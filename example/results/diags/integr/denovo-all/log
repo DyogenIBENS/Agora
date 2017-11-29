@@ -1,0 +1,29 @@
+-----------------------------------------------------------------------
+| Key           | Values                                              |
+-----------------------------------------------------------------------
+| phylTree.conf | /Users/alouis/VirtEnv_AGORA/Agora/data/Species.conf |
+| target        | A0                                                  |
+| pairwiseDiags | diags/pairwise/pairs-all/%s.list.bz2                |
+| minimalWeight | 1                                                   |
+| searchLoops   | False                                               |
+| OUT.ancDiags  | diags/integr/denovo-all/anc/diags.%s.list.bz2       |
+| ancGenesFiles | ancGenes/all/ancGenes.%s.list.bz2                   |
+-----------------------------------------------------------------------
+set(['A1', 'A0', 'A3', 'A2'])
+Loading genome of ancGenes/all/ancGenes.A1.list.bz2 ...Loading genome of ancGenes/all/ancGenes.A0.list.bz2 ...Loading genome of ancGenes/all/ancGenes.A3.list.bz2 ... (ancestral genes) OK
+Integrated blocs of A1 ...
+Loading genome of ancGenes/all/ancGenes.A2.list.bz2 ...NEWANC A1
+ (ancestral genes) OK
+Integrated blocs of A0 ...
+ (ancestral genes) OK
+Integrated blocs of A3 ...
+NEWANC A0
+ (ancestral genes) OK
+Integrated blocs of A2 ...
+NEWANC A3
+NEWANC A2
+A0 min=2	N50=10	WA=12.61	max=58 + 2280 singletons OK
+A2 min=2	N50=14	WA=17.18	max=98 + 1201 singletons OK
+A1 min=2	N50=32	WA=41.84	max=206 + 1295 singletons OK
+A3 min=2	N50=90	WA=114.94	max=365 + 1087 singletons OK
+Elapsed time: 4.07063293457

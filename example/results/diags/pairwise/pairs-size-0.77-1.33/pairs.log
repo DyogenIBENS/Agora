@@ -1,0 +1,37 @@
+-----------------------------------------------------------------------
+| Key           | Values                                              |
+-----------------------------------------------------------------------
+| phylTree.conf | /Users/alouis/VirtEnv_AGORA/Agora/data/Species.conf |
+| target        | A0                                                  |
+| genesFiles    | ~/VirtEnv_AGORA/Agora/data/genes/genes.%s.list.bz2  |
+| ancGenesFiles | ancGenes/size-0.77-1.33/ancGenes.%s.list.bz2        |
+| OUT.pairwise  | diags/pairwise/pairs-size-0.77-1.33/%s.list.bz2     |
+-----------------------------------------------------------------------
+Loading genome of ~/VirtEnv_AGORA/Agora/data/genes/genes.M5.list.bz2 ... (Ensembl) OK
+Loading genome of ancGenes/size-0.77-1.33/ancGenes.A2.list.bz2 ... (ancestral genes) OK
+Loading genome of ancGenes/size-0.77-1.33/ancGenes.A0.list.bz2 ... (ancestral genes) OK
+Extraction of pairs of genes from M5  Loading genome of ~/VirtEnv_AGORA/Agora/data/genes/genes.M4.list.bz2 ... (Ensembl) OK
+Extraction of pairs of genes from M4  Loading genome of ~/VirtEnv_AGORA/Agora/data/genes/genes.M1.list.bz2 ... (Ensembl) OK
+Loading genome of ancGenes/size-0.77-1.33/ancGenes.A3.list.bz2 ... (ancestral genes) OK
+Loading genome of ancGenes/size-0.77-1.33/ancGenes.A1.list.bz2 ... (ancestral genes) OK
+Extraction of pairs of genes from M1  Loading genome of ~/VirtEnv_AGORA/Agora/data/genes/genes.M3.list.bz2 ... (Ensembl) OK
+Extraction of pairs of genes from M3  Loading genome of ~/VirtEnv_AGORA/Agora/data/genes/genes.M2.list.bz2 ... (Ensembl) OK
+Extraction of pairs of genes from M2  time for task1 3.75017619133
+Number of pairs for A1 [('A3', 14908), ('M3', 13350)]
+Intersection between A3 and M3 ... OK
+11731 conserved pairs between descendants A1
+Number of pairs for A0 [('A1', 15492), ('A2', 14901)]
+Intersection between A1 and A2 ... OK
+11237 conserved pairs between descendants A0
+Number of pairs for A3 [('M1', 15176), ('M2', 15142)]
+Intersection between M1 and M2 ... OK
+13873 conserved pairs between descendants A3
+Number of pairs for A2 [('M4', 11642), ('M5', 10556)]
+Intersection between M4 and M5 ... OK
+6735 conserved pairs between descendants A2
+time for task 2 1.46968483925
+13374 conserved pairs for A1
+11237 conserved pairs for A0
+15025 conserved pairs for A3
+11935 conserved pairs for A2
+Elapsed time task3: 0.720522880554 5.94042420387

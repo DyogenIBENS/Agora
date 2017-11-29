@@ -1,0 +1,29 @@
+----------------------------------------------------------------------------
+| Key           | Values                                                   |
+----------------------------------------------------------------------------
+| phylTree.conf | /Users/alouis/VirtEnv_AGORA/Agora/data/Species.conf      |
+| target        | A0                                                       |
+| pairwiseDiags | diags/pairwise/pairs-size-0.77-1.33/%s.list.bz2          |
+| minimalWeight | 1                                                        |
+| searchLoops   | False                                                    |
+| OUT.ancDiags  | diags/integr/denovo-size-0.77-1.33/anc/diags.%s.list.bz2 |
+| ancGenesFiles | ancGenes/all/ancGenes.%s.list.bz2                        |
+----------------------------------------------------------------------------
+set(['A1', 'A0', 'A3', 'A2'])
+Loading genome of ancGenes/all/ancGenes.A1.list.bz2 ...Loading genome of ancGenes/all/ancGenes.A0.list.bz2 ...Loading genome of ancGenes/all/ancGenes.A3.list.bz2 ... (ancestral genes) OK
+Blocs integres de A1 ...
+Loading genome of ancGenes/all/ancGenes.A2.list.bz2 ...NEWANC A1
+ (ancestral genes) OK
+Blocs integres de A0 ...
+ (ancestral genes) OK
+Blocs integres de A3 ...
+NEWANC A0
+ (ancestral genes) OK
+Blocs integres de A2 ...
+NEWANC A2
+NEWANC A3
+2 [4/7/13] [9/15/26] 98 [10.29/10.41-1210] + 3829 singletons OK
+2 [4/8/16] [11/19/32] 103 [12.33/12.27-1053] + 2583 singletons OK
+2 [6/20/56] [41/85/149] 316 [39.75/49.75-345] + 3624 singletons OK
+2 [9/33/91] [77/138/260] 529 [67.76/89.13-225] + 2872 singletons OK
+Elapsed time: 4.60254406929

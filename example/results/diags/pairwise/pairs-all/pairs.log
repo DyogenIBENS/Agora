@@ -1,0 +1,13 @@
+-----------------------------------------------------------------------
+| Key           | Values                                              |
+-----------------------------------------------------------------------
+| phylTree.conf | /Users/alouis/VirtEnv_AGORA/Agora/data/Species.conf |
+| target        | A0                                                  |
+| genesFiles    | ~/VirtEnv_AGORA/Agora/data/genes/genes.%s.list.bz2  |
+| ancGenesFiles | ancGenes/all/ancGenes.%s.list.bz2                   |
+| OUT.pairwise  | diags/pairwise/pairs-all/%s.list.bz2                |
+-----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/alouis/VirtEnv_AGORA/Agora/src/buildSynteny.pairwise-conservedPairs.py", line 32, in <module>
+    phylTree = utils.myPhylTree.PhylogeneticTree(arguments["phylTree.conf"])
+AttributeError: 'module' object has no attribute 'myPhylTree'

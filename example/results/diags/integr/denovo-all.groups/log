@@ -1,0 +1,51 @@
+-------------------------------------------------------------------------
+| Key            | Values                                               |
+-------------------------------------------------------------------------
+| phylTree.conf  | /Users/alouis/VirtEnv_AGORA/Agora/data/Species.conf  |
+| target         | A0                                                   |
+| usedSpecies    | A0                                                   |
+| minimalWeight  | 1                                                    |
+| anchorSize     | 2                                                    |
+| minChromLength | 2                                                    |
+| IN.ancDiags    | diags/integr/denovo-all/anc/diags.%s.list.bz2        |
+| OUT.ancDiags   | diags/integr/denovo-all.groups/anc/diags.%s.list.bz2 |
+| genesFiles     | ~/VirtEnv_AGORA/Agora/data/genes/genes.%s.list.bz2   |
+| ancGenesFiles  | ancGenes/all/ancGenes.%s.list.bz2                    |
+-------------------------------------------------------------------------
+Loading genome of ~/VirtEnv_AGORA/Agora/data/genes/genes.M5.list.bz2 ... (Ensembl) OK
+Loading genome of ~/VirtEnv_AGORA/Agora/data/genes/genes.M4.list.bz2 ... (Ensembl) OK
+Loading genome of ~/VirtEnv_AGORA/Agora/data/genes/genes.M1.list.bz2 ... (Ensembl) OK
+Loading genome of ~/VirtEnv_AGORA/Agora/data/genes/genes.M3.list.bz2 ... (Ensembl) OK
+Loading genome of ~/VirtEnv_AGORA/Agora/data/genes/genes.M2.list.bz2 ... (Ensembl) OK
+Loading genome of ancGenes/all/ancGenes.A1.list.bz2 ... (ancestral genes) OK
+Loading genome of diags/integr/denovo-all/anc/diags.A1.list.bz2 ... (ancestral genome: diags) OK
+Loading genome of ancGenes/all/ancGenes.A0.list.bz2 ... (ancestral genes) OK
+Loading genome of diags/integr/denovo-all/anc/diags.A0.list.bz2 ... (ancestral genome: diags) OK
+Loading genome of ancGenes/all/ancGenes.A3.list.bz2 ... (ancestral genes) OK
+Loading genome of diags/integr/denovo-all/anc/diags.A3.list.bz2 ... (ancestral genome: diags) OK
+Loading genome of ancGenes/all/ancGenes.A2.list.bz2 ... (ancestral genes) OK
+Loading genome of diags/integr/denovo-all/anc/diags.A2.list.bz2 ... (ancestral genome: diags) OK
+Diagonals extraction between A1 and M5 ... 2 [2/4/6] [4/7/11] 37 [5.11/4.26-2393] 304 adjacencies / 764 blocs
+Diagonals extraction between A1 and M4 ... 2 [2/5/11] [8/17/30] 86 [8.98/10.38-1343] 579 adjacencies / 735 blocs
+Diagonals extraction between A1 and M1 ... 2 [3/6/14] [10/19/35] 131 [10.84/12.97-1405] 795 adjacencies / 913 blocs
+Diagonals extraction between A1 and M3 ... 2 [2/4/12] [10/20/38] 114 [9.86/13.17-1490] 809 adjacencies / 923 blocs
+Diagonals extraction between A1 and M2 ... 2 [2/6/13] [9/17/31] 89 [10.02/11.09-1518] 793 adjacencies / 936 blocs
+Integrated blocs of A1 2 [2/9/73] [96/162/290] 527 [54.57/89.76-294] + 1295 singletons
+Diagonals extraction between A0 and M5 ... 2 [2/3/6] [3/6/9] 32 [4.64/3.47-2560] 846 adjacencies / 1767 blocs
+Diagonals extraction between A0 and M4 ... 2 [2/4/8] [5/9/15] 45 [6.32/5.49-1851] 1649 adjacencies / 1692 blocs
+Diagonals extraction between A0 and M1 ... 2 [2/4/8] [5/9/14] 50 [6.16/5.20-2157] 1692 adjacencies / 1829 blocs
+Diagonals extraction between A0 and M3 ... 2 [2/4/7] [4/8/13] 39 [5.72/4.92-2166] 1650 adjacencies / 1775 blocs
+Diagonals extraction between A0 and M2 ... 2 [2/4/8] [5/8/13] 50 [5.95/5.02-2211] 1661 adjacencies / 1825 blocs
+Integrated blocs of A0 2 [3/9/22] [17/34/59] 146 [16.46/19.59-850] + 2280 singletons
+Diagonals extraction between A3 and M5 ... 2 [2/4/6] [4/7/11] 32 [5.06/4.21-2398] 136 adjacencies / 354 blocs
+Diagonals extraction between A3 and M4 ... 2 [2/5/12] [9/18/31] 93 [9.46/10.95-1264] 236 adjacencies / 339 blocs
+Diagonals extraction between A3 and M1 ... 2 [2/6/20] [21/47/90] 262 [17.70/28.74-931] 510 adjacencies / 584 blocs
+Diagonals extraction between A3 and M3 ... 2 [2/5/13] [11/23/44] 152 [10.75/14.63-1349] 391 adjacencies / 499 blocs
+Diagonals extraction between A3 and M2 ... 2 [2/5/17] [18/40/76] 198 [15.31/23.32-1077] 502 adjacencies / 610 blocs
+Integrated blocs of A3 2 [2/10/98] [145/276/413] 588 [76.72/127.35-222] + 1087 singletons
+Diagonals extraction between A2 and M5 ... 2 [2/4/7] [4/7/12] 50 [5.24/4.42-2368] 571 adjacencies / 1434 blocs
+Diagonals extraction between A2 and M4 ... 2 [2/5/10] [7/12/21] 84 [7.76/7.55-1567] 1338 adjacencies / 1383 blocs
+Diagonals extraction between A2 and M1 ... 2 [2/5/9] [5/10/16] 74 [6.62/6.06-2019] 1200 adjacencies / 1436 blocs
+Diagonals extraction between A2 and M3 ... 2 [2/4/8] [5/9/15] 39 [6.11/5.44-2042] 1176 adjacencies / 1412 blocs
+Diagonals extraction between A2 and M2 ... 2 [2/4/8] [5/9/15] 58 [6.31/5.68-2097] 1174 adjacencies / 1435 blocs
+Integrated blocs of A2 2 [3/10/36] [36/73/117] 285 [27.68/40.56-519] + 1201 singletons

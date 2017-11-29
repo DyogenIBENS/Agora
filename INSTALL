@@ -1,0 +1,51 @@
+
+    // | |     //   ) )  //   ) ) //   ) )  // | |
+   //__| |    //        //   / / //___/ /  //__| |
+  / ___  |   //  ____  //   / / / ___ (   / ___  |
+ //    | |  //    / / //   / / //   | |  //    | |
+//     | | ((____/ / ((___/ / //    | | //     | |
+
+
+#AGORA v1.0 (2016-09-15)
+
+#This code may be freely distributed and modified under the terms of the GNU General Public License version 3 (GPL v3)
+#and the CeCILL licence version 2 of the CNRS. These licences are contained in the files:
+#    1) LICENSE-GPL.txt (or http://www.gnu.org/licenses/gpl-3.0-standalone.html)
+#    2) LICENCE-CeCILL.txt (or http://www.cecill.info/licences/Licence_CeCILL_V2-en.html)
+
+#Copyright for this code is held jointly by the Dyogen (DYnamic and Organisation of GENomes) team
+#of the Institut de Biologie de l'Ecole Normale Supérieure (IBENS) 46 rue d'Ulm Paris, and the individual authors.
+
+# Agora v1.0
+# Copyright © 2016 IBENS/Dyogen : Alexandra LOUIS, Thi Thuy Nga NGUYEN, Matthieu MUFFATO and Hugues ROEST CROLLIUS
+# mail : hrc@ens.fr or alouis@ens.fr
+# This is free software, you may copy, modify and/or distribute this work under the terms of the GNU General Public License, version 3 (GPL v3) or later and the CeCiLL v2 license in France
+
+
+
+###########
+# INSTALL #
+###########
+
+Agora package needs the LibsDyoGen library to run (in the package directory).
+
+: echo 'export PYTHONPATH="$PYTHONPATH:$PWD/LibsDyoGen"' >> ~/.bashrc
+
+Agora needs python packages to be installed:
+
+msgpack-python, joblib, pycallgraph
+
+you can install them by pip:
+
+pip install msgpack-python
+pip install joblib
+pip install pycallgraph
+
+
+Once all these install ok just run:
+
+bash ./checkAgoraIntegrity.sh
+
+to check the install of AGORA.
+
+Once everything is ok, go to doc/HowTo.pdf to learn how to use AGORA.

@@ -1,0 +1,8 @@
+---------------------------------------------------------------------------------------------------------------------
+| Key           | Values                                                                                            |
+---------------------------------------------------------------------------------------------------------------------
+| phylTree.conf | /Users/alouis/VirtEnv_AGORA/Agora/data/Species.conf                                               |
+| target        | A0                                                                                                |
+| IN.ancDiags   | diags/integr/denovo-size-custom.refine-all.extend-all.halfinsert-all.groups/anc/diags.%s.list.bz2 |
+| OUT.ancDiags  | diags/integr/final/anc/diags.%s.list.bz2                                                          |
+---------------------------------------------------------------------------------------------------------------------
