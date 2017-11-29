@@ -2,5 +2,4 @@
 
 
 AGORA stands for “Algorithm for Gene Order Reconstruction in Ancestors” and was developed by
-Matthieu Muffato during his PhD (2007-2010) in the DYOGEN Laboratory at the Ecole normale supérieure
-in Paris. 
+Matthieu Muffato in the DYOGEN Laboratory at the Ecole normale supérieure in Paris. 
