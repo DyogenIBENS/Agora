@@ -29,6 +29,6 @@ ENV PYTHONPATH=$INSTALLATION_PATH/LibsDyoGen/
 
 FROM prod AS test
 WORKDIR /opt/agora
-#RUN ./checkAgoraIntegrity.sh
+RUN ./checkAgoraIntegrity.sh
 
 FROM prod
