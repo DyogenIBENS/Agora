@@ -252,18 +252,23 @@ queue = manager.Queue()
 nrun = 0
 proc = {}
 completed = 0
+failed = 0
 
 
 # Waiting for a task to finish
 def joinnext():
     print "Waiting ...",
     sys.stdout.flush()
-    i = queue.get()
-    print i, "is now finished"
-    tasklist.removeDep(i)
+    (i, r) = queue.get()
+    print "task", i, "is now finished (status", r, ")"
+    if r == 0:
+        tasklist.removeDep(i)
     proc.pop(i).join()
-    global completed
-    completed += 1
+    global completed, failed
+    if r == 0:
+        completed += 1
+    else:
+        failed += 1
     global nrun
     nrun -= 1
 
@@ -275,26 +280,31 @@ def golaunch(i, args, out, log):
     p = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=stderr)
     for l in p.stdout:
         print >> stdout, l,
-    p.wait()
+    r = p.wait()
     for l in p.stdout:
         print >> stdout, l,
     stdout.close()
     stderr.close()
     time.sleep(5)
-    queue.put(i)
+    queue.put((i, r))
 
 
 # Queue
-while completed < len(tasklist):
+while (completed + failed) < len(tasklist):
 
+    print "running:", nrun
     print "todo:", len(tasklist)
     print "done:", completed
+    print "failed:", failed
 
     if nrun == arguments["nbThreads"]:
         joinnext()
     else:
         todo = tasklist.getAvailable()
         if todo is None:
+            if nrun == 0:
+                print "Workflow stopped because of failures"
+                break
             joinnext()
         else:
             (next, dep, (args, out, log, launch)) = todo
@@ -308,3 +318,5 @@ while completed < len(tasklist):
                 completed += 1
 
 assert nrun == 0
+
+sys.exit(failed)
