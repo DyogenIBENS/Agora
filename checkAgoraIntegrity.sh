@@ -90,7 +90,7 @@ if [ ${NbAncGenomes} == 4 ]
         printf "${red} Everything seems OK! Enjoy AGORA${NC}\n"
     else
         printf "${red} HOHOHO problems! ${NC}\n"
-        exit
+        exit 1
 fi
 
 #########################################
