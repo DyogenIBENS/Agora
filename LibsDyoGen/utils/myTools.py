@@ -475,14 +475,7 @@ def checkArgs(args, options, info, showArgs=True, loadOnlyDefaultOptions=False):
                 if s not in valOpt:
 
                     # predefined values
-                    if s.startswith("psyco"):
-                        if t[0] == '+':
-                            try:
-                                import psyco
-                                psyco.full()
-                            except ImportError:
-                                print >> sys.stderr, "Unable to load psyco !"
-                    elif s == "bz2":
+                    if s == "bz2":
                         if t[0] == '+':
                             import bz2
                             sys.stdout = bz2.BZ2File("/dev/stdout", "w")
