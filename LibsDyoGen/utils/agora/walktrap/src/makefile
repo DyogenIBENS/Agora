@@ -18,8 +18,8 @@ py%.o : py%.cpp
 %.o : %.cpp
 	$(CC) -c $< $(CFLAGS)
 clean :
-	rm *.o *.pyo
+	rm -f *.o *.pyo
 
 moreclean :
-	rm *.o *.pyo _walktrap.so walktrap
+	rm -f *.o *.pyo _walktrap.so walktrap
 
