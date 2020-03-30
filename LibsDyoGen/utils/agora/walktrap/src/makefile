@@ -1,6 +1,5 @@
 CC = g++
-#PYTHON_INCLUDEDIR = /usr/include/python2.6
-PYTHON_INCLUDEDIR = /users/ldog/muffato/bin/Python-2.6.4/include/python2.6
+PYTHON_INCLUDES = $(shell python-config --includes)
 CFLAGS = -W -Wall -O3 -static -fPIC
 LDFLAGS = -shared -fPIC
 
@@ -13,7 +12,7 @@ _walktrap.so : pywalktrap.o communities.o graph.o heap.o
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 py%.o : py%.cpp
-	$(CC) -c $< $(CFLAGS) -I$(PYTHON_INCLUDEDIR)
+	$(CC) -c $< $(CFLAGS) $(PYTHON_INCLUDES)
 
 %.o : %.cpp
 	$(CC) -c $< $(CFLAGS)

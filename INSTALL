@@ -46,6 +46,10 @@ or via the requirements.txt:
 
 pip install -r requirements.txt
 
+Then go to LibsDyoGen/utils/agora/walktrap/src and run:
+
+make
+
 Once all these install ok just run:
 
 bash ./checkAgoraIntegrity.sh
