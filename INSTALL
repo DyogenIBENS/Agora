@@ -35,12 +35,15 @@ Agora needs python packages to be installed:
 
 msgpack-python, joblib, pycallgraph
 
-you can install them by pip:
+you can install them by pip individually:
 
 pip install msgpack-python
 pip install joblib
 pip install pycallgraph
 
+or via the requirements.txt:
+
+pip install -r requirements.txt
 
 Once all these install ok just run:
 
