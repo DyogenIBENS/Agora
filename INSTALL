@@ -33,14 +33,12 @@ Agora package needs the LibsDyoGen library to run (in the package directory).
 
 Agora needs python packages to be installed:
 
-enum, msgpack-python, joblib, pycallgraph
+enum, joblib
 
 you can install them by pip individually:
 
 pip install enum
-pip install msgpack-python
 pip install joblib
-pip install pycallgraph
 
 or via the requirements.txt:
 

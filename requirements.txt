@@ -1,4 +1,2 @@
 enum
-msgpack-python
 joblib
-pycallgraph
