@@ -21,6 +21,8 @@ RUN pip install -r requirements.txt
 RUN apt-get install -y pkg-config build-essential liblzma-dev
 RUN pip install pyliblzma
 
+RUN python -m compileall .
+
 FROM base AS prod
 ARG INSTALLATION_PATH=/opt/agora
 COPY --from=builder /tmp/agora "$INSTALLATION_PATH"
