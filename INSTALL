@@ -27,10 +27,6 @@
 # INSTALL #
 ###########
 
-Agora package needs the LibsDyoGen library to run (in the package directory).
-
-: echo 'export PYTHONPATH="$PYTHONPATH:$PWD/LibsDyoGen"' >> ~/.bashrc
-
 Agora needs python packages to be installed:
 
 enum, numpy, joblib (version 0.11 or earlier)
