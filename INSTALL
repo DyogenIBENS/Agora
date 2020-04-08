@@ -27,17 +27,8 @@
 # INSTALL #
 ###########
 
-Agora needs python packages to be installed:
-
-enum, numpy, joblib (version 0.11 or earlier)
-
-you can install them by pip individually:
-
-pip install enum
-pip install numpy
-pip install joblib==0.11
-
-or via the requirements.txt:
+Agora needs several Python packages that can all be installed with pip.
+They are listed in requirements.txt:
 
 pip install -r requirements.txt
 
