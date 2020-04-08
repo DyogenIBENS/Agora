@@ -25,8 +25,7 @@ RUN rm -rf .git
 RUN python -m compileall .
 
 FROM base AS prod
-ARG INSTALLATION_PATH=/opt/agora
-COPY --from=builder /tmp/agora "$INSTALLATION_PATH"
+COPY --from=builder /tmp/agora /opt/agora
 COPY --from=builder /usr/local /usr/local
 
 FROM prod AS test
