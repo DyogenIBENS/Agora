@@ -5,6 +5,13 @@ FROM base AS builder
 # Build dependencies
 RUN apt-get update -y
 RUN apt-get install -y git
+RUN apt-get install -y pkg-config build-essential liblzma-dev
+
+# Python dependencies
+COPY requirements.txt /tmp/requirements.txt
+RUN pip install -r /tmp/requirements.txt
+# Optional dependency
+RUN pip install pyliblzma
 
 # The repository itself
 RUN mkdir -p /tmp/agora
@@ -14,13 +21,7 @@ RUN git clean -d -f
 RUN git clean -X -f
 RUN rm -rf .git
 
-# Python dependencies
-RUN pip install -r requirements.txt
-
-# Optional dependency
-RUN apt-get install -y pkg-config build-essential liblzma-dev
-RUN pip install pyliblzma
-
+# Compile all Python files to speed things up
 RUN python -m compileall .
 
 FROM base AS prod
