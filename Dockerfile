@@ -24,10 +24,12 @@ RUN rm -rf .git
 # Compile all Python files to speed things up
 RUN python -m compileall .
 
+# Trick to only keep the files we need and make the image smaller
 FROM base AS prod
 COPY --from=builder /tmp/agora /opt/agora
 COPY --from=builder /usr/local /usr/local
 
+# Test the image
 FROM prod AS test
 WORKDIR /opt/agora
 RUN ./checkAgoraIntegrity.sh
