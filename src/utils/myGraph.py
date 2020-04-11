@@ -20,7 +20,7 @@ from . import myMaths
 from . import myTools
 
 
-OrthosFilterType = myTools.Enum('None', 'InCommonAncestor', 'InBothSpecies')
+OrthosFilterType = myTools.Enum('NoFilter', 'InCommonAncestor', 'InBothSpecies')
 
 
 def loadConservedPairsAnc(filename):
@@ -210,7 +210,7 @@ def diagMerger(diagGen, sameStrand, largeurTrou):
 #
 # Procedure complete de calculs des diagonales a partir de 2 genomes, des orthologues et de certains parametres
 ################################################################################################################
-def calcDiags(g1, g2, orthos, fusionThreshold=-1, sameStrand=True, orthosFilter=OrthosFilterType.None, minChromLength=0):
+def calcDiags(g1, g2, orthos, fusionThreshold=-1, sameStrand=True, orthosFilter=OrthosFilterType.NoFilter, minChromLength=0):
 
 	# Ecrit les genomes comme suites de numeros de genes ancestraux
 	def translateGenome(genome):
@@ -262,7 +262,7 @@ def calcDiags(g1, g2, orthos, fusionThreshold=-1, sameStrand=True, orthosFilter=
 
 	# Dans tous les cas, il faut filtrer sur la taille
 	# On garde tous les genes
-	if orthosFilter == OrthosFilterType.None:
+	if orthosFilter == OrthosFilterType.NoFilter:
 		filterSize(newg1)
 		filterSize(newg2)
 	# On ne garde que les genes presents chez l'ancetre
@@ -294,7 +294,7 @@ def calcDiags(g1, g2, orthos, fusionThreshold=-1, sameStrand=True, orthosFilter=
 		src = iterateDiags(newg1[c1], newLoc, sameStrand)
 		if (fusionThreshold > 0) or (not sameStrand):
 			src = diagMerger(src, sameStrand, fusionThreshold)
-		if orthosFilter != OrthosFilterType.None:
+		if orthosFilter != OrthosFilterType.NoFilter:
 			for (c2,d1,d2,da) in src:
 				yield ((c1,[(trans1[c1][i1],s1) for (i1,s1) in d1]), (c2,[(trans2[c2][i2],s2) for (i2,s2) in d2]), da)
 		else:
