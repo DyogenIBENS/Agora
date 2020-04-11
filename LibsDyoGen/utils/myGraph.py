@@ -17,9 +17,10 @@ import collections
 
 import enum
 
-import utils.myMaths
-import utils.myTools
-import utils.myGenomes
+import myFile
+import myMaths
+import myTools
+import myGenomes
 
 
 OrthosFilterType = enum.Enum('None', 'InCommonAncestor', 'InBothSpecies')
@@ -27,7 +28,7 @@ OrthosFilterType = enum.Enum('None', 'InCommonAncestor', 'InBothSpecies')
 
 def loadConservedPairsAnc(filename):
     pairwiseDiags = []
-    f = utils.myFile.openFile(filename, "r")
+    f = myFile.openFile(filename, "r")
     for l in f:
         t = l.split("\t")
         pairwiseDiags.append(((int(t[0]), int(t[1])), (int(t[2]), int(t[3])), int(t[4])))
@@ -38,9 +39,9 @@ def loadConservedPairsAnc(filename):
 # Chargement d'un fichier de paires conservees
 ################################################
 def loadConservedPairs(filename, targets):
-	print >> sys.stderr, "Chargement des paires conservees %s ..." % filename,
+	print >> sys.stderr, "Loading conserved pairs of %s ..." % filename,
 	pairwiseDiags = collections.defaultdict(list)
-	f = utils.myFile.openFile(filename, "r")
+	f = myFile.openFile(filename, "r")
 	for l in f:
 		t = l[:-1].split("\t")
 		if t[0] in targets:
@@ -56,8 +57,8 @@ def loadConservedPairs(filename, targets):
 def loadIntegr(filename):
 	integr = []
 	singletons = set()
-	print >> sys.stderr, "Chargement des blocs integres %s ..." % filename,
-	f = utils.myFile.openFile(filename, "r")
+	print >> sys.stderr, "Loading integrated blocks of %s ..." % filename,
+	f = myFile.openFile(filename, "r")
 	for l in f:
 		t = l.split("\t")
 		diagA = [int(x) for x in t[2].split()]
@@ -70,7 +71,7 @@ def loadIntegr(filename):
 		else:
 			integr.append((zip(diagA,diagS),diagW))
 	f.close()
-	print >> sys.stderr, utils.myMaths.myStats.txtSummary([len(x[0]) for x in integr]), "+", len(singletons), "singletons OK"
+	print >> sys.stderr, myMaths.myStats.txtSummary([len(x[0]) for x in integr]), "+", len(singletons), "singletons OK"
 	return (integr,singletons)
 
 #
@@ -217,7 +218,7 @@ def calcDiags(g1, g2, orthos, fusionThreshold=-1, sameStrand=True, orthosFilter=
 	# Ecrit les genomes comme suites de numeros de genes ancestraux
 	def translateGenome(genome):
 		newGenome = {}
-		for c in genome.chrList[utils.myGenomes.ContigType.Chromosome] + genome.chrList[utils.myGenomes.ContigType.Scaffold]:
+		for c in genome.chrList[myGenomes.ContigType.Chromosome] + genome.chrList[myGenomes.ContigType.Scaffold]:
 			tmp = [(orthos.getPositions(g.names),g.strand) for g in genome.lstGenes[c]]
 			#assert set(len(x[0]) for x in tmp).issubset(set([0,1]))
 			#assert set(list(x[0])[0].chromosome for x in tmp if len(x[0]) > 0).issubset([None])
@@ -303,7 +304,7 @@ def calcDiags(g1, g2, orthos, fusionThreshold=-1, sameStrand=True, orthosFilter=
 			for (c2,d1,d2,da) in src:
 				yield ((c1,d1), (c2,d2), da)
 
-#@utils.myTools.memoize
+#@myTools.memoize
 def revGene((x,sx)):
     # sx is an integer for the graph construction of AGORA
     # sx = +1 or -1, standard case
@@ -349,7 +350,7 @@ class WeightedDiagGraph:
 	# Insere une diagonale avec poids fixe
 	########################################
 	def addDiag(self, diag, weight=1):
-		for (xsx,ysy) in utils.myTools.myIterator.slidingTuple(diag):
+		for (xsx,ysy) in myTools.myIterator.slidingTuple(diag):
 			self.addLink(xsx, ysy, weight)
 		
 	#
@@ -357,7 +358,7 @@ class WeightedDiagGraph:
 	################################################
 	def addWeightedDiag(self, diag, weights):
 		assert len(diag) == (len(weights)+1)
-		for ((xsx,ysy),w) in itertools.izip(utils.myTools.myIterator.slidingTuple(diag), weights):
+		for ((xsx,ysy),w) in itertools.izip(myTools.myIterator.slidingTuple(diag), weights):
 			self.addLink(xsx, ysy, w)
 		
 	#

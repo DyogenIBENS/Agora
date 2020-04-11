@@ -21,9 +21,9 @@ import time
 
 from joblib import Parallel, delayed
 
-import myGraph
 import utils.myFile
 import utils.myGenomes
+import utils.myGraph
 import utils.myMaths
 import utils.myPhylTree
 import utils.myTools
@@ -46,12 +46,15 @@ def do(anc, diags, sto):
 
     print >> sys.stderr, "Integrated blocs of %s ..." % anc
 
-    graph = myGraph.WeightedDiagGraph()
+    graph = utils.myGraph.WeightedDiagGraph()
     for x in diags:
         graph.addLink(*x)
     print >> sys.stderr, "NEWANC", anc
 
-    graph.printIniGraph(sto)
+    ini_stdout = sys.stdout
+    sys.stdout = utils.myFile.openFile(sto, "w")
+    graph.printIniGraph()
+    sys.stdout = ini_stdout
 
     # Cut the graph in subgraph
     graph.cleanGraphTopDown(arguments["minimalWeight"], searchLoops=arguments["searchLoops"])
@@ -92,7 +95,7 @@ n_cpu = multiprocessing.cpu_count()
 # n_cpu = 1
 
 Parallel(n_jobs=n_cpu)(
-    delayed(do)(anc, myGraph.loadConservedPairsAnc(arguments["pairwiseDiags"] % phylTree.fileName[anc]),
+    delayed(do)(anc, utils.myGraph.loadConservedPairsAnc(arguments["pairwiseDiags"] % phylTree.fileName[anc]),
                 "denovo_log/%s.log.bz2" % anc) for anc in targets)
 
 
