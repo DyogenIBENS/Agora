@@ -76,7 +76,7 @@ class myTSV:
     # write a mySQL dump file (\N for NULL)
     @staticmethod
     def MySQLFileWriter(data):
-        return myTSV.printLine(data).replace("None", "\N")
+        return myTSV.printLine(data).replace("None", "\\N")
 
 # Read the first line of a file. Useful when you want to know the format without having to open-close it before opening it once more
 class firstLineBuffer:
