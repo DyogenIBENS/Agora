@@ -10,17 +10,16 @@
 # Fonctions communes de traitement des diagonales #
 ###################################################
 
-import sys
-import operator
-import itertools
 import collections
+import itertools
+import sys
 
 import enum
 
 import myFile
+import myGenomes
 import myMaths
 import myTools
-import myGenomes
 
 
 OrthosFilterType = enum.Enum('None', 'InCommonAncestor', 'InBothSpecies')
