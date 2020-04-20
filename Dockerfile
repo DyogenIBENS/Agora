@@ -1,17 +1,14 @@
-FROM python:2.7.17-slim AS base
+FROM python:3.7.7-slim AS base
 
 FROM base AS builder
 
 # Build dependencies
 RUN apt-get update -y
 RUN apt-get install -y git
-RUN apt-get install -y pkg-config build-essential liblzma-dev
 
 # Python dependencies
 COPY requirements.txt /tmp/requirements.txt
 RUN pip install -r /tmp/requirements.txt
-# Optional dependency
-RUN pip install pyliblzma
 
 # The repository itself
 RUN mkdir -p /tmp/agora
