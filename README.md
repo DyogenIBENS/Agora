@@ -13,6 +13,10 @@ Matthieu Muffato in the DYOGEN Laboratory at the École normale supérieure in P
 //     | | ((____/ / ((___/ / //    | | //     | |
 ```
 
+AGORA has been constantly used in the group since 2010, especially to
+generate ancestral genomes for the [Genomicus](https://www.genomicus.biologie.ens.fr/genomicus)
+online server for comparative genomics.
+
 ## License
 
 This code may be freely distributed and modified under the terms of the GNU General Public License version 3 (GPL v3)
