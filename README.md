@@ -1,5 +1,7 @@
 # AGORA v1.0 (2016-09-15)
 
+## Introduction
+
 AGORA stands for “Algorithm for Gene Order Reconstruction in Ancestors” and was developed by
 Matthieu Muffato in the DYOGEN Laboratory at the École normale supérieure in Paris.
 
@@ -11,7 +13,7 @@ Matthieu Muffato in the DYOGEN Laboratory at the École normale supérieure in P
 //     | | ((____/ / ((___/ / //    | | //     | |
 ```
 
-# License
+## License
 
 This code may be freely distributed and modified under the terms of the GNU General Public License version 3 (GPL v3)
 and the CeCILL licence version 2 of the CNRS. These licences are contained in the files:
@@ -26,11 +28,11 @@ and the individual authors.
 - Copyright © 2006-2020 IBENS/Dyogen : Alexandra LOUIS, Thi Thuy Nga NGUYEN, Matthieu MUFFATO and Hugues ROEST CROLLIUS
 - Copyright © 2020 EMBL-European Bioinformatics Institute
 
-# Contacts
+## Contacts
 
 Email hrc {at} ens {dot} fr or alouis {at} ens {dot} fr
 
-# Installation
+## Installation
 
 AGORA is written in Python 2 and is currently not compatible with Python 3.
 You can install a Python 2 environment with all the dependencies with
@@ -57,6 +59,6 @@ It should run for a few minutes and end with this message in red:
 
 > the ancestral genomes should be available in tmp/ancGenomes/
 
-# Usage
+## Usage
 
 Check out our [user manual](doc/HowTo.pdf) to learn how to use AGORA.
