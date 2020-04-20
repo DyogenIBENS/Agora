@@ -16,8 +16,8 @@ Matthieu Muffato in the DYOGEN Laboratory at the École normale supérieure in P
 This code may be freely distributed and modified under the terms of the GNU General Public License version 3 (GPL v3)
 and the CeCILL licence version 2 of the CNRS. These licences are contained in the files:
 
-1. LICENSE-GPL.txt (or (http://www.gnu.org/licenses/gpl-3.0-standalone.html))
-2. LICENCE-CeCILL.txt (or [http://www.cecill.info/licences/Licence_CeCILL_V2-en.html])
+1. [LICENSE-GPL.txt](LICENSE-GPL.txt) (or on [www.gnu.org](https://www.gnu.org/licenses/gpl-3.0-standalone.html))
+2. [LICENCE-CeCILL.txt](LICENCE-CeCILL.txt) (or on [www.cecill.info](https://cecill.info/licences/Licence_CeCILL_V2-en.html))
 
 Copyright for this code is held jointly by the Dyogen (DYnamic and Organisation of GENomes) team
 of the Institut de Biologie de l'Ecole Normale Supérieure (IBENS) 46 rue d'Ulm Paris, the European Bioinformatics Institute outstation of the European Molecular Biology Laboratory,
@@ -59,4 +59,4 @@ It should run for a few minutes and end with this message in red:
 
 # Usage
 
-Check out our user manual (doc/HowTo.pdf) to learn how to use AGORA.
+Check out our [user manual](doc/HowTo.pdf) to learn how to use AGORA.
