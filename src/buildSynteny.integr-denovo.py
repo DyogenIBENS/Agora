@@ -85,6 +85,7 @@ def do(anc, diags, sto):
     print >> sys.stderr, anc,  utils.myMaths.myStats.syntheticTxtSummary(s), "+ %d singletons OK" % len(singletons)
 
     # Revert to the true standard output
+    sys.stdout.close()
     sys.stdout = ini_stdout
 
 

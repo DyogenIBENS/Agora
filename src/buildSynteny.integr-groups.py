@@ -198,4 +198,5 @@ for anc in targets:
     ini_stdout = sys.stdout
     sys.stdout = utils.myFile.openFile(arguments["LOG.ancGraph"] % phylTree.fileName[anc], "w")
     do(anc)
+    sys.stdout.close()
     sys.stdout = ini_stdout
