@@ -319,4 +319,5 @@ while (completed + failed) < len(tasklist):
 
 assert nrun == 0
 
+print "Workflow complete"
 sys.exit(failed)
