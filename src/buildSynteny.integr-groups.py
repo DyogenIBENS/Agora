@@ -31,6 +31,7 @@ arguments = utils.myTools.checkArgs( \
     [("phylTree.conf", file), ("target", str), ("usedSpecies", str)], \
     [("minimalWeight", int, 1), ("anchorSize", int, 2), ("minChromLength", int, 2), \
      ("IN.ancDiags", str, ""), \
+     ("LOG.ancGraph", str, "anc/graph.%s.txt.bz2"),
      ("OUT.ancDiags", str, "anc/diags.%s.list.bz2"), \
      ("genesFiles", str, ""), \
      ("ancGenesFiles", str, "")], \
@@ -193,4 +194,8 @@ for (e1, e2) in itertools.combinations(listSpecies, 2):
         toStudy[anc].append((e1, e2))
 
 for anc in targets:
+    # Redirect the standard output to a file
+    ini_stdout = sys.stdout
+    sys.stdout = utils.myFile.openFile(arguments["LOG.ancGraph"] % phylTree.fileName[anc], "w")
     do(anc)
+    sys.stdout = ini_stdout
