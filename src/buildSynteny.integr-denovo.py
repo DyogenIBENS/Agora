@@ -52,10 +52,11 @@ def do(anc, diags, sto):
         graph.addLink(*x)
     print >> sys.stderr, "NEWANC", anc
 
+    # Redirect the standard output to a file
     ini_stdout = sys.stdout
     sys.stdout = utils.myFile.openFile(sto, "w")
+
     graph.printIniGraph()
-    sys.stdout = ini_stdout
 
     # Cut the graph in subgraph
     graph.cleanGraphTopDown(arguments["minimalWeight"], searchLoops=arguments["searchLoops"])
@@ -82,6 +83,9 @@ def do(anc, diags, sto):
         print >> f, utils.myFile.myTSV.printLine([anc, 1, x, 1, ""])
     f.close()
     print >> sys.stderr, anc,  utils.myMaths.myStats.syntheticTxtSummary(s), "+ %d singletons OK" % len(singletons)
+
+    # Revert to the true standard output
+    sys.stdout = ini_stdout
 
 
 start = time.time()
