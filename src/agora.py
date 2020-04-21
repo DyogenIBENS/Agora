@@ -26,7 +26,7 @@ __doc__ = """
 scriptDir = os.path.dirname(os.path.abspath(__file__))
 arguments = utils.myTools.checkArgs(
     [("agora.conf", file)],
-    [("workingDir", file, "."), ("nbThreads", int, 1),
+    [("workingDir", str, "."), ("nbThreads", int, 1),
      ("prog:synteny", str, os.path.join(scriptDir, "buildSynteny.%s-%s.py")),
      ("prog:ancGenes", str, os.path.join(scriptDir, "ALL.filterGeneFamilies-%s.py"))
      ],
@@ -60,6 +60,14 @@ files = {}
 for x in bysections["files"]:
     x = partition(x, "=")
     files[x[0].lower()] = x[1]
+
+# All input paths are relative to the directory of the configuration file
+inputDir = os.path.dirname(arguments["agora.conf"])
+outputDir = arguments["workingDir"]
+inputParams = ["speciestree", "genes"]
+for f in files:
+    files[f] = os.path.join(inputDir if f in inputParams else outputDir, files[f])
+
 phylTree = utils.myPhylTree.PhylogeneticTree(files["speciestree"])
 
 
@@ -244,8 +252,6 @@ for x in bysections.get("integration", []):
 
 # Launching tasks in multiple threads
 #####################################
-
-os.chdir(arguments["workingDir"])
 
 import multiprocessing
 
