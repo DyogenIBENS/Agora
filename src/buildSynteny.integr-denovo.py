@@ -32,6 +32,7 @@ import utils.myTools
 arguments = utils.myTools.checkArgs(
     [("phylTree.conf", file), ("target", str), ("pairwiseDiags", str)],
     [("minimalWeight", int, 1), ("searchLoops", bool, False),
+     ("LOG.ancGraph", str, "denovo_log/%s.log.bz2"),
      ("OUT.ancDiags", str, "anc/diags.%s.list.bz2"),
      ("ancGenesFiles", str, ""),
      ],
@@ -96,7 +97,7 @@ n_cpu = multiprocessing.cpu_count()
 
 Parallel(n_jobs=n_cpu)(
     delayed(do)(anc, utils.myGraph.loadConservedPairsAnc(arguments["pairwiseDiags"] % phylTree.fileName[anc]),
-                "denovo_log/%s.log.bz2" % anc) for anc in targets)
+                arguments["LOG.ancGraph"] % phylTree.fileName[anc]) for anc in targets)
 
 
 print >> sys.stderr, "Elapsed time:", (time.time() - start)
