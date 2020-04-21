@@ -23,11 +23,12 @@ __doc__ = """
           ../src/agora.py ../conf/agora.ini -workingDir=. -nbThreads=4
 """
 
+scriptDir = os.path.dirname(os.path.abspath(__file__))
 arguments = utils.myTools.checkArgs(
     [("agora.conf", file)],
     [("workingDir", file, "."), ("nbThreads", int, 1),
-     ("prog:synteny", str, os.path.dirname(os.path.abspath(__file__)) + "/buildSynteny.%s-%s.py"),
-     ("prog:ancGenes", str, os.path.dirname(os.path.abspath(__file__)) + "/ALL.filterGeneFamilies-%s.py")
+     ("prog:synteny", str, os.path.join(scriptDir, "buildSynteny.%s-%s.py")),
+     ("prog:ancGenes", str, os.path.join(scriptDir, "ALL.filterGeneFamilies-%s.py"))
      ],
     __doc__)
 
