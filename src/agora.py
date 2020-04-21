@@ -157,8 +157,7 @@ for x in bysections.get("pairwise", []):
              "-ancGenesFiles=" + files["ancgenesdata"] % {"filt": dirname, "name": "%s"},
              "-genesFiles=" + files["genes"] % {"name": "%s"},
              "-OUT.pairwise=" + files["pairwiseoutput"] % {"filt": dirname, "name": "%s"}] + params[1:],
-            # files["pairwiseoutput"] % {"filt": dirname},
-            "abc",
+            os.devnull,
             files["pairwiselog"] % {"filt": dirname},
             "*" not in x[0]
         )
