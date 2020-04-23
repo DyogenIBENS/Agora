@@ -123,18 +123,18 @@ for x in bysections["ancgenes"]:
     minsize = minsize[:-1]
     maxsize = maxsize[:-1]
 
-tasklist.addTask(
-    ("ancgenes", "size"),
-    [],
-    (
-        [arguments["prog:ancGenes"] % "size", files["speciestree"], root,
-         files["ancgenesdata"] % {"filt": "all", "name": "%s"},
-         files["ancgenesdata"] % {"filt": "size-%s-%s", "name": "%s"}] + [minsize, maxsize],
-        files["ancgenesoutput"],
-        files["ancgeneslog"],
-        "*" not in x[0]
+    tasklist.addTask(
+        ("ancgenes", "size"),
+        [],
+        (
+            [arguments["prog:ancGenes"] % "size", files["speciestree"], root,
+             files["ancgenesdata"] % {"filt": "all", "name": "%s"},
+             files["ancgenesdata"] % {"filt": "size-%s-%s", "name": "%s"}] + [minsize, maxsize],
+            files["ancgenesoutput"],
+            files["ancgeneslog"],
+            "*" not in x[0]
+        )
     )
-)
 
 # Pairwise comparison section
 #############################
