@@ -227,13 +227,16 @@ for x in bysections.get("integration", []):
         args.append("-ancGenesFiles=" + files["ancgenesdata"] % {"filt": "all", "name": "%s"})
         args.append("-genesFiles=" + files["genes"] % {"name": "%s"})
 
+    if params[0] != "copy":
+        args.append("-LOG.ancGraph=" + files["integroutput"] % {"method": newMethod, "name": "%s"})
+
     # Integration task
     tasklist.addTask(
         ("integr", newMethod),
         dep,
         (
             args,
-            files["integroutput"] % {"method": newMethod},
+            os.devnull,
             files["integrlog"] % {"method": newMethod},
             tolaunch
         )
