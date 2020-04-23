@@ -1,0 +1,17 @@
+graph TD
+  subgraph Input data
+    A[Extant genomes]
+    B[Species tree]
+    C[Gene phylogenies]
+    D[Extant gene orders]
+  end
+  subgraph AGORA
+    E[Ancestral gene lists]
+    F{{Reconstruction}}
+  end
+  subgraph Output
+    G[Contiguous Ancestral Regions]
+  end
+  A -.- B & C & D
+  C --> E
+  B & E & D --> F --> G
