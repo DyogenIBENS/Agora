@@ -202,8 +202,7 @@ def do(anc, pairwiseDiags, sto):
                                                   utils.myFile.myTSV.printLine([x[1] for x in newb], delim=" "),
                                                   utils.myFile.myTSV.printLine(news, delim=" ")])
     f.close()
-    #print >> sys.stderr, utils.myMaths.myStats.txtSummary(ll), "+", sing, "singletons"
-    print utils.myMaths.myStats.txtSummary(ll), "+", sing, "singletons"
+    print >> sys.stderr, utils.myMaths.myStats.txtSummary(ll), "+", sing, "singletons"
 
     # Revert to the true standard output
     sys.stdout.close()
