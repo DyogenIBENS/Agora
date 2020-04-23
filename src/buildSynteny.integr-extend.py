@@ -27,13 +27,15 @@ import utils.myTools
 arguments = utils.myTools.checkArgs(
     [("phylTree.conf", file), ("target", str), ("pairwiseDiags", str)],
     [("minimalWeight", int, 1), ("searchLoops", bool, True), ("onlySingletons", bool, False),
-     ("IN.ancDiags", str, ""), ("OUT.ancDiags", str, "")],
+     ("IN.ancDiags", str, ""), ("OUT.ancDiags", str, ""), ("LOG.ancGraph", str, "extend_log/%s.log.bz2")],
     __doc__
 )
 
 
 def do(anc, diags, sto):
-    sys.stdout = sys.stderr = utils.myFile.openFile(sto, "w")
+    # Redirect the standard output to a file
+    ini_stdout = sys.stdout
+    sys.stdout = utils.myFile.openFile(sto, "w")
     graph = utils.myGraph.WeightedDiagGraph()
 
     (integr, singletons) = utils.myGraph.loadIntegr(arguments["IN.ancDiags"] % phylTree.fileName[anc])
@@ -81,8 +83,10 @@ def do(anc, diags, sto):
         print >> f, utils.myFile.myTSV.printLine([anc, 1, x, 1, ""])
     f.close()
     print >> sys.stderr, utils.myMaths.myStats.txtSummary(s), "+ %d singletons OK" % len(singletons)
-    sys.stdout.flush()
-    sys.stderr.flush()
+
+    # Revert to the true standard output
+    sys.stdout.close()
+    sys.stdout = ini_stdout
 
 
 start = time.time()
@@ -97,6 +101,6 @@ n_cpu = multiprocessing.cpu_count()
 
 Parallel(n_jobs=n_cpu)(
     delayed(do)(anc, utils.myGraph.loadConservedPairsAnc(arguments["pairwiseDiags"] % phylTree.fileName[anc]),
-                "extend_log/%s.log" % anc) for anc in targets)
+                arguments["LOG.ancGraph"] % phylTree.fileName[anc]) for anc in targets)
 
 print >> sys.stderr, "Elapsed time:", (time.time() - start)

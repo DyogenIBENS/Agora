@@ -43,7 +43,7 @@ import utils.myTools
 # Arguments
 arguments = utils.myTools.checkArgs(
     [("phylTree.conf", file), ("target", str), ("pairwiseDiags", str)],
-    [("IN.ancDiags", str, ""), ("OUT.ancDiags", str, ""),
+    [("IN.ancDiags", str, ""), ("OUT.ancDiags", str, ""), ("LOG.ancGraph", str, "refine_log/%s.log.bz2"),
      ("minimalWeight", int, 1), ("mustExtend", bool, False), ("loop", bool, False), ("timeout", int, 900),
      ("func", str, "")],
     __doc__
@@ -417,7 +417,9 @@ def prepareGraph(pairwiseDiags, singletons, graphData, start, end):
 
 # def do(anc, pairwiseDiags):
 def do(anc, pairwiseDiags, sto):
-    sys.stdout = sys.stderr = utils.myFile.openFile(sto, "w")
+    # Redirect the standard output to a file
+    ini_stdout = sys.stdout
+    sys.stdout = utils.myFile.openFile(sto, "w")
     print "newanc", anc
     print "in ancGene", arguments["IN.ancDiags"]
     (integr, singletons) = utils.myGraph.loadIntegr(arguments["IN.ancDiags"] % phylTree.fileName[anc])
@@ -659,8 +661,10 @@ def do(anc, pairwiseDiags, sto):
     for x in singletons:
         print >> f, utils.myFile.myTSV.printLine([anc, 1, x, 1, ""])
     f.close()
-    sys.stdout.flush()
-    sys.stderr.flush()
+
+    # Revert to the true standard output
+    sys.stdout.close()
+    sys.stdout = ini_stdout
 
 
 start = time.time()
@@ -699,7 +703,7 @@ n_cpu = multiprocessing.cpu_count()
 # n_cpu = 1
 
 Parallel(n_jobs=n_cpu)(
-    delayed(do)(anc, loadPairwise(arguments["pairwiseDiags"] % phylTree.fileName[anc]), "refine_log/%s.log" % anc) for
+    delayed(do)(anc, loadPairwise(arguments["pairwiseDiags"] % phylTree.fileName[anc]), arguments["LOG.ancGraph"] % phylTree.fileName[anc]) for
     anc in targets)
 
 print >> sys.stderr, "total computation time", (time.time() - start)

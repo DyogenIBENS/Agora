@@ -31,7 +31,7 @@ arguments = utils.myTools.checkArgs( \
     [("phylTree.conf", file), ("target", str), ("usedSpecies", str)], \
     [("minimalWeight", int, 1), ("anchorSize", int, 2), ("minChromLength", int, 2), \
      ("IN.ancDiags", str, ""), \
-     ("LOG.ancGraph", str, "anc/graph.%s.txt.bz2"),
+     ("LOG.ancGraph", str, "groups_log/%s.log.bz2"),
      ("OUT.ancDiags", str, "anc/diags.%s.list.bz2"), \
      ("genesFiles", str, ""), \
      ("ancGenesFiles", str, "")], \
@@ -198,5 +198,6 @@ for anc in targets:
     ini_stdout = sys.stdout
     sys.stdout = utils.myFile.openFile(arguments["LOG.ancGraph"] % phylTree.fileName[anc], "w")
     do(anc)
+    # Revert to the true standard output
     sys.stdout.close()
     sys.stdout = ini_stdout

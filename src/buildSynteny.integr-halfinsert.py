@@ -28,7 +28,7 @@ import utils.myTools
 # Arguments
 arguments = utils.myTools.checkArgs(
     [("phylTree.conf", file), ("target", str), ("IN.pairwiseDiags", str)],
-    [("IN.ancDiags", str, ""), ("OUT.ancDiags", str, ""), ("REF.ancDiags", str, ""),
+    [("IN.ancDiags", str, ""), ("OUT.ancDiags", str, ""), ("REF.ancDiags", str, ""), ("LOG.ancGraph", str, "halfinsert_log/%s.log.bz2"),
      ("selectionFunction", str, "newscore/float(oldscore)")],
     __doc__
 )
@@ -44,8 +44,9 @@ selectionFunction = eval("lambda newscore, oldscore: " + arguments["selectionFun
 
 
 def do(anc, pairwiseDiags, sto):
-    sys.stdout = sys.stderr = utils.myFile.openFile(sto, "w")
-    #sys.stdout =  utils.myFile.openFile(sto, "w")
+    # Redirect the standard output to a file
+    ini_stdout = sys.stdout
+    sys.stdout = utils.myFile.openFile(sto, "w")
     print "newanc", anc
     (integr, singletons) = utils.myGraph.loadIntegr(arguments["IN.ancDiags"] % phylTree.fileName[anc])
     (_, refsing) = utils.myGraph.loadIntegr(arguments["REF.ancDiags"] % phylTree.fileName[anc])
@@ -203,8 +204,10 @@ def do(anc, pairwiseDiags, sto):
     f.close()
     #print >> sys.stderr, utils.myMaths.myStats.txtSummary(ll), "+", sing, "singletons"
     print utils.myMaths.myStats.txtSummary(ll), "+", sing, "singletons"
-    sys.stdout.flush()
-    sys.stderr.flush()
+
+    # Revert to the true standard output
+    sys.stdout.close()
+    sys.stdout = ini_stdout
 
 start = time.time()
 # Load species tree and target ancestral genome
@@ -224,6 +227,6 @@ def loadPairwise(anc):
 
 n_cpu = multiprocessing.cpu_count()
 #n_cpu = 1
-Parallel(n_jobs=n_cpu)(delayed(do)(anc, loadPairwise(anc), "insert_log/%s.log" % anc) for anc in targets)
+Parallel(n_jobs=n_cpu)(delayed(do)(anc, loadPairwise(anc), arguments["LOG.ancGraph"] % phylTree.fileName[anc]) for anc in targets)
 
 print >> sys.stderr, "Elapsed time:", (time.time() - start)
