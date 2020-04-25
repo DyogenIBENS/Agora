@@ -130,7 +130,7 @@ for x in bysections["ancgenes"]:
             [arguments["prog:ancGenes"] % "size", files["speciestree"], root,
              files["ancgenesdata"] % {"filt": "all", "name": "%s"},
              files["ancgenesdata"] % {"filt": "size-%s-%s", "name": "%s"}] + [minsize, maxsize],
-            files["ancgenesoutput"],
+            os.devnull,
             files["ancgeneslog"],
             "*" not in x[0]
         )
