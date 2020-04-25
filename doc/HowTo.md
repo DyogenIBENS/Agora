@@ -354,10 +354,10 @@ procedure, as described in this document.
 src/ALL.filterGeneFamilies-size.py \
   example/data/Species.conf \
   A0 \
+  example/results/ancGenes/all/ancGenes.%s.list.bz2 \
+  example/results/ancGenes/size-%s-%s/ancGenes.%s.list.bz2 \
   1.0,0.9,0.77 \
   1.0,1.1,1.33 \
-  -IN.ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
-  -OUT.ancGenesFiles=example/results/ancGenes/size-%s-%s/ancGenes.%s.list.bz2 \
   2> example/results/ancGenes/size.log
 ```
 
