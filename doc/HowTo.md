@@ -379,8 +379,6 @@ required from each run.
 
 For all ancestral genes:
 
-TODO standard output ??
-
 ```bash
 src/buildSynteny.pairwise-conservedPairs.py \
   example/data/Species.conf \
@@ -400,7 +398,6 @@ src/buildSynteny.pairwise-conservedPairs.py \
   -OUT.pairwise=example/results/diags/pairwise/pairs-size-1.0-1.0/%s.list.bz2 \
   -genesFiles=example/data/genes/genes.%s.list.bz2 \
   -ancGenesFiles=example/results/ancGenes/size-1.0-1.0/ancGenes.%s.list.bz2 \
-  > example/results/abc \
   2> example/results/diags/pairwise/pairs-size-1.0-1.0/pairs.log
 ```
 
@@ -414,7 +411,6 @@ src/buildSynteny.integr-denovo.py \
   -OUT.ancDiags=example/results/diags/integr/denovo-size-1.0-1.0/anc/diags.%s.list.bz2 \
   -LOG.ancGraph=example/results/diags/integr/denovo-size-1.0-1.0/anc/graph.%s.txt.bz2 \
   -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
-  > example/results/diags/integr/denovo-size-1.0-1.0/graph.txt.bz2 \
   2> example/results/diags/integr/denovo-size-1.0-1.0/log
 ```
 
@@ -426,7 +422,6 @@ src/buildSynteny.integr-copy.py \
   A0 \
   -IN.ancDiags=example/results/diags/integr/denovo-size-1.0-1.0/anc/diags.%s.list.bz2 \
   -OUT.ancDiags=example/results/diags/integr/denovo-size-custom/anc/diags.%s.list.bz2 \
-  > example/results/diags/integr/denovo-size-custom/graph.txt.bz2 \
   2> example/results/diags/integr/denovo-size-custom/log
 ```
 
@@ -442,7 +437,6 @@ src/buildSynteny.integr-refine.py \
   -IN.ancDiags=example/results/diags/integr/denovo-size-custom/anc/diags.%s.list.bz2 \
   -OUT.ancDiags=example/results/diags/integr/denovo-size-custom.refine-all/anc/diags.%s.list.bz2 \
   -LOG.ancGraph=example/results/diags/integr/denovo-size-custom.refine-all/anc/graph.%s.txt.bz2 \
-  > example/results/diags/integr/denovo-size-custom.refine-all/graph.txt.bz2 \
   2> example/results/diags/integr/denovo-size-custom.refine-all/log
 ```
 
@@ -457,7 +451,6 @@ src/buildSynteny.integr-extend.py \
   -IN.ancDiags=example/results/diags/integr/denovo-size-custom.refine-all/anc/diags.%s.list.bz2 \
   -OUT.ancDiags=example/results/diags/integr/denovo-size-custom.refine-all.extend-all/anc/diags.%s.list.bz2 \
   -LOG.ancGraph=example/results/diags/integr/denovo-size-custom.refine-all.extend-all/anc/graph.%s.txt.bz2 \
-  > example/results/diags/integr/denovo-size-custom.refine-all.extend-all/graph.txt.bz2 \
   2> example/results/diags/integr/denovo-size-custom.refine-all.extend-all/log
 ```
 
@@ -472,7 +465,6 @@ src/buildSynteny.integr-halfinsert.py \
   -REF.ancDiags=example/results/diags/integr/denovo-size-custom.refine-all/anc/diags.%s.list.bz2 \
   -OUT.ancDiags=example/results/diags/integr/denovo-size-custom.refine-all.extend-all.halfinsert-all/anc/diags.%s.list.bz2 \
   -LOG.ancGraph=example/results/diags/integr/denovo-size-custom.refine-all.extend-all.halfinsert-all/anc/graph.%s.txt.bz2 \
-  > example/results/diags/integr/denovo-size-custom.refine-all.extend-all.halfinsert-all/graph.txt.bz2 \
   2> example/results/diags/integr/denovo-size-custom.refine-all.extend-all.halfinsert-all/log
 ```
 
@@ -488,7 +480,6 @@ src/buildSynteny.integr-groups.py \
   -LOG.ancGraph=example/results/diags/integr/denovo-size-custom.refine-all.extend-all.halfinsert-all.groups/anc/graph.%s.txt.bz2 \
   -genesFiles=example/data/genes/genes.%s.list.bz2 \
   -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
-  > example/results/diags/integr/denovo-size-custom.refine-all.extend-all.halfinsert-all.groups/graph.txt.bz2 \
   2> example/results/diags/integr/denovo-size-custom.refine-all.extend-all.halfinsert-all.groups/log
 ```
 
@@ -500,7 +491,6 @@ src/buildSynteny.integr-copy.py \
   A0 \
   -IN.ancDiags=example/results/diags/integr/denovo-size-custom.refine-all.extend-all.halfinsert-all.groups/anc/diags.%s.list.bz2 \
   -OUT.ancDiags=example/results/diags/integr/final/anc/diags.%s.list.bz2 \
-  > example/results/diags/integr/final/graph.txt.bz2 \
   2> example/results/diags/integr/final/log
 ```
 
