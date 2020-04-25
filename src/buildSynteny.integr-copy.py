@@ -12,6 +12,7 @@ __doc__ = """
 
 import multiprocessing
 import time
+import sys
 
 from joblib import Parallel, delayed
 
@@ -42,4 +43,4 @@ def do(anc):
 n_cpu = multiprocessing.cpu_count()
 # n_cpu = 1
 Parallel(n_jobs=n_cpu)(delayed(do)(anc) for anc in targets)
-print "Time elapsed:", time.time() - start
+print >> sys.stderr, "Time elapsed:", time.time() - start
