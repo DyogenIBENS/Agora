@@ -16,6 +16,7 @@ DYOGEN Laboratory, Institut de Biologie de l'École Normale Supérieure
   * [Extraction of ancestral gene content](#extraction-of-ancestral-gene-content)
   * [AGORA with no selection of robust families](#agora-with-no-selection-of-robust-families)
   * [AGORA with selection of robust families](#agora-with-selection-of-robust-families)
+  * [AGORA with multiple selection of robust families](#agora-with-multiple-selection-of-robust-families)
 * [Output format and post-processing scripts](#output-format-and-post-processing-scripts)
 
 ----
@@ -241,8 +242,7 @@ genome assembly:
 
 The ancestral gene lists have been generated in the
 [previous section](#extraction-of-ancestral-gene-content).
-The scripts can be run step by step or through the wrapper `agora.py`
-(with an appropriate `agora.ini` configuration file).
+The scripts can be run step by step or through the wrapper `agora.py`.
 In the following command lines, `A0` represents the name of the target
 ancestor for the reconstructions (which must exist in the species tree).
 This ancestor and all its descendants will be reconstructed.
@@ -311,21 +311,18 @@ src/buildSynteny.integr-groups.py \
 
 `agora.py` is a script that encapsulates the 3 previous scripts and runs
 them automatically. The parameters, paths, etc, are defined in a configuration
-file `agora.ini`. The example one contains documentation of all the options.
+file [`agora.ini`](../conf/agora.ini). The example one contains documentation of all the options.
 
 ```bash
-src/agora.py example/agora.ini -workingDir=results
+src/agora.py conf/agora.ini -workingDir=example/results
 ```
 
-All data will be created in the `workingDir` directory, which is relative
-to the location of the configuration file. In this example, files are
-created under `example/results`.
+All data will be created in the `workingDir` directory.
 
 ### AGORA with selection of robust families
 
 This approach builds ancestral adjacencies considering a subset of
-the genes (following a user-defined quality criterion).
-The idea here is to build "robust" ancestral adjacency
+the genes. The idea here is to build "robust" ancestral adjacency
 scaffolds, and to insert within these adjacencies the remaining
 ancestral genes.
 
@@ -338,15 +335,21 @@ of robust genes according to a user-defined criterion.
 It will compare all extant genomes pairwise (considering all genes and
 robust genes separately), build the adjacency graphs on the comparisons
 of robust genes and
-linearise them to obtain robust contigs. It will then fill in the robust
+linearise them to obtain robust contigs. It will then _fill in_ the robust
 contigs with non-robust genes, build contigs of non-robust
-genes (weak families fusion) and insert these in the filled-in robust
-contigs (Single side junction). Finally it will assemble the resulting
-contigs (Block assembly) into Contiguous Ancestral Regions (CARs).
+genes (_weak families fusion_) and insert these in the filled-in robust
+contigs (_single side junction_). Finally it will assemble the resulting
+contigs (block assembly) into Contiguous Ancestral Regions (CARs).
 
 #### Step by step
 
 ##### Selection of robust genes
+
+Let's consider the genes families that have exactly the same number of
+extant genes as extant species (i.e. _minSize_ and _maxSize_ parameters equal
+to 1). Having undergone fewer losses and duplications, the synteny signal
+of those families is less ambiguous and their adjacencies easier to compare
+and more conserved.
 
 ```bash
 src/ALL.filterGeneFamilies-size.py \
@@ -354,25 +357,15 @@ src/ALL.filterGeneFamilies-size.py \
   A0 \
   example/results/ancGenes/all/ancGenes.%s.list.bz2 \
   example/results/ancGenes/size-%s-%s/ancGenes.%s.list.bz2 \
-  1.0,0.9,0.77 \
-  1.0,1.1,1.33 \
+  1.0 \
+  1.0 \
   2> example/results/ancGenes/size.log
 ```
 
 ##### Pairwise comparison
 
-This step is run once for all ancestral genes, and once per set of
-criteria for selecting robust families. Here, the example is given for
-the criteria 1.0-1.0, meaning that robust families will have exactly the
-same ratio between extant genes and extant species. A criteria of
-0.9-1.1 will tolerate a 10% deviation from the previous ratio. In the
-example, robust families are built once. But users may want to build
-some ancestors with one condition (e.g. 1.0-1.0) and other ancestors
-with another condition (e.g. 0.9-1.1). See for example the
-`agora-size.ini` configuration file (section 2 and section 4) that is used
-when running the wrap up script `agora.py`. This step should therefore be
-run once for each set of desired criteria. AGORA will later pick what is
-required from each run.
+This step is run once for all ancestral genes, and once for the set of
+robust families.
 
 For all ancestral genes:
 
@@ -386,7 +379,7 @@ src/buildSynteny.pairwise-conservedPairs.py \
   2> example/results/pairwise/pairs-all/log
 ```
 
-For robust gene families (once per set of criteria):
+For the robust gene families:
 
 ```bash
 src/buildSynteny.pairwise-conservedPairs.py \
@@ -415,17 +408,6 @@ src/buildSynteny.integr-denovo.py \
   2> example/results/ancGenomes/denovo-size-1.0-1.0/log
 ```
 
-##### Copy previous ancestral scaffolds based on robust genes in one single directory
-
-```bash
-src/buildSynteny.integr-copy.py \
-  example/data/Species.conf \
-  A0 \
-  -IN.ancDiags=example/results/ancGenomes/denovo-size-1.0-1.0/diags.%s.list.bz2 \
-  -OUT.ancDiags=example/results/ancGenomes/denovo-size-custom/diags.%s.list.bz2 \
-  2> example/results/ancGenomes/denovo-size-custom/log
-```
-
 ##### Fill-in
 
 This step will insert weak genes in each interval of the ancestral contigs, but
@@ -436,10 +418,10 @@ src/buildSynteny.integr-refine.py \
   example/data/Species.conf \
   A0 \
   example/results/pairwise/pairs-all/%s.list.bz2 \
-  -IN.ancDiags=example/results/ancGenomes/denovo-size-custom/diags.%s.list.bz2 \
-  -OUT.ancDiags=example/results/ancGenomes/denovo-size-custom.refine-all/diags.%s.list.bz2 \
-  -LOG.ancGraph=example/results/ancGenomes/denovo-size-custom.refine-all/graph.%s.log.bz2 \
-  2> example/results/ancGenomes/denovo-size-custom.refine-all/log
+  -IN.ancDiags=example/results/ancGenomes/denovo-size-1.0-1.0/diags.%s.list.bz2 \
+  -OUT.ancDiags=example/results/ancGenomes/denovo-size-1.0-1.0.refine-all/diags.%s.list.bz2 \
+  -LOG.ancGraph=example/results/ancGenomes/denovo-size-1.0-1.0.refine-all/graph.%s.log.bz2 \
+  2> example/results/ancGenomes/denovo-size-1.0-1.0.refine-all/log
 ```
 
 ##### Weak families fusion
@@ -452,10 +434,10 @@ src/buildSynteny.integr-extend.py \
   example/data/Species.conf \
   A0 \
   example/results/pairwise/pairs-all/%s.list.bz2 \
-  -IN.ancDiags=example/results/ancGenomes/denovo-size-custom.refine-all/diags.%s.list.bz2 \
-  -OUT.ancDiags=example/results/ancGenomes/denovo-size-custom.refine-all.extend-all/diags.%s.list.bz2 \
-  -LOG.ancGraph=example/results/ancGenomes/denovo-size-custom.refine-all.extend-all/graph.%s.log.bz2 \
-  2> example/results/ancGenomes/denovo-size-custom.refine-all.extend-all/log
+  -IN.ancDiags=example/results/ancGenomes/denovo-size-1.0-1.0.refine-all/diags.%s.list.bz2 \
+  -OUT.ancDiags=example/results/ancGenomes/denovo-size-1.0-1.0.refine-all.extend-all/diags.%s.list.bz2 \
+  -LOG.ancGraph=example/results/ancGenomes/denovo-size-1.0-1.0.refine-all.extend-all/graph.%s.log.bz2 \
+  2> example/results/ancGenomes/denovo-size-1.0-1.0.refine-all.extend-all/log
 ```
 
 ##### Single-side junction
@@ -467,11 +449,11 @@ src/buildSynteny.integr-halfinsert.py \
   example/data/Species.conf \
   A0 \
   example/results/pairwise/pairs-all/%s.list.bz2 \
-  -IN.ancDiags=example/results/ancGenomes/denovo-size-custom.refine-all.extend-all/diags.%s.list.bz2 \
-  -REF.ancDiags=example/results/ancGenomes/denovo-size-custom.refine-all/diags.%s.list.bz2 \
-  -OUT.ancDiags=example/results/ancGenomes/denovo-size-custom.refine-all.extend-all.halfinsert-all/diags.%s.list.bz2 \
-  -LOG.ancGraph=example/results/ancGenomes/denovo-size-custom.refine-all.extend-all.halfinsert-all/graph.%s.log.bz2 \
-  2> example/results/ancGenomes/denovo-size-custom.refine-all.extend-all.halfinsert-all/log
+  -IN.ancDiags=example/results/ancGenomes/denovo-size-1.0-1.0.refine-all.extend-all/diags.%s.list.bz2 \
+  -REF.ancDiags=example/results/ancGenomes/denovo-size-1.0-1.0.refine-all/diags.%s.list.bz2 \
+  -OUT.ancDiags=example/results/ancGenomes/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all/diags.%s.list.bz2 \
+  -LOG.ancGraph=example/results/ancGenomes/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all/graph.%s.log.bz2 \
+  2> example/results/ancGenomes/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all/log
 ```
 
 ##### Block assembly
@@ -486,12 +468,12 @@ src/buildSynteny.integr-groups.py \
   example/data/Species.conf \
   A0 \
   A0 \
-  -IN.ancDiags=example/results/ancGenomes/denovo-size-custom.refine-all.extend-all.halfinsert-all/diags.%s.list.bz2 \
-  -OUT.ancDiags=example/results/ancGenomes/denovo-size-custom.refine-all.extend-all.halfinsert-all.groups/diags.%s.list.bz2 \
-  -LOG.ancGraph=example/results/ancGenomes/denovo-size-custom.refine-all.extend-all.halfinsert-all.groups/graph.%s.log.bz2 \
+  -IN.ancDiags=example/results/ancGenomes/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all/diags.%s.list.bz2 \
+  -OUT.ancDiags=example/results/ancGenomes/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all.groups/diags.%s.list.bz2 \
+  -LOG.ancGraph=example/results/ancGenomes/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all.groups/graph.%s.log.bz2 \
   -genesFiles=example/data/genes/genes.%s.list.bz2 \
   -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
-  2> example/results/ancGenomes/denovo-size-custom.refine-all.extend-all.halfinsert-all.groups/log
+  2> example/results/ancGenomes/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all.groups/log
 ```
 
 ##### Copy of the results in the final repository
@@ -500,24 +482,79 @@ src/buildSynteny.integr-groups.py \
 src/buildSynteny.integr-copy.py \
   example/data/Species.conf \
   A0 \
-  -IN.ancDiags=example/results/ancGenomes/denovo-size-custom.refine-all.extend-all.halfinsert-all.groups/diags.%s.list.bz2 \
+  -IN.ancDiags=example/results/ancGenomes/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all.groups/diags.%s.list.bz2 \
   -OUT.ancDiags=example/results/ancGenomes/final/diags.%s.list.bz2 \
   2> example/results/ancGenomes/final/log
 ```
 
 #### All in one: agora.py
 
-This script will run all the above steps automatically. Use the
-`agora-size.ini` configuration file to set paths to scripts and to set
-parameters.
-
-Run:
+The whole process can be automated with `agora.py`and
+([`agora-robust.ini`](../conf/agora-robust.ini`).
 
 ```bash
-src/agora.py \
-  conf/agora-size.ini \
-  -workingDir=example/results/ \
-  > agora-size.log
+src/agora.py conf/agora-robust.ini -workingDir=example/results
+```
+
+### AGORA with multiple selection of robust families
+
+The process can be further tuned to use multiple sets of robust genes
+for specific ancestors. Along the _1.0-1.0_ robust families used above,
+we can define other, more relaxed, sets, like _0.9-1.1_, which tolerates
+a 10% deviation between the number of extant genes and extant species,
+and so forth.
+
+The most efficient way of extracting multiple sets is to do all at once,
+for instance:
+
+```bash
+src/ALL.filterGeneFamilies-size.py \
+  example/data/Species.conf \
+  A0 \
+  example/results/ancGenes/all/ancGenes.%s.list.bz2 \
+  example/results/ancGenes/size-%s-%s/ancGenes.%s.list.bz2 \
+  1.0,0.9,0.77 \
+  1.0,1.1,1.33 \
+  2> example/results/ancGenes/size.log
+```
+
+These different sets can be used to generate the first set of ancestral
+adjacencies for different ancestors, e.g.:
+
+```bash
+src/buildSynteny.integr-denovo.py \
+  example/data/Species.conf \
+  =A3 \
+  example/results/pairwise/pairs-size-1.0-1.0/%s.list.bz2 \
+  -OUT.ancDiags=example/results/ancGenomes/denovo-size-1.0-1.0/diags.%s.list.bz2 \
+  -LOG.ancGraph=example/results/ancGenomes/denovo-size-1.0-1.0/graph.%s.log.bz2 \
+  -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
+  2> example/results/ancGenomes/denovo-size-1.0-1.0/log
+src/buildSynteny.integr-denovo.py \
+  example/data/Species.conf \
+  =A1,=A2 \
+  example/results/pairwise/pairs-size-0.9-1.1/%s.list.bz2 \
+  -OUT.ancDiags=example/results/ancGenomes/denovo-size-0.9-1.1/diags.%s.list.bz2 \
+  -LOG.ancGraph=example/results/ancGenomes/denovo-size-0.9-1.1/graph.%s.log.bz2 \
+  -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
+  2> example/results/ancGenomes/denovo-size-0.9-1.1/log
+```
+
+These sets can be combined by running the copy script multiple times, like this:
+
+```bash
+src/buildSynteny.integr-copy.py \
+  example/data/Species.conf \
+  =A3 \
+  -IN.ancDiags=example/results/ancGenomes/denovo-size-1.0-1.0/diags.%s.list.bz2 \
+  -OUT.ancDiags=example/results/ancGenomes/denovo-size-custom/diags.%s.list.bz2 \
+  2> example/results/ancGenomes/denovo-size-custom/log
+```
+
+However, the easiest is to use `agora.py` with a [suitable configuration file](../conf/agora-multirobust.ini).
+
+```bash
+src/agora.py conf/agora-multirobust.ini -workingDir=example/results
 ```
 
 ## Output format and post-processing scripts
