@@ -436,8 +436,6 @@ src/buildSynteny.integr-refine.py \
   example/data/Species.conf \
   A0 \
   example/results/pairwise/pairs-all/%s.list.bz2 \
-  -func=0,32\|100,40t\|10000 \
-  -timeout=150 \
   -IN.ancDiags=example/results/ancGenomes/denovo-size-custom/diags.%s.list.bz2 \
   -OUT.ancDiags=example/results/ancGenomes/denovo-size-custom.refine-all/diags.%s.list.bz2 \
   -LOG.ancGraph=example/results/ancGenomes/denovo-size-custom.refine-all/graph.%s.log.bz2 \
@@ -454,7 +452,6 @@ src/buildSynteny.integr-extend.py \
   example/data/Species.conf \
   A0 \
   example/results/pairwise/pairs-all/%s.list.bz2 \
-  +onlySingletons \
   -IN.ancDiags=example/results/ancGenomes/denovo-size-custom.refine-all/diags.%s.list.bz2 \
   -OUT.ancDiags=example/results/ancGenomes/denovo-size-custom.refine-all.extend-all/diags.%s.list.bz2 \
   -LOG.ancGraph=example/results/ancGenomes/denovo-size-custom.refine-all.extend-all/graph.%s.log.bz2 \

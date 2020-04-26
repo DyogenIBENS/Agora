@@ -26,7 +26,7 @@ import utils.myTools
 # Arguments
 arguments = utils.myTools.checkArgs(
     [("phylTree.conf", file), ("target", str), ("pairwiseDiags", str)],
-    [("minimalWeight", int, 1), ("searchLoops", bool, True), ("onlySingletons", bool, False),
+    [("minimalWeight", int, 1), ("searchLoops", bool, True), ("onlySingletons", bool, True),
      ("IN.ancDiags", str, ""), ("OUT.ancDiags", str, ""), ("LOG.ancGraph", str, "extend_log/%s.log.bz2")],
     __doc__
 )
