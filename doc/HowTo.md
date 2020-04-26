@@ -337,7 +337,7 @@ robust genes separately), build the adjacency graphs on the comparisons
 of robust genes and
 linearise them to obtain robust contigs. It will then _fill in_ the robust
 contigs with non-robust genes, build contigs of non-robust
-genes (_weak families fusion_) and insert these in the filled-in robust
+genes (_non-robust families fusion_) and insert these in the filled-in robust
 contigs (_single side junction_). Finally it will assemble the resulting
 contigs (block assembly) into Contiguous Ancestral Regions (CARs).
 
@@ -410,8 +410,8 @@ src/buildSynteny.integr-denovo.py \
 
 ##### Fill-in
 
-This step will insert weak genes in each interval of the ancestral contigs, but
-only following paths in the ancestral adjacency graph.
+This step will insert non-robust genes in each interval of the ancestral contigs,
+following paths in the complete ancestral adjacency graph.
 
 ```bash
 src/buildSynteny.integr-refine.py \
@@ -424,10 +424,10 @@ src/buildSynteny.integr-refine.py \
   2> example/results/ancGenomes/denovo-size-1.0-1.0.refine-all/log
 ```
 
-##### Weak families fusion
+##### Non-robust families fusion
 
-This step will take all the remaining singletons (`+onlySingletons` option), which
-are mainly "weak", and try to assemble them into contigs.
+This step will take all the remaining singletons, which
+are mostly non-robust genes, and try to assemble them into contigs.
 
 ```bash
 src/buildSynteny.integr-extend.py \
@@ -442,7 +442,7 @@ src/buildSynteny.integr-extend.py \
 
 ##### Single-side junction
 
-This step will insert the contigs of weak families created above and insert them in the CARs.
+This step will insert the contigs of non-robust families created above and insert them in the CARs.
 
 ```bash
 src/buildSynteny.integr-halfinsert.py \
@@ -459,7 +459,7 @@ src/buildSynteny.integr-halfinsert.py \
 ##### Block assembly
 
 Like in non-robust mode, this step will do pairwise comparisons and a graph linearisation
-on the previous CARs, which allows finding higher-level adjacencies.
+of the CARs themselves, which allows finding higher-level adjacencies.
 
 &#9888; **Warning**: The name of the ancestor has to be repeated !
 
