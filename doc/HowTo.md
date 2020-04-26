@@ -100,7 +100,7 @@ To convert a tree from NHX format to PhylTree format, use the script
 src/preprocessing/newickSpeciesTree2phylTreeSpeciesTree.py Species.nwk > Species.conf
 ```
 
-:warning: **Warning**: Internal labels (e.g. "Amniota" or "Anc659123") have to be unique !
+&#9888; **Warning**: Internal labels (e.g. "Amniota" or "Anc659123") have to be unique !
 
 ### The forest of gene trees
 
@@ -138,7 +138,7 @@ The fields are:
 5. Gene identifier (text)
 6. Transcript identifier (text, optional)
 
-:warning: **Warning**: The gene identifiers have to be consistent with the
+&#9888; **Warning**: The gene identifiers have to be consistent with the
 ones used in the gene trees. The genes files must be named consistently
 with the names of the species in the species tree, using the format `prefix.species_name.suffix`.
 
@@ -291,7 +291,7 @@ and integration into an adjacency graph) but on the previous CARs, which allows
 finding higher-level adjacencies.
 The result is a set of CARs made of CARs, that are much longer than in the previous steps.
 
-:warning: **Warning**: The name of the ancestor has to be repeated !
+&#9888; **Warning**: The name of the ancestor has to be repeated !
 
 ```bash
 mkdir -p example/results/ancGenomes/denovo-all.groups/
@@ -479,7 +479,7 @@ src/buildSynteny.integr-halfinsert.py \
 Like in non-robust mode, this step will do pairwise comparisons and a graph linearisation
 on the previous CARs, which allows finding higher-level adjacencies.
 
-:warning: **Warning**: The name of the ancestor has to be repeated !
+&#9888; **Warning**: The name of the ancestor has to be repeated !
 
 ```bash
 src/buildSynteny.integr-groups.py \
