@@ -269,7 +269,7 @@ src/buildSynteny.pairwise-conservedPairs.py \
 
 This step will integrate all the pairwise comparisons identified above
 for each ancestor and combine them into adjacency graphs, from which
-CARs are derived.
+a first set of CARs are derived.
 
 ```bash
 mkdir -p example/results/ancGenomes/denovo-all/
@@ -287,8 +287,9 @@ src/buildSynteny.integr-denovo.py \
 ##### Block assembly
 
 In this step, we basically reiterate the same process (pairwise comparisons
-and integration into an adjacency graph) but on the CARs. The result is a set
-of CARs made of CARs, that are much longer than in the previous steps.
+and integration into an adjacency graph) but on the previous CARs, which allows
+finding higher-level adjacencies.
+The result is a set of CARs made of CARs, that are much longer than in the previous steps.
 
 :warning: **Warning**: The name of the ancestor has to be repeated !
 
@@ -399,6 +400,10 @@ src/buildSynteny.pairwise-conservedPairs.py \
 
 ##### Graph linearisation
 
+This step will integrate all the pairwise comparisons of robust genes
+identified above for each ancestor and combine them into adjacency graphs,
+from which a first set of CARs are derived.
+
 ```bash
 src/buildSynteny.integr-denovo.py \
   example/data/Species.conf \
@@ -423,6 +428,9 @@ src/buildSynteny.integr-copy.py \
 
 ##### Fill-in
 
+This step will insert weak genes in each interval of the ancestral contigs, but
+only following paths in the ancestral adjacency graph.
+
 ```bash
 src/buildSynteny.integr-refine.py \
   example/data/Species.conf \
@@ -438,6 +446,9 @@ src/buildSynteny.integr-refine.py \
 
 ##### Weak families fusion
 
+This step will take all the remaining singletons (`+onlySingletons` option), which
+are mainly "weak", and try to assemble them into contigs.
+
 ```bash
 src/buildSynteny.integr-extend.py \
   example/data/Species.conf \
@@ -452,6 +463,8 @@ src/buildSynteny.integr-extend.py \
 
 ##### Single-side junction
 
+This step will insert the contigs of weak families created above and insert them in the CARs.
+
 ```bash
 src/buildSynteny.integr-halfinsert.py \
   example/data/Species.conf \
@@ -465,6 +478,11 @@ src/buildSynteny.integr-halfinsert.py \
 ```
 
 ##### Block assembly
+
+Like in non-robust mode, this step will do pairwise comparisons and a graph linearisation
+on the previous CARs, which allows finding higher-level adjacencies.
+
+:warning: **Warning**: The name of the ancestor has to be repeated !
 
 ```bash
 src/buildSynteny.integr-groups.py \
