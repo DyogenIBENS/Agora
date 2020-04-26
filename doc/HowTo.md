@@ -236,7 +236,7 @@ In this mode, the reconstruction is composed of three steps akin to a
 genome assembly:
 
 * The pairwise comparisons provide "reads" of the ancestral genomes
-* The reads are assembled into contigs ("Ancestral gene order" step)
+* The reads are assembled into contigs ("Graph linearisation" step)
 * The contigs are assembled into scaffolds ("Block assembly" step)
 
 The ancestral gene lists have been generated in the
@@ -265,7 +265,7 @@ src/buildSynteny.pairwise-conservedPairs.py \
   2> example/results/pairwise/pairs-all/log
 ```
 
-##### Ancestral gene order
+##### Graph linearisation
 
 This step will integrate all the pairwise comparisons identified above
 for each ancestor and combine them into adjacency graphs, from which
@@ -322,29 +322,26 @@ created under `example/results`.
 
 ### AGORA with selection of robust families
 
-This approach builds an adjacency graph using a subset of extant
-conserved adjacencies, which are selected by a user-defined quality
-criterion. The idea here is to build robust ancestral adjacency
+This approach builds ancestral adjacencies considering a subset of
+the genes (following a user-defined quality criterion).
+The idea here is to build "robust" ancestral adjacency
 scaffolds, and to insert within these adjacencies the remaining
 ancestral genes.
 
+> AGORA workflow with selection of robust families
 
 ![](agora_robust2.jpg)
 
-Figure 2. Schematic of the AGORA pipeline with selection of robust
-families. (A) Diagram with the name of the different AGORA procedures.
-From the data (white boxes at the top), AGORA (grey rectangle) will
-identify a subset of robust gene phylogenies according to a user-defined
-criteria, then extract all ancestral genes (all genes and robust genes).
+From the complete list of ancestral genes, AGORA will identify a subset
+of robust genes according to a user-defined criterion.
 It will compare all extant genomes pairwise (considering all genes and
-robust genes separately), build the adjacency graphs (de novo) and
+robust genes separately), build the adjacency graphs on the comparisons
+of robust genes and
 linearise them to obtain robust contigs. It will then fill in the robust
-contigs with non-robust genes (Fill-in), build contigs of non-robust
+contigs with non-robust genes, build contigs of non-robust
 genes (weak families fusion) and insert these in the filled-in robust
 contigs (Single side junction). Finally it will assemble the resulting
-contigs (Bloc assembly) into Contiguous Ancestral Regions (CARs). (B)
-The same diagram with the names of the scripts required for each
-procedure, as described in this document.
+contigs (Block assembly) into Contiguous Ancestral Regions (CARs).
 
 #### Step by step
 
@@ -400,7 +397,7 @@ src/buildSynteny.pairwise-conservedPairs.py \
   2> example/results/pairwise/pairs-size-1.0-1.0/log
 ```
 
-##### Adjacency graphs for robust gene families
+##### Graph linearisation
 
 ```bash
 src/buildSynteny.integr-denovo.py \
@@ -424,7 +421,7 @@ src/buildSynteny.integr-copy.py \
   2> example/results/ancGenomes/denovo-size-custom/log
 ```
 
-##### Refine
+##### Fill-in
 
 ```bash
 src/buildSynteny.integr-refine.py \
@@ -439,7 +436,7 @@ src/buildSynteny.integr-refine.py \
   2> example/results/ancGenomes/denovo-size-custom.refine-all/log
 ```
 
-##### Extend
+##### Weak families fusion
 
 ```bash
 src/buildSynteny.integr-extend.py \
@@ -453,7 +450,7 @@ src/buildSynteny.integr-extend.py \
   2> example/results/ancGenomes/denovo-size-custom.refine-all.extend-all/log
 ```
 
-##### Half-insert
+##### Single-side junction
 
 ```bash
 src/buildSynteny.integr-halfinsert.py \
@@ -467,7 +464,7 @@ src/buildSynteny.integr-halfinsert.py \
   2> example/results/ancGenomes/denovo-size-custom.refine-all.extend-all.halfinsert-all/log
 ```
 
-##### Scaffolding
+##### Block assembly
 
 ```bash
 src/buildSynteny.integr-groups.py \
