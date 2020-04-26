@@ -13,9 +13,9 @@ graph TD
     G[Ancestral adjacency graph]
     H{{Graph linearisation}}
     subgraph Extension
-      L{{fill-in / refine}}
-      M{{Weak family fusion / extension}}
-      N{{single-side junction / half-insert}}
+      L{{Fill-in}}
+      M{{Weak families fusion}}
+      N{{Single-side junction}}
     end
     J{{Block assembly}}
   end
@@ -27,4 +27,5 @@ graph TD
   B --> J & F & FF
   D --> FF & F & J
   E --> EE --> FF --> G --> H --> L --> M --> N --> J --> K
+  L --> N
   E --> F --> L & M & N
