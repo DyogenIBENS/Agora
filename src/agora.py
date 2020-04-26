@@ -19,8 +19,8 @@ __doc__ = """
     Run all the AGORA programs thanks to configuration file
 
     Usage:
-          ../src/agora.py ../conf/agora.ini
-          ../src/agora.py ../conf/agora.ini -workingDir=. -nbThreads=4
+          src/agora.py conf/agora.ini
+          src/agora.py conf/agora.ini -workingDir=example/results -nbThreads=4
 """
 
 scriptDir = os.path.dirname(os.path.abspath(__file__))
