@@ -65,4 +65,5 @@ It should run for a few minutes and end with this message in red:
 
 ## Usage
 
-Check out our [user manual](doc/HowTo.pdf) to learn how to use AGORA.
+Check out our [user manual](doc/HowTo.md) to learn how to use AGORA
+(also available as [docx](doc/HowTo.docx) and [pdf](doc/HowTo.pdf)).
