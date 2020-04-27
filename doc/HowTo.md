@@ -196,14 +196,14 @@ takes as input the species tree, the forest of gene trees and a template
 to name the output files.
 
 ```bash
-mkdir -p example/results
+mkdir -p example/results/ancGenes
 src/ALL.extractGeneFamilies.py \
   example/data/Species.conf \
   example/data/GeneTreeForest.phylTree.bz2 \
   -OUT.ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
   +bz2 \
   > example/results/GeneTreeForests.withAncGenes.phylTree.bz2 \
-  2> example/results/log.ancGenes
+  2> example/results/ancGenes/ancGenes.log
 ```
 
 Be careful to provide the correct path to write the _ancGenes_ files
@@ -272,16 +272,16 @@ for each ancestor and combine them into adjacency graphs, from which
 a first set of CARs are derived.
 
 ```bash
-mkdir -p example/results/ancGenomes/denovo-all/
+mkdir -p example/results/integrDiags/denovo-all/
 src/buildSynteny.integr-denovo.py \
   example/data/Species.conf \
   A0 \
   example/results/pairwise/pairs-all/%s.list.bz2 \
   +searchLoops \
-  -OUT.ancDiags=example/results/ancGenomes/denovo-all/diags.%s.list.bz2 \
-  -LOG.ancGraph=example/results/ancGenomes/denovo-all/graph.%s.log.bz2 \
+  -OUT.ancDiags=example/results/integrDiags/denovo-all/diags.%s.list.bz2 \
+  -LOG.ancGraph=example/results/integrDiags/denovo-all/graph.%s.log.bz2 \
   -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
-  2> example/results/ancGenomes/denovo-all/log
+  2> example/results/integrDiags/denovo-all/log
 ```
 
 ##### Block assembly
@@ -294,17 +294,17 @@ The result is a set of CARs made of CARs, that are much longer than in the previ
 &#9888; **Warning**: The name of the ancestor has to be repeated !
 
 ```bash
-mkdir -p example/results/ancGenomes/denovo-all.groups/
+mkdir -p example/results/integrDiags/denovo-all.groups/
 src/buildSynteny.integr-groups.py \
   example/data/Species.conf \
   A0 \
   A0 \
-  -IN.ancDiags=example/results/ancGenomes/denovo-all/diags.%s.list.bz2 \
-  -OUT.ancDiags=example/results/ancGenomes/denovo-all.groups/diags.%s.list.bz2 \
-  -LOG.ancGraph=example/results/ancGenomes/denovo-all.groups/graph.%s.log.bz2 \
+  -IN.ancDiags=example/results/integrDiags/denovo-all/diags.%s.list.bz2 \
+  -OUT.ancDiags=example/results/integrDiags/denovo-all.groups/diags.%s.list.bz2 \
+  -LOG.ancGraph=example/results/integrDiags/denovo-all.groups/graph.%s.log.bz2 \
   -genesFiles=example/data/genes/genes.%s.list.bz2 \
   -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
-  2> example/results/ancGenomes/denovo-all.groups/log
+  2> example/results/integrDiags/denovo-all.groups/log
 ```
 
 #### All in one: agora.py
@@ -402,10 +402,10 @@ src/buildSynteny.integr-denovo.py \
   example/data/Species.conf \
   A0 \
   example/results/pairwise/pairs-size-1.0-1.0/%s.list.bz2 \
-  -OUT.ancDiags=example/results/ancGenomes/denovo-size-1.0-1.0/diags.%s.list.bz2 \
-  -LOG.ancGraph=example/results/ancGenomes/denovo-size-1.0-1.0/graph.%s.log.bz2 \
+  -OUT.ancDiags=example/results/integrDiags/denovo-size-1.0-1.0/diags.%s.list.bz2 \
+  -LOG.ancGraph=example/results/integrDiags/denovo-size-1.0-1.0/graph.%s.log.bz2 \
   -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
-  2> example/results/ancGenomes/denovo-size-1.0-1.0/log
+  2> example/results/integrDiags/denovo-size-1.0-1.0/log
 ```
 
 ##### Fill-in
@@ -418,10 +418,10 @@ src/buildSynteny.integr-refine.py \
   example/data/Species.conf \
   A0 \
   example/results/pairwise/pairs-all/%s.list.bz2 \
-  -IN.ancDiags=example/results/ancGenomes/denovo-size-1.0-1.0/diags.%s.list.bz2 \
-  -OUT.ancDiags=example/results/ancGenomes/denovo-size-1.0-1.0.refine-all/diags.%s.list.bz2 \
-  -LOG.ancGraph=example/results/ancGenomes/denovo-size-1.0-1.0.refine-all/graph.%s.log.bz2 \
-  2> example/results/ancGenomes/denovo-size-1.0-1.0.refine-all/log
+  -IN.ancDiags=example/results/integrDiags/denovo-size-1.0-1.0/diags.%s.list.bz2 \
+  -OUT.ancDiags=example/results/integrDiags/denovo-size-1.0-1.0.refine-all/diags.%s.list.bz2 \
+  -LOG.ancGraph=example/results/integrDiags/denovo-size-1.0-1.0.refine-all/graph.%s.log.bz2 \
+  2> example/results/integrDiags/denovo-size-1.0-1.0.refine-all/log
 ```
 
 ##### Non-robust families fusion
@@ -434,10 +434,10 @@ src/buildSynteny.integr-extend.py \
   example/data/Species.conf \
   A0 \
   example/results/pairwise/pairs-all/%s.list.bz2 \
-  -IN.ancDiags=example/results/ancGenomes/denovo-size-1.0-1.0.refine-all/diags.%s.list.bz2 \
-  -OUT.ancDiags=example/results/ancGenomes/denovo-size-1.0-1.0.refine-all.extend-all/diags.%s.list.bz2 \
-  -LOG.ancGraph=example/results/ancGenomes/denovo-size-1.0-1.0.refine-all.extend-all/graph.%s.log.bz2 \
-  2> example/results/ancGenomes/denovo-size-1.0-1.0.refine-all.extend-all/log
+  -IN.ancDiags=example/results/integrDiags/denovo-size-1.0-1.0.refine-all/diags.%s.list.bz2 \
+  -OUT.ancDiags=example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all/diags.%s.list.bz2 \
+  -LOG.ancGraph=example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all/graph.%s.log.bz2 \
+  2> example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all/log
 ```
 
 ##### Single-side junction
@@ -449,11 +449,11 @@ src/buildSynteny.integr-halfinsert.py \
   example/data/Species.conf \
   A0 \
   example/results/pairwise/pairs-all/%s.list.bz2 \
-  -IN.ancDiags=example/results/ancGenomes/denovo-size-1.0-1.0.refine-all.extend-all/diags.%s.list.bz2 \
-  -REF.ancDiags=example/results/ancGenomes/denovo-size-1.0-1.0.refine-all/diags.%s.list.bz2 \
-  -OUT.ancDiags=example/results/ancGenomes/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all/diags.%s.list.bz2 \
-  -LOG.ancGraph=example/results/ancGenomes/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all/graph.%s.log.bz2 \
-  2> example/results/ancGenomes/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all/log
+  -IN.ancDiags=example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all/diags.%s.list.bz2 \
+  -REF.ancDiags=example/results/integrDiags/denovo-size-1.0-1.0.refine-all/diags.%s.list.bz2 \
+  -OUT.ancDiags=example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all/diags.%s.list.bz2 \
+  -LOG.ancGraph=example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all/graph.%s.log.bz2 \
+  2> example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all/log
 ```
 
 ##### Block assembly
@@ -468,12 +468,12 @@ src/buildSynteny.integr-groups.py \
   example/data/Species.conf \
   A0 \
   A0 \
-  -IN.ancDiags=example/results/ancGenomes/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all/diags.%s.list.bz2 \
-  -OUT.ancDiags=example/results/ancGenomes/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all.groups/diags.%s.list.bz2 \
-  -LOG.ancGraph=example/results/ancGenomes/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all.groups/graph.%s.log.bz2 \
+  -IN.ancDiags=example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all/diags.%s.list.bz2 \
+  -OUT.ancDiags=example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all.groups/diags.%s.list.bz2 \
+  -LOG.ancGraph=example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all.groups/graph.%s.log.bz2 \
   -genesFiles=example/data/genes/genes.%s.list.bz2 \
   -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
-  2> example/results/ancGenomes/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all.groups/log
+  2> example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all.groups/log
 ```
 
 ##### Copy of the results in the final repository
@@ -482,9 +482,9 @@ src/buildSynteny.integr-groups.py \
 src/buildSynteny.integr-copy.py \
   example/data/Species.conf \
   A0 \
-  -IN.ancDiags=example/results/ancGenomes/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all.groups/diags.%s.list.bz2 \
-  -OUT.ancDiags=example/results/ancGenomes/final/diags.%s.list.bz2 \
-  2> example/results/ancGenomes/final/log
+  -IN.ancDiags=example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all.groups/diags.%s.list.bz2 \
+  -OUT.ancDiags=example/results/integrDiags/final/diags.%s.list.bz2 \
+  2> example/results/integrDiags/final/log
 ```
 
 #### All in one: agora.py
@@ -515,7 +515,7 @@ src/ALL.filterGeneFamilies-size.py \
   example/results/ancGenes/size-%s-%s/ancGenes.%s.list.bz2 \
   1.0,0.9,0.77 \
   1.0,1.1,1.33 \
-  2> example/results/ancGenes/size.log
+  2> example/results/ancGenes/multi-size.log
 ```
 
 Pairwise comparisons would have to be run on each set independently.
@@ -527,18 +527,18 @@ src/buildSynteny.integr-denovo.py \
   example/data/Species.conf \
   =A3 \
   example/results/pairwise/pairs-size-1.0-1.0/%s.list.bz2 \
-  -OUT.ancDiags=example/results/ancGenomes/denovo-size-1.0-1.0/diags.%s.list.bz2 \
-  -LOG.ancGraph=example/results/ancGenomes/denovo-size-1.0-1.0/graph.%s.log.bz2 \
+  -OUT.ancDiags=example/results/integrDiags/denovo-size-1.0-1.0/diags.%s.list.bz2 \
+  -LOG.ancGraph=example/results/integrDiags/denovo-size-1.0-1.0/graph.%s.log.bz2 \
   -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
-  2> example/results/ancGenomes/denovo-size-1.0-1.0/log
+  2> example/results/integrDiags/denovo-size-1.0-1.0/log
 src/buildSynteny.integr-denovo.py \
   example/data/Species.conf \
   =A1,=A2 \
   example/results/pairwise/pairs-size-0.9-1.1/%s.list.bz2 \
-  -OUT.ancDiags=example/results/ancGenomes/denovo-size-0.9-1.1/diags.%s.list.bz2 \
-  -LOG.ancGraph=example/results/ancGenomes/denovo-size-0.9-1.1/graph.%s.log.bz2 \
+  -OUT.ancDiags=example/results/integrDiags/denovo-size-0.9-1.1/diags.%s.list.bz2 \
+  -LOG.ancGraph=example/results/integrDiags/denovo-size-0.9-1.1/graph.%s.log.bz2 \
   -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
-  2> example/results/ancGenomes/denovo-size-0.9-1.1/log
+  2> example/results/integrDiags/denovo-size-0.9-1.1/log
 ```
 
 These sets can be combined by running the copy script multiple times, like this:
@@ -547,9 +547,9 @@ These sets can be combined by running the copy script multiple times, like this:
 src/buildSynteny.integr-copy.py \
   example/data/Species.conf \
   =A3 \
-  -IN.ancDiags=example/results/ancGenomes/denovo-size-1.0-1.0/diags.%s.list.bz2 \
-  -OUT.ancDiags=example/results/ancGenomes/denovo-size-custom/diags.%s.list.bz2 \
-  2> example/results/ancGenomes/denovo-size-custom/log
+  -IN.ancDiags=example/results/integrDiags/denovo-size-1.0-1.0/diags.%s.list.bz2 \
+  -OUT.ancDiags=example/results/integrDiags/denovo-size-custom/diags.%s.list.bz2 \
+  2> example/results/integrDiags/denovo-size-custom/log
 ```
 
 However, the easiest is to use `agora.py` with a [suitable configuration file](../conf/agora-multirobust.ini).
@@ -563,7 +563,7 @@ src/agora.py conf/agora-multirobust.ini -workingDir=example/results
 * The diags files
 
 ```
-example/results/ancGenomes/final/diags.*.list.bz2
+example/results/integrDiags/final/diags.*.list.bz2
 ```
 
 This directory contains a file for each ancestral reconstructed genome
@@ -600,8 +600,8 @@ A0	8	4559 4179 10099 15638 1304 10998 5675 13765	-1 -1 -1 1 1 -1 -1 1	(5) 6 (3)
 
 ```bash
 src/postprocessing/misc.convertContigsToGenome.py \
-  example/results/ancGenomes/final/diags.A0.list.bz2 \
-  tmp/ancGenes/all/ancGenes.A0.list.bz2 \
+  example/results/integrDiags/final/diags.A0.list.bz2 \
+  example/results/ancGenes/all/ancGenes.A0.list.bz2 \
   > tmp/ancGenomes/ancGenome.A0.list
 ```
 
