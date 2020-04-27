@@ -518,8 +518,9 @@ src/ALL.filterGeneFamilies-size.py \
   2> example/results/ancGenes/size.log
 ```
 
-These different sets can be used to generate the first set of ancestral
-adjacencies for different ancestors, e.g.:
+Pairwise comparisons would have to be run on each set independently.
+Then these different sets can be used on different ancestors to generate
+the first set of ancestral adjacencies, e.g.:
 
 ```bash
 src/buildSynteny.integr-denovo.py \
