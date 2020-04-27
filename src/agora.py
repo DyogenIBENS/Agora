@@ -66,7 +66,7 @@ inputDir = os.path.dirname(arguments["agora.conf"])
 outputDir = arguments["workingDir"]
 inputParams = ["speciestree", "genes"]
 for f in files:
-    files[f] = os.path.join(inputDir if f in inputParams else outputDir, files[f])
+    files[f] = os.path.normpath(os.path.join(inputDir if f in inputParams else outputDir, files[f]))
 
 phylTree = utils.myPhylTree.PhylogeneticTree(files["speciestree"])
 
