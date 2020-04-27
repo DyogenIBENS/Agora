@@ -1,0 +1,26 @@
+----------------------------------------------------------------------------
+| Key           | Values                                                   |
+----------------------------------------------------------------------------
+| phylTree.conf | example/data/Species.conf                                |
+| target        | A0                                                       |
+| pairwiseDiags | example/results/pairwise/pairs-all/%s.list.bz2           |
+| minimalWeight | 1                                                        |
+| searchLoops   | True                                                     |
+| LOG.ancGraph  | example/results/integrDiags/denovo-all/graph.%s.log.bz2  |
+| OUT.ancDiags  | example/results/integrDiags/denovo-all/diags.%s.list.bz2 |
+| ancGenesFiles | example/results/ancGenes/all/ancGenes.%s.list.bz2        |
+----------------------------------------------------------------------------
+set(['A1', 'A0', 'A3', 'A2'])
+Loading genome of example/results/ancGenes/all/ancGenes.A1.list.bz2 ... (ancestral genes) OK
+Integrated blocs of A1 ...
+A1 min=2	N50=33	WA=42.13	max=207 + 1224 singletons OK
+Loading genome of example/results/ancGenes/all/ancGenes.A0.list.bz2 ... (ancestral genes) OK
+Integrated blocs of A0 ...
+A0 min=2	N50=10	WA=12.67	max=58 + 2229 singletons OK
+Loading genome of example/results/ancGenes/all/ancGenes.A3.list.bz2 ... (ancestral genes) OK
+Integrated blocs of A3 ...
+A3 min=2	N50=90	WA=115.48	max=367 + 1045 singletons OK
+Loading genome of example/results/ancGenes/all/ancGenes.A2.list.bz2 ... (ancestral genes) OK
+Integrated blocs of A2 ...
+A2 min=2	N50=14	WA=17.25	max=98 + 1150 singletons OK
+Elapsed time: 5.2338488102

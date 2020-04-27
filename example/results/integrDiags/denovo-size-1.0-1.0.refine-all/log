@@ -1,0 +1,33 @@
+------------------------------------------------------------------------------------------------
+| Key           | Values                                                                       |
+------------------------------------------------------------------------------------------------
+| phylTree.conf | example/data/Species.conf                                                    |
+| target        | A0                                                                           |
+| pairwiseDiags | example/results/pairwise/pairs-all/%s.list.bz2                               |
+| IN.ancDiags   | example/results/integrDiags/denovo-size-1.0-1.0/diags.%s.list.bz2            |
+| OUT.ancDiags  | example/results/integrDiags/denovo-size-1.0-1.0.refine-all/diags.%s.list.bz2 |
+| LOG.ancGraph  | example/results/integrDiags/denovo-size-1.0-1.0.refine-all/graph.%s.log.bz2  |
+| minimalWeight | 1                                                                            |
+| mustExtend    | False                                                                        |
+| loop          | False                                                                        |
+| timeout       | 150                                                                          |
+| func          | 0,32|100,40t|10000                                                           |
+------------------------------------------------------------------------------------------------
+set(['A1', 'A0', 'A3', 'A2'])
+Loading integrated blocks of example/results/integrDiags/denovo-size-1.0-1.0/diags.A1.list.bz2 ... 2 [6/15/39] [29/58/90] 238 [27.57/32.30-446] + 5043 singletons OK
+Building graphs ... OK
+adding singletons ... OK
+Final blocks of A1 2 [6/17/42] [33/63/100] 269 [30.43/35.92-446] + 3766 singletons
+Loading integrated blocks of example/results/integrDiags/denovo-size-1.0-1.0/diags.A0.list.bz2 ... 2 [4/10/20] [14/26/44] 137 [15.33/15.86-525] + 8226 singletons OK
+Building graphs ... OK
+adding singletons ... OK
+Final blocks of A0 2 [5/12/25] [18/33/55] 164 [18.75/19.83-525] + 6430 singletons
+Loading integrated blocks of example/results/integrDiags/denovo-size-1.0-1.0/diags.A3.list.bz2 ... 2 [10/38/88] [72/133/235] 505 [66.96/86.87-214] + 3789 singletons OK
+Building graphs ... OK
+adding singletons ... OK
+Final blocks of A3 2 [10/40/100] [83/147/264] 575 [73.71/96.60-214] + 2346 singletons
+Loading integrated blocks of example/results/integrDiags/denovo-size-1.0-1.0/diags.A2.list.bz2 ... 2 [5/11/28] [19/38/61] 139 [19.97/21.19-489] + 5805 singletons OK
+Building graphs ... OK
+adding singletons ... OK
+Final blocks of A2 2 [6/13/32] [22/45/73] 169 [23.22/25.15-489] + 4212 singletons
+total computation time 16.2793288231

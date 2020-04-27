@@ -1,0 +1,20 @@
+-------------------------------------------------------------------------------------
+| Key           | Values                                                            |
+-------------------------------------------------------------------------------------
+| phylTree.conf | example/data/Species.conf                                         |
+| target        | =A1,=A2                                                           |
+| pairwiseDiags | example/results/pairwise/pairs-size-0.9-1.1/%s.list.bz2           |
+| minimalWeight | 1                                                                 |
+| searchLoops   | False                                                             |
+| LOG.ancGraph  | example/results/integrDiags/denovo-size-0.9-1.1/graph.%s.log.bz2  |
+| OUT.ancDiags  | example/results/integrDiags/denovo-size-0.9-1.1/diags.%s.list.bz2 |
+| ancGenesFiles | example/results/ancGenes/all/ancGenes.%s.list.bz2                 |
+-------------------------------------------------------------------------------------
+set(['A1', 'A2'])
+Loading genome of example/results/ancGenes/all/ancGenes.A1.list.bz2 ... (ancestral genes) OK
+Integrated blocs of A1 ...
+A1 min=2	N50=58	WA=65.42	max=238 + 5043 singletons OK
+Loading genome of example/results/ancGenes/all/ancGenes.A2.list.bz2 ... (ancestral genes) OK
+Integrated blocs of A2 ...
+A2 min=2	N50=38	WA=42.45	max=139 + 5805 singletons OK
+Elapsed time: 2.17918610573

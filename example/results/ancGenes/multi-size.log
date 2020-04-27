@@ -5,8 +5,8 @@
 | target            | A0                                                       |
 | IN.ancGenesFiles  | example/results/ancGenes/all/ancGenes.%s.list.bz2        |
 | OUT.ancGenesFiles | example/results/ancGenes/size-%s-%s/ancGenes.%s.list.bz2 |
-| minSize           | 1.0                                                      |
-| maxSize           | 1.0                                                      |
+| minSize           | 1.0,0.9,0.77                                             |
+| maxSize           | 1.0,1.1,1.33                                             |
 --------------------------------------------------------------------------------
 Loading genome of example/results/ancGenes/all/ancGenes.A1.list.bz2 ... (ancestral genes) OK
 Loading genome of example/results/ancGenes/all/ancGenes.A0.list.bz2 ... (ancestral genes) OK
@@ -28,6 +28,24 @@ Writing families of A1 ... 17339 -> 12358 OK
 Writing families of A0 ... 16274 -> 8142 OK
 Writing families of A3 ... 18119 -> 14348 OK
 Writing families of A2 ... 15569 -> 9840 OK
+Writing families of M1 ... 19850 -> 19850 OK
+Writing families of M3 ... 19002 -> 19002 OK
+Writing families of M2 ... 21836 -> 21836 OK
+Writing families of M5 ... 17448 -> 17448 OK
+Writing families of M4 ... 15058 -> 15058 OK
+Writing families of A1 ... 17339 -> 12358 OK
+Writing families of A0 ... 16274 -> 8142 OK
+Writing families of A3 ... 18119 -> 14348 OK
+Writing families of A2 ... 15569 -> 9840 OK
+Writing families of M1 ... 19850 -> 19850 OK
+Writing families of M3 ... 19002 -> 19002 OK
+Writing families of M2 ... 21836 -> 21836 OK
+Writing families of M5 ... 17448 -> 17448 OK
+Writing families of M4 ... 15058 -> 15058 OK
+Writing families of A1 ... 17339 -> 13774 OK
+Writing families of A0 ... 16274 -> 12863 OK
+Writing families of A3 ... 18119 -> 15271 OK
+Writing families of A2 ... 15569 -> 13379 OK
 Writing families of M1 ... 19850 -> 19850 OK
 Writing families of M3 ... 19002 -> 19002 OK
 Writing families of M2 ... 21836 -> 21836 OK
