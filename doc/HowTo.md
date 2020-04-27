@@ -370,6 +370,7 @@ robust families.
 For all ancestral genes:
 
 ```bash
+mkdir -p example/results/pairwise/pairs-all
 src/buildSynteny.pairwise-conservedPairs.py \
   example/data/Species.conf \
   A0 \
@@ -382,6 +383,7 @@ src/buildSynteny.pairwise-conservedPairs.py \
 For the robust gene families:
 
 ```bash
+mkdir -p example/results/pairwise/pairs-size-1.0-1.0
 src/buildSynteny.pairwise-conservedPairs.py \
   example/data/Species.conf \
   A0 \
@@ -398,6 +400,7 @@ identified above for each ancestor and combine them into adjacency graphs,
 from which a first set of CARs are derived.
 
 ```bash
+mkdir -p example/results/integrDiags/denovo-size-1.0-1.0
 src/buildSynteny.integr-denovo.py \
   example/data/Species.conf \
   A0 \
@@ -414,6 +417,7 @@ This step will insert non-robust genes in each interval of the ancestral contigs
 following paths in the complete ancestral adjacency graph.
 
 ```bash
+mkdir -p example/results/integrDiags/denovo-size-1.0-1.0.refine-all
 src/buildSynteny.integr-refine.py \
   example/data/Species.conf \
   A0 \
@@ -430,6 +434,7 @@ This step will take all the remaining singletons, which
 are mostly non-robust genes, and try to assemble them into contigs.
 
 ```bash
+mkdir -p example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all
 src/buildSynteny.integr-extend.py \
   example/data/Species.conf \
   A0 \
@@ -445,6 +450,7 @@ src/buildSynteny.integr-extend.py \
 This step will insert the contigs of non-robust families created above and insert them in the CARs.
 
 ```bash
+mkdir -p example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all
 src/buildSynteny.integr-halfinsert.py \
   example/data/Species.conf \
   A0 \
@@ -464,6 +470,7 @@ of the CARs themselves, which allows finding higher-level adjacencies.
 &#9888; **Warning**: The name of the ancestor has to be repeated !
 
 ```bash
+mkdir -p example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all.groups
 src/buildSynteny.integr-groups.py \
   example/data/Species.conf \
   A0 \
@@ -479,6 +486,7 @@ src/buildSynteny.integr-groups.py \
 ##### Copy of the results in the final repository
 
 ```bash
+mkdir -p example/results/integrDiags/final
 src/buildSynteny.integr-copy.py \
   example/data/Species.conf \
   A0 \
@@ -523,6 +531,7 @@ Then these different sets can be used on different ancestors to generate
 the first set of ancestral adjacencies, e.g.:
 
 ```bash
+mkdir -p example/results/integrDiags/denovo-size-1.0-1.0
 src/buildSynteny.integr-denovo.py \
   example/data/Species.conf \
   =A3 \
@@ -531,6 +540,7 @@ src/buildSynteny.integr-denovo.py \
   -LOG.ancGraph=example/results/integrDiags/denovo-size-1.0-1.0/graph.%s.log.bz2 \
   -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
   2> example/results/integrDiags/denovo-size-1.0-1.0/log
+mkdir -p example/results/integrDiags/denovo-size-0.9-1.1
 src/buildSynteny.integr-denovo.py \
   example/data/Species.conf \
   =A1,=A2 \
@@ -544,6 +554,7 @@ src/buildSynteny.integr-denovo.py \
 These sets can be combined by running the copy script multiple times, like this:
 
 ```bash
+mkdir -p example/results/integrDiags/denovo-size-custom
 src/buildSynteny.integr-copy.py \
   example/data/Species.conf \
   =A3 \
