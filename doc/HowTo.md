@@ -231,7 +231,7 @@ adjacency graphs and linearise them to produce CARs.
 
 > AGORA workflow with no selection of robust families
 
-![](agora_no_robust2.jpg)
+![](agora_no_robust.jpg)
 
 In this mode, the reconstruction is composed of three steps akin to a
 genome assembly:
@@ -328,7 +328,7 @@ ancestral genes.
 
 > AGORA workflow with selection of robust families
 
-![](agora_robust2.jpg)
+![](agora_robust.jpg)
 
 From the complete list of ancestral genes, AGORA will identify a subset
 of robust genes according to a user-defined criterion.
