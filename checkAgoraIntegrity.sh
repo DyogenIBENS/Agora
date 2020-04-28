@@ -57,6 +57,7 @@ for line in "${extractGeneFamiliesCommandLines[@]}"
 		printf "${green}${line}${NC}\n"
 		eval ${line}
 done
+
 #########################################
 #	Check integrity of agora.py		    #
 #########################################
@@ -64,17 +65,14 @@ printf "${red}----------------------------------${NC}\n"
 printf "${red}creation of the configuration file${NC}\n"
 printf "${red}----------------------------------${NC}\n"
 
-
-sed  s,PATH_To_SpeciesTree,${PWD}/tmp/speciesTree.phylTree, ./conf/agora-size.ini | sed s,PATH_To_GENEFILES,${PWD}/example/data/genes, > tmp/agora-size.ini
-
-
+sed  s,../example/data/Species.conf,speciesTree.phylTree, ./conf/agora-robust.ini > tmp/agora-robust.ini
 
 printf "${red}--------------------------------------${NC}\n"
 printf "${red}check the agora.py encapsulated script${NC}\n"
 printf "${red}--------------------------------------${NC}\n"
 agoraCommandLines=(
 # agora.py
-"src/agora.py tmp/agora-size.ini -workingDir=tmp"
+"src/agora.py tmp/agora-robust.ini -workingDir=tmp"
 )
 
 for line in "${agoraCommandLines[@]}"
@@ -83,7 +81,7 @@ for line in "${agoraCommandLines[@]}"
 		eval ${line}
 done
 
-NbAncGenomes=`ls tmp/diags/integr/final/anc/ | wc -l`
+NbAncGenomes=`ls tmp/integrDiags/final/diags.* | wc -l`
 
 if [ ${NbAncGenomes} == 4 ]
     then
@@ -102,11 +100,11 @@ printf "${red}check the postprocessing script ${NC}\n"
 printf "${red}--------------------------------${NC}\n"
 
 mkdir tmp/ancGenomes
-for i in tmp/diags/integr/final/anc/*
+for i in tmp/integrDiags/final/diags.*
     do
-        prefix="tmp/diags/integr/final/anc/diags."
+        prefix="tmp/integrDiags/final/diags."
         ancGenome=${i/.list.bz2/}; ancGenome=${ancGenome#$prefix};
-        printf "${green}formating ${ancGenome}${NC}\n"
+        printf "${green}formatting ${ancGenome}${NC}\n"
         printf "${green}src/postprocessing/misc.convertContigsToGenome.py $i tmp/ancGenes/all/ancGenes.${ancGenome}.list.bz2 > tmp/ancGenomes/ancGenome.${ancGenome}.list${NC}\n"
         src/postprocessing/misc.convertContigsToGenome.py $i tmp/ancGenes/all/ancGenes.${ancGenome}.list.bz2 > tmp/ancGenomes/ancGenome.${ancGenome}.list
     done
