@@ -124,9 +124,9 @@ The forest file is merely the concatenation of all the families. See the example
 * [`example/data/GeneTreeForest.phylTree.bz2`](../example/data/GeneTreeForest.phylTree.bz2) -- PhylTree format
 * [`example/data/GeneTreeForest.nhx.bz2`](../example/data/GeneTreeForest.nhx.bz2) -- Newick format
 
-### The genes files
+### The gene lists of extant genomes
 
-The genes files used by AGORA contain the list of genes on each extant
+The _genes_ files used by AGORA contain the list of genes on each extant
 genome. The format is tab-separated values, in 5 mandatory columns (the
 6^th is optional). One file must be provided per extant genome.
 
@@ -571,15 +571,15 @@ src/agora.py conf/agora-multirobust.ini -workingDir=example/results
 
 ## Output format and post-processing scripts
 
-* The diags files
+* The _diags_ files
 
-```
-example/results/integrDiags/final/diags.*.list.bz2
-```
+These files are present under `example/results/integrDiags/denovo-all.groups/`
+(no selection of robust gene families) and `example/results/integrDiags/integrDiags/final/`
+(with selection of robust gene families).
 
 This directory contains a file for each ancestral reconstructed genome
 (e.g. `diags.A0.list.bz2`). There are five tab-separated fields, and values
-in each field are further separated by single spaces. The term 'diag'
+in each field are further separated by single spaces. The term _diag_
 historically refers to the diagonal lines that appear in 2 dimensional
 matrices comparing 2 genomes and reflecting successive conserved
 adjacencies.
@@ -589,51 +589,51 @@ The fields are:
 1. Name of the ancestral species.
 2. Number of genes in the ancestral block.
 3. List of gene IDs. Each ID corresponds to the line number in the
-   corresponding ancGenes.Species.list (starting from 0).
+   corresponding _ancGenes_ file (the full one) of this ancestor
+   (starting from 0).
 4. Gene transcriptional orientation (strand) within the block.
-5. A relative confidence index for each inter-block linkage. The values
-   in parenthesis are the size of the initial blocks.
+5. A relative confidence index for each inter-block linkage.
+   - The values in parenthesis are the size of the initial blocks.
+   - The values without parenthesis represent the number of time the two
+     adjacent blocks are adjacent in extant species.
 
-The values without parenthesis represent the number of time the two
-adjacent blocks are adjacent in extant species.
+   The sum of the lengths of the initial blocks (numbers in parenthesis) is
+   thus equal to the size of the whole block (field number 2)
 
-The sum of the lengths of the initial blocks (numbers in parenthesis) is
-thus equal to the size of the whole block (field number 2)
-
-ex: A block of 8 genes in A0 made of 2 sub-blocks linked by an adjacency
+For instance, the following line represents a block of 8 genes in A0 made
+of 2 sub-blocks (of respectively 5 and 3 genes) linked by an adjacency
 of score 6.
 
 ```
 A0	8	4559 4179 10099 15638 1304 10998 5675 13765	-1 -1 -1 1 1 -1 -1 1	(5) 6 (3)
 ```
 
-* Post processing scripts: transforming diags files to genome files
+* The _ancGenome_ files
+
+These files are simpler way of accessing the content of the ancestral
+genomes. They are very similar to the input _genes_ files.
+
+To convert a _diags_ files to the _ancGenome_ format, run this script:
 
 ```bash
+mkdir -p example/results/ancGenomes/final
 src/postprocessing/misc.convertContigsToGenome.py \
   example/results/integrDiags/final/diags.A0.list.bz2 \
   example/results/ancGenes/all/ancGenes.A0.list.bz2 \
-  > tmp/ancGenomes/ancGenome.A0.list
+  +bz2 \
+  > example/results/ancGenomes/final/ancGenome.A0.list.bz2
 ```
 
-As an example:
-
-```
-tmp/ancGenomes/ancGenomes.\*.list
-```
-
-This directory contains a file for each ancestral reconstructed genome
-(e.g. `ancGenome.A0.list`).
-
-There are five tab-separated fields, and values in each field are
-further separated by single spaces.
-
-The fields are:
+The ancGenome files are tab-separated and contain 5 columns:
 
 1. Name of the ancestral block.
 2. Relative start position of the ancestral gene.
 3. Relative end position of the ancestral gene.
 4. Ancestral gene orientation within the block.
-5. Ancestral gene names. The first name corresponds to the ancestral
-   gene, subsequent ones are the list of extant copies of this ancestral
-   gene, in the genome of extant species.
+5. Ancestral gene names, separated by a space. The first name corresponds
+   to the ancestral gene, subsequent ones are the list of extant copies
+   of this ancestral gene, in the genome of extant species.
+
+Coordinates follow the same convention as [BED files](https://en.wikipedia.org/wiki/BED_\(file_format\)#Coordinate_system).
+The start coordinate is 0-based while the end coordinate is 1-based.
+Thus the first gene in a block has got the coordinates 0 and 1, and the sixth gene 5 and 6.
