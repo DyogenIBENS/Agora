@@ -107,7 +107,12 @@ for i in tmp/integrDiags/final/diags.*
         printf "${green}formatting ${ancGenome}${NC}\n"
         printf "${green}src/postprocessing/misc.convertContigsToGenome.py $i tmp/ancGenes/all/ancGenes.${ancGenome}.list.bz2 > tmp/ancGenomes/ancGenome.${ancGenome}.list${NC}\n"
         src/postprocessing/misc.convertContigsToGenome.py $i tmp/ancGenes/all/ancGenes.${ancGenome}.list.bz2 > tmp/ancGenomes/ancGenome.${ancGenome}.list
+        if [ ! -s "tmp/ancGenomes/ancGenome.${ancGenome}.list" ]
+        then
+            printf "${red} Conversion to ancGenome failed! ${NC}\n"
+            exit 1
+        fi
     done
 
-printf "${red} the ancestral genomes should be available in tmp/ancGenomes/${NC}\n"
+printf "${red} the ancestral genomes are available in tmp/ancGenomes/${NC}\n"
 

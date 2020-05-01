@@ -61,7 +61,7 @@ Once everything is installed, run this to check the installation:
 
 It should run for a few minutes and end with this message in red:
 
-> the ancestral genomes should be available in tmp/ancGenomes/
+> The ancestral genomes are available in tmp/ancGenomes/
 
 ## Usage
 
