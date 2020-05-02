@@ -613,15 +613,17 @@ A0	8	4559 4179 10099 15638 1304 10998 5675 13765	-1 -1 -1 1 1 -1 -1 1	(5) 6 (3)
 These files are simpler way of accessing the content of the ancestral
 genomes. They are very similar to the input _genes_ files.
 
-To convert a _diags_ files to the _ancGenome_ format, run this script:
+To convert the _diags_ files to the _ancGenome_ format, run this script:
 
 ```bash
 mkdir -p example/results/ancGenomes/final
 src/postprocessing/misc.convertContigsToGenome.py \
-  example/results/integrDiags/final/diags.A0.list.bz2 \
-  example/results/ancGenes/all/ancGenes.A0.list.bz2 \
-  +bz2 \
-  > example/results/ancGenomes/final/ancGenome.A0.list.bz2
+  example/data/Species.conf \
+  A0 \
+  -IN.ancDiags=example/results/integrDiags/final/diags.%s.list.bz2 \
+  -OUT.ancGenomes=example/results/ancGenomes/final/ancGenome.%s.list.bz2 \
+  -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
+  2> example/results/ancGenomes/final/log
 ```
 
 The ancGenome files are tab-separated and contain 5 columns:

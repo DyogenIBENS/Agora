@@ -81,12 +81,10 @@ for line in "${agoraCommandLines[@]}"
 		eval ${line}
 done
 
-NbAncGenomes=`ls tmp/integrDiags/final/diags.* | wc -l`
+NbAncDiags=`ls tmp/integrDiags/final/diags.* | wc -l`
 
-if [ ${NbAncGenomes} == 4 ]
+if [ ${NbAncDiags} != 4 ]
     then
-        printf "${red} Everything seems OK! Enjoy AGORA${NC}\n"
-    else
         printf "${red} HOHOHO problems! ${NC}\n"
         exit 1
 fi
@@ -100,19 +98,19 @@ printf "${red}check the postprocessing script ${NC}\n"
 printf "${red}--------------------------------${NC}\n"
 
 mkdir tmp/ancGenomes
-for i in tmp/integrDiags/final/diags.*
-    do
-        prefix="tmp/integrDiags/final/diags."
-        ancGenome=${i/.list.bz2/}; ancGenome=${ancGenome#$prefix};
-        printf "${green}formatting ${ancGenome}${NC}\n"
-        printf "${green}src/postprocessing/misc.convertContigsToGenome.py $i tmp/ancGenes/all/ancGenes.${ancGenome}.list.bz2 > tmp/ancGenomes/ancGenome.${ancGenome}.list${NC}\n"
-        src/postprocessing/misc.convertContigsToGenome.py $i tmp/ancGenes/all/ancGenes.${ancGenome}.list.bz2 > tmp/ancGenomes/ancGenome.${ancGenome}.list
-        if [ ! -s "tmp/ancGenomes/ancGenome.${ancGenome}.list" ]
-        then
-            printf "${red} Conversion to ancGenome failed! ${NC}\n"
-            exit 1
-        fi
-    done
+convertAncGenomesCommandLines=(
+"src/postprocessing/misc.convertContigsToGenome.py tmp/speciesTree.phylTree A0 -IN.ancDiags=tmp/integrDiags/final/diags.%s.list.bz2 -OUT.ancGenomes=tmp/ancGenomes/ancGenome.%s.list.bz2 -ancGenesFiles=tmp/ancGenes/all/ancGenes.%s.list.bz2"
+)
+eval "${convertAncGenomesCommandLines[@]}"
 
-printf "${red} the ancestral genomes are available in tmp/ancGenomes/${NC}\n"
+NbAncGenomes=`ls tmp/ancGenomes/ancGenome.* | wc -l`
+
+if [ ${NbAncGenomes} == 4 ]
+    then
+        printf "${red} the ancestral genomes are available in tmp/ancGenomes/${NC}\n"
+        printf "${red} Everything seems OK! Enjoy AGORA${NC}\n"
+    else
+        printf "${red} HOHOHO problems! ${NC}\n"
+        exit 1
+fi
 

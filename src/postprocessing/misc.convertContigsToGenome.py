@@ -7,21 +7,33 @@
 # This is free software; you may copy, modify and/or distribute this work under the terms of the GNU General Public License, version 3 or later and the CeCiLL v2 license in France
 
 __doc__ = """
-    Transform a reconstructed ancestral list of blocks (diags) in a formated ancestral genome (list of genes)
+    Transform reconstructed ancestral lists of blocks (diags) in formated ancestral genomes (lists of genes)
 
     usage:
-        ./misc.convertContigsToGenome.py diags.Amiota.list.bz2 ancGenes.Amniota.list.bz2 > genome.Amniota.list
+        src/postprocessing/misc.convertContigsToGenome.py example/data/Species.conf A0 \
+                -IN.ancDiags=example/results/integrDiags/final/diags.%s.list.bz2 \
+                -OUT.ancGenomes=example/results/ancGenomes/final/ancGenome.%s.list.bz2 \
+                -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2
 """
 
-import sys
-
-import utils.myTools
 import utils.myGenomes
+import utils.myPhylTree
+import utils.myTools
 
-arguments = utils.myTools.checkArgs([("contigsFile", file), ("ancGenesFile", file)], [], __doc__)
+# Arguments
+arguments = utils.myTools.checkArgs(
+    [("phylTree.conf", file), ("target", str)],
+    [("IN.ancDiags", str, ""), ("ancGenesFiles", str, ""), ("OUT.ancGenomes", str, "ancGenomes/ancGenome.%s.list.bz2")],
+    __doc__
+)
 
-ancGenes = utils.myGenomes.Genome(arguments["ancGenesFile"])
+# Load species tree - target ancestral genome and the extant species used to assemble blocs
+phylTree = utils.myPhylTree.PhylogeneticTree(arguments["phylTree.conf"])
+targets = phylTree.getTargetsAnc(arguments["target"])
 
-genome = utils.myGenomes.Genome(arguments["contigsFile"], ancGenes=ancGenes)
-
-genome.printEnsembl(sys.stdout)
+for anc in targets:
+    ancGenes = utils.myGenomes.Genome(arguments["ancGenesFiles"] % phylTree.fileName[anc])
+    genome = utils.myGenomes.Genome(arguments["IN.ancDiags"] % phylTree.fileName[anc], ancGenes=ancGenes)
+    ancGenomeFile = utils.myFile.openFile(arguments["OUT.ancGenomes"] % phylTree.fileName[anc], "w")
+    genome.printEnsembl(ancGenomeFile)
+    ancGenomeFile.close()
