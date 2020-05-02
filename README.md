@@ -59,7 +59,7 @@ Once everything is installed, run this to check the installation:
 ./checkAgoraIntegrity.sh
 ```
 
-It should run for a few minutes and end with this message in red:
+It should run for a few minutes and end with this message in green:
 
 > The ancestral genomes are available in tmp/ancGenomes/
 

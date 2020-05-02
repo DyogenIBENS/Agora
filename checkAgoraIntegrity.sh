@@ -94,8 +94,8 @@ NbAncGenomes=`ls tmp/ancGenomes/ancGenome.* | wc -l`
 
 if [ ${NbAncGenomes} == 4 ]
     then
-        printf "${red} the ancestral genomes are available in tmp/ancGenomes/${NC}\n"
-        printf "${red} Everything seems OK! Enjoy AGORA${NC}\n"
+        printf "${green} The ancestral genomes are available in tmp/ancGenomes/${NC}\n"
+        printf "${green} Everything seems OK! Enjoy AGORA${NC}\n"
     else
         error 'Some ancestral genomes are missing'
 fi
