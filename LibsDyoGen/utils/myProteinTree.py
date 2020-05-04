@@ -344,7 +344,7 @@ def getDupSuffix(n, upper=False):
 
 
 # load the tree from a file
-def loadTree(name):
+def loadPhylTreeTree(f):
 
     ns = myTools.Namespace()
 
@@ -381,26 +381,18 @@ def loadTree(name):
 
         return currID
 
-
-    print >> sys.stderr, "Loading the forest of gene trees %s ..." % name,
-    f = myFile.openFile(name, "r") if isinstance(name, str) else name
     ns.curr = None
     nextLine()
-    n = (0,0,0)
     while True:
         tree = ProteinTree()
         tree.root = recLoad(tree, 0)
         yield tree
-        n = (n[0]+1, n[1]+len(tree.data), n[2]+len(tree.info)-len(tree.data))
         if ns.curr == None:
             break
-    print >> sys.stderr, "%d roots, %d branches, %d nodes OK" % n
-
-    f.close()
 
 
 # load the tree from an NHX file
-def loadNHXTree(name):
+def loadNHXTree(f):
 
     import cStringIO
 
@@ -455,10 +447,6 @@ def loadNHXTree(name):
             proteinTree.data[nodeid] = data
         return nodeid
 
-    print >> sys.stderr, "Loading the forest of gene trees %s ..." % name,
-    f = myFile.openFile(name, "r") if isinstance(name, str) else name
-
-    n = (0, 0, 0)
     for line in f:
         if len(line.replace(" ", "").replace("\n", "")) == 0:
             #Do nothing : empty line
@@ -473,8 +461,30 @@ def loadNHXTree(name):
             raise NameError("The nhx tree is not formated properly. Please take care to have one tree per line. A line ends with \";\\n\"")
 
         yield proteinTree
-        n = (n[0]+1, n[1]+len(proteinTree.data), n[2]+len(proteinTree.info)-len(proteinTree.data))
 
+
+def loadTree(name):
+    print >> sys.stderr, "Loading the forest of gene trees %s ..." % name,
+    f = myFile.openFile(name, "r") if isinstance(name, str) else name
+
+    # Sniff the first line and choose the appropriate loader
+    # We can't use firstLineBuffer because loadPhylTreeTree uses next()
+    # and the later is not able to add the first line back
+    firstLine = f.next()
+    f.seek(0)
+
+    if (';' in firstLine) or ('(' in firstLine):
+        print >> sys.stderr, "(NHX format)",
+        loader = loadNHXTree(f)
+    else:
+        print >> sys.stderr, "(phylTree format)",
+        loader = loadPhylTreeTree(f)
+
+    # Load and count the trees
+    n = (0, 0, 0)
+    for tree in loader:
+        n = (n[0]+1, n[1]+len(tree.data), n[2]+len(tree.info)-len(tree.data))
+        yield tree
     print >> sys.stderr, "%d roots, %d branches, %d nodes OK" % n
 
     f.close()
