@@ -9,6 +9,7 @@
 import sys
 import collections
 
+import myPhylTree
 import myTools
 import myFile
 
@@ -396,3 +397,85 @@ def loadTree(name):
     print >> sys.stderr, "%d roots, %d branches, %d nodes OK" % n
 
     f.close()
+
+
+# load the tree from an NHX file
+def loadNHXTree(name):
+
+    import cStringIO
+
+    ns = myTools.Namespace()
+    ns.nodeid = 0
+    ns.ntree = 0
+
+    def convertNodeRec(tree, proteinTree, node):
+        nodeid = ns.nodeid
+        ns.nodeid += 1
+
+        info = {}
+
+        if "B" in tree.info[node]:
+            info["Bootstrap"] = tree.info[node]["B"]
+
+        if "D" in tree.info[node]:
+            if tree.info[node]["D"] == "N":
+                info["Duplication"] = 0
+            elif tree.info[node]["D"] == "Y":
+
+                if "SIS" in tree.info[node]:
+                    info["duplication_confidence_score"] = float(tree.info[node]["SIS"]) / 100
+
+                if "DD" in tree.info[node] and tree.info[node]["DD"] == "Y":
+                    info["Duplication"] = 1
+                    info["dubious_duplication"] = 1
+                else:
+                    info["Duplication"] = 2
+            else:
+                print >> sys.stderr, "Unknown Duplication code '%s'" % (tree.info[node]["D"],)
+                sys.exit(1)
+        else:
+            info["Duplication"] = 0
+
+        if "E" in tree.info[node]:
+            info["taxon_lost"] = tree.info[node]["E"].split("=-$")[1].split("-")
+
+        if "S" in tree.info[node]:
+            info["taxon_name"] = tree.info[node]["S"].replace("_", " ").replace(".", " ").capitalize()
+
+        if node not in tree.items:
+            info["gene_name"] = node
+        else:
+            info["node_name"] = node
+
+        proteinTree.info[nodeid] = info
+        if node in tree.items:
+            data = []
+            for (e, l) in tree.items[node]:
+                data.append((convertNodeRec(tree, proteinTree, e), l))
+            proteinTree.data[nodeid] = data
+        return nodeid
+
+    print >> sys.stderr, "Loading the forest of gene trees %s ..." % name,
+    f = myFile.openFile(name, "r") if isinstance(name, str) else name
+
+    n = (0, 0, 0)
+    for line in f:
+        if len(line.replace(" ", "").replace("\n", "")) == 0:
+            #Do nothing : empty line
+            continue
+        elif line.find(";\n"):
+            tree = myPhylTree.PhylogeneticTree(cStringIO.StringIO(line))
+            proteinTree = ProteinTree()
+            proteinTree.root = convertNodeRec(tree, proteinTree, tree.root)
+            proteinTree.info[proteinTree.root]["tree_name"] = "Fam%06d" % ns.ntree
+            ns.ntree += 1
+        else:
+            raise NameError("The nhx tree is not formated properly. Please take care to have one tree per line. A line ends with \";\\n\"")
+
+        yield proteinTree
+        n = (n[0]+1, n[1]+len(proteinTree.data), n[2]+len(proteinTree.info)-len(proteinTree.data))
+
+    print >> sys.stderr, "%d roots, %d branches, %d nodes OK" % n
+
+    f.close()
+
