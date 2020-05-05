@@ -9,8 +9,8 @@
 __doc__ = """ Convert a species phylogenetic tree from/to newick or phyltree text format
 
      usage:
-        ALL.convertNewickTree.py Species.conf -fromNewick > Species.nwk
-        ALL.convertNewickTree.py Species.nwk +fromNewick > Species.conf """
+        convert.SpeciesTree.Newick-phylTree.py Species.conf -fromNewick > Species.nwk
+        convert.SpeciesTree.Newick-phylTree.py Species.nwk +fromNewick > Species.conf """
 
 import utils.myFile as myFile
 import utils.myPhylTree as myPhylTree

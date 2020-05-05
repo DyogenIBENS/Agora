@@ -10,7 +10,7 @@ __doc__ = """
     Transform reconstructed ancestral lists of blocks (diags) in formated ancestral genomes (lists of genes)
 
     usage:
-        src/postprocessing/misc.convertContigsToGenome.py example/data/Species.conf A0 \
+        src/convert.ancGenomes.diags-genes.py example/data/Species.conf A0 \
                 -IN.ancDiags=example/results/integrDiags/final/diags.%s.list.bz2 \
                 -OUT.ancGenomes=example/results/ancGenomes/final/ancGenome.%s.list.bz2 \
                 -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2

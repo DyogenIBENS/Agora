@@ -617,7 +617,7 @@ To convert the _diags_ files to the _ancGenome_ format, run this script:
 
 ```bash
 mkdir -p example/results/ancGenomes/final
-src/postprocessing/misc.convertContigsToGenome.py \
+src/convert.ancGenomes.diags-genes.py \
   example/data/Species.conf \
   A0 \
   -IN.ancDiags=example/results/integrDiags/final/diags.%s.list.bz2 \

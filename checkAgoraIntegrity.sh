@@ -40,9 +40,9 @@ print_title 'check the preprocessing scripts'
 
 preProcessCommandLines=(
 # convet a .nhx tree into a protTree (forest of gene trees)
-"src/preprocessing/nhxGeneTrees2phylTreeGeneTrees.py example/data/GeneTreeForest.nhx.bz2 > tmp/geneTrees.protTree"
+"src/convert.geneTrees.NHX-phylTree.py example/data/GeneTreeForest.nhx.bz2 > tmp/geneTrees.protTree"
 # convet a .nwk tree into a phylTree
-"src/preprocessing/newickSpeciesTree2phylTreeSpeciesTree.py example/data/Species.nwk > tmp/speciesTree.phylTree"
+"src/convert.speciesTree.Newick-phylTree.py example/data/Species.nwk > tmp/speciesTree.phylTree"
 )
 print_and_run_commands "${preProcessCommandLines[@]}"
 
@@ -86,7 +86,7 @@ print_title 'check the postprocessing script'
 
 mkdir tmp/ancGenomes
 convertAncGenomesCommandLines=(
-"src/postprocessing/misc.convertContigsToGenome.py tmp/speciesTree.phylTree A0 -IN.ancDiags=tmp/integrDiags/final/diags.%s.list.bz2 -OUT.ancGenomes=tmp/ancGenomes/ancGenome.%s.list.bz2 -ancGenesFiles=tmp/ancGenes/all/ancGenes.%s.list.bz2"
+"src/convert.ancGenomes.diags-genes.py tmp/speciesTree.phylTree A0 -IN.ancDiags=tmp/integrDiags/final/diags.%s.list.bz2 -OUT.ancGenomes=tmp/ancGenomes/ancGenome.%s.list.bz2 -ancGenesFiles=tmp/ancGenes/all/ancGenes.%s.list.bz2"
 )
 print_and_run_commands "${convertAncGenomesCommandLines[@]}"
 
