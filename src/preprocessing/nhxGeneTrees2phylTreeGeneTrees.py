@@ -115,6 +115,8 @@ def processData(data):
 
 
             info["gene_name"] = x
+        else:
+            info["node_name"] = node
 
         print "%sinfo\t%s" % (indent, info)
 
