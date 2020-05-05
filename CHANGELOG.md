@@ -1,3 +1,9 @@
+## 2020-05-08 - v1.2
+
+1. [new] -- All scripts now natively support Newick species tree and NHX
+	 gene trees
+2. [change] -- Moved and renamed the scripts that convert file formats
+
 ## 2020-04-27 - v1.1
 
 1. [bugfix] -- `agora.py` was not detecting workflow errors
