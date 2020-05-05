@@ -78,7 +78,7 @@ class ProteinTree:
             print >> f, "%sinfo\t{%s}" % (indent, ", ".join(repr(key) + ": " + repr(value) for (key, value) in sorted(self.info[node].iteritems())))
             # children
             for (g,d) in self.data.get(node,[]):
-                print >> f, "%s\tlen\t%f" % (indent, d)
+                print >> f, "%s\tlen\t%g" % (indent, d)
                 rec(n+1, g)
 
         rec(0, self.root if node is None else node)
