@@ -370,6 +370,27 @@ class PhylogeneticTree:
         self.ages = self.newCommonNamesMapperInstance()
         calcAges(data)
 
+    # print into phylTree format, with tabulations
+    def printPhylTree(self, fh=sys.stdout):
+        def recPrint(node, indent):
+            names = myFile.myTSV.printLine([self.fileName[node]] + [x for x in self.commonNames.get(node, "") if isinstance(x, str) and (x != node)], delim="|")
+            if node in self.listSpecies:
+                print >> fh, ("\t" * indent) + str(names)
+            else:
+                print >> fh, ("\t" * indent) + str(names) + "\t" + str(int(self.ages[node]))
+                for (f, _) in self.items[node]:
+                    recPrint(f, indent+1)
+        recPrint(self.root, 0)
+
+    def printNewick(self, fh=sys.stdout):
+        def recConvert(node):
+            a = self.fileName[node]
+            if node in self.listSpecies:
+                return a
+            else:
+                return "(" + ",".join([recConvert(e) + ":" + str(l) for (e,l) in self.items[node]]) + ")%s" % a
+        print >> fh, recConvert(self.root) + ";"
+
     # return the name of the last common ancestor of several species
     def lastCommonAncestor(self, species):
         anc = species[0]
