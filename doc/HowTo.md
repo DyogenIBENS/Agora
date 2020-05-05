@@ -77,52 +77,58 @@ In this HowTo, all the paths are relative to the root of the repository.
 To reconstruct ancestral gene orders, AGORA needs 3 kinds of files (see
 [`example/data/`](../example/data)):
 
-* A species tree, e.g. [`example/data/Species.conf`](../example/data/Species.conf)
+* A species tree, e.g. [`example/data/Species.nwk`](../example/data/Species.nwk)
 * A set of extant gene trees reconciled with the species tree, e.g.
-  [`example/data/GeneTreeForest.phylTree.bz2`](../example/data/GeneTreeForest.phylTree.bz2).
+  [`example/data/GeneTreeForest.nhx.bz2`](../example/data/GeneTreeForest.nhx.bz2).
   Extant genes that are not in a tree will not be used for gene order reconstruction.
 * The order of extant genes in each extant genomes, e.g.
   [`example/data/genes/genes.M1.list.bz2`](../example/data/genes/genes.M1.list.bz2)
 
 ### Species tree
 
-The species tree must be in _PhylTree_ format. The PhylTree format is a
+The species tree can be in either Newick or _PhylTree_ format.
+The PhylTree format is a
 human readable format of trees developed specifically for AGORA, based
 on tabulations. See the example species tree:
 
-* [`example/data/Species.conf`](../example/data/Species.conf) -- PhylTree format
 * [`example/data/Species.nwk`](../example/data/Species.nwk) -- Newick format
+* [`example/data/Species.conf`](../example/data/Species.conf) -- PhylTree format
 * [`example/data/Species.pdf`](../example/data/Species.pdf) -- Graphical representation
 
-To convert a tree from NHX format to PhylTree format, use the script
-`newickSpeciesTree2phylTreeSpeciesTree.py`:
-
-```bash
-src/preprocessing/newickSpeciesTree2phylTreeSpeciesTree.py Species.nwk > Species.conf
-```
-
-&#9888; **Warning**: Internal labels (e.g. "Amniota" or "Anc659123") have to be unique !
+&#9888; **Warning**: Internal labels (e.g. "Amniota" or "Anc659123") have to be unique as
+they are used to refer to ancestors and name files !
 
 ### The forest of gene trees
 
-The forest of gene trees has to be in PhylTree format as well, in a
-single file. See an example family:
+The forest of gene trees can be either in NHX or PhylTree format.
 
+See an example family:
+
+* [`example/data/Family1.nhx`](../example/data/Family1.nhx) -- NHX format
 * [`example/data/Family1.phylTree`](../example/data/Family1.phylTree) -- PhylTree format
-* [`example/data/Family1.nhx`](../example/data/Family1.nhx) -- Newick format
 * [`example/data/Family1.pdf`](../example/data/Family1.pdf) -- Graphical representation
 
-To convert trees from NHX format to PhylTree format, use the script
-`nhxGeneTrees2phylTreeGeneTrees.py`:
+AGORA cares about:
 
-```bash
-src/preprocessing/nhxGeneTrees2phylTreeGeneTrees.py Family1.nhx > Family1.phylTree
-```
+1. The speciation / duplication annotations
+   * `D` and `DD` keys in NHX tags
+     * `D=Y` indicates a duplication, which is further marked as "dubious"
+       if `DD=Y`
+     * `D=N` or `D` not set indicate a speciation
+   * `Duplication` key in PhylTree files. 0 and 1 indicate speciations and
+     dubious duplications, values higher or equal to 2 indicate
+     well-supported duplications
+2. The taxon annotation that comes from the reconciliation with the
+   species tree:
+   * `S` key in NHX annotations
+   * `taxon_name` key in PhylTree files
+3. Gene names:
+   * `gene_name` key in PhylTree files
 
 The forest file is merely the concatenation of all the families. See the example forest:
 
+* [`example/data/GeneTreeForest.nhx.bz2`](../example/data/GeneTreeForest.nhx.bz2) -- NHX format
 * [`example/data/GeneTreeForest.phylTree.bz2`](../example/data/GeneTreeForest.phylTree.bz2) -- PhylTree format
-* [`example/data/GeneTreeForest.nhx.bz2`](../example/data/GeneTreeForest.nhx.bz2) -- Newick format
 
 ### The gene lists of extant genomes
 
@@ -157,7 +163,7 @@ genes files have to be named:
 * `prefix.Mus.musculus.suffix`
 * `prefix.Canis.familiaris.suffix`
 
-In [`example/data`](../example/data), the five species named in the [species-tree](../example/data/Species.conf)
+In [`example/data`](../example/data), the five species named in the [species-tree](../example/data/Species.nwk)
 are `M1`, `M2`, `M3`, `M4`,, and `M5`, and the genes files are named [`genes.M1.list.bz2`](../example/data/genes/genes.M1.list.bz2), etc.
 
 ## Running AGORA
@@ -198,8 +204,8 @@ to name the output files.
 ```bash
 mkdir -p example/results/ancGenes
 src/ALL.extractGeneFamilies.py \
-  example/data/Species.conf \
-  example/data/GeneTreeForest.phylTree.bz2 \
+  example/data/Species.nwk \
+  example/data/GeneTreeForest.nhx.bz2 \
   -OUT.ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
   +bz2 \
   > example/results/GeneTreeForests.withAncGenes.phylTree.bz2 \
@@ -257,7 +263,7 @@ combinations to identify conserved adjacencies.
 ```bash
 mkdir -p example/results/pairwise/pairs-all/
 src/buildSynteny.pairwise-conservedPairs.py \
-  example/data/Species.conf \
+  example/data/Species.nwk \
   A0 \
   -OUT.pairwise=example/results/pairwise/pairs-all/%s.list.bz2 \
   -genesFiles=example/data/genes/genes.%s.list.bz2 \
@@ -274,7 +280,7 @@ a first set of CARs are derived.
 ```bash
 mkdir -p example/results/integrDiags/denovo-all/
 src/buildSynteny.integr-denovo.py \
-  example/data/Species.conf \
+  example/data/Species.nwk \
   A0 \
   example/results/pairwise/pairs-all/%s.list.bz2 \
   +searchLoops \
@@ -296,7 +302,7 @@ The result is a set of CARs made of CARs, that are much longer than in the previ
 ```bash
 mkdir -p example/results/integrDiags/denovo-all.groups/
 src/buildSynteny.integr-groups.py \
-  example/data/Species.conf \
+  example/data/Species.nwk \
   A0 \
   A0 \
   -IN.ancDiags=example/results/integrDiags/denovo-all/diags.%s.list.bz2 \
@@ -353,7 +359,7 @@ and more conserved.
 
 ```bash
 src/ALL.filterGeneFamilies-size.py \
-  example/data/Species.conf \
+  example/data/Species.nwk \
   A0 \
   example/results/ancGenes/all/ancGenes.%s.list.bz2 \
   example/results/ancGenes/size-%s-%s/ancGenes.%s.list.bz2 \
@@ -372,7 +378,7 @@ For all ancestral genes:
 ```bash
 mkdir -p example/results/pairwise/pairs-all
 src/buildSynteny.pairwise-conservedPairs.py \
-  example/data/Species.conf \
+  example/data/Species.nwk \
   A0 \
   -OUT.pairwise=example/results/pairwise/pairs-all/%s.list.bz2 \
   -genesFiles=example/data/genes/genes.%s.list.bz2 \
@@ -385,7 +391,7 @@ For the robust gene families:
 ```bash
 mkdir -p example/results/pairwise/pairs-size-1.0-1.0
 src/buildSynteny.pairwise-conservedPairs.py \
-  example/data/Species.conf \
+  example/data/Species.nwk \
   A0 \
   -OUT.pairwise=example/results/pairwise/pairs-size-1.0-1.0/%s.list.bz2 \
   -genesFiles=example/data/genes/genes.%s.list.bz2 \
@@ -402,7 +408,7 @@ from which a first set of CARs are derived.
 ```bash
 mkdir -p example/results/integrDiags/denovo-size-1.0-1.0
 src/buildSynteny.integr-denovo.py \
-  example/data/Species.conf \
+  example/data/Species.nwk \
   A0 \
   example/results/pairwise/pairs-size-1.0-1.0/%s.list.bz2 \
   -OUT.ancDiags=example/results/integrDiags/denovo-size-1.0-1.0/diags.%s.list.bz2 \
@@ -419,7 +425,7 @@ following paths in the complete ancestral adjacency graph.
 ```bash
 mkdir -p example/results/integrDiags/denovo-size-1.0-1.0.refine-all
 src/buildSynteny.integr-refine.py \
-  example/data/Species.conf \
+  example/data/Species.nwk \
   A0 \
   example/results/pairwise/pairs-all/%s.list.bz2 \
   -IN.ancDiags=example/results/integrDiags/denovo-size-1.0-1.0/diags.%s.list.bz2 \
@@ -436,7 +442,7 @@ are mostly non-robust genes, and try to assemble them into contigs.
 ```bash
 mkdir -p example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all
 src/buildSynteny.integr-extend.py \
-  example/data/Species.conf \
+  example/data/Species.nwk \
   A0 \
   example/results/pairwise/pairs-all/%s.list.bz2 \
   -IN.ancDiags=example/results/integrDiags/denovo-size-1.0-1.0.refine-all/diags.%s.list.bz2 \
@@ -452,7 +458,7 @@ This step will insert the contigs of non-robust families created above and inser
 ```bash
 mkdir -p example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all
 src/buildSynteny.integr-halfinsert.py \
-  example/data/Species.conf \
+  example/data/Species.nwk \
   A0 \
   example/results/pairwise/pairs-all/%s.list.bz2 \
   -IN.ancDiags=example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all/diags.%s.list.bz2 \
@@ -472,7 +478,7 @@ of the CARs themselves, which allows finding higher-level adjacencies.
 ```bash
 mkdir -p example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all.groups
 src/buildSynteny.integr-groups.py \
-  example/data/Species.conf \
+  example/data/Species.nwk \
   A0 \
   A0 \
   -IN.ancDiags=example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all/diags.%s.list.bz2 \
@@ -488,7 +494,7 @@ src/buildSynteny.integr-groups.py \
 ```bash
 mkdir -p example/results/integrDiags/final
 src/buildSynteny.integr-copy.py \
-  example/data/Species.conf \
+  example/data/Species.nwk \
   A0 \
   -IN.ancDiags=example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all.groups/diags.%s.list.bz2 \
   -OUT.ancDiags=example/results/integrDiags/final/diags.%s.list.bz2 \
@@ -517,7 +523,7 @@ for instance:
 
 ```bash
 src/ALL.filterGeneFamilies-size.py \
-  example/data/Species.conf \
+  example/data/Species.nwk \
   A0 \
   example/results/ancGenes/all/ancGenes.%s.list.bz2 \
   example/results/ancGenes/size-%s-%s/ancGenes.%s.list.bz2 \
@@ -533,7 +539,7 @@ the first set of ancestral adjacencies, e.g.:
 ```bash
 mkdir -p example/results/integrDiags/denovo-size-1.0-1.0
 src/buildSynteny.integr-denovo.py \
-  example/data/Species.conf \
+  example/data/Species.nwk \
   =A3 \
   example/results/pairwise/pairs-size-1.0-1.0/%s.list.bz2 \
   -OUT.ancDiags=example/results/integrDiags/denovo-size-1.0-1.0/diags.%s.list.bz2 \
@@ -542,7 +548,7 @@ src/buildSynteny.integr-denovo.py \
   2> example/results/integrDiags/denovo-size-1.0-1.0/log
 mkdir -p example/results/integrDiags/denovo-size-0.9-1.1
 src/buildSynteny.integr-denovo.py \
-  example/data/Species.conf \
+  example/data/Species.nwk \
   =A1,=A2 \
   example/results/pairwise/pairs-size-0.9-1.1/%s.list.bz2 \
   -OUT.ancDiags=example/results/integrDiags/denovo-size-0.9-1.1/diags.%s.list.bz2 \
@@ -556,7 +562,7 @@ These sets can be combined by running the copy script multiple times, like this:
 ```bash
 mkdir -p example/results/integrDiags/denovo-size-custom
 src/buildSynteny.integr-copy.py \
-  example/data/Species.conf \
+  example/data/Species.nwk \
   =A3 \
   -IN.ancDiags=example/results/integrDiags/denovo-size-1.0-1.0/diags.%s.list.bz2 \
   -OUT.ancDiags=example/results/integrDiags/denovo-size-custom/diags.%s.list.bz2 \
@@ -618,7 +624,7 @@ To convert the _diags_ files to the _ancGenome_ format, run this script:
 ```bash
 mkdir -p example/results/ancGenomes/final
 src/convert.ancGenomes.diags-genes.py \
-  example/data/Species.conf \
+  example/data/Species.nwk \
   A0 \
   -IN.ancDiags=example/results/integrDiags/final/diags.%s.list.bz2 \
   -OUT.ancGenomes=example/results/ancGenomes/final/ancGenome.%s.list.bz2 \
