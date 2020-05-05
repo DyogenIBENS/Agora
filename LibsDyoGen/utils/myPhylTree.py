@@ -285,6 +285,14 @@ class PhylogeneticTree:
                 keepWhile(' ')
 
             nodeName = keepUntil("),:;[ ")
+            if nodeName[0] == SYMBOL6X:
+                nodeName = nodeName[1:]
+                self.lstEsp6X.add(nodeName)
+            elif nodeName[0] == SYMBOL2X:
+                nodeName = nodeName[1:]
+                self.lstEsp2X.add(nodeName)
+            else:
+                self.lstEspFull.add(nodeName)
             elt = (children, nodeName)
 
             keepWhile(' ')
@@ -352,6 +360,9 @@ class PhylogeneticTree:
 
         #FIXME add the age of ancestors for an easier conversion into myFormat
         self.pos = 0
+        self.lstEsp2X = set()
+        self.lstEsp6X = set()
+        self.lstEspFull = set()
         data = readTree()
         self.pos = 0
         self.info = {}
