@@ -276,18 +276,17 @@ class PhylogeneticTree:
         def readTree():
             keepWhile(' ')
 
+            children = []
             if s[self.pos] == '(':
-                children = []
                 # '(' the first time, then some ',' untill the final ')'
                 while readStr(1) != ')':
                     children.append(readTree())
                     keepWhile(' ')
                 keepWhile(' ')
-                # the result is the list of children + the name
-                elt = (children, keepUntil("),:;[ "))
-            else:
-                # the result is a name, for leaves, no children
-                elt = ([], keepUntil("),:;[ "))
+
+            nodeName = keepUntil("),:;[ ")
+            elt = (children, nodeName)
+
             keepWhile(' ')
 
             # possibly a non-null branch length
