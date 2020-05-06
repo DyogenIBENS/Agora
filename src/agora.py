@@ -23,12 +23,9 @@ __doc__ = """
           src/agora.py conf/agora.ini -workingDir=example/results -nbThreads=4
 """
 
-scriptDir = os.path.dirname(os.path.abspath(__file__))
 arguments = utils.myTools.checkArgs(
     [("agora.conf", file)],
     [("workingDir", str, "."), ("nbThreads", int, 1),
-     ("prog:synteny", str, os.path.join(scriptDir, "buildSynteny.%s-%s.py")),
-     ("prog:ancGenes", str, os.path.join(scriptDir, "ALL.filterGeneFamilies-%s.py"))
      ],
     __doc__)
 
@@ -67,6 +64,7 @@ outputDir = arguments["workingDir"]
 inputParams = ["speciestree", "genes"]
 for f in files:
     files[f] = os.path.normpath(os.path.join(inputDir if f in inputParams else outputDir, files[f]))
+scriptDir = os.path.dirname(os.path.abspath(__file__))
 
 phylTree = utils.myPhylTree.PhylogeneticTree(files["speciestree"])
 
@@ -135,7 +133,7 @@ for x in bysections["ancgenes"]:
         ("ancgenes", "size"),
         [],
         (
-            [arguments["prog:ancGenes"] % "size", files["speciestree"], root,
+            [os.path.join(scriptDir, "ALL.filterGeneFamilies-%s.py" % "size"), files["speciestree"], root,
              files["ancgenesdata"] % {"filt": "all", "name": "%s"},
              files["ancgenesdata"] % {"filt": "size-%s-%s", "name": "%s"}] + [minsize, maxsize],
             os.devnull,
@@ -161,7 +159,7 @@ for x in bysections.get("pairwise", []):
         ("pairwise", dirname),
         [],
         (
-            [arguments["prog:synteny"] % ("pairwise", params[0]), files["speciestree"], root,
+            [os.path.join(scriptDir, "buildSynteny.pairwise-%s.py" % params[0]), files["speciestree"], root,
              "-ancGenesFiles=" + files["ancgenesdata"] % {"filt": dirname, "name": "%s"},
              "-genesFiles=" + files["genes"] % {"name": "%s"},
              "-OUT.pairwise=" + files["pairwiseoutput"] % {"filt": dirname, "name": "%s"}] + params[1:],
@@ -211,7 +209,7 @@ for x in bysections.get("integration", []):
         interm[output] = newMethod
 
     # task parameters
-    args = [arguments["prog:synteny"] % ("integr", params[0]), files["speciestree"], root] + params[1:] + [
+    args = [os.path.join(scriptDir, "buildSynteny.integr-%s.py" % params[0]), files["speciestree"], root] + params[1:] + [
         "-OUT.ancDiags=" + files["integrblocks"] % {"method": newMethod, "name": "%s"}]
     dep = []
     if dirname is not None:
