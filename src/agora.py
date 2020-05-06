@@ -116,7 +116,7 @@ for x in bysections["ancgenes"]:
     if root == "":
         root = phylTree.root
     # index
-    t = x[0].split(",")
+    t = x[0].replace("*", "").split(",")
     sizes = params.split(",")
     minsize = ""
     maxsize = ""
@@ -125,7 +125,7 @@ for x in bysections["ancgenes"]:
         minsize += str(size[0]) + ","
         maxsize += str(size[1]) + ","
         dirname = "size-" + str(size[0]) + "-" + str(size[1])
-        ancGenes[t[i].replace("*", "")] = dirname
+        ancGenes[t[i]] = dirname
     minsize = minsize[:-1]
     maxsize = maxsize[:-1]
 
