@@ -121,17 +121,20 @@ for x in bysections["ancgenes"]:
     assert len(t) == len(sizes)
     minsize = ""
     maxsize = ""
+    ancGenesDirNames = []
     for i in range(len(sizes)):
         size = sizes[i].split()
         minsize += str(size[0]) + ","
         maxsize += str(size[1]) + ","
         dirname = "size-" + str(size[0]) + "-" + str(size[1])
         ancGenes[t[i]] = dirname
+        ancGenesDirNames.append(dirname)
     minsize = minsize[:-1]
     maxsize = maxsize[:-1]
 
+    taskname = "size-" + minsize + "-" + maxsize
     tasklist.addTask(
-        ("ancgenes", "size"),
+        ("ancgenes", taskname),
         [("ancgenes", "all")],
         (
             [os.path.join(scriptDir, "ALL.filterGeneFamilies-%s.py" % "size"), files["speciestree"], root,
@@ -142,6 +145,10 @@ for x in bysections["ancgenes"]:
             "*" not in x[0]
         )
     )
+
+    if len(ancGenesDirNames) > 1:
+        for dirname in ancGenesDirNames:
+            tasklist.addTask( ("ancgenes", dirname), [("ancgenes", taskname)], (None, None, None, False) )
 
 # Pairwise comparison section
 #############################
@@ -158,7 +165,7 @@ for x in bysections.get("pairwise", []):
     # Pairwise comparison tasks
     tasklist.addTask(
         ("pairwise", dirname),
-        [],
+        [("ancgenes",dirname)],
         (
             [os.path.join(scriptDir, "buildSynteny.pairwise-%s.py" % params[0]), files["speciestree"], root,
              "-ancGenesFiles=" + files["ancgenesdata"] % {"filt": dirname, "name": "%s"},
