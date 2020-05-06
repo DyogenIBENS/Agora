@@ -118,6 +118,7 @@ for x in bysections["ancgenes"]:
     # index
     t = x[0].replace("*", "").split(",")
     sizes = params.split(",")
+    assert len(t) == len(sizes)
     minsize = ""
     maxsize = ""
     for i in range(len(sizes)):
