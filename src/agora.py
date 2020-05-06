@@ -132,7 +132,7 @@ for x in bysections["ancgenes"]:
 
     tasklist.addTask(
         ("ancgenes", "size"),
-        [],
+        [("ancgenes", "all")],
         (
             [os.path.join(scriptDir, "ALL.filterGeneFamilies-%s.py" % "size"), files["speciestree"], root,
              files["ancgenesdata"] % {"filt": "all", "name": "%s"},
