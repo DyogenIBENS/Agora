@@ -141,7 +141,7 @@ for x in bysections["ancgenes"]:
              files["ancgenesdata"] % {"filt": "all", "name": "%s"},
              files["ancgenesdata"] % {"filt": "size-%s-%s", "name": "%s"}] + [minsize, maxsize],
             os.devnull,
-            files["ancgeneslog"],
+            files["ancgeneslog"] % {"filt": taskname},
             "*" not in x[0]
         )
     )
