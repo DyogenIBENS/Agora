@@ -7,6 +7,7 @@
 # This is free software; you may copy, modify and/or distribute this work under the terms of the GNU General Public License, version 3 or later and the CeCiLL v2 license in France
 
 import os
+import re
 import subprocess
 import sys
 import time
@@ -61,7 +62,7 @@ for x in bysections["files"]:
 # All input paths are relative to the directory of the configuration file
 inputDir = os.path.dirname(arguments["agora.conf"])
 outputDir = arguments["workingDir"]
-inputParams = ["speciestree", "genes"]
+inputParams = ["speciestree", "genes", "genetrees"]
 for f in files:
     files[f] = os.path.normpath(os.path.join(inputDir if f in inputParams else outputDir, files[f]))
 scriptDir = os.path.dirname(os.path.abspath(__file__))
@@ -103,14 +104,39 @@ class TaskList():
 
 
 tasklist = TaskList()
-tasklist.addTask(("ancgenes", "all"), [], (None, None, None, False))
 
 # Ancestral genes lists Section
 ################################
 
 
-ancGenes = {"all": "all", "0": "all"}
+# all ancGenes task - gather nickname and only launch if explicitly requested to (backwards compatibility)
+allname = "all"
+launchall = False
+patternall = re.compile(r'=.*\ball\b')
 for x in bysections["ancgenes"]:
+    if patternall.search(x):
+        x = partition(x, "=")
+        launchall = "*" not in x[0]
+        allname = x[0].replace("*", "").strip()
+
+tasklist.addTask(
+    ("ancgenes", "all"),
+    [],
+    (
+        [os.path.join(scriptDir, "ALL.extractGeneFamilies.py"), files["speciestree"], files["genetrees"],
+            "-OUT.ancGenesFiles=" + files["ancgenesdata"] % {"filt": "all", "name": "%s"}],
+        os.devnull,
+        files["ancgeneslog"] % {"filt": "ancGenes"},
+        launchall,
+    )
+)
+
+ancGenes = {allname: "all", "0": "all"}
+
+# Parse the section
+for x in bysections["ancgenes"]:
+    if patternall.search(x):
+        continue
     x = partition(x, "=")
     (params, root) = partition(x[1], "!")
     if root == "":
