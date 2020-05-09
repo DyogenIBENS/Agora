@@ -243,14 +243,23 @@ for x in bysections.get("integration", []):
         interm[output] = newMethod
 
     # task parameters
-    args = [os.path.join(scriptDir, "buildSynteny.integr-%s.py" % params[0]), files["speciestree"], root] + params[1:] + [
-        "-OUT.ancDiags=" + files["integrblocks"] % {"method": newMethod, "name": "%s"}]
+    args = [os.path.join(scriptDir, "buildSynteny.integr-%s.py" % params[0]), files["speciestree"], root] + params[1:]
+
+    if params[0] == "publish":
+        # "publish" is not an integration method
+        args[0] = os.path.join(scriptDir, "convert.ancGenomes.diags-genes.py")
+        args.append("-OUT.ancGenomes=" + files["ancgenomesoutput"] % {"method": newMethod, "name": "%s"})
+        logfile = files["ancgenomeslog"]
+    else:
+        args.append("-OUT.ancDiags=" + files["integrblocks"] % {"method": newMethod, "name": "%s"})
+        logfile = files["integrlog"]
+
     dep = []
     if dirname is not None:
         dep.append(("pairwise", dirname))
         args.append(files["pairwiseoutput"] % {"filt": dirname, "name": "%s"})
 
-    if params[0] in ["denovo", "groups"]:
+    if params[0] in ["denovo", "groups", "publish"]:
         args.append("-ancGenesFiles=" + files["ancgenesdata"] % {"filt": "all", "name": "%s"})
 
     # No input data to consider for the denovo method
@@ -266,7 +275,7 @@ for x in bysections.get("integration", []):
     if params[0] == "groups":
         args.append("-genesFiles=" + files["genes"] % {"name": "%s"})
 
-    if params[0] != "copy":
+    if params[0] not in ["copy", "publish"]:
         args.append("-LOG.ancGraph=" + files["integroutput"] % {"method": newMethod, "name": "%s"})
 
     # Integration task
@@ -276,10 +285,14 @@ for x in bysections.get("integration", []):
         (
             args,
             os.devnull,
-            files["integrlog"] % {"method": newMethod},
+            logfile % {"method": newMethod},
             tolaunch
         )
     )
+
+    # The publish method doesn't generate integrDiags and can't be used as an input method
+    if params[0] == "publish":
+        newMethod = prevMethod
 
 # Launching tasks in multiple threads
 #####################################
