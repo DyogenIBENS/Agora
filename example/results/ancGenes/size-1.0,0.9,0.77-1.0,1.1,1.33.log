@@ -1,7 +1,7 @@
 --------------------------------------------------------------------------------
 | Key               | Values                                                   |
 --------------------------------------------------------------------------------
-| phylTree.conf     | example/data/Species.conf                                |
+| phylTree.conf     | example/data/Species.nwk                                 |
 | target            | A0                                                       |
 | IN.ancGenesFiles  | example/results/ancGenes/all/ancGenes.%s.list.bz2        |
 | OUT.ancGenesFiles | example/results/ancGenes/size-%s-%s/ancGenes.%s.list.bz2 |

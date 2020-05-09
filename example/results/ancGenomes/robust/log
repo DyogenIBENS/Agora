@@ -1,0 +1,17 @@
+----------------------------------------------------------------------------------------------------------------------------------
+| Key            | Values                                                                                                        |
+----------------------------------------------------------------------------------------------------------------------------------
+| phylTree.conf  | example/data/Species.nwk                                                                                      |
+| target         | A0                                                                                                            |
+| IN.ancDiags    | example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all.groups/diags.%s.list.bz2 |
+| ancGenesFiles  | example/results/ancGenes/all/ancGenes.%s.list.bz2                                                             |
+| OUT.ancGenomes | example/results/ancGenomes/robust/ancGenome.%s.list.bz2                                                       |
+----------------------------------------------------------------------------------------------------------------------------------
+Loading genome of example/results/ancGenes/all/ancGenes.A1.list.bz2 ... (ancestral genes) OK
+Loading genome of example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all.groups/diags.A1.list.bz2 ... (ancestral genome: diags) OK
+Loading genome of example/results/ancGenes/all/ancGenes.A0.list.bz2 ... (ancestral genes) OK
+Loading genome of example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all.groups/diags.A0.list.bz2 ... (ancestral genome: diags) OK
+Loading genome of example/results/ancGenes/all/ancGenes.A3.list.bz2 ... (ancestral genes) OK
+Loading genome of example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all.groups/diags.A3.list.bz2 ... (ancestral genome: diags) OK
+Loading genome of example/results/ancGenes/all/ancGenes.A2.list.bz2 ... (ancestral genes) OK
+Loading genome of example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all.groups/diags.A2.list.bz2 ... (ancestral genome: diags) OK

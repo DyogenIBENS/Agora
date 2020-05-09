@@ -1,9 +1,0 @@
---------------------------------------------------------------------------------------------------------------------------------
-| Key           | Values                                                                                                       |
---------------------------------------------------------------------------------------------------------------------------------
-| phylTree.conf | example/data/Species.conf                                                                                    |
-| target        | A0                                                                                                           |
-| IN.ancDiags   | example/results/integrDiags/denovo-size-custom.refine-all.extend-all.halfinsert-all.groups/diags.%s.list.bz2 |
-| OUT.ancDiags  | example/results/integrDiags/final-multi/diags.%s.list.bz2                                                    |
---------------------------------------------------------------------------------------------------------------------------------
-Time elapsed: 0.118699789047

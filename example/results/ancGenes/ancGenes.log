@@ -1,12 +1,12 @@
 -------------------------------------------------------------------------
 | Key               | Values                                            |
 -------------------------------------------------------------------------
-| phylTree.conf     | example/data/Species.conf                         |
-| proteinTree       | example/data/GeneTreeForest.phylTree.bz2          |
+| phylTree.conf     | example/data/Species.nwk                          |
+| proteinTree       | example/data/GeneTreeForest.nhx.bz2               |
 | OUT.ancGenesFiles | example/results/ancGenes/all/ancGenes.%s.list.bz2 |
 | reuseNames        | False                                             |
 -------------------------------------------------------------------------
-Loading the forest of gene trees example/data/GeneTreeForest.phylTree.bz2 ... 11011 roots, 82031 branches, 93194 nodes OK
+Loading the forest of gene trees example/data/GeneTreeForest.nhx.bz2 ... (NHX format) 11011 roots, 82031 branches, 93194 nodes OK
 Writing families of ancestral genome A1 ... 17339 OK
 Writing families of genome M4 ... 15058 OK
 Writing families of genome M5 ... 17448 OK
