@@ -250,11 +250,11 @@ for x in bysections.get("integration", []):
         dep.append(("pairwise", dirname))
         args.append(files["pairwiseoutput"] % {"filt": dirname, "name": "%s"})
 
-
-    if params[0] == "denovo":
+    if params[0] in ["denovo", "groups"]:
         args.append("-ancGenesFiles=" + files["ancgenesdata"] % {"filt": "all", "name": "%s"})
-    else:
-        # there're input blocks only for not denovo integration ( != "denovo" )
+
+    # No input data to consider for the denovo method
+    if params[0] != "denovo":
         dep.append(("integr", prevMethod))
         args.append("-IN.ancDiags=" + files["integrblocks"] % {"method": prevMethod, "name": "%s"})
 
@@ -264,7 +264,6 @@ for x in bysections.get("integration", []):
         args.append("-REF.ancDiags=" + files["integrblocks"] % {"method": refMethod[newMethod][0], "name": "%s"})
 
     if params[0] == "groups":
-        args.append("-ancGenesFiles=" + files["ancgenesdata"] % {"filt": "all", "name": "%s"})
         args.append("-genesFiles=" + files["genes"] % {"name": "%s"})
 
     if params[0] != "copy":
