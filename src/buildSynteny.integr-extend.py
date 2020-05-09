@@ -48,7 +48,6 @@ def do(anc, diags, sto):
             graph.addLink(*x)
 
     print >> sys.stderr, "Blocs integres de %s ..." % anc,
-    print "NEWANC", anc
 
     # cutting the graph
     graph.cleanGraphTopDown(arguments["minimalWeight"], searchLoops=arguments["searchLoops"])

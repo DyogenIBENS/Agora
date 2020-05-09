@@ -114,7 +114,6 @@ def getAllAdj(anc):
 
 
 def do(anc):
-    print "NEWANC", anc
     allAdj = getAllAdj(anc)
 
     gr = utils.myGraph.WeightedDiagGraph()

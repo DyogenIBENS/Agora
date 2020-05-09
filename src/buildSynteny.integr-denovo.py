@@ -50,7 +50,6 @@ def do(anc, diags, sto):
     graph = utils.myGraph.WeightedDiagGraph()
     for x in diags:
         graph.addLink(*x)
-    print >> sys.stderr, "NEWANC", anc
 
     # Redirect the standard output to a file
     ini_stdout = sys.stdout

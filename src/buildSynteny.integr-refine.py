@@ -420,7 +420,7 @@ def do(anc, pairwiseDiags, sto):
     # Redirect the standard output to a file
     ini_stdout = sys.stdout
     sys.stdout = utils.myFile.openFile(sto, "w")
-    print "newanc", anc
+
     (integr, singletons) = utils.myGraph.loadIntegr(arguments["IN.ancDiags"] % phylTree.fileName[anc])
     newintegr = integr
 
