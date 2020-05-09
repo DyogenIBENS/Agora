@@ -125,7 +125,7 @@ tasklist.addTask(
     (
         [os.path.join(scriptDir, "ALL.extractGeneFamilies.py"), files["speciestree"], files["genetrees"],
             "-OUT.ancGenesFiles=" + files["ancgenesdata"] % {"filt": "all", "name": "%s"}],
-        os.devnull,
+        files["genetreeswithancnames"],
         files["ancgeneslog"] % {"filt": "ancGenes"},
         launchall,
     )
