@@ -6,6 +6,7 @@
 # mail : hrc@ens.fr or alouis@biologie.ens.fr
 # This is free software; you may copy, modify and/or distribute this work under the terms of the GNU General Public License, version 3 or later and the CeCiLL v2 license in France
 
+import multiprocessing
 import os
 import re
 import subprocess
@@ -26,7 +27,7 @@ __doc__ = """
 
 arguments = utils.myTools.checkArgs(
     [("agora.conf", file)],
-    [("workingDir", str, "."), ("nbThreads", int, 1),
+    [("workingDir", str, "."), ("nbThreads", int, multiprocessing.cpu_count()),
      ],
     __doc__)
 
@@ -299,8 +300,6 @@ for x in bysections.get("integration", []):
 
 # Launching tasks in multiple threads
 #####################################
-
-import multiprocessing
 
 manager = multiprocessing.Manager()
 queue = manager.Queue()
