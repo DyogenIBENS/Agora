@@ -66,7 +66,7 @@ sed  s,../example/data/Species.conf,speciesTree.phylTree, ./conf/agora-robust.in
 print_title 'check the agora.py encapsulated script'
 agoraCommandLines=(
 # agora.py
-"src/agora.py tmp/agora-robust.ini -workingDir=tmp"
+"src/agora.py tmp/agora-robust.ini -workingDir=tmp -nbThreads=1"
 )
 
 print_and_run_commands "${agoraCommandLines[@]}"
