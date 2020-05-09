@@ -71,30 +71,11 @@ agoraCommandLines=(
 
 print_and_run_commands "${agoraCommandLines[@]}"
 
-NbAncDiags=`ls tmp/integrDiags/final/diags.* | wc -l`
-
-if [ ${NbAncDiags} != 4 ]
-    then
-        error 'Missing ancestors'
-fi
-
-#########################################
-#	Check integrity of postprocessing   #
-#########################################
-
-print_title 'check the postprocessing script'
-
-mkdir tmp/ancGenomes
-convertAncGenomesCommandLines=(
-"src/convert.ancGenomes.diags-genes.py tmp/speciesTree.phylTree A0 -IN.ancDiags=tmp/integrDiags/final/diags.%s.list.bz2 -OUT.ancGenomes=tmp/ancGenomes/ancGenome.%s.list.bz2 -ancGenesFiles=tmp/ancGenes/all/ancGenes.%s.list.bz2"
-)
-print_and_run_commands "${convertAncGenomesCommandLines[@]}"
-
-NbAncGenomes=`ls tmp/ancGenomes/ancGenome.* | wc -l`
+NbAncGenomes=`ls tmp/ancGenomes/robust/ancGenome.* | wc -l`
 
 if [ ${NbAncGenomes} == 4 ]
     then
-        printf "${green} The ancestral genomes are available in tmp/ancGenomes/${NC}\n"
+        printf "${green} The ancestral genomes are available in tmp/ancGenomes/robust/${NC}\n"
         printf "${green} Everything seems OK! Enjoy AGORA${NC}\n"
     else
         error 'Some ancestral genomes are missing'
