@@ -27,6 +27,7 @@ import utils.myTools
 arguments = utils.myTools.checkArgs(
     [("phylTree.conf", file), ("target", str), ("pairwiseDiags", str)],
     [("minimalWeight", int, 1), ("searchLoops", bool, True), ("onlySingletons", bool, True),
+     ("nbThreads", int, 0),
      ("IN.ancDiags", str, ""), ("OUT.ancDiags", str, ""), ("LOG.ancGraph", str, "extend_log/%s.log.bz2")],
     __doc__
 )
@@ -95,8 +96,7 @@ start = time.time()
 phylTree = utils.myPhylTree.PhylogeneticTree(arguments["phylTree.conf"])
 targets = phylTree.getTargetsAnc(arguments["target"])
 
-n_cpu = multiprocessing.cpu_count()
-# n_cpu = 1
+n_cpu = arguments["nbThreads"] or multiprocessing.cpu_count()
 
 Parallel(n_jobs=n_cpu)(
     delayed(do)(anc, utils.myGraph.loadConservedPairsAnc(arguments["pairwiseDiags"] % phylTree.fileName[anc]),

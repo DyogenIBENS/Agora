@@ -29,6 +29,7 @@ import utils.myTools
 arguments = utils.myTools.checkArgs(
     [("phylTree.conf", file), ("target", str), ("IN.pairwiseDiags", str)],
     [("IN.ancDiags", str, ""), ("OUT.ancDiags", str, ""), ("REF.ancDiags", str, ""), ("LOG.ancGraph", str, "halfinsert_log/%s.log.bz2"),
+     ("nbThreads", int, 0),
      ("selectionFunction", str, "newscore/float(oldscore)")],
     __doc__
 )
@@ -224,8 +225,7 @@ def loadPairwise(anc):
     return pairwiseDiags
 
 
-n_cpu = multiprocessing.cpu_count()
-#n_cpu = 1
+n_cpu = arguments["nbThreads"] or multiprocessing.cpu_count()
 Parallel(n_jobs=n_cpu)(delayed(do)(anc, loadPairwise(anc), arguments["LOG.ancGraph"] % phylTree.fileName[anc]) for anc in targets)
 
 print >> sys.stderr, "Elapsed time:", (time.time() - start)

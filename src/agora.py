@@ -80,16 +80,16 @@ class TaskList():
     def __len__(self):
         return len(self.list)
 
-    def addTask(self, name, dep, data):
+    def addTask(self, name, dep, data, multithreaded=False):
         print "New task", len(self.list), name
         print dep
         print data
         print
         self.dic[name] = len(self.list)
-        self.list.append((set(self.dic[x] for x in dep), data))
+        self.list.append((set(self.dic[x] for x in dep), data, multithreaded))
 
     def removeDep(self, i):
-        for (dep, _) in self.list:
+        for (dep, _, _) in self.list:
             dep.discard(i)
 
     def getAvailable(self):
@@ -278,6 +278,8 @@ for x in bysections.get("integration", []):
     if params[0] not in ["copy", "publish"]:
         args.append("-LOG.ancGraph=" + files["integroutput"] % {"method": newMethod, "name": "%s"})
 
+    multithreaded = params[0] not in ["groups", "publish"]
+
     # Integration task
     tasklist.addTask(
         ("integr", newMethod),
@@ -287,7 +289,8 @@ for x in bysections.get("integration", []):
             os.devnull,
             logfile % {"method": newMethod},
             tolaunch
-        )
+        ),
+        multithreaded
     )
 
     # The publish method doesn't generate integrDiags and can't be used as an input method
@@ -304,6 +307,7 @@ queue = manager.Queue()
 
 nrun = 0
 proc = {}
+nthreads = {}
 completed = 0
 failed = 0
 
@@ -323,7 +327,7 @@ def joinnext():
     else:
         failed += 1
     global nrun
-    nrun -= 1
+    nrun -= nthreads[next]
 
 
 # Launch  program function
@@ -360,12 +364,18 @@ while (completed + failed) < len(tasklist):
                 break
             joinnext()
         else:
-            (next, dep, (args, out, log, launch)) = todo
+            (next, dep, (args, out, log, launch), multithreaded) = todo
             print ("Launching" if launch else "Skipping"), next, args, ">", out, "2>", log
             if launch:
+                if multithreaded:
+                    nthreads[next] = arguments["nbThreads"] - nrun
+                    args.append("-nbThreads=%d" % nthreads[next])
+                    print "Using", nthreads[next], "threads"
+                else:
+                    nthreads[next] = 1
                 proc[next] = multiprocessing.Process(target=golaunch, args=(next, args, out, log))
                 proc[next].start()
-                nrun += 1
+                nrun += nthreads[next]
             else:
                 tasklist.removeDep(next)
                 completed += 1

@@ -44,6 +44,7 @@ import utils.myTools
 arguments = utils.myTools.checkArgs(
     [("phylTree.conf", file), ("target", str), ("pairwiseDiags", str)],
     [("IN.ancDiags", str, ""), ("OUT.ancDiags", str, ""), ("LOG.ancGraph", str, "refine_log/%s.log.bz2"),
+     ("nbThreads", int, 0),
      ("minimalWeight", int, 1), ("mustExtend", bool, False), ("loop", bool, False), ("timeout", int, 150),
      ("func", str, "0,32|100,40t|10000")],
     __doc__
@@ -697,8 +698,7 @@ def loadPairwise(file):
 print >> sys.stderr, targets
 alltime = 0.
 
-n_cpu = multiprocessing.cpu_count()
-# n_cpu = 1
+n_cpu = arguments["nbThreads"] or multiprocessing.cpu_count()
 
 Parallel(n_jobs=n_cpu)(
     delayed(do)(anc, loadPairwise(arguments["pairwiseDiags"] % phylTree.fileName[anc]), arguments["LOG.ancGraph"] % phylTree.fileName[anc]) for

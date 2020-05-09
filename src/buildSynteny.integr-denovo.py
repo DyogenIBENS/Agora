@@ -35,6 +35,7 @@ arguments = utils.myTools.checkArgs(
      ("LOG.ancGraph", str, "denovo_log/%s.log.bz2"),
      ("OUT.ancDiags", str, "anc/diags.%s.list.bz2"),
      ("ancGenesFiles", str, ""),
+     ("nbThreads", int, 0),
      ],
     __doc__
 )
@@ -97,8 +98,7 @@ targets = phylTree.getTargetsAnc(arguments["target"])
 
 print >> sys.stderr, targets
 
-n_cpu = multiprocessing.cpu_count()
-# n_cpu = 1
+n_cpu = arguments["nbThreads"] or multiprocessing.cpu_count()
 
 Parallel(n_jobs=n_cpu)(
     delayed(do)(anc, utils.myGraph.loadConservedPairsAnc(arguments["pairwiseDiags"] % phylTree.fileName[anc]),

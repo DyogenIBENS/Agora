@@ -22,7 +22,7 @@ import utils.myTools
 
 # Arguments
 arguments = utils.myTools.checkArgs([("phylTree.conf", file), ("target", str)],
-                                    [("IN.ancDiags", str, ""), ("OUT.ancDiags", str, "")],
+                                    [("IN.ancDiags", str, ""), ("OUT.ancDiags", str, ""), ("nbThreads", int, 0)],
                                     __doc__
                                     )
 
@@ -40,7 +40,6 @@ def do(anc):
     fi.close()
 
 
-n_cpu = multiprocessing.cpu_count()
-# n_cpu = 1
+n_cpu = arguments["nbThreads"] or multiprocessing.cpu_count()
 Parallel(n_jobs=n_cpu)(delayed(do)(anc) for anc in targets)
 print >> sys.stderr, "Time elapsed:", time.time() - start
