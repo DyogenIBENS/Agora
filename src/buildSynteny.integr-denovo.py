@@ -45,7 +45,7 @@ def do(anc, diags, sto):
     g = utils.myGenomes.Genome(arguments["ancGenesFiles"] % phylTree.fileName[anc], withDict=False).lstGenes
     singletons = set(xrange(len(g[None]))) if None in g else set(g)
 
-    print >> sys.stderr, "Integrated blocs of %s ..." % anc
+    print >> sys.stderr, "Integrated blocs of %s ..." % anc,
 
     graph = utils.myGraph.WeightedDiagGraph()
     for x in diags:
@@ -81,6 +81,7 @@ def do(anc, diags, sto):
     for x in singletons:
         print >> f, utils.myFile.myTSV.printLine([anc, 1, x, 1, ""])
     f.close()
+    print >> sys.stderr, "OK"
     print >> sys.stderr, anc,  utils.myMaths.myStats.syntheticTxtSummary(s), "+ %d singletons OK" % len(singletons)
 
     # Revert to the true standard output

@@ -65,7 +65,7 @@ for esp in listSpecies:
 			if anc not in genesAnc:
 				genesAnc[anc] = utils.myGenomes.Genome(arguments["ancGenesFiles"] % phylTree.fileName[anc])
 			lanc.append((anc, genesAnc[anc].dicGenes))
-	print >> sys.stderr, "Extraction of pairs of genes from %s " % esp,
+	print >> sys.stderr, "Extraction of pairs of genes from %s " % esp, "...",
 	
 	for chrom in genome.chrList[utils.myGenomes.ContigType.Chromosome] + genome.chrList[utils.myGenomes.ContigType.Scaffold]:
 		chrom = genome.lstGenes[chrom]
@@ -97,6 +97,8 @@ for esp in listSpecies:
 					modPair = ((gm2[0],-gm2[1]), (gm1[0],-gm1[1]))
 				dicAncMod[anc][item][ancPair].append((esp,modPair))
 				dicModAnc[modPair].append( (anc,ancPair) )
+
+	print >> sys.stderr, "OK"
 
 print >> sys.stderr, "time for task1", time.time() - start
 start = time.time()
