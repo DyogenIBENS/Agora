@@ -77,7 +77,7 @@ class GraphContainer:
     def __init__(self, lstIniPairwise=[]):
 
         if len(lstIniPairwise) > 0:
-            print "graphcall", "begin", len(lstIniPairwise), time.clock()
+            print "graphcall", "begin", len(lstIniPairwise)
 
         als = self.allSucc = collections.defaultdict(set)
         alp = self.allPred = collections.defaultdict(set)
@@ -104,7 +104,7 @@ class GraphContainer:
                 alp[t].update(alpg1)
 
         if len(lstIniPairwise) > 0:
-            print "graphcall", "end", len(lstIniPairwise), time.clock()
+            print "graphcall", "end", len(lstIniPairwise)
 
     def findPairwise(self, gfrom, gto, lstPairwise):
 
@@ -389,7 +389,7 @@ def bestPath44(*args):
 # Rajoute les pairwise qui commencent en "start" ou finissent en "end"
 ########################################################################
 def prepareGraph(pairwiseDiags, singletons, graphData, start, end):
-    print "preparecall", start, end, time.clock()
+    print "preparecall", start, end
     newPairwise = []
     startlink = set([start])
     endlink = set([end])
@@ -421,13 +421,12 @@ def do(anc, pairwiseDiags, sto):
     ini_stdout = sys.stdout
     sys.stdout = utils.myFile.openFile(sto, "w")
     print "newanc", anc
-    print "in ancGene", arguments["IN.ancDiags"]
     (integr, singletons) = utils.myGraph.loadIntegr(arguments["IN.ancDiags"] % phylTree.fileName[anc])
     newintegr = integr
 
     while len(integr) > 0:
 
-        print "loop", time.clock()
+        print "loop"
         nsing = len(singletons)
 
         print >> sys.stderr, "Building graphs ...",
@@ -439,7 +438,7 @@ def do(anc, pairwiseDiags, sto):
                 for (g2, s) in l.iteritems():
                     if g2[0] in singletons:
                         commonPairwise.append((s, g1, g2))
-        print "commonpairwise", len(commonPairwise), time.clock()
+        print "commonpairwise", len(commonPairwise)
 
         # La structure de graphe de base
         sp = GraphContainer(commonPairwise)
@@ -492,8 +491,7 @@ def do(anc, pairwiseDiags, sto):
             end = integr[interv[0]][0][interv[1] + 1]
             lstPairwise = goodPairwise[interv]
 
-            # print "searchcall", "%d/%d" % interv, start, end, time.clock()
-            print len(lstPairwise), interv, "pairs", lstPairwise
+            print "searchcall", "%d/%d" % interv, start, end, "pairs", len(lstPairwise), lstPairwise
 
             if len(lstPairwise) >= maxsize:
                 print "toobig"
@@ -505,7 +503,7 @@ def do(anc, pairwiseDiags, sto):
                         if len(lstPairwise) >= size:
                             break
                     if thread:
-                        print "with thread", time.clock()
+                        print "with thread"
                         p = multiprocessing.Process(target=bestPathInQueue, args=(f, (start, end, lstPairwise)))
                         p.start()
                         st = time.time()
@@ -521,7 +519,7 @@ def do(anc, pairwiseDiags, sto):
                         st = time.clock()
                         r = f(start, end, lstPairwise)
                         et = time.clock()
-                    print "duration", et - st
+                    # print "duration", et - st
                     global alltime
                     alltime += (et - st)
 
