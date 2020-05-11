@@ -94,7 +94,7 @@ class ProteinTree:
             if node in self.data:
                 return "(" + ",".join(
                         rec(g)
-                        + ((":%f" % l) if withDist else "")
+                        + ((":%g" % l) if withDist else "")
                         + ("[&&NHX:" + ":".join(("%s=%s" % ((NHX[tag],self.info[g][tag]) if tag!="Duplication" else (NHX[tag],"N" if self.info[g][tag]== 0 else "Y"))).replace(" ", ".") for tag in NHX if tag in self.info[g]) + "]" if withTags else "")
                         for (g,l) in self.data[node]
                 ) + ")" + (self.info[node]["taxon_name"].replace(' ', '.') if withAncSpeciesNames and ("taxon_name" in self.info[node]) else '')+(self.info[node]['family_name'].split("/")[0]if withAncGenesNames and ("taxon_name" in self.info[node]) else '')
