@@ -150,14 +150,16 @@ class PhylogeneticTree:
 
         print >> stream, " OK"
 
-    def __init__(self, file, skipInit=False, stream=open(os.devnull, 'w')):
+    def __init__(self, file=None, skipInit=False, stream=open(os.devnull, 'w')):
         if type(file) == tuple:
             print >> stream, "Creation of the phylogenetic tree ...",
             (self.items, self.root, self.officialName) = file
         else:
-            print >> stream, "Loading phylogenetic tree %s ..." % file,
             self.officialName = {}
             self.items = self.newCommonNamesMapperInstance()
+            if file is None:
+                return
+            print >> stream, "Loading phylogenetic tree %s ..." % file,
             # name and instance of file
             f = myFile.openFile(file, 'r')
             try:

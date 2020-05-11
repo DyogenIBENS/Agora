@@ -452,8 +452,9 @@ def loadNHXTree(f):
             #Do nothing : empty line
             continue
         elif line.find(";\n"):
-            tree = myPhylTree.PhylogeneticTree(cStringIO.StringIO(line))
             proteinTree = ProteinTree()
+            tree = myPhylTree.PhylogeneticTree(None)
+            tree.__loadFromNewick__(line)
             proteinTree.root = convertNodeRec(tree, proteinTree, tree.root)
             proteinTree.info[proteinTree.root]["tree_name"] = "Fam%06d" % ns.ntree
             ns.ntree += 1
