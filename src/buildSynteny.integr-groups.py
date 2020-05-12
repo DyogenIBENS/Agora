@@ -171,7 +171,7 @@ def do(anc):
 phylTree = utils.myPhylTree.PhylogeneticTree(arguments["phylTree.conf"])
 
 targets = phylTree.getTargetsAnc(arguments["target"])
-listSpecies = phylTree.getTargetsSpec(arguments["usedSpecies"])
+listSpecies = phylTree.getTargetsSpec(arguments["target"] if arguments["usedSpecies"] == "_" else arguments["usedSpecies"])
 
 dicGenomes = {}
 for e in listSpecies:
