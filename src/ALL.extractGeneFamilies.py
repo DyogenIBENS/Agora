@@ -104,7 +104,7 @@ def extractGeneFamilies(node, baseName, previousAnc, lastWrittenAnc):
 geneFamilies = collections.defaultdict(list)
 for tree in utils.myProteinTree.loadTree(arguments["proteinTree"]):
     extractGeneFamilies(tree.root, tree.info[tree.root]["tree_name"], None, None)
-    utils.myProteinTree.printTree(sys.stdout, tree.data, tree.info, tree.root)
+    tree.printTree(sys.stdout)
 
 for (anc, lst) in geneFamilies.iteritems():
     if anc in phylTree.listSpecies:
