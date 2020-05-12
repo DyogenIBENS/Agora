@@ -38,6 +38,10 @@ Email hrc {at} ens {dot} fr or alouis {at} ens {dot} fr
 
 ## Installation
 
+To simplify deployment, AGORA already embeds the version 1.0 (6/11/2015) of
+[LibsDyogen](https://github.com/DyogenIBENS/LibsDyogen), a Python library
+for bioinformatics and comparative genomics developed by the same group.
+
 AGORA is written in Python 2 and is currently not compatible with Python 3.
 You can install a Python 2 environment with all the dependencies with
 [_conda_](https://docs.conda.io/)
