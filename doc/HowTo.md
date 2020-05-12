@@ -86,51 +86,34 @@ To reconstruct ancestral gene orders, AGORA needs 3 kinds of files (see
 
 ### Species tree
 
-The species tree can be in either Newick or _PhylTree_ format.
-The PhylTree format is a
-human readable format of trees developed specifically for AGORA, based
-on tabulations. See the example species tree:
+The species tree is expected in Newick format. See the example species tree:
 
 * [`example/data/Species.nwk`](../example/data/Species.nwk) -- Newick format
-* [`example/data/Species.conf`](../example/data/Species.conf) -- PhylTree format
 * [`example/data/Species.pdf`](../example/data/Species.pdf) -- Graphical representation
 
 &#9888; **Warning**: Internal labels (e.g. "Amniota" or "Anc659123") have to be unique as
 they are used to refer to ancestors and name files !
 
-### The forest of gene trees
+### Gene trees
 
-The forest of gene trees can be either in NHX or PhylTree format.
+AGORA expects the gene trees to be in NHX format with the following keys:
+
+1. `S` gives the taxon name, which must exist in the species tree
+2. `D` indicates the type of the node:
+   * `D=N` for speciation nodes
+   * `D=Y` for duplication nodes, which can be marked as "dubious" with an extra `DD=Y`
 
 See an example family:
 
 * [`example/data/Family1.nhx`](../example/data/Family1.nhx) -- NHX format
-* [`example/data/Family1.phylTree`](../example/data/Family1.phylTree) -- PhylTree format
 * [`example/data/Family1.pdf`](../example/data/Family1.pdf) -- Graphical representation
 
-AGORA cares about:
-
-1. The speciation / duplication annotations
-   * `D` and `DD` keys in NHX tags
-     * `D=Y` indicates a duplication, which is further marked as "dubious"
-       if `DD=Y`
-     * `D=N` or `D` not set indicate a speciation
-   * `Duplication` key in PhylTree files. 0 and 1 indicate speciations and
-     dubious duplications, values higher or equal to 2 indicate
-     well-supported duplications
-2. The taxon annotation that comes from the reconciliation with the
-   species tree:
-   * `S` key in NHX annotations
-   * `taxon_name` key in PhylTree files
-3. Gene names:
-   * `gene_name` key in PhylTree files
 
 The forest file is merely the concatenation of all the families. See the example forest:
 
 * [`example/data/GeneTreeForest.nhx.bz2`](../example/data/GeneTreeForest.nhx.bz2) -- NHX format
-* [`example/data/GeneTreeForest.phylTree.bz2`](../example/data/GeneTreeForest.phylTree.bz2) -- PhylTree format
 
-### The gene lists of extant genomes
+### Gene lists
 
 The _genes_ files used by AGORA contain the list of genes on each extant
 genome. The format is tab-separated values, in 5 mandatory columns (the
