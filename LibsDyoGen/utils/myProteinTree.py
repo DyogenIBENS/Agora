@@ -475,15 +475,17 @@ def loadTree(name):
     f.seek(0)
 
     if (';' in firstLine) or ('(' in firstLine):
-        print >> sys.stderr, "(NHX format)",
+        tree_format = "NHX"
         loader = loadNHXTree(f)
     else:
-        print >> sys.stderr, "(phylTree format)",
+        tree_format = "phylTree"
         loader = loadPhylTreeTree(f)
+    print >> sys.stderr, "(%s format)" % tree_format,
 
     # Load and count the trees
     n = (0, 0, 0)
     for tree in loader:
+        tree.info[tree.root]["format"] = tree_format
         n = (n[0]+1, n[1]+len(tree.data), n[2]+len(tree.info)-len(tree.data))
         yield tree
     print >> sys.stderr, "%d roots, %d branches, %d nodes OK" % n
