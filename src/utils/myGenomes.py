@@ -11,7 +11,7 @@ import itertools
 import collections
 import enum
 
-import myFile
+from . import myFile
 
 Gene = collections.namedtuple("Gene", ['chromosome', 'beginning', 'end', 'strand', 'names'])
 GenePosition = collections.namedtuple("GenePosition", ['chromosome', 'index'])

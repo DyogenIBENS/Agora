@@ -10,7 +10,7 @@ import random
 import sys
 import math
 import operator
-import myTools
+from . import myTools
 import bisect
 import numpy as np
 

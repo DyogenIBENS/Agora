@@ -9,9 +9,9 @@
 import sys
 import collections
 
-import myPhylTree
-import myTools
-import myFile
+from . import myPhylTree
+from . import myTools
+from . import myFile
 
 # Manage gene trees in the form of (data,info)
 

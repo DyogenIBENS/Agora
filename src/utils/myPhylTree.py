@@ -11,7 +11,7 @@ import sys
 import itertools
 import collections
 
-import myFile
+from . import myFile
 
 SYMBOL6X = '.'
 SYMBOL2X = '*'

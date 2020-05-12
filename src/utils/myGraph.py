@@ -16,10 +16,10 @@ import sys
 
 import enum
 
-import myFile
-import myGenomes
-import myMaths
-import myTools
+from . import myFile
+from . import myGenomes
+from . import myMaths
+from . import myTools
 
 
 OrthosFilterType = enum.Enum('None', 'InCommonAncestor', 'InBothSpecies')

@@ -20,7 +20,7 @@ import enum
 from functools import wraps
 from collections import OrderedDict, Callable
 
-import myFile
+from . import myFile
 
 null = open(os.devnull, 'w')
 
