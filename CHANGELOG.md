@@ -1,3 +1,12 @@
+## 2020-05-13 - v1.3
+
+1. [change] -- Moved the _LibsDyoGen_ inside `scripts/utils/`
+2. [change] -- `buildSynteny.integr-groups.py` now accepts `_` as a value
+   for the `usedSpecies` parameter and interprets it as the same value as
+   the `target` parameter.
+3. [change] -- `ALL.extractGeneFamilies.py` now outputs trees in the same
+   format as the input trees
+
 ## 2020-05-10 - v1.2
 
 1. [bugfix] -- `agora.py` now makes the script it launches follow the

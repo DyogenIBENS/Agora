@@ -1,4 +1,4 @@
-# AGORA v1.2 (2020-05-10)
+# AGORA v1.3 (2020-05-13)
 
 ## Introduction
 
