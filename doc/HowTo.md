@@ -9,18 +9,21 @@ DYOGEN Laboratory, Institut de Biologie de l'École Normale Supérieure
 
 **Table of contents:**
 
-* [History](#history)
-* [What AGORA does and does not do](#what-agora-does-and-does-not-do)
+* [Introduction](#introduction)
+  * [History](#history)
+  * [What AGORA does and does not do](#what-agora-does-and-does-not-do)
 * [Input file formats](#input-file-formats)
 * [Running AGORA](#running-agora)
   * [AGORA with no selection of robust families](#agora-with-no-selection-of-robust-families)
   * [AGORA with selection of robust families](#agora-with-selection-of-robust-families)
   * [AGORA with multiple selection of robust families](#agora-with-multiple-selection-of-robust-families)
-* [Output format and post-processing scripts](#output-format-and-post-processing-scripts)
+* [Output file formats](#output-file-formats)
 
 ----
 
-## History
+## Introduction
+
+### History
 
 AGORA stands for "Algorithm for Gene Order Reconstruction in Ancestors"
 and was developed by Matthieu Muffato during his PhD (2007-2010) in the
@@ -33,26 +36,24 @@ in French [(Muffato 2010)](https://www.biblio.univ-evry.fr/theses/2010/2010EVRY0
 and the core algorithm used to build and linearise the adjacency graph is
 described in a separate study [(Berthelot et al 2015)](https://www.cell.com/cell-reports/pdfExtended/S2211-1247\(15\)00204-1).
 
-## What AGORA does and does not do
+### What AGORA does and does not do
 
-AGORA takes as input a set of extant gene lists, ordered by chromosome
-(or scaffolds), a species tree linking the genomes, and phylogenetic
-gene trees reconciled with the species tree. It will produce linear
-ancestral gene orders (with transcriptional orientation) at all the
-nodes of the species tree. This may result in very long successive
+AGORA takes as input a set of extant gene lists,
+a species tree linking the genomes, and phylogenetic
+gene trees reconciled with the species tree. It can produce linear
+ancestral gene orders (with transcriptional orientation) at any
+node of the species tree. This may result in very long successive
 ancestral adjacencies or CARs (Contiguous Ancestral Regions) if the data
 allows it (e.g. closely related extant genomes with contiguous sequence
 assemblies) or very short ones if the data does not allow it (e.g. extant
 genes distributed in short scaffolds, or very rearranged extant
 genomes).
 
-AGORA does not:
+AGORA does not reconstruct:
 
-* Reconstruct ancestral nucleotide or protein sequences.
-* Reconstruct circular chromosomes (*)
-
-(*) The only exception is the mitochondrial genome, which has a canonical
-way of being represented in a linear fashion.
+* ancestral nucleotide and protein sequences,
+* circular chromosomes, unless they are canonically represented in a
+  linear fashion like the mitochondrial genome.
 
 AGORA can be run in two modes. The first and simplest uses all possible
 adjacencies found in extant genomes to reconstruct ancestral
@@ -64,12 +65,15 @@ sensitive to errors in gene trees. A second, more complex version first
 identifies "robust" gene familes, on the basis of a user-defined
 criterion. Typically this can be a requirement that there are as many
 genes on a tree as there are species, thus limiting the chances that
-duplications have occurred. AGORA will first build a temporary ancestral
+duplications have occurred. AGORA first builds a temporary ancestral
 genome with these genes (ignoring all other families) as a robust
-backbone. Then, it will use remaining gene families to fill in the space
+backbone. Then, it use remaining gene families to fill in the space
 between robust genes, but without breaking a chain of robust genes.
 
 In this HowTo, all the paths are relative to the root of the repository.
+The individual script commands usually complete within seconds on the
+example dataset, using less than 300 MB of memory, while the complete
+reconstructions themselves take between 30 seconds and 1 minute.
 
 ## Input file formats
 
@@ -79,9 +83,9 @@ To reconstruct ancestral gene orders, AGORA needs 3 kinds of files (see
 * A species tree, e.g. [`example/data/Species.nwk`](../example/data/Species.nwk)
 * A set of extant gene trees reconciled with the species tree, e.g.
   [`example/data/GeneTreeForest.nhx.bz2`](../example/data/GeneTreeForest.nhx.bz2).
-  Extant genes that are not in a tree will not be used for gene order reconstruction.
-* The order of extant genes in each extant genomes, e.g.
-  [`example/data/genes/genes.M1.list.bz2`](../example/data/genes/genes.M1.list.bz2)
+* The list and positions of the genes of each extant genomes, e.g.
+  [`example/data/genes/genes.M1.list.bz2`](../example/data/genes/genes.M1.list.bz2).
+  Extant genes that are not in a tree are **not** used for gene order reconstruction.
 
 ### Species tree
 
@@ -89,6 +93,9 @@ The species tree is expected in Newick format. See the example species tree:
 
 * [`example/data/Species.nwk`](../example/data/Species.nwk) -- Newick format
 * [`example/data/Species.pdf`](../example/data/Species.pdf) -- Graphical representation
+
+Only the node names matter, as they are used to match extant genomes and name
+the ancestral genomes.
 
 &#9888; **Warning**: Internal labels (e.g. "Amniota" or "Anc659123") have to be unique as
 they are used to refer to ancestors and name files !
@@ -132,7 +139,9 @@ coordinates can be 0-based or 1-based, inclusive or not, etc, as long as
 the same convention is used throughout each file.
 
 &#9888; **Warning**: The gene identifiers have to be consistent with the
-ones used in the gene trees. The genes files must be named consistently
+ones used in the gene trees.
+
+&#9888; **Warning**: The genes files must be named consistently
 with the names of the species in the species tree, using the format `prefix.species_name.suffix`.
 
 For example, if the species in the species tree are: `HUMAN`, `MOUSE`, `DOG`,
@@ -150,7 +159,7 @@ genes files have to be named:
 * `prefix.Canis.familiaris.suffix`
 
 In [`example/data`](../example/data), the five species named in the [species-tree](../example/data/Species.nwk)
-are `M1`, `M2`, `M3`, `M4`,, and `M5`, and the genes files are named [`genes.M1.list.bz2`](../example/data/genes/genes.M1.list.bz2), etc.
+are `M1`, `M2`, `M3`, `M4`, and `M5`, and the genes files are named [`genes.M1.list.bz2`](../example/data/genes/genes.M1.list.bz2), etc.
 
 ## Running AGORA
 
@@ -158,8 +167,8 @@ are `M1`, `M2`, `M3`, `M4`,, and `M5`, and the genes files are named [`genes.M1.
 
 ![](agora.jpg)
 
-The AGORA method is wrapped up in a script named `agora.py`, which will
-run all the steps of the reconstructions according to a configuration file.
+The AGORA method is wrapped up in a script named `agora.py`, which
+runs all the steps of the reconstructions according to a configuration file.
 
 The reconstruction itself can be perfomed with different approaches,
 explained below, and the output is a set of CARs.
@@ -170,11 +179,11 @@ AGORA comes with three different configuration files of increasing complexity:
   * [AGORA with multiple selection of robust families](#agora-with-multiple-selection-of-robust-families)
 
 
-# TODO move to Step by step
+#### Notes
 
 All AGORA scripts automatically creates the necessary output directories given to them
 as command line arguments. This excludes standard output / error shell
-redirections, which should still point at valid paths.
+redirections, which must still be valid paths.
 
 AGORA supports several compression formats for input and output files:
 
@@ -190,9 +199,9 @@ Compression is also supported on the standard output by adding `+gz`, `+bz2`,
 
 ### AGORA with no selection of robust families
 
-This is the simplest way of running AGORA. It will compare all extant
-genomes pairwise to extract conserved adjacencies, generate the ancestral
-adjacency graphs and linearise them to produce CARs.
+This is the simplest and quickest reconstruction. AGORA compares all extant
+genomes pairwise to extract conserved adjacencies, generates the ancestral
+adjacency graphs and linearises them to produce CARs.
 
 > AGORA workflow with no selection of robust families
 
@@ -223,8 +232,8 @@ To regenerate the reference output of the example dataset, simply run:
 src/agora.py conf/agora.ini -workingDir=example/results -nbThreads=1
 ```
 
-By default, AGORA uses all the cores available on the machine. Add
-the `-nbThreads=XX` option to change the number of cores to be used.
+By default, AGORA uses all the cores available on the machine. Use
+the `-nbThreads=XX` option to change this.
 
 #### Step by step
 
@@ -255,8 +264,8 @@ src/ALL.extractGeneFamilies.py \
 
 Be careful to provide the correct path to write the _ancGenes_ files
 (`ancGenes/all/ancGenes.%s.list.bz2`), it will be important if you use
-AGORA on _robust_ family in a second step (see article). The `%s` will
-be automatically replaced by the extant and ancestral species name, as
+AGORA on _robust_ family in a second step (see article). The `%s` is
+automatically replaced by the extant and ancestral species name, as
 indicated in the species tree.
 
 ancGenes files are tab-separated files, with the following two fields:
@@ -272,7 +281,7 @@ than the forest of gene trees.
 
 ##### Pairwise comparisons
 
-This step will compare extant genomes in all possible pairwise
+This step compares extant genomes in all possible pairwise
 combinations to identify conserved adjacencies.
 
 ```bash
@@ -288,7 +297,7 @@ src/buildSynteny.pairwise-conservedPairs.py \
 
 ##### Graph linearisation
 
-This step will integrate all the pairwise comparisons identified above
+This step integrates all the pairwise comparisons identified above
 for each ancestor and combine them into adjacency graphs, from which
 a first set of CARs are derived.
 
@@ -328,6 +337,26 @@ src/buildSynteny.integr-groups.py \
   2> example/results/integrDiags/denovo-all.groups/log
 ```
 
+##### Conversion to ancestral genomes
+
+The previous script outputs the ancestral reconstructions as _diags_ files
+There is a last script to convert these files to a format very similar to
+the input _genes_ files, named _ancGenomes_:
+
+```bash
+mkdir -p example/results/ancGenomes/standard
+src/convert.ancGenomes.diags-genes.py \
+  example/data/Species.nwk \
+  A0 \
+  -IN.ancDiags=example/results/integrDiags/denovo-all.groups/diags.%s.list.bz2 \
+  -OUT.ancGenomes=example/results/ancGenomes/standard/ancGenome.%s.list.bz2 \
+  -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
+  2> example/results/ancGenomes/standard/log
+```
+
+More information about these files in [Output file formats](#output-file-formats)
+below.
+
 ### AGORA with selection of robust families
 
 This approach builds ancestral adjacencies considering a subset of
@@ -339,15 +368,15 @@ ancestral genes.
 
 ![](agora_robust.jpg)
 
-From the complete list of ancestral genes, AGORA will identify a subset
+From the complete list of ancestral genes, AGORA identifies a subset
 of robust genes according to a user-defined criterion.
-It will compare all extant genomes pairwise (considering all genes and
+It compares all extant genomes pairwise (considering all genes and
 robust genes separately), build the adjacency graphs on the comparisons
 of robust genes and
-linearise them to obtain robust contigs. It will then _fill in_ the robust
-contigs with non-robust genes, build contigs of non-robust
-genes (_non-robust families fusion_) and insert these in the filled-in robust
-contigs (_single side junction_). Finally it will assemble the resulting
+linearise them to obtain robust contigs. It then _fills these in_
+with non-robust genes, builds contigs of non-robust
+genes (_non-robust families fusion_) and inserts these in the filled-in robust
+contigs (_single side junction_). Finally it assembles the resulting
 contigs (block assembly) into Contiguous Ancestral Regions (CARs).
 
 #### All in one: `agora-robust.py`
@@ -380,12 +409,12 @@ src/agora.py conf/agora-robust.ini -workingDir=example/results -nbThreads=1
 
 ##### Selection of robust genes
 
-This script will filter the complete set of ancestral genes and select the
+This script filters the complete set of ancestral genes and selects the
 ones that match the required number of extant genes (relative to the number
 of extant species.
 
 &#9888; **Warning**: this assumes you have already extracted the ancestral
-genes from the gene trees (see above).
+genes from the gene trees (see running AGORA with no selection of robust families).
 
 ```bash
 src/ALL.filterGeneFamilies-size.py \
@@ -431,8 +460,8 @@ src/buildSynteny.pairwise-conservedPairs.py \
 
 ##### Graph linearisation
 
-This step will integrate all the pairwise comparisons of robust genes
-identified above for each ancestor and combine them into adjacency graphs,
+This step integrates all the pairwise comparisons of robust genes
+identified above for each ancestor and combines them into adjacency graphs,
 from which a first set of CARs are derived.
 
 ```bash
@@ -449,7 +478,7 @@ src/buildSynteny.integr-denovo.py \
 
 ##### Fill-in
 
-This step will insert non-robust genes in each interval of the ancestral contigs,
+This step inserts non-robust genes in each interval of the ancestral contigs,
 following paths in the complete ancestral adjacency graph.
 
 ```bash
@@ -466,8 +495,8 @@ src/buildSynteny.integr-refine.py \
 
 ##### Non-robust families fusion
 
-This step will take all the remaining singletons, which
-are mostly non-robust genes, and try to assemble them into contigs.
+This step takes all the remaining singletons, which
+are mostly non-robust genes, and tries to assemble them into contigs.
 
 ```bash
 mkdir -p example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all
@@ -483,7 +512,7 @@ src/buildSynteny.integr-extend.py \
 
 ##### Single-side junction
 
-This step will insert the contigs of non-robust families created above and insert them in the CARs.
+This step inserts the contigs of non-robust families created above and inserts them in the CARs.
 
 ```bash
 mkdir -p example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all
@@ -500,7 +529,7 @@ src/buildSynteny.integr-halfinsert.py \
 
 ##### Block assembly
 
-Like in non-robust mode, this step will do pairwise comparisons and a graph linearisation
+Like in non-robust mode, this step does pairwise comparisons and a graph linearisation
 of the CARs themselves, which allows finding higher-level adjacencies.
 
 &#9888; **Warning**: Here as well the underscore `_` must be given.
@@ -518,6 +547,24 @@ src/buildSynteny.integr-groups.py \
   -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
   2> example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all.groups/log
 ```
+
+##### Conversion to ancestral genomes
+
+This step converts the _diags_ files to _ancGenomes_:
+
+```bash
+mkdir -p example/results/ancGenomes/robust
+src/convert.ancGenomes.diags-genes.py \
+  example/data/Species.nwk \
+  A0 \
+  -IN.ancDiags=example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all.groups/diags.%s.list.bz2 \
+  -OUT.ancGenomes=example/results/ancGenomes/robust/ancGenome.%s.list.bz2 \
+  -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
+  2> example/results/ancGenomes/robust/log
+```
+
+More information about these files in [Output file formats](#output-file-formats)
+below.
 
 ### AGORA with multiple selection of robust families
 
@@ -565,6 +612,7 @@ src/buildSynteny.integr-denovo.py \
   -LOG.ancGraph=example/results/integrDiags/denovo-size-1.0-1.0/graph.%s.log.bz2 \
   -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
   2> example/results/integrDiags/denovo-size-1.0-1.0/log
+
 mkdir -p example/results/integrDiags/denovo-size-0.9-1.1
 src/buildSynteny.integr-denovo.py \
   example/data/Species.nwk \
@@ -588,16 +636,13 @@ src/buildSynteny.integr-copy.py \
   2> example/results/integrDiags/denovo-size-custom/log
 ```
 
-## Output format and post-processing scripts
+## Output file formats
 
-* The _diags_ files
+### The _diags_ files
 
-These files are present under `example/results/integrDiags/denovo-all.groups/`
-(no selection of robust gene families) and `example/results/integrDiags/integrDiags/final/`
-(with selection of robust gene families).
-
-This directory contains a file for each ancestral reconstructed genome
-(e.g. `diags.A0.list.bz2`). There are five tab-separated fields, and values
+These files are present under `example/results/integrDiags/*`.
+Each of these contains a file per ancestral reconstructed genome
+(e.g. `diags.A0.list.bz2`). The files are tab-separated, and values
 in each field are further separated by single spaces. The term _diag_
 historically refers to the diagonal lines that appear in 2 dimensional
 matrices comparing 2 genomes and reflecting successive conserved
@@ -627,25 +672,13 @@ of score 6.
 A0	8	4559 4179 10099 15638 1304 10998 5675 13765	-1 -1 -1 1 1 -1 -1 1	(5) 6 (3)
 ```
 
-* The _ancGenome_ files
+### The _ancGenome_ files
 
-These files are simpler way of accessing the content of the ancestral
-genomes. They are very similar to the input _genes_ files.
+The _ancGenomes_ files are a simpler way of accessing the content of the ancestral
+genomes, and can be found under `example/results/ancGenomes/*`.
 
-To convert the _diags_ files to the _ancGenome_ format, run this script:
-
-```bash
-mkdir -p example/results/ancGenomes/final
-src/convert.ancGenomes.diags-genes.py \
-  example/data/Species.nwk \
-  A0 \
-  -IN.ancDiags=example/results/integrDiags/final/diags.%s.list.bz2 \
-  -OUT.ancGenomes=example/results/ancGenomes/final/ancGenome.%s.list.bz2 \
-  -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
-  2> example/results/ancGenomes/final/log
-```
-
-The ancGenome files are tab-separated and contain 5 columns:
+They are very similar to the input _genes_ files. They are tab-separated
+and contain 5 columns:
 
 1. Name of the ancestral block.
 2. Relative start position of the ancestral gene.
