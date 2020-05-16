@@ -507,22 +507,22 @@ def do(anc, pairwiseDiags, sto):
                         print "with thread"
                         p = multiprocessing.Process(target=bestPathInQueue, args=(f, (start, end, lstPairwise)))
                         p.start()
-                        st = time.time()
+                        # st = time.time()
                         try:
                             r = queue.get(True, arguments["timeout"])
                         except Queue.Empty:
                             p.terminate()
                             # Au cas ou le resultat serait arrive entre temps
                             r = queue.get_nowait()
-                        et = time.time()
+                        # et = time.time()
                         p.join()
                     else:
-                        st = time.clock()
+                        # st = time.clock()
                         r = f(start, end, lstPairwise)
-                        et = time.clock()
+                        # et = time.clock()
                     # print "duration", et - st
-                    global alltime
-                    alltime += (et - st)
+                    # global alltime
+                    # alltime += (et - st)
 
                     if r is None:
                         print "nopath"
@@ -696,7 +696,6 @@ def loadPairwise(file):
 
 
 print >> sys.stderr, targets
-alltime = 0.
 
 n_cpu = arguments["nbThreads"] or multiprocessing.cpu_count()
 
