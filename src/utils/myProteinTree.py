@@ -3,7 +3,7 @@
 # LibsDyogen version 1.0 (6/11/2015)
 # python v2.7 at least is needed
 # Copyright © 2020 IBENS/Dyogen and EMBL-European Bioinformatics Institute : Matthieu MUFFATO, Joseph LUCAS and Hugues ROEST CROLLIUS
-# mail : jlucas@ens.fr
+# mail : agora@bio.ens.psl.eu
 # Licences GLP v3 and CeCILL v2
 
 import sys

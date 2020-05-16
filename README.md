@@ -32,9 +32,9 @@ and the individual authors.
 - Copyright © 2006-2020 IBENS/Dyogen : Alexandra LOUIS, Thi Thuy Nga NGUYEN, Matthieu MUFFATO and Hugues ROEST CROLLIUS
 - Copyright © 2020 EMBL-European Bioinformatics Institute
 
-## Contacts
+## Contact
 
-Email hrc {at} ens {dot} fr or alouis {at} ens {dot} fr
+Email agora {at} bio {dot} ens {dot} psl {dot} eu
 
 ## Installation
 
