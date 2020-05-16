@@ -279,7 +279,8 @@ for x in bysections.get("integration", []):
     if params[0] not in ["copy", "publish"]:
         args.append("-LOG.ancGraph=" + files["integroutput"] % {"method": newMethod, "name": "%s"})
 
-    multithreaded = params[0] not in ["groups", "publish"]
+    # Currently, all those methods are multithreaded
+    multithreaded = True
 
     # Integration task
     tasklist.addTask(

@@ -17,7 +17,11 @@ __doc__ = """
 
 import collections
 import itertools
+import multiprocessing
 import sys
+import time
+
+from joblib import Parallel, delayed
 
 import utils.myFile
 import utils.myGenomes
@@ -30,6 +34,7 @@ import utils.myTools
 arguments = utils.myTools.checkArgs( \
     [("phylTree.conf", file), ("target", str), ("usedSpecies", str)], \
     [("minimalWeight", int, 1), ("anchorSize", int, 2), ("minChromLength", int, 2), \
+     ("nbThreads", int, 0),
      ("IN.ancDiags", str, ""), \
      ("LOG.ancGraph", str, "groups_log/%s.log.bz2"),
      ("OUT.ancDiags", str, "anc/diags.%s.list.bz2"), \
@@ -114,6 +119,10 @@ def getAllAdj(anc):
 
 
 def do(anc):
+    # Redirect the standard output to a file
+    ini_stdout = sys.stdout
+    sys.stdout = utils.myFile.openFile(arguments["LOG.ancGraph"] % phylTree.fileName[anc], "w")
+
     allAdj = getAllAdj(anc)
 
     gr = utils.myGraph.WeightedDiagGraph()
@@ -166,6 +175,10 @@ def do(anc):
         genesAnc[anc].lstGenes[None]) - sum(stats), "singletons"
     f.close()
 
+    # Revert to the true standard output
+    sys.stdout.close()
+    sys.stdout = ini_stdout
+
 
 # Load species tree - target ancestral genome and the extant species used to assemble blocs
 phylTree = utils.myPhylTree.PhylogeneticTree(arguments["phylTree.conf"])
@@ -192,11 +205,7 @@ for (e1, e2) in itertools.combinations(listSpecies, 2):
     for anc in targets.intersection(phylTree.dicLinks[e1][e2][1:-1]):
         toStudy[anc].append((e1, e2))
 
-for anc in targets:
-    # Redirect the standard output to a file
-    ini_stdout = sys.stdout
-    sys.stdout = utils.myFile.openFile(arguments["LOG.ancGraph"] % phylTree.fileName[anc], "w")
-    do(anc)
-    # Revert to the true standard output
-    sys.stdout.close()
-    sys.stdout = ini_stdout
+start = time.time()
+n_cpu = arguments["nbThreads"] or multiprocessing.cpu_count()
+Parallel(n_jobs=n_cpu)(delayed(do)(anc) for anc in targets)
+print >> sys.stderr, "Elapsed time:", (time.time() - start)

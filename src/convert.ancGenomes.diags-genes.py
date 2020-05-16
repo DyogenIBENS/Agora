@@ -16,6 +16,12 @@ __doc__ = """
                 -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2
 """
 
+import multiprocessing
+import sys
+import time
+
+from joblib import Parallel, delayed
+
 import utils.myGenomes
 import utils.myPhylTree
 import utils.myTools
@@ -23,7 +29,7 @@ import utils.myTools
 # Arguments
 arguments = utils.myTools.checkArgs(
     [("phylTree.conf", file), ("target", str)],
-    [("IN.ancDiags", str, ""), ("ancGenesFiles", str, ""), ("OUT.ancGenomes", str, "ancGenomes/ancGenome.%s.list.bz2")],
+    [("nbThreads", int, 0), ("IN.ancDiags", str, ""), ("ancGenesFiles", str, ""), ("OUT.ancGenomes", str, "ancGenomes/ancGenome.%s.list.bz2")],
     __doc__
 )
 
@@ -31,9 +37,14 @@ arguments = utils.myTools.checkArgs(
 phylTree = utils.myPhylTree.PhylogeneticTree(arguments["phylTree.conf"])
 targets = phylTree.getTargetsAnc(arguments["target"])
 
-for anc in targets:
+def do(anc):
     ancGenes = utils.myGenomes.Genome(arguments["ancGenesFiles"] % phylTree.fileName[anc])
     genome = utils.myGenomes.Genome(arguments["IN.ancDiags"] % phylTree.fileName[anc], ancGenes=ancGenes)
     ancGenomeFile = utils.myFile.openFile(arguments["OUT.ancGenomes"] % phylTree.fileName[anc], "w")
     genome.printEnsembl(ancGenomeFile)
     ancGenomeFile.close()
+
+start = time.time()
+n_cpu = arguments["nbThreads"] or multiprocessing.cpu_count()
+Parallel(n_jobs=n_cpu)(delayed(do)(anc) for anc in targets)
+print >> sys.stderr, "Time elapsed:", time.time() - start
