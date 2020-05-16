@@ -416,11 +416,12 @@ def prepareGraph(pairwiseDiags, singletons, graphData, start, end):
     return (newPairwise, startlink, endlink)
 
 
-# def do(anc, pairwiseDiags):
-def do(anc, pairwiseDiags, sto):
+def do(anc):
     # Redirect the standard output to a file
     ini_stdout = sys.stdout
-    sys.stdout = utils.myFile.openFile(sto, "w")
+    sys.stdout = utils.myFile.openFile(arguments["LOG.ancGraph"] % phylTree.fileName[anc], "w")
+
+    pairwiseDiags = loadPairwise(arguments["pairwiseDiags"] % phylTree.fileName[anc])
 
     (integr, singletons) = utils.myGraph.loadIntegr(arguments["IN.ancDiags"] % phylTree.fileName[anc])
     newintegr = integr
@@ -698,9 +699,6 @@ def loadPairwise(file):
 print >> sys.stderr, targets
 
 n_cpu = arguments["nbThreads"] or multiprocessing.cpu_count()
-
-Parallel(n_jobs=n_cpu)(
-    delayed(do)(anc, loadPairwise(arguments["pairwiseDiags"] % phylTree.fileName[anc]), arguments["LOG.ancGraph"] % phylTree.fileName[anc]) for
-    anc in targets)
+Parallel(n_jobs=n_cpu)(delayed(do)(anc) for anc in targets)
 
 print >> sys.stderr, "total computation time", (time.time() - start)

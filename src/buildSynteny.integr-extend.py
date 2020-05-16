@@ -33,17 +33,18 @@ arguments = utils.myTools.checkArgs(
 )
 
 
-def do(anc, diags, sto):
+def do(anc):
     # Redirect the standard output to a file
     ini_stdout = sys.stdout
-    sys.stdout = utils.myFile.openFile(sto, "w")
-    graph = utils.myGraph.WeightedDiagGraph()
+    sys.stdout = utils.myFile.openFile(arguments["LOG.ancGraph"] % phylTree.fileName[anc], "w")
 
+    graph = utils.myGraph.WeightedDiagGraph()
     (integr, singletons) = utils.myGraph.loadIntegr(arguments["IN.ancDiags"] % phylTree.fileName[anc])
     if not arguments["onlySingletons"]:
         for (b, w) in integr:
             graph.addWeightedDiag(b, [x + 10000 for x in w])
 
+    diags = utils.myGraph.loadConservedPairsAnc(arguments["pairwiseDiags"] % phylTree.fileName[anc])
     for x in diags:
         if not arguments["onlySingletons"] or ((x[0][0] in singletons) and (x[1][0] in singletons)):
             graph.addLink(*x)
@@ -97,9 +98,6 @@ phylTree = utils.myPhylTree.PhylogeneticTree(arguments["phylTree.conf"])
 targets = phylTree.getTargetsAnc(arguments["target"])
 
 n_cpu = arguments["nbThreads"] or multiprocessing.cpu_count()
-
-Parallel(n_jobs=n_cpu)(
-    delayed(do)(anc, utils.myGraph.loadConservedPairsAnc(arguments["pairwiseDiags"] % phylTree.fileName[anc]),
-                arguments["LOG.ancGraph"] % phylTree.fileName[anc]) for anc in targets)
+Parallel(n_jobs=n_cpu)(delayed(do)(anc) for anc in targets)
 
 print >> sys.stderr, "Elapsed time:", (time.time() - start)

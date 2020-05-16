@@ -41,7 +41,9 @@ arguments = utils.myTools.checkArgs(
 )
 
 
-def do(anc, diags, sto):
+def do(anc):
+
+    diags = utils.myGraph.loadConservedPairsAnc(arguments["pairwiseDiags"] % phylTree.fileName[anc])
 
     g = utils.myGenomes.Genome(arguments["ancGenesFiles"] % phylTree.fileName[anc], withDict=False).lstGenes
     singletons = set(xrange(len(g[None]))) if None in g else set(g)
@@ -54,7 +56,7 @@ def do(anc, diags, sto):
 
     # Redirect the standard output to a file
     ini_stdout = sys.stdout
-    sys.stdout = utils.myFile.openFile(sto, "w")
+    sys.stdout = utils.myFile.openFile(arguments["LOG.ancGraph"] % phylTree.fileName[anc], "w")
 
     graph.printIniGraph()
 
@@ -99,10 +101,6 @@ targets = phylTree.getTargetsAnc(arguments["target"])
 print >> sys.stderr, targets
 
 n_cpu = arguments["nbThreads"] or multiprocessing.cpu_count()
-
-Parallel(n_jobs=n_cpu)(
-    delayed(do)(anc, utils.myGraph.loadConservedPairsAnc(arguments["pairwiseDiags"] % phylTree.fileName[anc]),
-                arguments["LOG.ancGraph"] % phylTree.fileName[anc]) for anc in targets)
-
+Parallel(n_jobs=n_cpu)(delayed(do)(anc) for anc in targets)
 
 print >> sys.stderr, "Elapsed time:", (time.time() - start)

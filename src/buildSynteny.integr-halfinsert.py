@@ -44,11 +44,12 @@ def rev((g, s)):
 selectionFunction = eval("lambda newscore, oldscore: " + arguments["selectionFunction"])
 
 
-def do(anc, pairwiseDiags, sto):
+def do(anc):
     # Redirect the standard output to a file
     ini_stdout = sys.stdout
-    sys.stdout = utils.myFile.openFile(sto, "w")
+    sys.stdout = utils.myFile.openFile(arguments["LOG.ancGraph"] % phylTree.fileName[anc], "w")
 
+    pairwiseDiags = loadPairwise(anc)
     (integr, singletons) = utils.myGraph.loadIntegr(arguments["IN.ancDiags"] % phylTree.fileName[anc])
     (_, refsing) = utils.myGraph.loadIntegr(arguments["REF.ancDiags"] % phylTree.fileName[anc])
 
@@ -226,6 +227,6 @@ def loadPairwise(anc):
 
 
 n_cpu = arguments["nbThreads"] or multiprocessing.cpu_count()
-Parallel(n_jobs=n_cpu)(delayed(do)(anc, loadPairwise(anc), arguments["LOG.ancGraph"] % phylTree.fileName[anc]) for anc in targets)
+Parallel(n_jobs=n_cpu)(delayed(do)(anc) for anc in targets)
 
 print >> sys.stderr, "Elapsed time:", (time.time() - start)
