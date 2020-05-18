@@ -80,11 +80,13 @@ for esp in listSpecies:
 			if len(chrom) < 2:
 				break
 			
-			item = esp
+			item = None
 			for (i,_) in phylTree.items[anc]:
 				if esp in phylTree.species[i]:
 					item = i
 					break
+			assert item is not None
+
 			for ((ga1,gm1),(ga2,gm2)) in utils.myTools.myIterator.slidingTuple(chrom):
 				if ga1[0] == ga2[0]:
 					continue
