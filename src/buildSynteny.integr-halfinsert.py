@@ -30,7 +30,7 @@ arguments = utils.myTools.checkArgs(
     [("phylTree.conf", file), ("target", str), ("IN.pairwiseDiags", str)],
     [("IN.ancDiags", str, ""), ("OUT.ancDiags", str, ""), ("REF.ancDiags", str, ""), ("LOG.ancGraph", str, "halfinsert_log/%s.log.bz2"),
      ("nbThreads", int, 0),
-     ("selectionFunction", str, "newscore/float(oldscore)")],
+     ("selectionFunction", str, "newscore/float(oldscore) if oldscore else newscore")],
     __doc__
 )
 
