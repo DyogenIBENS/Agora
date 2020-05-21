@@ -3,10 +3,11 @@
 ---------------------------------------------------------------------------------------------------------------------------------
 | phylTree.conf  | example/data/Species.nwk                                                                                     |
 | target         | A0                                                                                                           |
-| usedSpecies    | A0                                                                                                           |
+| usedSpecies    | _                                                                                                            |
 | minimalWeight  | 1                                                                                                            |
 | anchorSize     | 2                                                                                                            |
 | minChromLength | 2                                                                                                            |
+| nbThreads      | 1                                                                                                            |
 | IN.ancDiags    | example/results/integrDiags/denovo-size-custom.refine-all.extend-all.halfinsert-all/diags.%s.list.bz2        |
 | LOG.ancGraph   | example/results/integrDiags/denovo-size-custom.refine-all.extend-all.halfinsert-all.groups/graph.%s.log.bz2  |
 | OUT.ancDiags   | example/results/integrDiags/denovo-size-custom.refine-all.extend-all.halfinsert-all.groups/diags.%s.list.bz2 |
