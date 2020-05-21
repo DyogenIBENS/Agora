@@ -123,7 +123,7 @@ for size in range(len(minsizes)):
 
     # Writing files
     for anc in phylTree.dicGenomes:
-        print >> sys.stderr, "Writing families of %s ..." % anc,
+        print >> sys.stderr, "Writing families of %s (size %g-%g)..." % (anc, minsizes[size], maxsizes[size]),
         n = 0
         f = utils.myFile.openFile(outDir[size] % phylTree.fileName[anc], "w")
         for (i, gene) in enumerate(phylTree.dicGenomes[anc].lstGenes[None]):
