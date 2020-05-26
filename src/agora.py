@@ -327,7 +327,7 @@ def joinnext():
     else:
         failed += 1
     global nrun
-    nrun -= nthreads[next]
+    nrun -= nthreads.pop(i)
 
 
 # Launch  program function
