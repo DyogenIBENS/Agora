@@ -11,8 +11,8 @@ import os
 import re
 import subprocess
 import sys
-import time
 
+import utils.myAgoraWorkflow
 import utils.myFile
 import utils.myPhylTree
 import utils.myTools
@@ -71,40 +71,7 @@ scriptDir = os.path.dirname(os.path.abspath(__file__))
 phylTree = utils.myPhylTree.PhylogeneticTree(files["speciestree"])
 
 
-# Managing the list of programs to launch and their dependencies
-#################################################################
-class TaskList():
-    def __init__(self):
-        self.list = []
-        self.dic = {}
-
-    def __len__(self):
-        return len(self.list)
-
-    def addTask(self, name, dep, data, multithreaded=False):
-        print "New task", len(self.list), name
-        print dep
-        print data
-        print
-        self.dic[name] = len(self.list)
-        self.list.append((set(self.dic[x] for x in dep), data, multithreaded))
-
-    def removeDep(self, i):
-        for (dep, _, _) in self.list:
-            dep.discard(i)
-
-    def getAvailable(self):
-        tmp = [i for (i, task) in enumerate(self.list) if len(task[0]) == 0]
-        print "Available tasks:", tmp
-        if len(tmp) > 0:
-            next = tmp[0]
-            self.list[next][0].add(None)
-            return (next,) + self.list[next]
-        else:
-            return None
-
-
-tasklist = TaskList()
+tasklist = utils.myAgoraWorkflow.TaskList()
 
 # Ancestral genes lists Section
 ################################
@@ -301,87 +268,5 @@ for x in bysections.get("integration", []):
 
 # Launching tasks in multiple threads
 #####################################
-
-manager = multiprocessing.Manager()
-queue = manager.Queue()
-
-nrun = 0
-proc = {}
-nthreads = {}
-completed = 0
-failed = 0
-
-
-# Waiting for a task to finish
-def joinnext():
-    print "Waiting ...",
-    sys.stdout.flush()
-    (i, r) = queue.get()
-    print "task", i, "is now finished (status", r, ")"
-    if r == 0:
-        tasklist.removeDep(i)
-    proc.pop(i).join()
-    global completed, failed
-    if r == 0:
-        completed += 1
-    else:
-        failed += 1
-    global nrun
-    nrun -= nthreads.pop(i)
-
-
-# Launch  program function
-def golaunch(i, args, out, log):
-    stdout = utils.myFile.openFile(out, "w")
-    stderr = utils.myFile.openFile(log, "w")
-    p = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=stderr)
-    for l in p.stdout:
-        print >> stdout, l,
-    r = p.wait()
-    for l in p.stdout:
-        print >> stdout, l,
-    stdout.close()
-    stderr.close()
-    time.sleep(5)
-    queue.put((i, r))
-
-
-# Queue
-while (completed + failed) < len(tasklist):
-
-    print "running:", nrun
-    print "todo:", len(tasklist)
-    print "done:", completed
-    print "failed:", failed
-
-    if nrun == arguments["nbThreads"]:
-        joinnext()
-    else:
-        todo = tasklist.getAvailable()
-        if todo is None:
-            if nrun == 0:
-                print "Workflow stopped because of failures"
-                break
-            joinnext()
-        else:
-            (next, dep, (args, out, log, launch), multithreaded) = todo
-            print ("Launching" if launch else "Skipping"), next, args, ">", out, "2>", log
-            if launch:
-                if multithreaded:
-                    nthreads[next] = arguments["nbThreads"] - nrun
-                    args.append("-nbThreads=%d" % nthreads[next])
-                    print "Using", nthreads[next], "threads"
-                else:
-                    nthreads[next] = 1
-                proc[next] = multiprocessing.Process(target=golaunch, args=(next, args, out, log))
-                proc[next].start()
-                nrun += nthreads[next]
-            else:
-                tasklist.removeDep(next)
-                completed += 1
-
-assert nrun == 0
-
-if not failed:
-    print "Workflow complete"
+failed = tasklist.runAll(arguments["nbThreads"])
 sys.exit(failed)
