@@ -58,9 +58,11 @@ for esp in listSpecies:
 	lanc = []
 	anc = esp
 	while anc in phylTree.parent:
-		(anc,_) = phylTree.parent[anc]
-		if anc in listAncestors:
-			lanc.append((anc, genesAnc[anc].dicGenes))
+		(par,_) = phylTree.parent[anc]
+		if par in listAncestors:
+			lanc.append((par, genesAnc[par].dicGenes, dicAncMod[par][anc]))
+		anc = par
+
 	print >> sys.stderr, "Extraction of pairs of genes from %s " % esp, "...",
 	
 	for chrom in genome.chrList[utils.myGenomes.ContigType.Chromosome] + genome.chrList[utils.myGenomes.ContigType.Scaffold]:
@@ -70,19 +72,12 @@ for esp in listSpecies:
 			continue
 		chrom = [(None, (gene.names[-1], gene.strand)) for gene in chrom]
 		
-		for (anc,dica) in lanc:
-			# Writing the chromosome under the new ancestor
+		for (anc,dica,subdicAncMod) in lanc:
+			# Updating the chromosome under the new ancestor, the list keeps on shrinking
 			chrom = [((dica.pop(x[0]).index, x[1]), x) for (_,x) in chrom if x[0] in dica]
 			if len(chrom) < 2:
 				break
 			
-			item = None
-			for (i,_) in phylTree.items[anc]:
-				if esp in phylTree.species[i]:
-					item = i
-					break
-			assert item is not None
-
 			for ((ga1,gm1),(ga2,gm2)) in utils.myTools.myIterator.slidingTuple(chrom):
 				if ga1[0] == ga2[0]:
 					continue
@@ -93,7 +88,7 @@ for esp in listSpecies:
 				else:
 					ancPair = ((ga2[0],-ga2[1]), (ga1[0],-ga1[1]))
 					modPair = ((gm2[0],-gm2[1]), (gm1[0],-gm1[1]))
-				dicAncMod[anc][item][ancPair].append((esp,modPair))
+				subdicAncMod[ancPair].append((esp,modPair))
 				dicModAnc[modPair].append( (anc,ancPair) )
 
 	print >> sys.stderr, "OK"
