@@ -99,8 +99,7 @@ start = time.time()
 
 # Returns all ancestral pairs designated by modern pairs
 #########################################################
-def getTargets(anc, lmodPair):
-	listAnc = phylTree.allDescendants[anc].intersection(phylTree.listAncestr)
+def getTargets(listAnc, lmodPair):
 	lanc = collections.defaultdict(list)
 	for modPair in lmodPair:
 		t = dict(dicModAnc[modPair[1]])
@@ -117,6 +116,7 @@ for anc in dicAncMod:
 	
 	# conserved pairs between to child species
 	pairs = [(x,dicAncMod[anc][x]) for (x,_) in phylTree.items[anc]]
+	listAnc = phylTree.allDescendants[anc].intersection(phylTree.listAncestr)
 	
 	print >> sys.stderr, "Number of pairs for", anc, [(x[0],len(x[1])) for x in pairs]
 	
@@ -133,19 +133,19 @@ for anc in dicAncMod:
 			rlmodPair2 = [(x[0],revPair(x[1])) for x in lmodPair2]
 
 			# On fait remonter toutes les paires modernes d'un cote sur l'autre
-			for ((ancName, ancPair), lmodPair) in getTargets(anc, lmodPair1):
+			for ((ancName, ancPair), lmodPair) in getTargets(listAnc, lmodPair1):
 				details[ancName][ancPair].update(lmodPair)
 				details[ancName][ancPair].update(lmodPair2)
 
-			for ((ancName, ancPair), lmodPair) in getTargets(anc, lmodPair2):
+			for ((ancName, ancPair), lmodPair) in getTargets(listAnc, lmodPair2):
 				details[ancName][ancPair].update(lmodPair)
 				details[ancName][ancPair].update(lmodPair1)
 	
-			for ((ancName, ancPair), lmodPair) in getTargets(anc, rlmodPair1):
+			for ((ancName, ancPair), lmodPair) in getTargets(listAnc, rlmodPair1):
 				details[ancName][ancPair].update(lmodPair)
 				details[ancName][ancPair].update(rlmodPair2)
 	
-			for ((ancName, ancPair), lmodPair) in getTargets(anc, rlmodPair2):
+			for ((ancName, ancPair), lmodPair) in getTargets(listAnc, rlmodPair2):
 				details[ancName][ancPair].update(lmodPair)
 				details[ancName][ancPair].update(rlmodPair1)
 		print >> sys.stderr, "OK"
