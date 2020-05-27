@@ -15,12 +15,6 @@ import itertools
 import sys
 import time
 
-#import multiprocessing
-#from joblib import Parallel, delayed
-#import msgpack
-#from pycallgraph import PyCallGraph
-#from pycallgraph.output import GraphvizOutput
-
 import utils.myMaths
 import utils.myPhylTree
 import utils.myGenomes
@@ -51,8 +45,6 @@ def revPair((g1, g2)):
 dicAncMod = collections.defaultdict(lambda: collections.defaultdict(lambda: collections.defaultdict(list)))
 dicModAnc = collections.defaultdict(list)
 genesAnc = {}
-
-#with PyCallGraph(output=GraphvizOutput()):
 
 for esp in listSpecies:
 	genome = utils.myGenomes.Genome(arguments["genesFiles"] % phylTree.fileName[esp], withDict=False)
@@ -166,10 +158,7 @@ for anc in dicAncMod:
 print >> sys.stderr, "time for task 2", time.time() - start
 start = time.time()
 
-
-#def do(anc, res, log):
-
-# Resulsts files.
+# Results files.
 for anc in details:
 	#sys.stdout = sys.stderr = utils.myFile.openFile(log, "w")	
 	print >> sys.stderr, len(details[anc]), "conserved pairs for", anc
@@ -199,5 +188,4 @@ for anc in details:
 		)
 	f.close()
 		
-#Parallel(n_jobs=multiprocessing.cpu_count())(delayed(do)(anc, "res/%s.bz2" % anc, "log/%s.log" % anc) for anc in details)
 print >> sys.stderr, "Elapsed time task3:", (time.time() - start), (time.time() - st)
