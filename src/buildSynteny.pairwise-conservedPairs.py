@@ -134,20 +134,17 @@ for anc in dicAncMod:
 
 			# On fait remonter toutes les paires modernes d'un cote sur l'autre
 			for ((ancName, ancPair), lmodPair) in getTargets(listAnc, lmodPair1):
-				details[ancName][ancPair].update(lmodPair)
-				details[ancName][ancPair].update(lmodPair2)
+				details[ancName][ancPair].update(lmodPair, lmodPair2)
 
 			for ((ancName, ancPair), lmodPair) in getTargets(listAnc, lmodPair2):
-				details[ancName][ancPair].update(lmodPair)
-				details[ancName][ancPair].update(lmodPair1)
+				details[ancName][ancPair].update(lmodPair, lmodPair1)
 	
 			for ((ancName, ancPair), lmodPair) in getTargets(listAnc, rlmodPair1):
-				details[ancName][ancPair].update(lmodPair)
-				details[ancName][ancPair].update(rlmodPair2)
+				details[ancName][ancPair].update(lmodPair, rlmodPair2)
 	
 			for ((ancName, ancPair), lmodPair) in getTargets(listAnc, rlmodPair2):
-				details[ancName][ancPair].update(lmodPair)
-				details[ancName][ancPair].update(rlmodPair1)
+				details[ancName][ancPair].update(lmodPair, rlmodPair1)
+
 		print >> sys.stderr, "OK"
 
 	print >> sys.stderr, nbcons, "conserved pairs between descendants", anc
