@@ -25,7 +25,7 @@ def commonChrName(x):
     except ValueError:
         return intern(x)
 
-ContigType = enum.Enum('Chromosome', 'Mitochondrial', 'Scaffold', 'None', 'Random')
+ContigType = enum.Enum('Chromosome', 'Scaffold', 'None', 'Random')
 def contigType(chrName):
     if chrName in [None, "Un_random", "UNKN", "Un"]:
         # chromosome named "Un" in Monodelphis.domestica corresponds to a scaffold that concatenates all unassembled
@@ -43,10 +43,6 @@ def contigType(chrName):
             # FIXME : what is a random contig ? It seems that a random contig is always associated to a chromosome number.
             # Thus we know that this random chromosome is on a specific chromosome number but we do not know where.
             return ContigType.Random
-        # mitochondrion in Drosophila melanogaster
-        for x in ['mt', 'mitochondrion']:
-            if x in chrNameLow:
-                return ContigType.Mitochondrial
         # ki in Homo.sapiens data81
         # jh in mus.musculus, Canis.lupus.familiaris
         # aaex in Canis.lupus.familiaris
