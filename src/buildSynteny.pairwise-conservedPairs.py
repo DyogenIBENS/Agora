@@ -114,31 +114,39 @@ details = collections.defaultdict(lambda: collections.defaultdict(set))
 for anc in dicAncMod:
 	genesAnc[anc] = [gene.names[0] for gene in genesAnc[anc].lstGenes[None]]
 	
-	# conserved pairs between to child species
+	# All pairs of child species, grouped by subtree
 	pairs = [(x,dicAncMod[anc][x]) for (x,_) in phylTree.items[anc]]
 	listAnc = phylTree.allDescendants[anc].intersection(phylTree.listAncestr)
 	
 	print >> sys.stderr, "Number of pairs for", anc, [(x[0],len(x[1])) for x in pairs]
 	
 	nbcons = 0
+	# Iterate over pairs of subtrees
 	for ((e1,gr1),(e2,gr2)) in itertools.combinations(pairs, 2):
 		print >> sys.stderr, "Intersection between", e1, "and", e2, "...",
+		# Iterate over the ancestral pairs found in both subtrees
 		for ancPair in set(gr1).intersection(set(gr2)):
 			nbcons += 1
 			
-			lmodPair1 = gr1[ancPair]
-			lmodPair2 = gr2[ancPair]
+			lmodPair1 = gr1[ancPair]    # Related modern pairs on the first subtree
+			lmodPair2 = gr2[ancPair]    # Related modern pairs on the second subtree
 
+			# And their reverse
 			rlmodPair1 = [(x[0],revPair(x[1])) for x in lmodPair1]
 			rlmodPair2 = [(x[0],revPair(x[1])) for x in lmodPair2]
 
-			# On fait remonter toutes les paires modernes d'un cote sur l'autre
+			# Iterate over all the ancestors of the first subtree (incl. anc), and the modern pairs below them
 			for ((ancName, ancPair), lmodPair) in getTargets(listAnc, lmodPair1):
+				# Add evidence onto the ancestral pair of this ancestor:
+				# - the subset of modern pairs of the first subtree
+				# - all the modern pairs of the second subtree
 				details[ancName][ancPair].update(lmodPair, lmodPair2)
 
+			# Do the same for all the other subtree
 			for ((ancName, ancPair), lmodPair) in getTargets(listAnc, lmodPair2):
 				details[ancName][ancPair].update(lmodPair, lmodPair1)
 	
+			# And for the reverse pairs
 			for ((ancName, ancPair), lmodPair) in getTargets(listAnc, rlmodPair1):
 				details[ancName][ancPair].update(lmodPair, rlmodPair2)
 	
