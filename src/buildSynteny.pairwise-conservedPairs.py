@@ -117,7 +117,7 @@ def getTargets(listAnc, lmodPair):
 details = collections.defaultdict(lambda: collections.defaultdict(set))
 
 for anc in dicAncMod:
-	genesAnc[anc] = [gene.names[0] for gene in genesAnc[anc].lstGenes[None]]
+	# genesAnc[anc] = [gene.names[0] for gene in genesAnc[anc].lstGenes[None]]
 	
 	# All pairs of child species, grouped by subtree
 	pairs = [(x,dicAncMod[anc][x]) for (x,_) in phylTree.items[anc]]
