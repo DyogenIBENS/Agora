@@ -159,9 +159,8 @@ print >> sys.stderr, "time for task 2", time.time() - start
 start = time.time()
 
 # Results files.
-for anc in details:
-	#sys.stdout = sys.stderr = utils.myFile.openFile(log, "w")	
-	print >> sys.stderr, len(details[anc]), "conserved pairs for", anc
+for (anc, pairs) in details.iteritems():
+	print >> sys.stderr, len(pairs), "conserved pairs for", anc
 
 	# -1 is the outgroup species, 1,2,3... are the descendantsdescendants
 	ind = dict.fromkeys(set(phylTree.outgroupSpecies[anc]).intersection(listSpecies), -1)
@@ -170,14 +169,14 @@ for anc in details:
 	
 	res = arguments["OUT.pairwise"] % phylTree.fileName[anc]
 	f = utils.myFile.openFile(res, "w")
-	for ancPair in details[anc]:
+	for ancPair in pairs:
 
 		#assert ancPair[0][0] < ancPair[1][0]
-		#assert set(details[anc][ancPair]).isdisjoint([(x[0],revPair(x[1])) for x in details[anc][ancPair]])
+		#assert set(pairs[ancPair]).isdisjoint([(x[0],revPair(x[1])) for x in pairs[ancPair]])
 
 		# Calcul des poids
 		weights = collections.defaultdict(int)
-		for modPair in details[anc][ancPair]:
+		for modPair in pairs[ancPair]:
 			weights[ind[modPair[0]]] += 1
 		weight = sum(x*y for (x,y) in itertools.combinations(weights.values(), 2))
 	    
