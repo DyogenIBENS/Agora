@@ -116,9 +116,7 @@ for anc in dicAncMod:
 	genesAnc[anc] = [gene.names[0] for gene in genesAnc[anc].lstGenes[None]]
 	
 	# conserved pairs between to child species
-	pairs = []
-	for (x,_) in phylTree.items[anc]:
-		pairs.append((x,dicAncMod[anc][x]))
+	pairs = [(x,dicAncMod[anc][x]) for (x,_) in phylTree.items[anc]]
 	
 	print >> sys.stderr, "Number of pairs for", anc, [(x[0],len(x[1])) for x in pairs]
 	
