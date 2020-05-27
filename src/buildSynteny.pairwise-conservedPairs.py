@@ -78,8 +78,11 @@ for esp in listSpecies:
 			if len(chrom) < 2:
 				break
 			
-			for ((ga1,gm1),(ga2,gm2)) in utils.myTools.myIterator.slidingTuple(chrom):
+			(ga1, gm1) = chrom[0]
+			for (ga2, gm2) in itertools.islice(chrom, 1, None):
 				if ga1[0] == ga2[0]:
+					ga1 = ga2
+					gm1 = gm2
 					continue
 				# We only keep the pair in the right direction
 				if ga1[0] < ga2[0]:
@@ -90,6 +93,8 @@ for esp in listSpecies:
 					modPair = ((gm2[0],-gm2[1]), (gm1[0],-gm1[1]))
 				subdicAncMod[ancPair].append((esp,modPair))
 				dicModAnc[modPair].append( (anc,ancPair) )
+				ga1 = ga2
+				gm1 = gm2
 
 	print >> sys.stderr, "OK"
 
