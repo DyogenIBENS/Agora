@@ -44,7 +44,13 @@ def revPair((g1, g2)):
 
 dicAncMod = collections.defaultdict(lambda: collections.defaultdict(lambda: collections.defaultdict(list)))
 dicModAnc = collections.defaultdict(list)
+
 genesAnc = {}
+for anc in listAncestors:
+	genesAnc[anc] = utils.myGenomes.Genome(arguments["ancGenesFiles"] % phylTree.fileName[anc])
+
+print >> sys.stderr, "time for loading", time.time() - start
+start = time.time()
 
 for esp in listSpecies:
 	genome = utils.myGenomes.Genome(arguments["genesFiles"] % phylTree.fileName[esp], withDict=False)
@@ -54,8 +60,6 @@ for esp in listSpecies:
 	while anc in phylTree.parent:
 		(anc,_) = phylTree.parent[anc]
 		if anc in listAncestors:
-			if anc not in genesAnc:
-				genesAnc[anc] = utils.myGenomes.Genome(arguments["ancGenesFiles"] % phylTree.fileName[anc])
 			lanc.append((anc, genesAnc[anc].dicGenes))
 	print >> sys.stderr, "Extraction of pairs of genes from %s " % esp, "...",
 	
