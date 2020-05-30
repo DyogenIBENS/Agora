@@ -135,11 +135,7 @@ class AgoraWorkflow:
         self.interm = {}
         self.refMethod = {}
 
-    def addDummy(self, taskFullName):
-        return self.addDependency(taskFullName, [])
-        # tasklist.addTask(taskFullName, [], (None, None, None, False))
-
-    def addDependency(self, taskFullName, dependencies):
+    def addDummy(self, taskFullName, dependencies=[]):
         return self.tasklist.addTask(taskFullName, dependencies, (None, None, None, False))
 
     def addAncGenesGenerationAnalysis(self, launch):

@@ -122,7 +122,7 @@ for x in bysections["ancgenes"]:
 
     if len(ancGenesDirNames) > 1:
         for dirname in ancGenesDirNames:
-            workflow.addDependency(("ancgenes", dirname), [("ancgenes", taskname)])
+            workflow.addDummy(("ancgenes", dirname), [("ancgenes", taskname)])
 
 # Pairwise comparison section
 #############################
