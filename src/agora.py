@@ -113,18 +113,18 @@ for x in bysections["ancgenes"]:
     t = x[0].replace("*", "").split(",")
     sizes = params.split(",")
     assert len(t) == len(sizes)
-    minsize = ""
-    maxsize = ""
+    minSizes = []
+    maxSizes = []
     ancGenesDirNames = []
     for i in range(len(sizes)):
         size = sizes[i].split()
-        minsize += str(size[0]) + ","
-        maxsize += str(size[1]) + ","
+        minSizes.append(size[0])
+        maxSizes.append(size[1])
         dirname = "size-" + str(size[0]) + "-" + str(size[1])
         ancGenes[t[i]] = dirname
         ancGenesDirNames.append(dirname)
-    minsize = minsize[:-1]
-    maxsize = maxsize[:-1]
+    minSizesStr = ",".join(minSizes)
+    maxSizesStr = ",".join(maxSizes)
 
     taskname = "size-" + minsize + "-" + maxsize
     tasklist.addTask(
@@ -133,7 +133,7 @@ for x in bysections["ancgenes"]:
         (
             [os.path.join(scriptDir, "ALL.filterGeneFamilies-%s.py" % "size"), files["speciestree"], root,
              files["ancgenesdata"] % {"filt": "all", "name": "%s"},
-             files["ancgenesdata"] % {"filt": "size-%s-%s", "name": "%s"}] + [minsize, maxsize],
+             files["ancgenesdata"] % {"filt": "size-%s-%s", "name": "%s"}] + [minSizesStr, maxSizesStr],
             os.devnull,
             files["ancgeneslog"] % {"filt": taskname},
             "*" not in x[0]
