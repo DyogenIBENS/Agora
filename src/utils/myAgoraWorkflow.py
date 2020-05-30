@@ -28,12 +28,14 @@ class TaskList():
         self.queue = manager.Queue()
 
     def addTask(self, name, dep, data, multithreaded=False):
-        print "New task", len(self.list), name
+        taskId = len(self.list)
+        print "New task", taskId, name
         print dep
         print data
         print
-        self.dic[name] = len(self.list)
+        self.dic[name] = taskId
         self.list.append((set(self.dic[x] for x in dep), data, multithreaded))
+        return taskId
 
     def removeDep(self, i):
         for (dep, _, _) in self.list:
