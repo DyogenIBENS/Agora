@@ -71,7 +71,7 @@ scriptDir = os.path.dirname(os.path.abspath(__file__))
 phylTree = utils.myPhylTree.PhylogeneticTree(files["speciestree"])
 
 
-tasklist = utils.myAgoraWorkflow.TaskList()
+workflow = utils.myAgoraWorkflow.AgoraWorkflow(phylTree.root, scriptDir, files)
 
 # Ancestral genes lists Section
 ################################
@@ -87,17 +87,7 @@ for x in bysections["ancgenes"]:
         launchall = "*" not in x[0]
         allname = x[0].replace("*", "").strip()
 
-tasklist.addTask(
-    ("ancgenes", "all"),
-    [],
-    (
-        [os.path.join(scriptDir, "ALL.extractGeneFamilies.py"), files["speciestree"], files["genetrees"],
-            "-OUT.ancGenesFiles=" + files["ancgenesdata"] % {"filt": "all", "name": "%s"}],
-        files["genetreeswithancnames"],
-        files["ancgeneslog"] % {"filt": "ancGenes"},
-        launchall,
-    )
-)
+workflow.addAncGenesGenerationAnalysis(launchall)
 
 ancGenes = {allname: "all", "0": "all"}
 
@@ -128,22 +118,11 @@ for x in bysections["ancgenes"]:
     maxSizesStr = ",".join(maxSizes)
 
     taskname = dirnameTemplate % (minSizesStr, maxSizesStr)
-    tasklist.addTask(
-        ("ancgenes", taskname),
-        [("ancgenes", "all")],
-        (
-            [os.path.join(scriptDir, "ALL.filterGeneFamilies-%s.py" % "size"), files["speciestree"], root,
-             files["ancgenesdata"] % {"filt": "all", "name": "%s"},
-             files["ancgenesdata"] % {"filt": dirnameTemplate, "name": "%s"}] + [minSizesStr, maxSizesStr],
-            os.devnull,
-            files["ancgeneslog"] % {"filt": taskname},
-            "*" not in x[0]
-        )
-    )
+    workflow.addAncGenesFilterAnalysis(taskname, "size", dirnameTemplate, root, [minSizesStr, maxSizesStr], "*" not in x[0])
 
     if len(ancGenesDirNames) > 1:
         for dirname in ancGenesDirNames:
-            tasklist.addTask( ("ancgenes", dirname), [("ancgenes", taskname)], (None, None, None, False) )
+            workflow.addDependency(("ancgenes", dirname), [("ancgenes", taskname)])
 
 # Pairwise comparison section
 #############################
@@ -158,24 +137,10 @@ for x in bysections.get("pairwise", []):
         root = phylTree.root
 
     # Pairwise comparison tasks
-    tasklist.addTask(
-        ("pairwise", dirname),
-        [("ancgenes",dirname)],
-        (
-            [os.path.join(scriptDir, "buildSynteny.pairwise-%s.py" % params[0]), files["speciestree"], root,
-             "-ancGenesFiles=" + files["ancgenesdata"] % {"filt": dirname, "name": "%s"},
-             "-genesFiles=" + files["genes"] % {"name": "%s"},
-             "-OUT.pairwise=" + files["pairwiseoutput"] % {"filt": dirname, "name": "%s"}] + params[1:],
-            os.devnull,
-            files["pairwiselog"] % {"filt": dirname},
-            "*" not in x[0]
-        )
-    )
+    workflow.addPairwiseAnalysis(dirname, params[0], root, params[1:], "*" not in x[0])
 
 # Integration section
 #####################
-interm = {}
-refMethod = {}
 for x in bysections.get("integration", []):
     tolaunch = ("*" not in x)
 
@@ -184,90 +149,19 @@ for x in bysections.get("integration", []):
     (params, output) = partition(params, ">")
     params = params.replace("*", "").split()
 
+    currMethod = None
     # method's name
-    currMethod = params.pop(0)[1:-1] if params[0].startswith("[") else params[0]
+    if params[0].startswith("["):
+        currMethod = params.pop(0)[1:-1]
 
     # used compared pairs
     dirname = None
     if params[-1].startswith("("):
         dirname = ancGenes[params.pop()[1:-1]]
-        currMethod = currMethod[:-1] if currMethod.endswith("/") else (currMethod + "-" + dirname)
-    elif currMethod.endswith("/"):
-        currMethod = currMethod[:-1]
 
-    if params[0] == "denovo":
-        newMethod = currMethod
-        if root == "":
-            root = phylTree.root
-        refMethod[newMethod] = (newMethod, root)
-    else:
-        # input data
-        prevMethod = interm[input] if input != "" else newMethod
-        newMethod = currMethod[1:] if currMethod.startswith("/") else (prevMethod + "." + currMethod)
-        if root == "":
-            root = refMethod[prevMethod][1]
-        refMethod[newMethod] = (newMethod, root) if params[0] == "refine" else refMethod[prevMethod]
-
-    if output != "":
-        interm[output] = newMethod
-
-    # task parameters
-    args = [os.path.join(scriptDir, "buildSynteny.integr-%s.py" % params[0]), files["speciestree"], root] + params[1:]
-
-    if params[0] == "publish":
-        # "publish" is not an integration method
-        args[0] = os.path.join(scriptDir, "convert.ancGenomes.diags-genes.py")
-        args.append("-OUT.ancGenomes=" + files["ancgenomesoutput"] % {"method": newMethod, "name": "%s"})
-        logfile = files["ancgenomeslog"]
-    else:
-        args.append("-OUT.ancDiags=" + files["integrblocks"] % {"method": newMethod, "name": "%s"})
-        logfile = files["integrlog"]
-
-    dep = []
-    if dirname is not None:
-        dep.append(("pairwise", dirname))
-        args.append(files["pairwiseoutput"] % {"filt": dirname, "name": "%s"})
-
-    if params[0] in ["denovo", "groups", "publish"]:
-        args.append("-ancGenesFiles=" + files["ancgenesdata"] % {"filt": "all", "name": "%s"})
-
-    # No input data to consider for the denovo method
-    if params[0] != "denovo":
-        dep.append(("integr", prevMethod))
-        args.append("-IN.ancDiags=" + files["integrblocks"] % {"method": prevMethod, "name": "%s"})
-
-    if params[0] == "halfinsert":
-        # The script needs singleton reference for "halfinsert"
-        dep.append(("integr", refMethod[newMethod][0]))
-        args.append("-REF.ancDiags=" + files["integrblocks"] % {"method": refMethod[newMethod][0], "name": "%s"})
-
-    if params[0] == "groups":
-        args.append("-genesFiles=" + files["genes"] % {"name": "%s"})
-
-    if params[0] not in ["copy", "publish"]:
-        args.append("-LOG.ancGraph=" + files["integroutput"] % {"method": newMethod, "name": "%s"})
-
-    # Currently, all those methods are multithreaded
-    multithreaded = True
-
-    # Integration task
-    tasklist.addTask(
-        ("integr", newMethod),
-        dep,
-        (
-            args,
-            os.devnull,
-            logfile % {"method": newMethod},
-            tolaunch
-        ),
-        multithreaded
-    )
-
-    # The publish method doesn't generate integrDiags and can't be used as an input method
-    if params[0] == "publish":
-        newMethod = prevMethod
+    workflow.addIntegrationAnalysis(currMethod, params[0], input, output, dirname, root, params[1:], tolaunch)
 
 # Launching tasks in multiple threads
 #####################################
-failed = tasklist.runAll(arguments["nbThreads"])
+failed = workflow.tasklist.runAll(arguments["nbThreads"])
 sys.exit(failed)
