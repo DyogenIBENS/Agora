@@ -125,18 +125,18 @@ class AgoraWorkflow:
 
     # Default paths (in case not set in the configuration file)
     defaultPaths = {
-        'ancgenesdata': 'ancGenes/%(filt)s/ancGenes.%(name)s.list.bz2',
-        'ancgeneslog': 'ancGenes/%(filt)s.log',
-        'genetreeswithancnames': 'GeneTreeForest.withAncGenes.nhx.bz2',
-        'pairwiseoutput': 'pairwise/pairs-%(filt)s/%(name)s.list.bz2',
-        'pairwiselog': 'pairwise/pairs-%(filt)s/log',
-        'integrblocks': 'integrDiags/%(method)s/diags.%(name)s.list.bz2',
-        'integroutput': 'integrDiags/%(method)s/graph.%(name)s.log.bz2',
-        'integrlog': 'integrDiags/%(method)s/log',
-        'ancgenomesoutput': 'ancGenomes/%(method)s/ancGenome.%(name)s.list.bz2',
-        'ancgenomeslog': 'ancGenomes/%(method)s/log',
+        'ancGenesData': 'ancGenes/%(filt)s/ancGenes.%(name)s.list.bz2',
+        'ancGenesLog': 'ancGenes/%(filt)s.log',
+        'geneTreesWithAncNames': 'GeneTreeForest.withAncGenes.nhx.bz2',
+        'pairwiseOutput': 'pairwise/pairs-%(filt)s/%(name)s.list.bz2',
+        'pairwiseLog': 'pairwise/pairs-%(filt)s/log',
+        'integrBlocks': 'integrDiags/%(method)s/diags.%(name)s.list.bz2',
+        'integrOutput': 'integrDiags/%(method)s/graph.%(name)s.log.bz2',
+        'integrLog': 'integrDiags/%(method)s/log',
+        'ancGenomesOutput': 'ancGenomes/%(method)s/ancGenome.%(name)s.list.bz2',
+        'ancGenomesLog': 'ancGenomes/%(method)s/log',
     }
-    inputParams = ["speciestree", "genetrees", "genes"]
+    inputParams = ["speciesTree", "geneTrees", "genes"]
 
 
     def __init__(self, defaultRoot, scriptDir, files):
@@ -161,12 +161,12 @@ class AgoraWorkflow:
                 (
                     [
                         os.path.join(self.scriptDir, "ALL.extractGeneFamilies.py"),
-                        self.files["speciestree"],
-                        self.files["genetrees"],
-                        "-OUT.ancGenesFiles=" + self.files["ancgenesdata"] % {"filt": self.allAncGenesDirName, "name": "%s"},
+                        self.files["speciesTree"],
+                        self.files["geneTrees"],
+                        "-OUT.ancGenesFiles=" + self.files["ancGenesData"] % {"filt": self.allAncGenesDirName, "name": "%s"},
                     ],
-                    self.files["genetreeswithancnames"],
-                    self.files["ancgeneslog"] % {"filt": "ancGenes"},
+                    self.files["geneTreesWithAncNames"],
+                    self.files["ancGenesLog"] % {"filt": "ancGenes"},
                     launch,
                 )
             )
@@ -180,13 +180,13 @@ class AgoraWorkflow:
             (
                 [
                     os.path.join(self.scriptDir, "ALL.filterGeneFamilies-%s.py" % methodName),
-                    self.files["speciestree"],
+                    self.files["speciesTree"],
                     ancestor or self.defaultRoot,
-                    self.files["ancgenesdata"] % {"filt": self.allAncGenesDirName, "name": "%s"},
-                    self.files["ancgenesdata"] % {"filt": dirnameTemplate, "name": "%s"}
+                    self.files["ancGenesData"] % {"filt": self.allAncGenesDirName, "name": "%s"},
+                    self.files["ancGenesData"] % {"filt": dirnameTemplate, "name": "%s"}
                 ] + params,
                 os.devnull,
-                self.files["ancgeneslog"] % {"filt": taskName},
+                self.files["ancGenesLog"] % {"filt": taskName},
                 launch,
             )
         )
@@ -198,14 +198,14 @@ class AgoraWorkflow:
             (
                 [
                     os.path.join(self.scriptDir, "buildSynteny.pairwise-%s.py" % methodName),
-                    self.files["speciestree"],
+                    self.files["speciesTree"],
                     ancestor or self.defaultRoot,
-                    "-ancGenesFiles=" + self.files["ancgenesdata"] % {"filt": taskName, "name": "%s"},
+                    "-ancGenesFiles=" + self.files["ancGenesData"] % {"filt": taskName, "name": "%s"},
                     "-genesFiles=" + self.files["genes"] % {"name": "%s"},
-                    "-OUT.pairwise=" + self.files["pairwiseoutput"] % {"filt": taskName, "name": "%s"}
+                    "-OUT.pairwise=" + self.files["pairwiseOutput"] % {"filt": taskName, "name": "%s"}
                 ] + params,
                 os.devnull,
-                self.files["pairwiselog"] % {"filt": taskName},
+                self.files["pairwiseLog"] % {"filt": taskName},
                 launch,
             )
         )
@@ -245,42 +245,42 @@ class AgoraWorkflow:
         # task parameters
         args = [
                 os.path.join(self.scriptDir, "buildSynteny.integr-%s.py" % methodName),
-                self.files["speciestree"],
+                self.files["speciesTree"],
                 ancestor,
         ] + params
 
         if methodName == "publish":
             # "publish" is not an integration method
             args[0] = os.path.join(self.scriptDir, "convert.ancGenomes.diags-genes.py")
-            args.append("-OUT.ancGenomes=" + self.files["ancgenomesoutput"] % {"method": newMethod, "name": "%s"})
-            logfile = self.files["ancgenomeslog"]
+            args.append("-OUT.ancGenomes=" + self.files["ancGenomesOutput"] % {"method": newMethod, "name": "%s"})
+            logfile = self.files["ancGenomesLog"]
         else:
-            args.append("-OUT.ancDiags=" + self.files["integrblocks"] % {"method": newMethod, "name": "%s"})
-            logfile = self.files["integrlog"]
+            args.append("-OUT.ancDiags=" + self.files["integrBlocks"] % {"method": newMethod, "name": "%s"})
+            logfile = self.files["integrLog"]
 
         dep = []
         if pairwiseName is not None:
             dep.append(("pairwise", pairwiseName))
-            args.append(self.files["pairwiseoutput"] % {"filt": pairwiseName, "name": "%s"})
+            args.append(self.files["pairwiseOutput"] % {"filt": pairwiseName, "name": "%s"})
 
         if methodName in ["denovo", "groups", "publish"]:
-            args.append("-ancGenesFiles=" + self.files["ancgenesdata"] % {"filt": "all", "name": "%s"})
+            args.append("-ancGenesFiles=" + self.files["ancGenesData"] % {"filt": "all", "name": "%s"})
 
         # No input data to consider for the denovo method
         if methodName != "denovo":
             dep.append(("integr", self.prevMethod))
-            args.append("-IN.ancDiags=" + self.files["integrblocks"] % {"method": self.prevMethod, "name": "%s"})
+            args.append("-IN.ancDiags=" + self.files["integrBlocks"] % {"method": self.prevMethod, "name": "%s"})
 
         if methodName == "halfinsert":
             # The script needs singleton reference for "halfinsert"
             dep.append(("integr", self.refMethod[newMethod][0]))
-            args.append("-REF.ancDiags=" + self.files["integrblocks"] % {"method": self.refMethod[newMethod][0], "name": "%s"})
+            args.append("-REF.ancDiags=" + self.files["integrBlocks"] % {"method": self.refMethod[newMethod][0], "name": "%s"})
 
         if methodName == "groups":
             args.append("-genesFiles=" + self.files["genes"] % {"name": "%s"})
 
         if methodName not in ["copy", "publish"]:
-            args.append("-LOG.ancGraph=" + self.files["integroutput"] % {"method": newMethod, "name": "%s"})
+            args.append("-LOG.ancGraph=" + self.files["integrOutput"] % {"method": newMethod, "name": "%s"})
 
         # Currently, all those methods are multithreaded
         multithreaded = True

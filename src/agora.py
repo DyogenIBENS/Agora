@@ -64,13 +64,13 @@ for x in bysections["files"]:
 files = {}
 inputDir = os.path.dirname(arguments["agora.conf"])
 for f in utils.myAgoraWorkflow.AgoraWorkflow.inputParams:
-    files[f] = os.path.normpath(os.path.join(inputDir, conffiles[f]))
+    files[f] = os.path.normpath(os.path.join(inputDir, conffiles[f.lower()]))
 outputDir = arguments["workingDir"]
 for (f, s) in utils.myAgoraWorkflow.AgoraWorkflow.defaultPaths.iteritems():
-    files[f] = os.path.normpath(os.path.join(outputDir, conffiles.get(f, s)))
+    files[f] = os.path.normpath(os.path.join(outputDir, conffiles.get(f.lower(), s)))
 scriptDir = os.path.dirname(os.path.abspath(__file__))
 
-phylTree = utils.myPhylTree.PhylogeneticTree(files["speciestree"])
+phylTree = utils.myPhylTree.PhylogeneticTree(files["speciesTree"])
 
 
 workflow = utils.myAgoraWorkflow.AgoraWorkflow(phylTree.root, scriptDir, files)
