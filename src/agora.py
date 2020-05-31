@@ -118,7 +118,7 @@ for x in bysections["ancgenes"]:
     maxSizesStr = ",".join(maxSizes)
 
     taskname = dirnameTemplate % (minSizesStr, maxSizesStr)
-    workflow.addAncGenesFilterAnalysis(taskname, "size", dirnameTemplate, root, [minSizesStr, maxSizesStr], "*" not in x[0])
+    workflow.addAncGenesFilterAnalysis(taskname, "size", [minSizesStr, maxSizesStr], dirnameTemplate, root, "*" not in x[0])
 
     if len(ancGenesDirNames) > 1:
         for dirname in ancGenesDirNames:
@@ -135,7 +135,7 @@ for x in bysections.get("pairwise", []):
     params = params.split()
 
     # Pairwise comparison tasks
-    workflow.addPairwiseAnalysis(dirname, params[0], root, params[1:], "*" not in x[0])
+    workflow.addPairwiseAnalysis(dirname, params[0], params[1:], root, "*" not in x[0])
 
 # Integration section
 #####################
@@ -157,7 +157,7 @@ for x in bysections.get("integration", []):
     if params[-1].startswith("("):
         dirname = ancGenes[params.pop()[1:-1]]
 
-    workflow.addIntegrationAnalysis(currMethod, params[0], input, output, dirname, root, params[1:], tolaunch)
+    workflow.addIntegrationAnalysis(params[0], params[1:], dirname, currMethod, input, output, root, tolaunch)
 
 # Launching tasks in multiple threads
 #####################################

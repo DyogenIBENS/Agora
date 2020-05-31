@@ -152,7 +152,7 @@ class AgoraWorkflow:
     def addDummy(self, taskFullName, dependencies=[]):
         return self.tasklist.addTask(taskFullName, dependencies, (None, None, None, False))
 
-    def addAncGenesGenerationAnalysis(self, launch):
+    def addAncGenesGenerationAnalysis(self, launch=True):
         taskFullName = ("ancgenes", self.allAncGenesTaskName)
         if launch:
             return self.tasklist.addTask(
@@ -173,7 +173,7 @@ class AgoraWorkflow:
         else:
             return self.addDummy(taskFullName)
 
-    def addAncGenesFilterAnalysis(self, taskName, methodName, dirnameTemplate, ancestor, params, launch):
+    def addAncGenesFilterAnalysis(self, taskName, methodName, params, dirnameTemplate, ancestor=None, launch=True):
         return self.tasklist.addTask(
             ("ancgenes", taskName),
             [("ancgenes", self.allAncGenesTaskName)],
@@ -191,7 +191,7 @@ class AgoraWorkflow:
             )
         )
 
-    def addPairwiseAnalysis(self, taskName, methodName, ancestor, params, launch):
+    def addPairwiseAnalysis(self, taskName, methodName="conservedPairs", params=[], ancestor=None, launch=True):
         return self.tasklist.addTask(
             ("pairwise", taskName),
             [("ancgenes",taskName)],
@@ -210,7 +210,7 @@ class AgoraWorkflow:
             )
         )
 
-    def addIntegrationAnalysis(self, taskName, methodName, inputName, outputName, pairwiseName, ancestor, params, launch):
+    def addIntegrationAnalysis(self, methodName, params, pairwiseName, taskName=None, inputName=None, outputName=None, ancestor=None, launch=True):
 
         if taskName is None:
             taskName = methodName
