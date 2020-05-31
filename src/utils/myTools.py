@@ -521,8 +521,8 @@ def checkArgs(args, options, info, showArgs=True, loadOnlyDefaultOptions=False):
     # there is less than the minimal number of arguments
     #FIXME, the second part of the condition should be avoided by upstream corrections
     if len(valArg) < len(args) and not (len(args) == 1 and args[0] == ()):
-        print >> sys.stderr, "valArg=", valArg
-        print >> sys.stderr, "args=", args
+        # print >> sys.stderr, "valArg=", valArg
+        # print >> sys.stderr, "args=", args
         error_usage("Not enough arguments")
 
     valArg.update(valOpt)
