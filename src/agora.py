@@ -27,7 +27,7 @@ __doc__ = """
 
 arguments = utils.myTools.checkArgs(
     [("agora.conf", file)],
-    [("workingDir", str, "."), ("nbThreads", int, multiprocessing.cpu_count()),
+    [("workingDir", str, "."), ("nbThreads", int, multiprocessing.cpu_count()), ("printWorkflowGraph", str, ""),
      ],
     __doc__)
 
@@ -158,6 +158,13 @@ for x in bysections.get("integration", []):
         dirname = ancGenes[params.pop()[1:-1]]
 
     workflow.addIntegrationAnalysis(params[0], params[1:], dirname, currMethod, input, output, root, tolaunch)
+
+# Print the workflow and exit
+if arguments["printWorkflowGraph"]:
+    fh = utils.myFile.openFile(arguments["printWorkflowGraph"], "w")
+    workflow.tasklist.printGraphviz(fh)
+    fh.close()
+    sys.exit(0)
 
 # Launching tasks in multiple threads
 #####################################

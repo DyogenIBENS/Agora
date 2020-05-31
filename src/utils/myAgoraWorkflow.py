@@ -28,6 +28,14 @@ class TaskList():
         manager = multiprocessing.Manager()
         self.queue = manager.Queue()
 
+    def printGraphviz(self, fh):
+        print >> fh, "digraph", "{"
+        for (name, taskId) in self.dic.iteritems():
+            print >> fh, '%d [label="%s"]' % (taskId, "/".join(name))
+            for dep in self.list[taskId][0]:
+                print >> fh, '%d -> %d' % (dep, taskId)
+        print >> fh, "}"
+
     def addTask(self, name, dep, data, multithreaded=False):
         taskId = len(self.list)
         print "New task", taskId, name
