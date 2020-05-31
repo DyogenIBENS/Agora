@@ -69,5 +69,24 @@ It should run for a few minutes and end with this message in green:
 
 ## Usage
 
-Check out our [user manual](doc/HowTo.md) to learn how to use AGORA
-(also available as [docx](doc/HowTo.docx) and [pdf](doc/HowTo.pdf)).
+In a nutshell, you need to gather:
+
+* a species tree
+* the list of genes of each species
+* gene trees
+
+and then try:
+
+```bash
+src/agora1.py species-tree.nwk gene-trees.nhx genes.%s.list
+```
+
+If the ancestral genomes are too fragmented, run this otherwise:
+
+```bash
+src/agora2.py species-tree.nwk gene-trees.nhx genes.%s.list
+```
+
+Check out our [user manual](doc/HowTo.md) for more information about the
+input file formats, what these two scripts do, and how to tune AGORA even
+further. Also available as [docx](doc/HowTo.docx) and [pdf](doc/HowTo.pdf).
