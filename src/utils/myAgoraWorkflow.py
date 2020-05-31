@@ -57,7 +57,7 @@ class TaskList():
         print "Waiting ...",
         sys.stdout.flush()
         (i, r) = self.queue.get()
-        print "task", i, "is now finished (status", r, ")"
+        print "task", i, "is now finished (status %d)" % r
         if r == 0:
             self.removeDep(i)
         self.proc.pop(i).join()
