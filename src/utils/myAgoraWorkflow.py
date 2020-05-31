@@ -87,10 +87,8 @@ class TaskList():
         # Queue
         while (self.completed + self.failed) < len(self.list):
 
-            print "running:", self.nrun
-            print "todo:", len(self.list)
-            print "done:", self.completed
-            print "failed:", self.failed
+            print "Status: %d to do, %d running, %d done, %d failed -- %d total" % \
+                    (len(self.list)-len(self.proc)-self.completed-self.failed, len(self.proc), self.completed, self.failed, len(self.list))
 
             if self.nrun == nbThreads:
                 self.joinNext()
