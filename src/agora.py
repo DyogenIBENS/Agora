@@ -97,8 +97,6 @@ for x in bysections["ancgenes"]:
         continue
     x = partition(x, "=")
     (params, root) = partition(x[1], "!")
-    if root == "":
-        root = phylTree.root
     # index
     t = x[0].replace("*", "").split(",")
     sizes = params.split(",")
@@ -133,8 +131,6 @@ for x in bysections.get("pairwise", []):
     dirname = ancGenes[x[0].replace("*", "").strip()]
     (params, root) = partition(x[1], "!")
     params = params.split()
-    if root == "":
-        root = phylTree.root
 
     # Pairwise comparison tasks
     workflow.addPairwiseAnalysis(dirname, params[0], root, params[1:], "*" not in x[0])
