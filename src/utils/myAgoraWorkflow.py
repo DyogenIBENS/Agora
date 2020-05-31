@@ -123,6 +123,22 @@ class TaskList():
 
 class AgoraWorkflow:
 
+    # Default paths (in case not set in the configuration file)
+    defaultPaths = {
+        'ancgenesdata': 'ancGenes/%(filt)s/ancGenes.%(name)s.list.bz2',
+        'ancgeneslog': 'ancGenes/%(filt)s.log',
+        'genetreeswithancnames': 'GeneTreeForest.withAncGenes.nhx.bz2',
+        'pairwiseoutput': 'pairwise/pairs-%(filt)s/%(name)s.list.bz2',
+        'pairwiselog': 'pairwise/pairs-%(filt)s/log',
+        'integrblocks': 'integrDiags/%(method)s/diags.%(name)s.list.bz2',
+        'integroutput': 'integrDiags/%(method)s/graph.%(name)s.log.bz2',
+        'integrlog': 'integrDiags/%(method)s/log',
+        'ancgenomesoutput': 'ancGenomes/%(method)s/ancGenome.%(name)s.list.bz2',
+        'ancgenomeslog': 'ancGenomes/%(method)s/log',
+    }
+    inputParams = ["speciestree", "genetrees", "genes"]
+
+
     def __init__(self, defaultRoot, scriptDir, files):
         self.defaultRoot = defaultRoot
         self.tasklist = TaskList()

@@ -55,17 +55,19 @@ def partition(s, delim):
 
 # Files and directory section
 ##############################
-files = {}
+conffiles = {}
 for x in bysections["files"]:
     x = partition(x, "=")
-    files[x[0].lower()] = x[1]
+    conffiles[x[0].lower()] = x[1]
 
 # All input paths are relative to the directory of the configuration file
+files = {}
 inputDir = os.path.dirname(arguments["agora.conf"])
+for f in utils.myAgoraWorkflow.AgoraWorkflow.inputParams:
+    files[f] = os.path.normpath(os.path.join(inputDir, conffiles[f]))
 outputDir = arguments["workingDir"]
-inputParams = ["speciestree", "genes", "genetrees"]
-for f in files:
-    files[f] = os.path.normpath(os.path.join(inputDir if f in inputParams else outputDir, files[f]))
+for (f, s) in utils.myAgoraWorkflow.AgoraWorkflow.defaultPaths.iteritems():
+    files[f] = os.path.normpath(os.path.join(outputDir, conffiles.get(f, s)))
 scriptDir = os.path.dirname(os.path.abspath(__file__))
 
 phylTree = utils.myPhylTree.PhylogeneticTree(files["speciestree"])
