@@ -290,7 +290,7 @@ class AgoraWorkflow:
             self.prevMethod = newMethod
 
         return self.tasklist.addTask(
-            ("integr", newMethod),
+            ("integr" if methodName != "publish" else "publish", newMethod),
             dep,
             (
                 args,
