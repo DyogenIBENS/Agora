@@ -101,7 +101,7 @@ class TaskList():
                     self.joinNext()
                 else:
                     (next, dep, (args, out, log, launch), multithreaded) = todo
-                    print ("Launching" if launch else "Skipping"), next, args, ">", out, "2>", log
+                    print ("Launching" if launch else "Skipping"), "task", next, args, ">", out, "2>", log
                     if launch:
                         if multithreaded:
                             self.nthreads[next] = nbThreads - self.nrun
