@@ -64,6 +64,7 @@ class TaskList():
             self.completed += 1
         else:
             self.failed += 1
+            print >> sys.stderr, ">", "Inspect", self.list[i][1][2], "for more information"
         self.nrun -= self.nthreads.pop(i)
 
     # Launch program function
