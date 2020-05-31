@@ -6,6 +6,7 @@
 # mail : agora@bio.ens.psl.eu
 # This is free software; you may copy, modify and/or distribute this work under the terms of the GNU General Public License, version 3 or later and the CeCiLL v2 license in France
 
+import itertools
 import multiprocessing
 import os
 import subprocess
@@ -41,9 +42,26 @@ class TaskList():
         print "New task", taskId, name
         print dep
         print data
-        print
-        self.dic[name] = taskId
         self.list.append((set(self.dic[x] for x in dep), data, multithreaded))
+        if name in self.dic:
+            if name + ("1",) in self.dic:
+                self.list[self.dic[name]][0].add(taskId)
+                for i in itertools.count(2):
+                    newName = name + (str(i),)
+                    if newName not in self.dic:
+                        print "! Name clash ! Renamed to", newName, "under a collector"
+                        self.dic[newName] = taskId
+                        break
+            else:
+                print "! Name clash ! Introducing a collector task"
+                collectorId = self.dic[name]
+                self.list.append(self.list[collectorId])
+                self.list[collectorId] = (set([taskId, taskId + 1]), (None, None, None, False), False)
+                self.dic[name + ("1",)] = taskId + 1
+                self.dic[name + ("2",)] = taskId
+        else:
+            self.dic[name] = taskId
+        print
         return taskId
 
     def removeDep(self, i):
