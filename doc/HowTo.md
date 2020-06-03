@@ -16,7 +16,7 @@ DYOGEN Laboratory, Institut de Biologie de l'École Normale Supérieure
 * [Running AGORA](#running-agora)
   * [AGORA with no selection of robust families](#agora-with-no-selection-of-robust-families)
   * [AGORA with selection of robust families](#agora-with-selection-of-robust-families)
-  * [AGORA with multiple selection of robust families](#agora-with-multiple-selection-of-robust-families)
+  * [Advanced AGORA usage](#advanced-agora-usage)
 * [Output file formats](#output-file-formats)
 
 ----
@@ -167,16 +167,13 @@ are `M1`, `M2`, `M3`, `M4`, and `M5`, and the genes files are named [`genes.M1.l
 
 ![](agora.jpg)
 
-The AGORA method is wrapped up in a script named `agora.py`, which
-runs all the steps of the reconstructions according to a configuration file.
-
-The reconstruction itself can be perfomed with different approaches,
+The reconstruction can be perfomed with different approaches,
 explained below, and the output is a set of CARs.
 AGORA comes with three different configuration files of increasing complexity:
 
   * [AGORA with no selection of robust families](#agora-with-no-selection-of-robust-families)
   * [AGORA with selection of robust families](#agora-with-selection-of-robust-families)
-  * [AGORA with multiple selection of robust families](#agora-with-multiple-selection-of-robust-families)
+  * [Advanced AGORA usage](#advanced-agora-usage)
 
 
 #### Notes
@@ -214,33 +211,47 @@ genome assembly:
 * The reads are assembled into contigs ("Graph linearisation" step)
 * The contigs are assembled into scaffolds ("Block assembly" step)
 
-#### All in one: agora.ini
+#### All in one: `agora1.py`
 
-The [`agora.ini`](../conf/agora.ini) configuration file sets AGORA
+The `agora1.py` script sets AGORA
 to run these three steps sequentially. The only parameters that have
-to be changed are the paths to the input files (species tree and gene
-trees). Then run AGORA with the name of output directory (which will
-be automatically created):
+to be given are the paths to the input files: species tree, gene
+trees and gene lists.
 
 ```bash
-src/agora.py conf/agora.ini -workingDir=output_dir
+src/agora1.py species-tree.nwk gene-trees.nhx genes.%s.list
 ```
 
-To regenerate the reference output of the example dataset, simply run:
+By default the files will be created in the current directory.
+Add the `-workingDir=output_dir` option to change the output
+directory (which will be automatically created).  
+By default AGORA uses all the cores available on the machine. Use
+the `-nbThreads=XX` option to change this.  
+By default AGORA will reconstruct *every* ancestor. To limit the
+reconstruction to one ancestor only (say `Boreoeutheria`), add the
+`-target==Boreoeutheria` option. Note that two `=` are indeed required
+because `-target=Boreoeutheria` tells AGORA to reconstruct `Boreoeutheria`
+and all its descendants.
+
+To regenerate the reference output of the example dataset, run:
 
 ```bash
-src/agora.py conf/agora.ini -workingDir=example/results -nbThreads=1
+src/agora1.py \
+  example/data/Species.nwk \
+  example/data/GeneTreeForest.nhx.bz2 \
+  example/data/genes/genes.%s.list.bz2 \
+  -workingDir=example/results \
+  -nbThreads=1
 ```
-
-By default, AGORA uses all the cores available on the machine. Use
-the `-nbThreads=XX` option to change this.
 
 #### Step by step
 
 The scripts can also be run step by step.
 In the following command lines, `A0` represents the name of the target
 ancestor for the reconstructions (here the root of the example species
-tree). This ancestor and all its descendants will be reconstructed.
+tree). As with the `-target` option, `A0` means that this ancestor and
+all its descendants will be reconstructed. To _only_ reconstruct `A0`,
+give `=A0` to the scripts.
 
 ##### Extraction of ancestral gene content
 
@@ -379,15 +390,13 @@ genes (_non-robust families fusion_) and inserts these in the filled-in robust
 contigs (_single side junction_). Finally it assembles the resulting
 contigs (block assembly) into Contiguous Ancestral Regions (CARs).
 
-#### All in one: `agora-robust.py`
+#### All in one: `agora2.py`
 
-The whole workflow can be run automatically with `agora.py` and
-[`agora-robust.ini`](../conf/agora-robust.ini`).
-First edit the paths to the input files (species tree and gene trees),
-then run:
+The whole workflow can be run automatically with `agora2.py` using
+the same syntax as `agora1.py`
 
 ```bash
-src/agora.py conf/agora-robust.ini -workingDir=output_dir
+src/agora2.py species-tree.nwk gene-trees.nhx genes.%s.list
 ```
 
 This configuration file is set to select
@@ -399,10 +408,19 @@ and more conserved.
 These two parameters can be changed according to the dynamics of the species
 considered.
 
-To regenerate the reference output of the example dataset, simply run:
+```bash
+src/agora2.py species-tree.nwk gene-trees.nhx genes.%s.list -minSize=0.9 -maxSize=1.1
+```
+
+To regenerate the reference output of the example dataset, run:
 
 ```bash
-src/agora.py conf/agora-robust.ini -workingDir=example/results -nbThreads=1
+src/agora2.py \
+  example/data/Species.nwk \
+  example/data/GeneTreeForest.nhx.bz2 \
+  example/data/genes/genes.%s.list.bz2 \
+  -workingDir=example/results \
+  -nbThreads=1
 ```
 
 #### Step by step
@@ -566,23 +584,53 @@ src/convert.ancGenomes.diags-genes.py \
 More information about these files in [Output file formats](#output-file-formats)
 below.
 
-### AGORA with multiple selection of robust families
 
-The process can be further tuned to use multiple sets of robust genes
-for specific ancestors. Along the _1.0-1.0_ robust families used above,
+### Advanced AGORA usage
+
+#### `agora.py` script
+
+The AGORA method is also available through a script named `agora.py`, which
+runs all the steps of the reconstructions according to a configuration file.
+
+The configuration file lists the input and output paths, and describes the steps
+of the workflows. The `agora1.py` and `agora2.py` scripts are equivalent to the
+[`agora.ini`](../conf/agora.ini) and [`agora-robust.ini`](../conf/agora-robust.ini)
+configuration files.
+
+For instance, this will run reconstructions directly, without selecting
+robust families:
+
+```bash
+src/agora.py conf/agora.ini -workingDir=output_dir
+```
+
+The script also accepts the `-nbThreads=XX` parameter.
+
+#### AGORA with different selections of robust families
+
+The selection of robust families can be further tuned to use multiple sets
+of robust genes. Along the _1.0-1.0_ robust families used above,
 we can define other, more relaxed, sets, like _0.9-1.1_, which tolerates
 a 10% deviation between the number of extant genes and extant species,
 and so forth.
 
+The following two configuration files showcase different ways of running AGORA
+with multiple sets of robust families, and demonstrate the power of using a
+configuration file.
+
+##### Different parameters for each ancestor
+
 The [`agora-multirobust.ini`](../conf/agora-multirobust.ini) configuration
-file does this. It demonstrates how to use multiple filters on different
+file tells AGORA to use multiple filters on different
 ancestors, and how to conbine the results.
+
+Run the entire workflow with `agora.py`:
 
 ```bash
 src/agora.py conf/agora-multirobust.ini -workingDir=output_dir
 ```
 
-#### Indicative steps
+##### Indicative steps
 
 The most efficient way of extracting multiple sets of robust families
 is to do all at once, for instance:
@@ -634,6 +682,20 @@ src/buildSynteny.integr-copy.py \
   -IN.ancDiags=example/results/integrDiags/denovo-size-1.0-1.0/diags.%s.list.bz2 \
   -OUT.ancDiags=example/results/integrDiags/denovo-size-custom/diags.%s.list.bz2 \
   2> example/results/integrDiags/denovo-size-custom/log
+```
+
+##### Iterative reconstructions with less and less robust families
+
+The [`agora-iterativerobust.ini`](../conf/agora-iterativerobust.ini) configuration
+file use the same multiple filters (_1.0-1.0_, _0.9-1.1_, _0.77-1.33_) but on
+**every** ancestor. Compared to the [`agora-robust.ini`](../conf/agora-robust.ini) workflow, it first extends the _1.0-1.0_ reconstructions with the "less robust"
+_0.9-1.1_ families only, then with the "even less robust" _0.77-1.33_ families,
+and finally with the complete set of families.
+
+Test it `agora.py`:
+
+```bash
+src/agora.py conf/agora-iterativerobust.ini -workingDir=output_dir
 ```
 
 ## Output file formats
