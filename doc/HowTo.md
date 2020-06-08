@@ -107,7 +107,9 @@ AGORA expects the gene trees to be in NHX format with the following keys:
 1. `S` gives the taxon name, which must exist in the species tree
 2. `D` indicates the type of the node:
    * `D=N` for speciation nodes
-   * `D=Y` for duplication nodes, which can be marked as "dubious" with an extra `DD=Y`
+   * `D=Y` for duplication nodes, which can be marked as "dubious" with an
+     extra `DD=Y`. Dubious duplications are considered like speciation
+     nodes when extracting the gene families.
 
 See an example family:
 
@@ -169,7 +171,8 @@ are `M1`, `M2`, `M3`, `M4`, and `M5`, and the genes files are named [`genes.M1.l
 
 The reconstruction can be perfomed with different approaches,
 explained below, and the output is a set of CARs.
-AGORA comes with three different configuration files of increasing complexity:
+AGORA comes with two presets (predefined workflows) and a mechanism
+to _roll your own_ workflow:
 
   * [AGORA with no selection of robust families](#agora-with-no-selection-of-robust-families)
   * [AGORA with selection of robust families](#agora-with-selection-of-robust-families)
@@ -219,19 +222,20 @@ to be given are the paths to the input files: species tree, gene
 trees and gene lists.
 
 ```bash
-src/agora1.py species-tree.nwk gene-trees.nhx genes.%s.list
+src/agora1.py /path/to/species-tree.nwk /path/to/gene-trees.nhx /path/to/genes.%s.list
 ```
 
-By default the files will be created in the current directory.
-Add the `-workingDir=output_dir` option to change the output
-directory (which will be automatically created).  
-By default AGORA uses all the cores available on the machine. Use
-the `-nbThreads=XX` option to change this.  
-By default AGORA will reconstruct *every* ancestor. To limit the
-reconstruction to one ancestor only (say `Boreoeutheria`), add the
-`-target==Boreoeutheria` option. Note that two `=` are indeed required
-because `-target=Boreoeutheria` tells AGORA to reconstruct `Boreoeutheria`
-and all its descendants.
+There are three optional Command-line parameters:
+* By default the files will be created in the current directory.
+  Add the `-workingDir=output_dir` option to change the output
+  directory (which will be automatically created).
+* By default AGORA uses all the cores available on the machine. Use
+  the `-nbThreads=XX` option to control this.
+* By default AGORA will reconstruct *every* ancestor. To limit the
+  reconstruction to one ancestor and all its descendants (say
+  `Boreoeutheria`), add the `-target=Boreoeutheria` option. To reconstruct
+  `Boreoeutheria` _only_, use ``-target==Boreoeutheria` (with two `=`)
+  instead.
 
 To regenerate the reference output of the example dataset, run:
 
@@ -396,7 +400,7 @@ The whole workflow can be run automatically with `agora2.py` using
 the same syntax as `agora1.py`
 
 ```bash
-src/agora2.py species-tree.nwk gene-trees.nhx genes.%s.list
+src/agora2.py /path/to/species-tree.nwk /path/to/gene-trees.nhx /path/to/genes.%s.list
 ```
 
 This configuration file is set to select
@@ -409,7 +413,7 @@ These two parameters can be changed according to the dynamics of the species
 considered.
 
 ```bash
-src/agora2.py species-tree.nwk gene-trees.nhx genes.%s.list -minSize=0.9 -maxSize=1.1
+src/agora2.py /path/to/species-tree.nwk /path/to/gene-trees.nhx /path/to/genes.%s.list -minSize=0.9 -maxSize=1.1
 ```
 
 To regenerate the reference output of the example dataset, run:
