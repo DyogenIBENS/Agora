@@ -1,3 +1,2 @@
 enum
-numpy
 joblib==0.11

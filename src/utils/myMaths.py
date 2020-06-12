@@ -12,7 +12,6 @@ import math
 import operator
 from . import myTools
 import bisect
-import numpy as np
 
 #############################
 # Fonctions de statistiques #
@@ -450,21 +449,6 @@ def prod(factors):
 
 def mean(l):
     return float(sum(l)) / len(l)
-
-# geometrical mean
-def geoMean(l):
-    res = (reduce(lambda x, y: x*y, l)**(1.0/len(l)))
-    if res == 0:
-        res = 1
-    return res
-
-def geoSd(l):
-    gM = float(geoMean(l))
-    # https://en.wikipedia.org/wiki/Geometric_standard_deviation
-    n = float(len(l))
-    s = float(sum([(math.log(float(v)/gM))**2 for v in l if v != 0]))
-    res = np.exp(math.sqrt(s/n))
-    return res
 
 def ratioAbs(ratio):
     assert ratio > 0

@@ -5,5 +5,4 @@ dependencies:
     - python=2.7
     - pip:
         - enum
-        - numpy
         - joblib==0.11
