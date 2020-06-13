@@ -111,18 +111,6 @@ def verbose(functionToExcecute):
         return res
     return  modifiedFunction
 
-# decorator for functions that requires a minimal python version >= 2.7 for instance
-# version is a tuple, for instance if the function requires python version at least 2.7, version = (2,7)
-def minimalPythonVersion(version):
-    def decorator(functionToExcecute):
-        def modifiedFunction(*args, **kargs):
-            if sys.version_info < version:
-                raise Exception("Function %s needs at least python %s.%s" % (functionToExcecute.__name__,version[0],version[1]))
-            else:
-                return functionToExcecute(*args, **kargs)
-        return modifiedFunction
-    return decorator
-
 # decorator that computes the execution time
 def tictac(functionToExcecute):
     @wraps(functionToExcecute) # to avoid changing the name of the function

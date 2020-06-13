@@ -442,9 +442,6 @@ def combinations(n,p):
                 else:
                     return float(num)/den
 
-#Warning: this function should be called from python 2.7 otherwise it may return annoying warnings in the sys.stderr as:
-#Exception RuntimeError: 'maximum recursion depth exceeded in __subclasscheck__' in <type 'exceptions.RuntimeError'> ignored
-@myTools.minimalPythonVersion((2,7))
 def prod(factors):
     return reduce(operator.mul, factors, 1)
 
