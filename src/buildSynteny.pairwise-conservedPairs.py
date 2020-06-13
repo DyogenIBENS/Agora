@@ -131,7 +131,7 @@ def getTargets(listAnc, lmodPair):
 		for otherAncName in listAnc:
 			if otherAncName in t:
 				lanc[(otherAncName, t[otherAncName])].append(modPair)
-	return iter(lanc.items())
+	return lanc.items()
 	
 
 details = collections.defaultdict(lambda: collections.defaultdict(set))

@@ -78,8 +78,8 @@ def do(anc):
             def filt(items):
                 return [x for x in items if (x[0] in extr) and (x[1] > weight)]
 
-            out1 = filt(iter(pairwiseDiags[start].items()))
-            out2 = filt(iter(pairwiseDiags[rev(end)].items()))
+            out1 = filt(pairwiseDiags[start].items())
+            out2 = filt(pairwiseDiags[rev(end)].items())
 
             for x in out1:
                 (k, f) = extr[x[0]]
