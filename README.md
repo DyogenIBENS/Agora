@@ -45,8 +45,8 @@ To simplify deployment, AGORA already embeds a modified version of
 (6/11/2015), a Python library
 for bioinformatics and comparative genomics developed by the same group.
 
-AGORA is written in Python 2 and is currently not compatible with Python 3.
-You can install a Python 2 environment with all the dependencies with
+AGORA is written in Python 3, which is widely available.
+You can install a Python 3 environment with all the dependencies with
 [_conda_](https://docs.conda.io/)
 
 ```
