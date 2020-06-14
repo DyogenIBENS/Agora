@@ -64,7 +64,7 @@ def printTable(table, output, spaceBetweenColumns=2):
     for i in range(len(table[0])):
         max_lens.append(max([len(str(r[i])) for r in table]))
     res = "\n".join(
-        ["".join([string.ljust(str(e), l + spaceBetweenColumns)
+        ["".join([str(e).ljust(l + spaceBetweenColumns)
                   for e, l in zip(r, max_lens)])
          for r in table])
     print >> output, res
