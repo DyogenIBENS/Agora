@@ -311,14 +311,9 @@ class randomValue:
     @staticmethod
     def myVonMises(mean, kappa):
 
-        # WARNING!! in Python version 2.7.3, vonmisesvariate(0,K) variates from
-        # -pi to +pi. This bug (as in the official documentation it goes well from
-        #  0 to 2*pi) was fixed in Pyhton 2.7.4
-        if sys.version_info <= (2, 7, 3):
-            vmrv = random.vonmisesvariate(0, kappa) / math.pi
-        else:
-            vmrv = random.vonmisesvariate(math.pi, kappa) / math.pi - 1
-        # vmrv = a von-Mises random variable between -1 and 1, mean = 0
+        # vonmisesvariate returns a value between 0 and 2*pi. We want a value
+        # between -1 and 1 (mean 0)
+        vmrv = random.vonmisesvariate(math.pi, kappa) / math.pi - 1
 
         r = vmrv * float(1 - mean)
         # r is in [- 1 + mean, + (1 - mean)]
