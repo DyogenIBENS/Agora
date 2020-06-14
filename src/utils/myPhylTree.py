@@ -532,20 +532,21 @@ class PhylogeneticTree:
     def newCommonNamesMapperInstance(self):
         dsi = dict.__setitem__
         dgi = dict.__getitem__
+        off = self.officialName
 
         class commonNamesMapper(dict):
 
-            def __getitem__(d, name):
-                if name in self.officialName:
-                    return dgi(d, self.officialName[name])
+            def __getitem__(self, name):
+                if name in off:
+                    return dgi(self, off[name])
                 else:
-                    return dgi(d, name)
+                    return dgi(self, name)
 
-            def __setitem__(d, name, value):
-                if name in self.officialName:
-                    dsi(d, self.officialName[name], value)
+            def __setitem__(self, name, value):
+                if name in off:
+                    dsi(self, off[name], value)
                 else:
-                    dsi(d, name, value)
+                    dsi(self, name, value)
 
             # Because it's recursive, use a non-ambiguous name for this method,
             # since 'to_dict' for instance, is already a method of
