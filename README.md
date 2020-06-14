@@ -38,8 +38,9 @@ Email agora {at} bio {dot} ens {dot} psl {dot} eu
 
 ## Installation
 
-To simplify deployment, AGORA already embeds the version 1.0 (6/11/2015) of
-[LibsDyogen](https://github.com/DyogenIBENS/LibsDyogen), a Python library
+To simplify deployment, AGORA already embeds a modified version of
+[LibsDyogen](https://github.com/DyogenIBENS/LibsDyogen) version 1.0
+(6/11/2015), a Python library
 for bioinformatics and comparative genomics developed by the same group.
 
 AGORA is written in Python 2 and is currently not compatible with Python 3.
