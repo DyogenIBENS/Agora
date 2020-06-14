@@ -9,9 +9,9 @@
 import sys
 import itertools
 import collections
-import enum
 
 from . import myFile
+from . import myTools
 
 Gene = collections.namedtuple("Gene", ['chromosome', 'beginning', 'end', 'strand', 'names'])
 GenePosition = collections.namedtuple("GenePosition", ['chromosome', 'index'])
@@ -25,7 +25,7 @@ def commonChrName(x):
     except ValueError:
         return intern(x)
 
-ContigType = enum.Enum('Chromosome', 'Scaffold', 'None', 'Random')
+ContigType = myTools.Enum('Chromosome', 'Scaffold', 'None', 'Random')
 def contigType(chrName):
     if chrName in [None, "Un_random", "UNKN", "Un"]:
         # chromosome named "Un" in Monodelphis.domestica corresponds to a scaffold that concatenates all unassembled

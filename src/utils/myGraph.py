@@ -14,15 +14,13 @@ import collections
 import itertools
 import sys
 
-import enum
-
 from . import myFile
 from . import myGenomes
 from . import myMaths
 from . import myTools
 
 
-OrthosFilterType = enum.Enum('None', 'InCommonAncestor', 'InBothSpecies')
+OrthosFilterType = myTools.Enum('None', 'InCommonAncestor', 'InBothSpecies')
 
 
 def loadConservedPairsAnc(filename):

@@ -15,8 +15,6 @@ import string
 import warnings
 import collections
 
-import enum
-
 from functools import wraps
 
 from . import myFile
@@ -404,8 +402,8 @@ def checkArgs(args, options, info, showArgs=True, loadOnlyDefaultOptions=False):
         for (i,t) in enumerate(args):
             print >> sys.stderr, "\t", "%d:" % (i+1), t[0], t[1]
         for t in options:
-            if isinstance(t[1], enum.Enum):
-                print >> sys.stderr, "\t", "  -%s %s (%s)" % (t[0], t[1]._keys, t[2])
+            if isinstance(t[1], Enum):
+                print >> sys.stderr, "\t", "  -%s %s (%s)" % (t[0], list(t[1].__dict__), t[2])
             elif t[1] == bool:
                 print >> sys.stderr, "\t", "+/-%s (%s)" % (t[0],t[2])
             else:
@@ -426,7 +424,7 @@ def checkArgs(args, options, info, showArgs=True, loadOnlyDefaultOptions=False):
                 error_usage("File '%s' innaccessible" % v)
             else:
                 res = v
-        elif isinstance(typ, enum.Enum):
+        elif isinstance(typ, Enum):
             try:
                 res = getattr(typ, v)
             except AttributeError:
@@ -443,7 +441,7 @@ def checkArgs(args, options, info, showArgs=True, loadOnlyDefaultOptions=False):
     opt = {}
     for (name,typ,val) in options:
         opt[name] = (typ,val)
-        valOpt[name] = val[0] if isinstance(val, list) else getattr(typ, val) if isinstance(typ, enum.Enum) else val
+        valOpt[name] = val[0] if isinstance(val, list) else getattr(typ, val) if isinstance(typ, Enum) else val
     if loadOnlyDefaultOptions:
         return valOpt
 
