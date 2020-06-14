@@ -11,6 +11,7 @@
 import itertools
 import collections
 import os
+import subprocess
 import sys
 
 null = open(os.devnull, 'w')
@@ -127,9 +128,11 @@ def openFile(nom, mode):
         # Compression lzma
         elif nom.endswith(".lzma"):
             comm += " | unlzma"
-        (stdin,f,stderr) = os.popen3( comm % nom )
-        stdin.close()
-        stderr.close()
+        p = subprocess.Popen(comm % nom, shell=True,
+                stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        p.stdin.close()
+        p.stderr.close()
+        f = p.stdout
 
     # standard entry
     elif nom == "-":
