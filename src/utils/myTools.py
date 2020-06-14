@@ -36,7 +36,7 @@ class Namespace: pass
 #3
 class Enum(object):
     def __init__(self, *keys):
-        self.____dict__.update(zip(keys, range(len(keys))))
+        self.__dict__.update(zip(keys, range(len(keys))))
 
 def applyFunctions(fun, data):
     for (f, x) in itertools.izip(fun, data):
