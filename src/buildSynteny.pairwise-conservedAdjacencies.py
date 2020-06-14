@@ -24,8 +24,6 @@ import multiprocessing
 import sys
 import time
 
-from joblib import Parallel, delayed
-
 import utils.myPhylTree
 import utils.myGenomes
 import utils.myFile
@@ -172,6 +170,6 @@ for (e1,e2) in itertools.combinations(listSpecies, 2):
 
 start = time.time()
 n_cpu = arguments["nbThreads"] or multiprocessing.cpu_count()
-Parallel(n_jobs=n_cpu)(delayed(getAllAdj)(anc) for anc in sorted(targets))
+multiprocessing.Pool(n_cpu).map(getAllAdj, sorted(targets))
 print("Elapsed time:", (time.time() - start), file=sys.stderr)
 

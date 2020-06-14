@@ -48,8 +48,6 @@ import sys
 import threading
 import time
 
-from joblib import Parallel, delayed
-
 import utils.myFile
 import utils.myGenomes
 import utils.myGraph
@@ -714,6 +712,6 @@ def loadPairwise(file):
 print("Targets:", sorted(targets), file=sys.stderr)
 
 n_cpu = arguments["nbThreads"] or multiprocessing.cpu_count()
-Parallel(n_jobs=n_cpu)(delayed(do)(anc) for anc in sorted(targets))
+multiprocessing.Pool(n_cpu).map(do, sorted(targets))
 
 print("total computation time", (time.time() - start), file=sys.stderr)

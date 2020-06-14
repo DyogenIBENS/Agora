@@ -1,2 +1,1 @@
-joblib==0.11
 psutil
