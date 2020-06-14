@@ -400,7 +400,7 @@ def checkArgs(args, options, info, showArgs=True, loadOnlyDefaultOptions=False):
         print >> sys.stderr, "- ERROR -", reason
         print >> sys.stderr, " Usage :", sys.argv[0]
         for (i,t) in enumerate(args):
-            print >> sys.stderr, "\t", "%d:" % (i+1), t[0], t[1]
+            print >> sys.stderr, "\t", "%d:" % (i+1), t[0], list(t[1].__dict__) if isinstance(t[1], Enum) else t[1]
         for t in options:
             if isinstance(t[1], Enum):
                 print >> sys.stderr, "\t", "  -%s %s (%s)" % (t[0], list(t[1].__dict__), t[2])
