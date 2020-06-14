@@ -18,6 +18,7 @@ import sys
 import utils.myGenomes
 import utils.myPhylTree
 import utils.myTools
+from utils.myTools import file
 
 arguments = utils.myTools.checkArgs(
     [("speciesTree", file), ("target", str), ("IN.ancGenesFiles", str), ("OUT.ancGenesFiles", str), ("minSize", str),("maxSize", str)],

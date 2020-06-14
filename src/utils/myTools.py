@@ -19,6 +19,8 @@ from functools import wraps
 
 from . import myFile
 
+class file: pass
+
 null = open(os.devnull, 'w')
 
 debug = null

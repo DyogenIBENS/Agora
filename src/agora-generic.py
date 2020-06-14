@@ -13,6 +13,7 @@ import sys
 import utils.myAgoraWorkflow
 import utils.myPhylTree
 import utils.myTools
+from utils.myTools import file
 
 __doc__ = """
     Run a generic workflow of AGORA that will try several parameters and select the best

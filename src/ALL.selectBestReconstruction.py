@@ -17,6 +17,7 @@ import utils.myFile
 import utils.myMaths
 import utils.myTools
 import utils.myPhylTree
+from utils.myTools import file
 
 arguments = utils.myTools.checkArgs(
         [("speciesTree",file), ("target",str), ("IN.ancBlocks", utils.myTools.ParamList(str, 1))],

@@ -16,6 +16,7 @@ import sys
 import utils.myFile
 import utils.myPhylTree
 import utils.myTools
+from utils.myTools import file
 
 # Arguments
 arguments = utils.myTools.checkArgs([("speciesTree", file), ("target", str)],

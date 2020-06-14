@@ -21,6 +21,7 @@ import utils.myGenomes
 import utils.myGraph
 import utils.myPhylTree
 import utils.myTools
+from utils.myTools import file
 
 # Arguments
 arguments = utils.myTools.checkArgs(

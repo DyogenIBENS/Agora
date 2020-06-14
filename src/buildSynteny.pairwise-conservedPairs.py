@@ -18,6 +18,8 @@ import time
 import utils.myMaths
 import utils.myPhylTree
 import utils.myGenomes
+import utils.myTools
+from utils.myTools import file
 
 
 # Arguments

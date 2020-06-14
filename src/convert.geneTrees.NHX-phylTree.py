@@ -14,6 +14,7 @@ import sys
 
 import utils.myProteinTree as myProteinTree
 import utils.myTools as myTools
+from utils.myTools import file
 
 arguments = myTools.checkArgs( [("tree",file)], [], __doc__)
 

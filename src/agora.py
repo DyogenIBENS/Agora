@@ -15,6 +15,7 @@ import utils.myAgoraWorkflow
 import utils.myFile
 import utils.myPhylTree
 import utils.myTools
+from utils.myTools import file
 
 __doc__ = """
     Run all the AGORA programs according to configuration file

@@ -40,6 +40,7 @@ import utils.myGraph
 import utils.myMaths
 import utils.myPhylTree
 import utils.myTools
+from utils.myTools import file
 
 # Arguments
 arguments = utils.myTools.checkArgs(

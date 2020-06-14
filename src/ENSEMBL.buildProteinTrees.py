@@ -19,6 +19,7 @@ import utils.myFile
 import utils.myTools
 import utils.myPhylTree
 import utils.myProteinTree
+from utils.myTools import file
 
 arguments = utils.myTools.checkArgs( \
 	[("speciesTree",file), ("ensemblTree",file)], \

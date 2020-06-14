@@ -14,6 +14,7 @@ __doc__ = """ Convert a species phylogenetic tree from/to newick or phyltree tex
 
 import utils.myPhylTree as myPhylTree
 import utils.myTools as myTools
+from utils.myTools import file
 
 
 arguments = myTools.checkArgs([("speciesTree",file)], [("fromNewick",bool,True)], __doc__)

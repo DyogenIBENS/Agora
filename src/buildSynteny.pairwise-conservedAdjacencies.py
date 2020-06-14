@@ -24,6 +24,7 @@ import utils.myFile
 import utils.myTools
 import utils.myMaths
 import utils.myGraph
+from utils.myTools import file
 
 # Arguments
 arguments = utils.myTools.checkArgs(

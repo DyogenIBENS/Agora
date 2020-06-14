@@ -22,6 +22,7 @@ import utils.myFile
 import utils.myPhylTree
 import utils.myProteinTree
 import utils.myTools
+from utils.myTools import file
 
 sys.setrecursionlimit(10000)
 

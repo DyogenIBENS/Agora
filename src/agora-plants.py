@@ -13,6 +13,7 @@ import sys
 import utils.myAgoraWorkflow
 import utils.myPhylTree
 import utils.myTools
+from utils.myTools import file
 
 __doc__ = """
     Run the Plants workflow of AGORA (i.e. with constrained families and a multi-integration pass for scaffolding)

@@ -13,6 +13,7 @@ import sys
 import utils.myAgoraWorkflow
 import utils.myPhylTree
 import utils.myTools
+from utils.myTools import file
 
 __doc__ = """
     Run the Vertebrates workflow of AGORA (i.e. with constrained families and a single-integration pass for scaffolding)
