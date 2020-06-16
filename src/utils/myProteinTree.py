@@ -34,7 +34,8 @@ def getIntermediateAnc(phylTree, previousAnc, lastWrittenAnc, newAnc, isDuplicat
                 toWrite=list(phylTree.dicLinks[previousAnc][newAnc]) # the genes of the species between previousAnc and newAnc are recorded and newAnc is removed if the node is a duplication node (see after)
 
     if isDuplication:                                               # if the current node is a duplication newAnc is not recorded in the list to be written
-        toWrite.remove(newAnc)
+        if toWrite:
+            toWrite.remove(newAnc)
 
     root=False                                              # root refers to terminal genes of the first species
     if not lastWrittenAnc:                                  # in the first species or at the first node outside the first species
