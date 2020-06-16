@@ -68,7 +68,7 @@ def getExtremities(genome):
     return (extr1, extr2)
 
 
-def getAllAdj(anc):
+def getAllAdj(anc, dicGenomesAnc):
     allAdj = {}
     for esp in listSpecies:
 
@@ -78,7 +78,7 @@ def getAllAdj(anc):
         print >> sys.stderr, "Diagonals extraction between %s and %s ..." % (anc, esp),
 
         for (n, ((c1, d1), (c2, d2), da)) in enumerate(
-                utils.myGraph.calcDiags(dicGenomes[esp], dicGenomes[anc], genesAnc[phylTree.dicParents[anc][esp]],
+                utils.myGraph.calcDiags(dicGenomes[esp], dicGenomesAnc, genesAnc[phylTree.dicParents[anc][esp]],
                                         orthosFilter=utils.myGraph.OrthosFilterType.InBothSpecies,
                                         minChromLength=arguments["minChromLength"])):
             if len(da) < arguments["anchorSize"]:
@@ -91,7 +91,7 @@ def getAllAdj(anc):
 
         print >> sys.stderr, utils.myMaths.myStats.txtSummary(stats),
 
-        newGA = rewriteGenome(dicGenomes[anc], dicA)
+        newGA = rewriteGenome(dicGenomesAnc, dicA)
         # List of selected blocks in the ancestor
         notdup = set()
         for cA in newGA:
@@ -123,7 +123,9 @@ def do(anc):
     ini_stdout = sys.stdout
     sys.stdout = utils.myFile.openFile(arguments["LOG.ancGraph"] % phylTree.fileName[anc], "w")
 
-    allAdj = getAllAdj(anc)
+    dicGenomesAnc = dicGenomes[anc]
+
+    allAdj = getAllAdj(anc, dicGenomesAnc)
 
     gr = utils.myGraph.WeightedDiagGraph()
     for (e1, e2) in toStudy[anc]:
@@ -134,11 +136,11 @@ def do(anc):
 
     stats = []
     f = utils.myFile.openFile(arguments["OUT.ancDiags"] % phylTree.fileName[anc], "w")
-    notseen = set(dicGenomes[anc].lstGenes)
+    notseen = set(dicGenomesAnc.lstGenes)
 
     def toString(x, rev=False):
-        lg = [genesAnc[anc].dicGenes[gene.names[0]].index for gene in dicGenomes[anc].lstGenes[x]]
-        ls = [gene.strand for gene in dicGenomes[anc].lstGenes[x]]
+        lg = [genesAnc[anc].dicGenes[gene.names[0]].index for gene in dicGenomesAnc.lstGenes[x]]
+        ls = [gene.strand for gene in dicGenomesAnc.lstGenes[x]]
         if rev:
             lg.reverse()
             ls = [-x for x in reversed(ls)]
@@ -157,19 +159,19 @@ def do(anc):
             tmp = toString(x, rev=(s < 0))
             tg.append(tmp[0])
             ts.append(tmp[1])
-            tw.append("(%d)" % len(dicGenomes[anc].lstGenes[x]))
+            tw.append("(%d)" % len(dicGenomesAnc.lstGenes[x]))
             if len(scores) > 0:
                 tw.append(str(scores.pop(0)))
-            l += len(dicGenomes[anc].lstGenes[x])
+            l += len(dicGenomesAnc.lstGenes[x])
         print >> f, utils.myFile.myTSV.printLine([anc, l, " ".join(tg), " ".join(ts), " ".join(tw)])
         stats.append(l)
 
     # Write the single blocks
     for x in sorted(notseen):
         print >> f, utils.myFile.myTSV.printLine(
-            (anc, len(dicGenomes[anc].lstGenes[x])) + toString(x) + ("(%d)" % len(dicGenomes[anc].lstGenes[x]),))
-        if len(dicGenomes[anc].lstGenes[x]) > 1:
-            stats.append(len(dicGenomes[anc].lstGenes[x]))
+            (anc, len(dicGenomesAnc.lstGenes[x])) + toString(x) + ("(%d)" % len(dicGenomesAnc.lstGenes[x]),))
+        if len(dicGenomesAnc.lstGenes[x]) > 1:
+            stats.append(len(dicGenomesAnc.lstGenes[x]))
 
     print >> sys.stderr, "Integrated blocs of", anc, utils.myMaths.myStats.txtSummary(stats), "+", len(
         genesAnc[anc].lstGenes[None]) - sum(stats), "singletons"
