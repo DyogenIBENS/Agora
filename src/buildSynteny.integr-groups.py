@@ -123,7 +123,8 @@ def do(anc):
     ini_stdout = sys.stdout
     sys.stdout = utils.myFile.openFile(arguments["LOG.ancGraph"] % phylTree.fileName[anc], "w")
 
-    dicGenomesAnc = dicGenomes[anc]
+    dicGenomesAnc = utils.myGenomes.Genome(arguments["IN.ancDiags"] % phylTree.fileName[anc], ancGenes=genesAnc[anc],
+                                             withDict=False)
 
     allAdj = getAllAdj(anc, dicGenomesAnc)
 
@@ -195,8 +196,6 @@ for e in listSpecies:
 genesAnc = {}
 for anc in targets:
     genesAnc[anc] = utils.myGenomes.Genome(arguments["ancGenesFiles"] % phylTree.fileName[anc])
-    dicGenomes[anc] = utils.myGenomes.Genome(arguments["IN.ancDiags"] % phylTree.fileName[anc], ancGenes=genesAnc[anc],
-                                             withDict=False)
 
 for anc in [phylTree.dicParents[e][a] for (e, a) in itertools.product(listSpecies, targets)]:
     if anc not in genesAnc:
