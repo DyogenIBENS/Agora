@@ -219,9 +219,13 @@ class PhylogeneticTree:
                     break
                 # record (name_of_child, evolution_time)
                 children.append((tmp, currLine[2] - self.ages.get(tmp)))
+            # AGORA needs a minimised tree
+            if len(children) == 1:
+                return children[0][0]
             # current node
             (currIndent, currNames, currAge) = currLine
             name = currNames[0]
+            # No children: the node is a leaf
             if len(children) == 0:
                 if name[0] == SYMBOL6X:
                     currLine[1][0] = name = currNames[0][1:]
@@ -232,11 +236,8 @@ class PhylogeneticTree:
                 else:
                     name = currNames[0]
                     self.lstEspFull.add(name)
-            # FIXE: also return anc node if only one extant species
-            if len(children) == 1:
-                self.items.setdefault(name, children)
             # several children, they are recorded
-            elif len(children) > 1:
+            else:
                 self.items.setdefault(name, children)
             # standard informations
             self.ages.setdefault(name, currLine[2])
