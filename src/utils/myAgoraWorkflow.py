@@ -9,6 +9,7 @@
 import itertools
 import multiprocessing
 import os
+import resource
 import subprocess
 import sys
 import time
@@ -80,7 +81,7 @@ class TaskList():
 
     # Waiting for a task to finish
     def joinNext(self):
-        print "Waiting ...",
+        print "Waiting ..."
         sys.stdout.flush()
         (i, r) = self.queue.get()
         print "task", i, "is now finished (status %d)" % r
@@ -93,8 +94,14 @@ class TaskList():
             print >> sys.stderr, ">", "Inspect", self.list[i][1][2], "for more information"
         self.nrun -= self.nthreads.pop(i)
 
+    def printCPUUsageStats(self, intro, start):
+        ru = resource.getrusage(resource.RUSAGE_CHILDREN)
+        elapsed = time.time() - start
+        print intro, "%g sec CPU time / %g sec elapsed = %g%% CPU usage" % (ru.ru_utime + ru.ru_stime, elapsed, 100. * (ru.ru_utime + ru.ru_stime) / elapsed)
+
     # Launch program function
     def goLaunch(self, i, args, out, log):
+        start = time.time()
         stdout = myFile.openFile(out, "w")
         stderr = myFile.openFile(log, "w")
         p = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=stderr)
@@ -105,11 +112,13 @@ class TaskList():
             print >> stdout, l,
         stdout.close()
         stderr.close()
+        self.printCPUUsageStats("task %d report:" % i, start)
         time.sleep(5)
         self.queue.put((i, r))
 
     # Launching tasks in multiple threads
     def runAll(self, nbThreads):
+        start = time.time()
         # Queue
         while (self.completed + self.failed) < len(self.list):
 
@@ -145,6 +154,7 @@ class TaskList():
         assert self.nrun == 0
         if not self.failed:
             print "Workflow complete"
+        self.printCPUUsageStats("Workflow report:", start)
         return self.failed
 
 class AgoraWorkflow:
