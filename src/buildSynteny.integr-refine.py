@@ -29,6 +29,7 @@ import collections
 import itertools
 import multiprocessing
 import sys
+import threading
 import time
 
 from joblib import Parallel, delayed
@@ -506,13 +507,13 @@ def do(anc):
                             break
                     if thread:
                         print "with thread"
-                        p = multiprocessing.Process(target=bestPathInQueue, args=(f, (start, end, lstPairwise)))
+                        p = threading.Thread(target=bestPathInQueue, args=(f, (start, end, lstPairwise)))
                         p.start()
                         # st = time.time()
                         try:
                             r = queue.get(True, arguments["timeout"])
                         except Queue.Empty:
-                            p.terminate()
+                            p._Thread__stop()
                             # Au cas ou le resultat serait arrive entre temps
                             r = queue.get_nowait()
                         # et = time.time()
