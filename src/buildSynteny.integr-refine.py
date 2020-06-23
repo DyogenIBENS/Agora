@@ -506,6 +506,11 @@ def do(anc):
                         if len(lstPairwise) >= size:
                             break
                     if thread:
+
+                        queue = Queue.Queue()
+                        def bestPathInQueue(f, args):
+                            queue.put(f(*args))
+
                         print "with thread"
                         p = threading.Thread(target=bestPathInQueue, args=(f, (start, end, lstPairwise)))
                         p.start()
@@ -677,14 +682,6 @@ func = [x.split(",") for x in arguments["func"].split("|")]
 maxsize = int(func[-1][0])
 func = [(int(x[0]), eval("bestPath" + x[1].replace("t", "")), "t" in x[1]) for x in func[:-1]]
 func.reverse()
-
-# Besoin d'un thread ?
-if True in [x[2] for x in func]:
-    queue = multiprocessing.Manager().Queue()
-
-
-    def bestPathInQueue(f, args):
-        queue.put(f(*args))
 
 
 def loadPairwise(file):
