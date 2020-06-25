@@ -517,7 +517,7 @@ src/buildSynteny.integr-refine.py \
 
 ##### Non-robust families fusion
 
-This step takes all the remaining singletons, which
+This step takes all the remaining singletons (`+onlySingletons` option), which
 are mostly non-robust genes, and tries to assemble them into contigs.
 
 ```bash
@@ -526,6 +526,7 @@ src/buildSynteny.integr-extend.py \
   example/data/Species.nwk \
   A0 \
   example/results/pairwise/pairs-all/%s.list.bz2 \
+  +onlySingletons \
   -IN.ancDiags=example/results/integrDiags/denovo-size-1.0-1.0.refine-all/diags.%s.list.bz2 \
   -OUT.ancDiags=example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all/diags.%s.list.bz2 \
   -LOG.ancGraph=example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all/graph.%s.log.bz2 \
