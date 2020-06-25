@@ -58,6 +58,10 @@ environment (e.g. a Python _virtualenv_):
 pip install -r requirements.txt
 ```
 
+If possible, you may want to use [PyPy](https://www.pypy.org/) instead of
+the reference Python implementation as it runs AGORA approx. 1.5 times
+faster in our tests.
+
 Once everything is installed, run this to check the installation:
 
 ```
