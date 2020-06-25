@@ -1,3 +1,26 @@
+
+## 2020-06-25 - v1.4
+
+1. [bugfix] -- Avoid `ALL.extractGeneFamilies.py` crashing because of a
+   `ValueError` in certain conditions.
+2. [bugfix] -- Some mitochondrial genomes were excluded from the
+   reconstructions.
+3. [bugfix] -- `buildSynteny.integr-refine.py` doesn't crash with a
+   `ZeroDivisionError` when there isn't a previous score to compare
+   against.
+4. [change] -- `buildSynteny.integr-refine.py` and
+   `buildSynteny.integr-groups.py` can now run across multiple cores.
+5. [change] -- The path evaluation parameter of
+   `buildSynteny.integr-refine.py` now defaults to the one used in the
+   paper.
+6. [change] -- Removed two Python dependencies: `numpy` and `enum`.
+7. [change] -- Unary nodes are now allowed in the species-tree.
+8. [new] -- New library (`myAgoraWorkflow`) to simplify the creation of
+   workflows around AGORA scripts.
+9. [new] -- Print CPU usage stats when running workflows.
+10. [new] -- New scripts (`agora1.py` and `agora2.py`) to run the default
+    workflows.
+
 ## 2020-05-13 - v1.3
 
 1. [change] -- Moved the _LibsDyoGen_ inside `scripts/utils/`
@@ -24,7 +47,7 @@
 
 ## 2020-04-27 - v1.1
 
-1. [bugfix] -- `agora.py` was not detecting workflow errors.
+1. [bugfix] -- `agora.py` was not detecting task failures.
 2. [bugfix] -- `agora.py` was always creating an ancGenes-filter task even
    when it doesn't need one.
 3. [change] -- Added a `-LOG.ancGraph` option to all the
