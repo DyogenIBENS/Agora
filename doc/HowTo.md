@@ -226,6 +226,7 @@ src/agora1.py /path/to/species-tree.nwk /path/to/gene-trees.nhx /path/to/genes.%
 ```
 
 There are three optional Command-line parameters:
+
 * By default the files will be created in the current directory.
   Add the `-workingDir=output_dir` option to change the output
   directory (which will be automatically created).
@@ -234,7 +235,7 @@ There are three optional Command-line parameters:
 * By default AGORA will reconstruct *every* ancestor. To limit the
   reconstruction to one ancestor and all its descendants (say
   `Boreoeutheria`), add the `-target=Boreoeutheria` option. To reconstruct
-  `Boreoeutheria` _only_, use ``-target==Boreoeutheria` (with two `=`)
+  `Boreoeutheria` _only_, use `-target==Boreoeutheria` (with two `=`)
   instead.
 
 To regenerate the reference output of the example dataset, run:
