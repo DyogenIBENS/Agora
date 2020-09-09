@@ -97,7 +97,7 @@ class TaskList():
     def printCPUUsageStats(self, intro, start):
         ru = resource.getrusage(resource.RUSAGE_CHILDREN)
         elapsed = time.time() - start
-        print intro, "%g sec CPU time / %g sec elapsed = %g%% CPU usage" % (ru.ru_utime + ru.ru_stime, elapsed, 100. * (ru.ru_utime + ru.ru_stime) / elapsed)
+        print intro, "%g sec CPU time / %g sec elapsed = %g%% CPU usage, %g MB RAM" % (ru.ru_utime + ru.ru_stime, elapsed, 100. * (ru.ru_utime + ru.ru_stime) / elapsed, ru.ru_maxrss / 1024.)
 
     # Launch program function
     def goLaunch(self, i, args, out, log):
