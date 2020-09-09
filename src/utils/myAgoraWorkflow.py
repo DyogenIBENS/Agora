@@ -136,8 +136,8 @@ class TaskList():
                     self.joinNext()
                 else:
                     (next, dep, (args, out, log, launch), multithreaded) = todo
-                    print ("Launching" if launch else "Skipping"), "task", next, args, ">", out, "2>", log
                     if launch:
+                        print "Launching task", next, args, ">", out, "2>", log
                         if multithreaded:
                             self.nthreads[next] = nbThreads - self.nrun
                             args.append("-nbThreads=%d" % self.nthreads[next])
@@ -148,6 +148,7 @@ class TaskList():
                         self.proc[next].start()
                         self.nrun += self.nthreads[next]
                     else:
+                        print "Skipping task", next, args
                         self.removeDep(next)
                         self.completed += 1
 
