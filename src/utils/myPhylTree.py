@@ -455,9 +455,9 @@ class PhylogeneticTree:
         return (listSpecies, listAncestors)
 
     # return the list of species pointed out by target
-    #   =esp
-    #   +anc [children]
-    #   /anc [outgroup]
+    #   anc  [anc+children]
+    #   =esp [esp]
+    #   /anc [outgroups]
     #   _** in order to remove instead of adding
     def getTargetsSpec(self, target):
         lesp = set()
@@ -479,10 +479,10 @@ class PhylogeneticTree:
         return lesp
 
     # return the list of ancestors pointed out by target
-    #   =anc
-    #   +anc [children]
-    #   -anc [parents]
-    #   /anc [parents+outgroups]
+    #   anc  [anc+children]
+    #   =anc [anc]
+    #   \anc [anc+parents]
+    #   /anc [anc+parents+outgroups]
     #   _** in order to remove instead of adding
     def getTargetsAnc(self, target):
         lanc = set()
