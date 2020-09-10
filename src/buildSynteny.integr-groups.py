@@ -32,9 +32,10 @@ import utils.myTools
 
 # Arguments
 arguments = utils.myTools.checkArgs( \
-    [("phylTree.conf", file), ("target", str), ("usedSpecies", str)], \
+    [("phylTree.conf", file), ("target", str)], \
     [("minimalWeight", int, 1), ("anchorSize", int, 2), ("minChromLength", int, 2), \
      ("nbThreads", int, 0),
+     ("extantSpeciesFilter", str, ""), \
      ("IN.ancDiags", str, ""), \
      ("LOG.ancGraph", str, "groups_log/%s.log.bz2"),
      ("OUT.ancDiags", str, "anc/diags.%s.list.bz2"), \
@@ -186,20 +187,15 @@ def do(anc):
 # Load species tree - target ancestral genome and the extant species used to assemble blocs
 phylTree = utils.myPhylTree.PhylogeneticTree(arguments["phylTree.conf"])
 
-targets = phylTree.getTargetsAnc(arguments["target"])
-listSpecies = phylTree.getTargetsSpec(arguments["target"] if arguments["usedSpecies"] == "_" else arguments["usedSpecies"])
+(listSpecies, targets, accessoryAncestors) = phylTree.getTargetsForPairwise(arguments["target"], arguments["extantSpeciesFilter"])
 
 dicGenomes = {}
 for e in listSpecies:
     dicGenomes[e] = utils.myGenomes.Genome(arguments["genesFiles"] % phylTree.fileName[e], withDict=False)
 
 genesAnc = {}
-for anc in targets:
+for anc in targets.union(accessoryAncestors):
     genesAnc[anc] = utils.myGenomes.Genome(arguments["ancGenesFiles"] % phylTree.fileName[anc])
-
-for anc in [phylTree.dicParents[e][a] for (e, a) in itertools.product(listSpecies, targets)]:
-    if anc not in genesAnc:
-        genesAnc[anc] = utils.myGenomes.Genome(arguments["ancGenesFiles"] % phylTree.fileName[anc])
 
 toStudy = collections.defaultdict(list)
 for (e1, e2) in itertools.combinations(listSpecies, 2):

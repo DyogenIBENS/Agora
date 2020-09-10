@@ -72,7 +72,8 @@ scriptDir = os.path.dirname(os.path.abspath(__file__))
 phylTree = utils.myPhylTree.PhylogeneticTree(files["speciesTree"])
 
 
-workflow = utils.myAgoraWorkflow.AgoraWorkflow(phylTree.root, scriptDir, files)
+# TODO: add options in config file to change the target ancestors / species
+workflow = utils.myAgoraWorkflow.AgoraWorkflow(phylTree.root, phylTree.root, scriptDir, files)
 
 # Ancestral genes lists Section
 ################################

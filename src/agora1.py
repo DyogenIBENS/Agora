@@ -25,7 +25,7 @@ __doc__ = """
 
 arguments = utils.myTools.checkArgs(
     [("speciesTree", file), ("geneTrees", file), ("genes", str)],
-    [("target", str, ""),
+    [("target", str, ""), ("extantSpeciesFilter", str, ""),
      ("workingDir", str, "."), ("nbThreads", int, multiprocessing.cpu_count())],
     __doc__)
 
@@ -42,12 +42,14 @@ phylTree = utils.myPhylTree.PhylogeneticTree(arguments["speciesTree"])
 # Check that the syntax is correct
 if arguments["target"]:
     phylTree.getTargetsAnc(arguments["target"])
+if arguments["extantSpeciesFilter"]:
+    phylTree.getTargetsSpec(arguments["extantSpeciesFilter"])
 
-workflow = utils.myAgoraWorkflow.AgoraWorkflow(arguments["target"] or phylTree.root, scriptDir, files)
+workflow = utils.myAgoraWorkflow.AgoraWorkflow(arguments["target"] or phylTree.root, arguments["extantSpeciesFilter"], scriptDir, files)
 workflow.addAncGenesGenerationAnalysis()
 workflow.addPairwiseAnalysis(workflow.allAncGenesDirName)
 workflow.addIntegrationAnalysis("denovo", ['+searchLoops'], workflow.allAncGenesDirName)
-workflow.addIntegrationAnalysis("groups", ['_'], None)
+workflow.addIntegrationAnalysis("groups", [], None)
 workflow.addIntegrationAnalysis("publish", [], None, taskName="//")
 
 # Launching tasks in multiple threads

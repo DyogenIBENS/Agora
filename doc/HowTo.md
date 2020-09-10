@@ -337,14 +337,11 @@ and integration into an adjacency graph) but on the previous CARs, which allows
 finding higher-level adjacencies.
 The result is a set of CARs made of CARs, that are much longer than in the previous steps.
 
-&#9888; **Warning**: The underscore `_` is a required parameter. It tells AGORA
-to consider all extant species under A0 for this step.
-
 ```bash
 mkdir -p example/results/integrDiags/denovo-all.groups/
 src/buildSynteny.integr-groups.py \
   example/data/Species.nwk \
-  A0 _ \
+  A0 \
   -IN.ancDiags=example/results/integrDiags/denovo-all/diags.%s.list.bz2 \
   -OUT.ancDiags=example/results/integrDiags/denovo-all.groups/diags.%s.list.bz2 \
   -LOG.ancGraph=example/results/integrDiags/denovo-all.groups/graph.%s.log.bz2 \
@@ -556,14 +553,11 @@ src/buildSynteny.integr-halfinsert.py \
 Like in non-robust mode, this step does pairwise comparisons and a graph linearisation
 of the CARs themselves, which allows finding higher-level adjacencies.
 
-&#9888; **Warning**: Here as well the underscore `_` must be given.
-It tells AGORA to consider all extant species
-
 ```bash
 mkdir -p example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all.groups
 src/buildSynteny.integr-groups.py \
   example/data/Species.nwk \
-  A0 _ \
+  A0 \
   -IN.ancDiags=example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all/diags.%s.list.bz2 \
   -OUT.ancDiags=example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all.groups/diags.%s.list.bz2 \
   -LOG.ancGraph=example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all.groups/graph.%s.log.bz2 \

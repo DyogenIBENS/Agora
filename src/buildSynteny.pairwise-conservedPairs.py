@@ -23,7 +23,7 @@ import utils.myGenomes
 # Arguments
 arguments = utils.myTools.checkArgs(
 	[("phylTree.conf",file), ("target",str)], \
-	[("genesFiles",str,""), ("ancGenesFiles",str,""), ("OUT.pairwise",str,"")],
+	[("extantSpeciesFilter",str,""), ("genesFiles",str,""), ("ancGenesFiles",str,""), ("OUT.pairwise",str,"")],
 	__doc__
 )
 
@@ -36,8 +36,7 @@ phylTree = utils.myPhylTree.PhylogeneticTree(arguments["phylTree.conf"])
 # Species to use
 ################
 
-listSpecies = phylTree.getTargetsSpec(arguments["target"])
-listAncestors = set(phylTree.dicParents[e1][e2] for (e1,e2) in itertools.combinations(listSpecies, 2))
+(listSpecies, listAncestors, accessoryAncestors) = phylTree.getTargetsForPairwise(arguments["target"], arguments["extantSpeciesFilter"])
 
 def revPair((g1, g2)):
 	return ((g2[0],-g2[1]),(g1[0],-g1[1]))
@@ -46,7 +45,7 @@ dicAncMod = collections.defaultdict(lambda: collections.defaultdict(lambda: coll
 dicModAnc = collections.defaultdict(list)
 
 genesAnc = {}
-for anc in listAncestors:
+for anc in listAncestors.union(accessoryAncestors):
 	genesAnc[anc] = utils.myGenomes.Genome(arguments["ancGenesFiles"] % phylTree.fileName[anc])
 
 print >> sys.stderr, "time for loading", time.time() - start
@@ -59,7 +58,7 @@ for esp in listSpecies:
 	anc = esp
 	while anc in phylTree.parent:
 		(par,_) = phylTree.parent[anc]
-		if par in listAncestors:
+		if par in genesAnc:
 			lanc.append((par, genesAnc[par].dicGenes, dicAncMod[par][anc]))
 		anc = par
 
@@ -167,6 +166,12 @@ start = time.time()
 
 # Results files.
 for (anc, pairs) in details.iteritems():
+
+	# Accessory ancestor (required to compare against outgroups)
+	if anc not in listAncestors:
+		print >> sys.stderr, "Skipping", anc, "(not a target)"
+		continue
+
 	print >> sys.stderr, len(pairs), "conserved pairs for", anc
 
 	# -1 is the outgroup species, 1,2,3... are the descendantsdescendants

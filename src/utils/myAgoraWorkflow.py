@@ -176,8 +176,9 @@ class AgoraWorkflow:
     inputParams = ["speciesTree", "geneTrees", "genes"]
 
 
-    def __init__(self, defaultRoot, scriptDir, files):
+    def __init__(self, defaultRoot, defaultExtantSpeciesFilter, scriptDir, files):
         self.defaultRoot = defaultRoot
+        self.defaultExtantSpeciesFilter = ["-extantSpeciesFilter=" + defaultExtantSpeciesFilter] if defaultExtantSpeciesFilter else []
         self.tasklist = TaskList()
         self.scriptDir = scriptDir
         self.files = files
@@ -243,7 +244,7 @@ class AgoraWorkflow:
                     "-ancGenesFiles=" + self.files["ancGenesData"] % {"filt": taskName, "name": "%s"},
                     "-genesFiles=" + self.files["genes"] % {"name": "%s"},
                     "-OUT.pairwise=" + self.files["pairwiseOutput"] % {"filt": taskName, "name": "%s"}
-                ] + params,
+                ] + self.defaultExtantSpeciesFilter + params,
                 os.devnull,
                 self.files["pairwiseLog"] % {"filt": taskName},
                 launch,
@@ -318,6 +319,7 @@ class AgoraWorkflow:
 
         if methodName == "groups":
             args.append("-genesFiles=" + self.files["genes"] % {"name": "%s"})
+            args.extend(self.defaultExtantSpeciesFilter)
 
         if methodName not in ["copy", "publish"]:
             args.append("-LOG.ancGraph=" + self.files["integrOutput"] % {"method": newMethod, "name": "%s"})
