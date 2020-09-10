@@ -507,6 +507,44 @@ class PhylogeneticTree:
                     lanc.update(e for e in self.listAncestr if self.isChildOf(e, x))
         return lanc
 
+    # Wrapper around getTargetsAnc and getTargetsSpec to list the species and
+    # ancestors to use in pairwise comparisons
+    def getTargetsForPairwise(self, target, extantSpeciesFilter):
+
+        # All the target ancestors
+        targets = self.getTargetsAnc(target)
+        # print "targets", targets
+
+        # All the allowed extant species
+        if extantSpeciesFilter:
+            listSpecies = set()
+            for anc in self.getTargetsSpec(extantSpeciesFilter):
+                listSpecies.update(self.species[anc])
+        else:
+            listSpecies = set(self.listSpecies)
+        # print "listSpecies", listSpecies
+
+        # All the possible ancestors given the extant species
+        # and the ones required to do comparisons
+        listAncestors = set()
+        requiredAncestors = set()
+        for (e1,e2) in itertools.combinations(listSpecies, 2):
+            inter = targets.intersection(self.dicLinks[e1][e2][1:-1])
+            # If the pair of species intersects a target
+            if inter:
+                listAncestors.update(inter)
+                requiredAncestors.add(self.dicParents[e1][e2])
+        # print "listAncestors", listAncestors
+        # print "requiredAncestors", requiredAncestors
+        accessoryAncestors = requiredAncestors.difference(listAncestors)
+        # print "accessoryAncestors", accessoryAncestors
+
+        if not listAncestors:
+            print >> sys.stderr, "No target ancestors. Received arguments: target=%s extantSpeciesFilter=%s" % (target, extantSpeciesFilter)
+            sys.exit(1)
+
+        return (listSpecies, listAncestors, accessoryAncestors)
+
     # return the structure of the sub-tree in which are exclusively the chosen species
     def getSubTree(self, goodSpecies, rootAnc=None):
         goodAnc = set(self.dicParents[e1][e2] for (e1, e2) in itertools.combinations(goodSpecies, 2))
