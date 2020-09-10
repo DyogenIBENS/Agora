@@ -102,8 +102,8 @@ class TaskList():
     # Launch program function
     def goLaunch(self, i, args, out, log):
         start = time.time()
-        stdout = myFile.openFile(out, "w")
-        stderr = myFile.openFile(log, "w")
+        stdout = myFile.openFile(out or os.devnull, "w")
+        stderr = myFile.openFile(log or os.devnull, "w")
         p = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=stderr)
         for l in p.stdout:
             print >> stdout, l,
@@ -226,7 +226,7 @@ class AgoraWorkflow:
                     self.files["ancGenesData"] % {"filt": self.allAncGenesDirName, "name": "%s"},
                     self.files["ancGenesData"] % {"filt": dirnameTemplate, "name": "%s"}
                 ] + params,
-                os.devnull,
+                None,
                 self.files["ancGenesLog"] % {"filt": taskName},
                 launch,
             )
@@ -245,7 +245,7 @@ class AgoraWorkflow:
                     "-genesFiles=" + self.files["genes"] % {"name": "%s"},
                     "-OUT.pairwise=" + self.files["pairwiseOutput"] % {"filt": taskName, "name": "%s"}
                 ] + self.defaultExtantSpeciesFilter + params,
-                os.devnull,
+                None,
                 self.files["pairwiseLog"] % {"filt": taskName},
                 launch,
             )
@@ -336,7 +336,7 @@ class AgoraWorkflow:
             dep,
             (
                 args,
-                os.devnull,
+                None,
                 logfile % {"method": newMethod},
                 launch,
             ),
