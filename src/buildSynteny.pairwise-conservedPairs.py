@@ -51,7 +51,7 @@ for anc in listAncestors.union(accessoryAncestors):
 print >> sys.stderr, "time for loading", time.time() - start
 start = time.time()
 
-for esp in listSpecies:
+def extractPairsFromSpecies(esp):
 	genome = utils.myGenomes.Genome(arguments["genesFiles"] % phylTree.fileName[esp], withDict=False)
 	# loading parents list
 	lanc = []
@@ -97,6 +97,9 @@ for esp in listSpecies:
 
 	print >> sys.stderr, "OK"
 
+for esp in listSpecies:
+	extractPairsFromSpecies(esp)
+
 print >> sys.stderr, "time for task1", time.time() - start
 start = time.time()
 
@@ -115,7 +118,7 @@ def getTargets(listAnc, lmodPair):
 
 details = collections.defaultdict(lambda: collections.defaultdict(set))
 
-for anc in dicAncMod:
+def intersectAndPropagatePairs(anc):
 	# genesAnc[anc] = [gene.names[0] for gene in genesAnc[anc].lstGenes[None]]
 	
 	# All pairs of child species, grouped by subtree
@@ -161,16 +164,20 @@ for anc in dicAncMod:
 
 	print >> sys.stderr, nbcons, "conserved pairs between descendants", anc
 
+for anc in list(dicAncMod):
+	intersectAndPropagatePairs(anc)
+
 print >> sys.stderr, "time for task 2", time.time() - start
 start = time.time()
 
 # Results files.
-for (anc, pairs) in details.iteritems():
+def reportPairs(anc):
+	pairs = details.pop(anc)
 
 	# Accessory ancestor (required to compare against outgroups)
 	if anc not in listAncestors:
 		print >> sys.stderr, "Skipping", anc, "(not a target)"
-		continue
+		return
 
 	print >> sys.stderr, len(pairs), "conserved pairs for", anc
 
@@ -199,4 +206,7 @@ for (anc, pairs) in details.iteritems():
 		)
 	f.close()
 		
+for anc in list(details):
+	reportPairs(anc)
+
 print >> sys.stderr, "Elapsed time task3:", (time.time() - start), (time.time() - st)
