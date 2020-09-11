@@ -122,8 +122,9 @@ details = collections.defaultdict(lambda: collections.defaultdict(set))
 
 def intersectAndPropagatePairs(anc):
 	
+	subdicAncMod = dicAncMod.pop(anc)
 	# All pairs of child species, grouped by subtree
-	pairs = [(x,dicAncMod[anc][x]) for (x,_) in phylTree.items[anc]]
+	pairs = [(x,subdicAncMod[x]) for (x,_) in phylTree.items[anc]]
 	listAnc = phylTree.allDescendants[anc].intersection(phylTree.listAncestr)
 	
 	print >> sys.stderr, "Number of pairs for", anc, [(x[0],len(x[1])) for x in pairs]
