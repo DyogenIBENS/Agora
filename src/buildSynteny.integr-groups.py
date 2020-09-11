@@ -134,6 +134,7 @@ def do(anc):
         for x in allAdj[e1] & allAdj[e2]:
             gr.addDiag(x)
     # gr.printIniGraph()
+    del allAdj
     gr.cleanGraphTopDown(2 * arguments["minimalWeight"])
 
     stats = []
