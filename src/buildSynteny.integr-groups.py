@@ -190,6 +190,23 @@ phylTree = utils.myPhylTree.PhylogeneticTree(arguments["phylTree.conf"])
 
 (listSpecies, targets, accessoryAncestors) = phylTree.getTargetsForPairwise(arguments["target"], arguments["extantSpeciesFilter"])
 
+# Gene names don't matter by themselves. What is important is that they link the dicGenomes
+# and the genesAnc. utils.myGenomes uses intern() to make them refer to the same string
+# instances to reduce the memory usage. Here we go further and we replace the names with
+# unique integers (the smallest object in Python) to save even more memory
+name_hash = {}
+n_names = 0
+def myintern(s):
+    t = name_hash.get(s)
+    if t:
+        return t
+    global n_names
+    n_names += 1
+    name_hash[s] = n_names
+    return n_names
+
+utils.myGenomes.intern = myintern
+
 dicGenomes = {}
 for e in listSpecies:
     dicGenomes[e] = utils.myGenomes.Genome(arguments["genesFiles"] % phylTree.fileName[e], withDict=False)
@@ -197,6 +214,10 @@ for e in listSpecies:
 genesAnc = {}
 for anc in targets.union(accessoryAncestors):
     genesAnc[anc] = utils.myGenomes.Genome(arguments["ancGenesFiles"] % phylTree.fileName[anc])
+
+# Now that the names have been replaced, let's empty the cache and restore intern
+name_hash = {}
+utils.myGenomes.intern = intern
 
 toStudy = collections.defaultdict(list)
 for (e1, e2) in itertools.combinations(listSpecies, 2):
