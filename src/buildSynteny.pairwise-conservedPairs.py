@@ -46,7 +46,9 @@ dicModAnc = collections.defaultdict(list)
 
 genesAnc = {}
 for anc in listAncestors.union(accessoryAncestors):
-	genesAnc[anc] = utils.myGenomes.Genome(arguments["ancGenesFiles"] % phylTree.fileName[anc])
+	ancGenes = utils.myGenomes.Genome(arguments["ancGenesFiles"] % phylTree.fileName[anc])
+	genesAnc[anc] = {k: v.index for (k,v) in ancGenes.dicGenes.iteritems()}
+	del ancGenes
 
 print >> sys.stderr, "time for loading", time.time() - start
 start = time.time()
@@ -59,7 +61,7 @@ def extractPairsFromSpecies(esp):
 	while anc in phylTree.parent:
 		(par,_) = phylTree.parent[anc]
 		if par in genesAnc:
-			lanc.append((par, genesAnc[par].dicGenes, dicAncMod[par][anc]))
+			lanc.append((par, genesAnc[par], dicAncMod[par][anc]))
 		anc = par
 
 	print >> sys.stderr, "Extraction of pairs of genes from %s " % esp, "...",
@@ -73,7 +75,7 @@ def extractPairsFromSpecies(esp):
 		
 		for (anc,dica,subdicAncMod) in lanc:
 			# Updating the chromosome under the new ancestor, the list keeps on shrinking
-			chrom = [((dica.pop(x[0]).index, x[1]), x) for (_,x) in chrom if x[0] in dica]
+			chrom = [((dica.pop(x[0]), x[1]), x) for (_,x) in chrom if x[0] in dica]
 			if len(chrom) < 2:
 				break
 			
@@ -119,7 +121,6 @@ def getTargets(listAnc, lmodPair):
 details = collections.defaultdict(lambda: collections.defaultdict(set))
 
 def intersectAndPropagatePairs(anc):
-	# genesAnc[anc] = [gene.names[0] for gene in genesAnc[anc].lstGenes[None]]
 	
 	# All pairs of child species, grouped by subtree
 	pairs = [(x,dicAncMod[anc][x]) for (x,_) in phylTree.items[anc]]
@@ -203,7 +204,6 @@ def reportPairs(anc):
 		print >> f, utils.myFile.myTSV.printLine(
 			list(ancPair[0] + ancPair[1]) +
 			[weight]
-			#[genesAnc[anc][ancPair[0][0]], genesAnc[anc][ancPair[1][0]], weight]
 		)
 	f.close()
 		
