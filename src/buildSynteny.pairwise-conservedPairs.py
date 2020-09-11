@@ -167,6 +167,7 @@ def intersectAndPropagatePairs(anc):
 for anc in list(dicAncMod):
 	intersectAndPropagatePairs(anc)
 
+del dicModAnc
 print >> sys.stderr, "time for task 2", time.time() - start
 start = time.time()
 
