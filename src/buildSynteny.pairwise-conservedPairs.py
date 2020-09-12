@@ -53,9 +53,8 @@ for anc in listAncestors.union(accessoryAncestors):
 print >> sys.stderr, "time for loading", time.time() - start
 start = time.time()
 
-def extractPairsFromSpecies(esp):
-	genome = utils.myGenomes.Genome(arguments["genesFiles"] % phylTree.fileName[esp], withDict=False)
-	# loading parents list
+todo = {}
+for esp in listSpecies:
 	lanc = []
 	anc = esp
 	while anc in phylTree.parent:
@@ -63,6 +62,11 @@ def extractPairsFromSpecies(esp):
 		if par in genesAnc:
 			lanc.append((par, genesAnc[par], dicAncMod[par][anc]))
 		anc = par
+	todo[esp] = lanc
+del genesAnc
+
+def extractPairsFromSpecies(esp):
+	genome = utils.myGenomes.Genome(arguments["genesFiles"] % phylTree.fileName[esp], withDict=False)
 
 	print >> sys.stderr, "Extraction of pairs of genes from %s " % esp, "...",
 	
@@ -73,7 +77,7 @@ def extractPairsFromSpecies(esp):
 			continue
 		chrom = [(None, (gene.names[-1], gene.strand)) for gene in chrom]
 		
-		for (anc,dica,subdicAncMod) in lanc:
+		for (anc,dica,subdicAncMod) in todo[esp]:
 			# Updating the chromosome under the new ancestor, the list keeps on shrinking
 			chrom = [((dica.pop(x[0]), x[1]), x) for (_,x) in chrom if x[0] in dica]
 			if len(chrom) < 2:
@@ -97,6 +101,7 @@ def extractPairsFromSpecies(esp):
 				ga1 = ga2
 				gm1 = gm2
 
+	del todo[esp]
 	print >> sys.stderr, "OK"
 
 for esp in listSpecies:
