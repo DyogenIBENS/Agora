@@ -207,13 +207,27 @@ def myintern(s):
 
 utils.myGenomes.intern = myintern
 
-dicGenomes = {}
-for e in listSpecies:
-    dicGenomes[e] = utils.myGenomes.Genome(arguments["genesFiles"] % phylTree.fileName[e], withDict=False)
-
 genesAnc = {}
 for anc in targets.union(accessoryAncestors):
     genesAnc[anc] = utils.myGenomes.Genome(arguments["ancGenesFiles"] % phylTree.fileName[anc])
+
+# Here's another trick. Once we have loaded all the ancestral genes, we have indexed the
+# names of all extant genes. Since extant genes are unique, we can clear the names used by
+# each species right after having loaded it
+# Note: this set will also contain the chromosome names
+species_names = set()
+def myintern_species(s):
+    species_names.add(s)
+    return myintern(s)
+
+utils.myGenomes.intern = myintern_species
+
+dicGenomes = {}
+for e in listSpecies:
+    dicGenomes[e] = utils.myGenomes.Genome(arguments["genesFiles"] % phylTree.fileName[e], withDict=False)
+    for s in species_names:
+        del name_hash[s]
+    species_names = set()
 
 # Now that the names have been replaced, let's empty the cache and restore intern
 name_hash = {}
