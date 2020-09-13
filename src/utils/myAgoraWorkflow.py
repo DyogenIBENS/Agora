@@ -104,7 +104,10 @@ class TaskList():
         start = time.time()
         stdout = myFile.openFile(out or os.devnull, "w")
         stderr = myFile.openFile(log or os.devnull, "w")
+        # stderr must have a fileno, so must be a regular file (not a .bz2 etc)
+        # stdout can be anything, incl. a .bz2
         p = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=stderr)
+        # This is where the .bz2 compression would happen
         for l in p.stdout:
             print >> stdout, l,
         r = p.wait()
