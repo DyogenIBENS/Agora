@@ -44,6 +44,12 @@ def revPair((g1, g2)):
 dicAncMod = collections.defaultdict(lambda: collections.defaultdict(lambda: collections.defaultdict(list)))
 dicModAnc = collections.defaultdict(list)
 
+# We override intern() in order to be able to clear its cache once all the loading is done
+name_hash = {}
+def myintern(s):
+	return name_hash.setdefault(s, s)
+utils.myGenomes.intern = myintern
+
 genesAnc = {}
 for anc in listAncestors.union(accessoryAncestors):
 	ancGenes = utils.myGenomes.Genome(arguments["ancGenesFiles"] % phylTree.fileName[anc])
@@ -106,6 +112,10 @@ def extractPairsFromSpecies(esp):
 
 for esp in listSpecies:
 	extractPairsFromSpecies(esp)
+
+# Now that all the genomes have been loaded, let's empty the cache and restore intern
+name_hash = {}
+utils.myGenomes.intern = intern
 
 print >> sys.stderr, "time for task1", time.time() - start
 start = time.time()
