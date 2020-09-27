@@ -13,6 +13,9 @@ import resource
 import subprocess
 import sys
 import time
+import threading
+
+import psutil
 
 from . import myFile
 
@@ -29,6 +32,8 @@ class TaskList():
         self.failed = 0
         manager = multiprocessing.Manager()
         self.queue = manager.Queue()
+        self.memusage = manager.dict()
+        self.memlock = manager.Lock()
 
     def printGraphviz(self, fh):
         print >> fh, "digraph", "{"
@@ -94,10 +99,38 @@ class TaskList():
             print >> sys.stderr, ">", "Inspect", self.list[i][1][2], "for more information"
         self.nrun -= self.nthreads.pop(i)
 
+    def memoryMonitor(self):
+        while self.memusage:
+            for pid in self.memusage.keys():
+                try:
+                    proc = psutil.Process(pid)
+                    total_mem = proc.memory_info().rss
+                    children = proc.children(recursive=True)
+                except (psutil.NoSuchProcess, IOError):
+                    continue
+                for subproc in children:
+                    try:
+                        # mem = subproc.memory_info().rss
+                        # Slower but more accurate
+                        mem = subproc.memory_full_info().uss
+                        total_mem += mem
+                    except (psutil.NoSuchProcess, IOError):
+                        pass
+                # Can't do this atomically, so need to wrap it with a lock
+                self.memlock.acquire()
+                if (pid in self.memusage) and (total_mem > self.memusage[pid]):
+                    self.memusage[pid] = total_mem
+                self.memlock.release()
+            time.sleep(5)
+
     def printCPUUsageStats(self, intro, start):
         ru = resource.getrusage(resource.RUSAGE_CHILDREN)
         elapsed = time.time() - start
-        print intro, "%g sec CPU time / %g sec elapsed = %g%% CPU usage, %g MB RAM" % (ru.ru_utime + ru.ru_stime, elapsed, 100. * (ru.ru_utime + ru.ru_stime) / elapsed, ru.ru_maxrss / 1024.)
+        # Use the lock so that we don't remove the key in the middle of memoryMonitor using it
+        self.memlock.acquire()
+        mem = max(ru.ru_maxrss * 1024, self.memusage.pop(os.getpid()))
+        self.memlock.release()
+        print intro, "%g sec CPU time / %g sec elapsed = %g%% CPU usage, %g MB RAM" % (ru.ru_utime + ru.ru_stime, elapsed, 100. * (ru.ru_utime + ru.ru_stime) / elapsed, mem / 1024. / 1024.)
 
     # Launch program function
     def goLaunch(self, i, args, out, log):
@@ -122,6 +155,11 @@ class TaskList():
     # Launching tasks in multiple threads
     def runAll(self, nbThreads):
         start = time.time()
+
+        self.memusage[os.getpid()] = 0
+        monitorThread = threading.Thread(target=self.memoryMonitor)
+        monitorThread.start()
+
         # Queue
         while (self.completed + self.failed) < len(self.list):
 
@@ -149,6 +187,7 @@ class TaskList():
                             self.nthreads[next] = 1
                         self.proc[next] = multiprocessing.Process(target=self.goLaunch, args=(next, args, out, log))
                         self.proc[next].start()
+                        self.memusage[self.proc[next].pid] = 0
                         self.nrun += self.nthreads[next]
                     else:
                         print "Skipping task", next, args
@@ -159,6 +198,7 @@ class TaskList():
         if not self.failed:
             print "Workflow complete"
         self.printCPUUsageStats("Workflow report:", start)
+        monitorThread.join()
         return self.failed
 
 class AgoraWorkflow:
