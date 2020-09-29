@@ -367,8 +367,8 @@ class AgoraWorkflow:
         if methodName not in ["copy", "publish"]:
             args.append("-LOG.ancGraph=" + self.files["integrOutput"] % {"method": newMethod, "name": "%s"})
 
-        # Currently, all those methods are multithreaded
-        multithreaded = True
+        # Most of the methods are multithreaded
+        multithreaded = methodName not in ["copy"]
 
         # The publish method doesn't generate integrDiags and can't be used as an input method
         if methodName != "publish":
