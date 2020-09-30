@@ -14,6 +14,8 @@ __doc__ = """
 """
 
 import sys
+
+import utils.myGenomes
 import utils.myPhylTree
 import utils.myTools
 
@@ -24,8 +26,19 @@ arguments = utils.myTools.checkArgs(
 
 phylTree = utils.myPhylTree.PhylogeneticTree(arguments["phylTree.conf"])
 target = phylTree.officialName[arguments["target"]]
-phylTree.loadSpeciesFromList([x for x in phylTree.listAncestr if phylTree.dicParents[x][target] == target], arguments["IN.ancGenesFiles"])
-phylTree.loadSpeciesFromList([x for x in phylTree.listSpecies if phylTree.dicParents[x][target] == target], arguments["IN.ancGenesFiles"])
+
+lstAncGenes = {}
+dicAncGenes = {}
+for anc in phylTree.listAncestr.union(phylTree.listSpecies):
+    if phylTree.dicParents[anc][target] == target:
+        ancGenes = utils.myGenomes.Genome(arguments["IN.ancGenesFiles"] % phylTree.fileName[anc])
+        lstAncGenes[anc] = [gene.names for gene in ancGenes.lstGenes[None]]
+        dicGenes = {}
+        for (i, names) in enumerate(lstAncGenes[anc]):
+            for s in names:
+                dicGenes[s] = i
+        dicAncGenes[anc] = dicGenes
+        del ancGenes
 
 minsizes = [float(x) for x in arguments["minSize"].split(",")]
 maxsizes = [float(x) for x in arguments["maxSize"].split(",")]
@@ -40,8 +53,8 @@ print >> sys.stderr, "Structures creation ...",
 desc = {}
 notseen = {}
 deleted = {}
-for anc in phylTree.dicGenomes:
-    n = len(phylTree.dicGenomes[anc].lstGenes[None])
+for anc in lstAncGenes:
+    n = len(lstAncGenes[anc])
     notseen[anc] = set(xrange(n))
     desc[anc] = [[] for _ in xrange(n)]
     deleted[anc] = set()
@@ -55,17 +68,18 @@ def mkStruct(anc):
         for i in notseen[anc]:
             todo.append((anc, i))
         for (newanc, _) in phylTree.items[anc]:
-            for (i, gene) in enumerate(phylTree.dicGenomes[anc].lstGenes[None]):
-                s = phylTree.dicGenomes[newanc].getPositions(gene.names[1:])
-                #print >>sys.stderr, i, gene, s
+            dicGenes = dicAncGenes[newanc]
+            for (i, names) in enumerate(lstAncGenes[anc]):
+                s = set((dicGenes[s] for s in names[1:] if s in dicGenes))
+                #print >>sys.stderr, i, names, s
                 # links father/children
                 for x in s:
-                    #print >>sys.stderr, x, x.index
-                    notseen[newanc].remove(x.index)
-                    desc[anc][i].append((newanc, x.index))
+                    #print >>sys.stderr, x
+                    notseen[newanc].remove(x)
+                    desc[anc][i].append((newanc, x))
                 # Duplicates have to be analyzed
                 if (len(s) > 1) and (newanc in phylTree.listAncestr):
-                    todo.extend((newanc, x.index) for x in s)
+                    todo.extend((newanc, x) for x in s)
             mkStruct(newanc)
 mkStruct(target)
 #print >> sys.stderr, len(todo), "todo", todo[0], todo[-1]
@@ -93,7 +107,7 @@ def getSpeciesList(anc, i):
 # name genes list
 @treeWrapper
 def getGeneNames(anc, i):
-    return phylTree.dicGenomes[anc].lstGenes[None][i].names[1:]
+    return lstAncGenes[anc][i][1:]
 
 import copy
 
@@ -122,21 +136,21 @@ for size in range(len(minsizes)):
 
 
     # Writing files
-    for anc in phylTree.dicGenomes:
+    for anc in lstAncGenes:
         print >> sys.stderr, "Writing families of %s (size %g-%g)..." % (anc, minsizes[size], maxsizes[size]),
         n = 0
         f = utils.myFile.openFile(outDir[size] % phylTree.fileName[anc], "w")
-        for (i, gene) in enumerate(phylTree.dicGenomes[anc].lstGenes[None]):
+        for (i, names) in enumerate(lstAncGenes[anc]):
             s = getGeneNames(anc, i)
             if len(s) > 0:
                 # Conserved family (maybe with less descendants)
                 n += 1
                 s = set(s)
-                s.add(gene.names[0])
-                print >> f, " ".join(x for x in gene.names if x in s)
+                s.add(names[0])
+                print >> f, " ".join(x for x in names if x in s)
             else:
                 # Empty family , this is necessary to conserved indexation (compared to all families)
-                print >> f, gene.names[0]
+                print >> f, names[0]
         f.close()
         deleted[anc] = set()
         print >> sys.stderr, len(desc[anc]), "->", n, "OK"
