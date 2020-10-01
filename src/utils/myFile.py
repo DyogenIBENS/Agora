@@ -48,7 +48,7 @@ class myTSV:
         # list of each column type
         new_type_list = []
         for x in type_list:
-            if type(x) == type:
+            if isinstance(x, type):
                 new_type_list.append(x)
             else:
                 new_type_list.extend([x[0]] * x[1])
@@ -113,7 +113,7 @@ def hasAccess(s):
 def openFile(nom, mode):
 
     # file already open
-    if type(nom) != str:
+    if not isinstance(nom, str):
         return nom
 
     # file on the web

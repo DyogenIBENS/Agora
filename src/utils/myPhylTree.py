@@ -151,7 +151,7 @@ class PhylogeneticTree:
         print(" OK", file=stream)
 
     def __init__(self, file=None, skipInit=False, stream=open(os.devnull, 'w')):
-        if type(file) == tuple:
+        if isinstance(file, tuple):
             print("Creation of the phylogenetic tree ...", end=' ', file=stream)
             (self.items, self.root, self.officialName) = file
         else:
