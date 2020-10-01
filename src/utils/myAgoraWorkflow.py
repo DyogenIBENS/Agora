@@ -176,7 +176,7 @@ class TaskList():
         self.queue.put((i, r))
 
     # Launching tasks in multiple threads
-    def runAll(self, nbThreads):
+    def runAll(self, nbThreads, sequential):
         start = time.time()
 
         self.memusage[os.getpid()] = 0
@@ -189,7 +189,7 @@ class TaskList():
             print "Status: %d to do, %d running, %d done, %d failed -- %d total" % \
                     (len(self.list)-len(self.proc)-self.completed-self.failed, len(self.proc), self.completed, self.failed, len(self.list))
 
-            if self.nrun == nbThreads:
+            if (self.nrun == nbThreads) or (sequential and self.nrun):
                 self.joinNext()
             else:
                 todo = self.getAvailable()

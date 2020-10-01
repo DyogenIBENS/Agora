@@ -26,7 +26,7 @@ __doc__ = """
 arguments = utils.myTools.checkArgs(
     [("speciesTree", file), ("geneTrees", file), ("genes", str)],
     [("minSize", float, 1.0), ("maxSize", float, 1.0), ("target", str, ""), ("extantSpeciesFilter", str, ""),
-     ("workingDir", str, "."), ("nbThreads", int, multiprocessing.cpu_count())],
+     ("workingDir", str, "."), ("nbThreads", int, multiprocessing.cpu_count()), ("sequential", bool, False)],
     __doc__)
 
 # Path configuration
@@ -62,5 +62,5 @@ workflow.addIntegrationAnalysis("publish", [], None, taskName="//")
 
 # Launching tasks in multiple threads
 #####################################
-failed = workflow.tasklist.runAll(arguments["nbThreads"])
+failed = workflow.tasklist.runAll(arguments["nbThreads"], arguments["sequential"])
 sys.exit(failed)

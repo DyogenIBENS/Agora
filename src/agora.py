@@ -26,7 +26,7 @@ __doc__ = """
 
 arguments = utils.myTools.checkArgs(
     [("agora.conf", file)],
-    [("workingDir", str, "."), ("nbThreads", int, multiprocessing.cpu_count()), ("printWorkflowGraph", str, ""),
+    [("workingDir", str, "."), ("nbThreads", int, multiprocessing.cpu_count()), ("sequential", bool, False), ("printWorkflowGraph", str, ""),
      ],
     __doc__)
 
@@ -168,5 +168,5 @@ if arguments["printWorkflowGraph"]:
 
 # Launching tasks in multiple threads
 #####################################
-failed = workflow.tasklist.runAll(arguments["nbThreads"])
+failed = workflow.tasklist.runAll(arguments["nbThreads"], arguments["sequential"])
 sys.exit(failed)
