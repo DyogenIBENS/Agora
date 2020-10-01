@@ -248,9 +248,7 @@ class myIterator:
     # sliding tuple (x1, x2, ...) of width=width
     @staticmethod
     def slidingTuple(lst, width=2):
-        if len(lst) < width:
-            raise StopIteration
-        else:
+        if len(lst) >= width:
             # idxW0, idx of the left extremity of the sliding window
             for idxW0 in range(len(lst) - width + 1):
                 yield tuple(lst[idxW0: idxW0 + width])
