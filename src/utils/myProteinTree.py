@@ -304,7 +304,7 @@ class ProteinTree:
                             else:
                                 global nextNodeID
                                 nextNodeID += 1
-                                length = min([d for (_,d) in lst]) / 2
+                                length = min([d for (_,d) in lst]) // 2
                                 self.data[nextNodeID] = [(g,d-length) for (g,d) in lst]
                                 anc = phylTree.lastCommonAncestor([self.info[g]['taxon_name'] for (g,_) in lst])
                                 self.info[nextNodeID] = {'taxon_name':anc}
@@ -340,7 +340,7 @@ def getDupSuffix(n, upper=False):
     s = "."
     while n > 26:
         s = s + chr(base + (n - 1) % 26)
-        n = 1 + (n - 1)/26
+        n = 1 + (n - 1)//26
     return s + chr(base + n)
 
 

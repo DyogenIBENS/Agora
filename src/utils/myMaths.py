@@ -377,7 +377,7 @@ def flatten(lst):
 def sqrti(n, part, nbdec):
     if (len(n) % 2) == 1:
         n = "0" + n
-    backup = len(n) / 2
+    backup = len(n) // 2
     iniL = len(n) + len(part)
     s = n + (part + ("00" * nbdec))[:2*nbdec]
     maxL = len(s)
