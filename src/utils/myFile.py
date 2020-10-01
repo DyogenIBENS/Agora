@@ -160,15 +160,15 @@ def openFile(nom, mode):
         # Compression bzip2
         elif nom.endswith(".bz2"):
             import bz2
-            f = bz2.BZ2File(nom, mode)
+            f = bz2.open(nom, mode+"t")
         # Compression gzip
         elif nom.endswith(".gz"):
             import gzip
-            f = gzip.GzipFile(nom, mode)
+            f = gzip.open(nom, mode+"t")
         # Compression lzma
         elif nom.endswith(".lzma") or nom.endswith(".xz"):
             import lzma
-            f = lzma.LZMAFile(nom, mode)
+            f = lzma.open(nom, mode+"t")
         else:
             f = open(nom, mode)
     return f
