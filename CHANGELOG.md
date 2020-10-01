@@ -1,3 +1,18 @@
+## 2020-10-01 - v1.5
+
+1. [bugfix] -- Added the missing `+onlySingletons` option to the
+   `buildSynteny.integr-extend.py` call in `agora2.py`.
+2. [change] -- New `-extantSpeciesFilter` parameter to control which extant
+   species can be used to run pairwise comparisons
+   (`buildSynteny.pairwise-conservedPairs.py` and
+   `buildSynteny.integr-groups.py`). The option is exposed in all workflow
+   scripts. In `buildSynteny.integr-groups.py` it replaces the third
+   positional command-line argument.
+3. [change] -- Removed the multithreading option of
+   `buildSynteny.integr-copy.py` as it does not give any benefits.
+4. [new] -- Print memory usage stats when running workflows.
+5. [new] -- Decreased the memory usage of `ALL.filterGeneFamilies-size.py`,
+   `buildSynteny.pairwise-conservedPairs.py`, and `buildSynteny.integr-groups.py`.
 
 ## 2020-06-25 - v1.4
 
