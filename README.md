@@ -3,7 +3,7 @@
 ## Introduction
 
 AGORA stands for “Algorithm for Gene Order Reconstruction in Ancestors” and was developed by
-Matthieu Muffato in the DYOGEN Laboratory at the École normale supérieure in Paris.
+Matthieu Muffato in the DYOGEN Laboratory at the École normale supérieure in Paris in 2008.
 
 ```
     // | |     //   ) )  //   ) ) //   ) )  // | |
@@ -13,9 +13,9 @@ Matthieu Muffato in the DYOGEN Laboratory at the École normale supérieure in P
 //     | | ((____/ / ((___/ / //    | | //     | |
 ```
 
-AGORA has been constantly used in the group since 2010, especially to
-generate ancestral genomes for the [Genomicus](https://www.genomicus.biologie.ens.fr/genomicus)
-online server for comparative genomics.
+AGORA is used to generate ancestral genomes for the
+[Genomicus](https://www.genomicus.biologie.ens.fr/genomicus) online server
+for gene order comparison, and has been in constant use in the group since.
 
 ## License
 
@@ -58,9 +58,9 @@ environment (e.g. a Python _virtualenv_):
 pip install -r requirements.txt
 ```
 
-If possible, you may want to use [PyPy](https://www.pypy.org/) instead of
-the reference Python implementation as it runs AGORA approx. 1.5 times
-faster in our tests.
+AGORA is compatible with [PyPy](https://www.pypy.org/) (an alternative,
+faster implementation of Python) which significantly speeds up the
+reconstructions.
 
 Once everything is installed, run this to check the installation:
 
