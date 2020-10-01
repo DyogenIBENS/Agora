@@ -82,22 +82,26 @@ class myTSV:
 class firstLineBuffer:
     def __init__(self, f):
         self.f = f
+        self.generator = self.__stripped_iter__()
         try:
-            self.firstLine = next(self)
+            self.firstLine = next(self.generator)
         except StopIteration:
+            print("no")
             self.firstLine = ""
 
-    def __iter__(self):
-        yield self.firstLine
-        while True:
-            yield next(self)
-
-    def __next__(self):
-        while True:
-            l = self.f.next().replace('\n', '').replace('\r', '')
+    def __stripped_iter__(self):
+        for l in self.f:
+            l = l.rstrip("\r\n")
             # Suppression of the lines with comments
-            if (not l.startswith("#")) and (len(l) > 0):
-                return l
+            if l and (not l.startswith("#")):
+                yield l
+
+    def __iter__(self):
+        if self.firstLine:
+            yield self.firstLine
+            yield from self.generator
+            # So that further calls to __iter__ will yield nothing
+            self.firstLine = ""
 
     def close(self):
         return self.f.close()
