@@ -31,6 +31,7 @@ class TaskList():
         self.completed = 0
         self.failed = 0
         manager = multiprocessing.Manager()
+        self.self_pids = [os.getpid(), manager._process.pid]
         self.queue = manager.Queue()
         self.memusage = manager.dict()
         self.memlock = manager.Lock()
@@ -99,28 +100,50 @@ class TaskList():
             print >> sys.stderr, ">", "Inspect", self.list[i][1][2], "for more information"
         self.nrun -= self.nthreads.pop(i)
 
+    def getMemoryUsage(self, pid):
+        try:
+            proc = psutil.Process(pid)
+            return proc.memory_full_info().uss
+        except (psutil.NoSuchProcess, IOError):
+            return None
+
+    def getRecursiveMemoryUsage(self, pid):
+        try:
+            proc = psutil.Process(pid)
+            total_mem = proc.memory_full_info().uss
+            children = proc.children(recursive=True)
+        except (psutil.NoSuchProcess, IOError):
+            return None
+        for subproc in children:
+            try:
+                # mem = subproc.memory_info().rss
+                # Slower but more accurate
+                mem = subproc.memory_full_info().uss
+                total_mem += mem
+            except (psutil.NoSuchProcess, IOError):
+                pass
+        return total_mem
+
+    def updateMemoryUsage(self, pid, mem):
+        # Can't do this atomically, so need to wrap it with a lock
+        self.memlock.acquire()
+        if (pid in self.memusage) and (mem > self.memusage[pid]):
+            self.memusage[pid] = mem
+        self.memlock.release()
+
     def memoryMonitor(self):
         while self.memusage:
+            total_mem = 0
             for pid in self.memusage.keys():
-                try:
-                    proc = psutil.Process(pid)
-                    total_mem = proc.memory_info().rss
-                    children = proc.children(recursive=True)
-                except (psutil.NoSuchProcess, IOError):
-                    continue
-                for subproc in children:
-                    try:
-                        # mem = subproc.memory_info().rss
-                        # Slower but more accurate
-                        mem = subproc.memory_full_info().uss
-                        total_mem += mem
-                    except (psutil.NoSuchProcess, IOError):
-                        pass
-                # Can't do this atomically, so need to wrap it with a lock
-                self.memlock.acquire()
-                if (pid in self.memusage) and (total_mem > self.memusage[pid]):
-                    self.memusage[pid] = total_mem
-                self.memlock.release()
+                mem = self.getRecursiveMemoryUsage(pid)
+                if mem:
+                    total_mem += mem
+                    self.updateMemoryUsage(pid, mem)
+            for pid in self.self_pids:
+                mem = self.getMemoryUsage(pid)
+                if mem:
+                    total_mem += mem
+            self.updateMemoryUsage(self.self_pids[0], mem)
             time.sleep(5)
 
     def printCPUUsageStats(self, intro, start):
