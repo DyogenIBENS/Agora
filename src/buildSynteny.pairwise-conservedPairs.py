@@ -40,8 +40,8 @@ phylTree = utils.myPhylTree.PhylogeneticTree(arguments["speciesTree"])
 
 (listSpecies, listAncestors, accessoryAncestors) = phylTree.getTargetsForPairwise(arguments["target"], arguments["extantSpeciesFilter"])
 
-def revPair(xxx_todo_changeme):
-	(g1, g2) = xxx_todo_changeme
+def revPair(pair):
+	(g1, g2) = pair
 	return ((g2[0],-g2[1]),(g1[0],-g1[1]))
 
 dicAncMod = collections.defaultdict(lambda: collections.defaultdict(lambda: collections.defaultdict(list)))

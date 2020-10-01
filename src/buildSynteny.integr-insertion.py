@@ -38,9 +38,8 @@ arguments = utils.myTools.checkArgs(
 
 # reverse gene
 ###############
-def rev(xxx_todo_changeme):
-    (g, s) = xxx_todo_changeme
-    return (g, -s)
+def rev(gene):
+    return (gene[0], -gene[1])
 
 
 selectionFunction = eval("lambda newscore, oldscore: " + arguments["selectionFunction"])

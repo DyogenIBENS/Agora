@@ -302,11 +302,11 @@ def calcDiags(g1, g2, orthos, fusionThreshold=-1, sameStrand=True, orthosFilter=
 				yield ((c1,d1), (c2,d2), da)
 
 #@myTools.memoize
-def revGene(xxx_todo_changeme):
+def revGene(gene):
+	(x,sx) = gene
 	# sx is an integer for the graph construction of AGORA
 	# sx = +1 or -1, standard case
 	# however sometimes sx is not defined, and we chose 0 and the reverse of 0 is 10
-	(x,sx) = xxx_todo_changeme
 	if sx == 0:
 		return (x, 10)
 	elif sx == 10:
