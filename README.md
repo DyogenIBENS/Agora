@@ -60,7 +60,7 @@ pip install -r requirements.txt
 
 AGORA is compatible with [PyPy](https://www.pypy.org/) (an alternative,
 faster implementation of Python) which significantly speeds up the
-reconstructions.
+reconstructions, whilst using more memory.
 
 Once everything is installed, run this to check the installation:
 
