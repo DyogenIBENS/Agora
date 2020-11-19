@@ -83,7 +83,7 @@ In a nutshell, you need to gather:
 and then try:
 
 ```bash
-src/agora1.py species-tree.nwk gene-trees.nhx genes.%s.list
+src/agora-basic.py species-tree.nwk gene-trees.nhx genes.%s.list
 ```
 
 If the ancestral genomes are too fragmented, run this otherwise:

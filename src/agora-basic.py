@@ -18,9 +18,9 @@ __doc__ = """
     Run all the AGORA programs with the v1 preset (all families at once)
 
     Usage:
-          src/agora1.py example/data/Species.nwk example/data/GeneTreeForest.nhx.bz2 example/data/genes/genes.%s.list.bz2
-          src/agora1.py example/data/Species.nwk example/data/GeneTreeForest.nhx.bz2 example/data/genes/genes.%s.list.bz2 -target=A0
-          src/agora1.py example/data/Species.nwk example/data/GeneTreeForest.nhx.bz2 example/data/genes/genes.%s.list.bz2 -target=A0 -workingDir=example/results -nbThreads=1
+          src/agora-basic.py example/data/Species.nwk example/data/GeneTreeForest.nhx.bz2 example/data/genes/genes.%s.list.bz2
+          src/agora-basic.py example/data/Species.nwk example/data/GeneTreeForest.nhx.bz2 example/data/genes/genes.%s.list.bz2 -target=A0
+          src/agora-basic.py example/data/Species.nwk example/data/GeneTreeForest.nhx.bz2 example/data/genes/genes.%s.list.bz2 -target=A0 -workingDir=example/results -nbThreads=1
 """
 
 arguments = utils.myTools.checkArgs(

@@ -205,7 +205,7 @@ adjacency graphs and linearises them to produce CARs.
 
 > AGORA workflow with no selection of robust families
 
-![](agora_no_robust.jpg)
+![](agora-basic.jpg)
 
 In this mode, the reconstruction is composed of three steps akin to a
 genome assembly:
@@ -214,15 +214,15 @@ genome assembly:
 * The reads are assembled into contigs ("Graph linearisation" step)
 * The contigs are assembled into scaffolds ("Block assembly" step)
 
-#### All in one: `agora1.py`
+#### All in one: `agora-basic.py`
 
-The `agora1.py` script sets AGORA
+The `agora-basic.py` script sets AGORA
 to run these three steps sequentially. The only parameters that have
 to be given are the paths to the input files: species tree, gene
 trees and gene lists.
 
 ```bash
-src/agora1.py /path/to/species-tree.nwk /path/to/gene-trees.nhx /path/to/genes.%s.list
+src/agora-basic.py /path/to/species-tree.nwk /path/to/gene-trees.nhx /path/to/genes.%s.list
 ```
 
 There are three optional Command-line parameters:
@@ -241,7 +241,7 @@ There are three optional Command-line parameters:
 To regenerate the reference output of the example dataset, run:
 
 ```bash
-src/agora1.py \
+src/agora-basic.py \
   example/data/Species.nwk \
   example/data/GeneTreeForest.nhx.bz2 \
   example/data/genes/genes.%s.list.bz2 \
@@ -395,7 +395,7 @@ contigs (block assembly) into Contiguous Ancestral Regions (CARs).
 #### All in one: `agora2.py`
 
 The whole workflow can be run automatically with `agora2.py` using
-the same syntax as `agora1.py`
+the same syntax as `agora-basic.py`
 
 ```bash
 src/agora2.py /path/to/species-tree.nwk /path/to/gene-trees.nhx /path/to/genes.%s.list
@@ -593,15 +593,15 @@ The AGORA method is also available through a script named `agora.py`, which
 runs all the steps of the reconstructions according to a configuration file.
 
 The configuration file lists the input and output paths, and describes the steps
-of the workflows. The `agora1.py` and `agora2.py` scripts are equivalent to the
-[`agora.ini`](../conf/agora.ini) and [`agora-robust.ini`](../conf/agora-robust.ini)
+of the workflows. The `agora-basic.py` and `agora2.py` scripts are equivalent to the
+[`agora-basic.ini`](../conf/agora-basic.ini) and [`agora-robust.ini`](../conf/agora-robust.ini)
 configuration files.
 
 For instance, this will run reconstructions directly, without selecting
 robust families:
 
 ```bash
-src/agora.py conf/agora.ini -workingDir=output_dir
+src/agora.py conf/agora-basic.ini -workingDir=output_dir
 ```
 
 The script also accepts the `-nbThreads=XX` parameter.

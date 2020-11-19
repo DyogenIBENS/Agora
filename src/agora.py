@@ -20,8 +20,8 @@ __doc__ = """
     Run all the AGORA programs thanks to configuration file
 
     Usage:
-          src/agora.py conf/agora.ini
-          src/agora.py conf/agora.ini -workingDir=example/results -nbThreads=4
+          src/agora.py conf/agora-basic.ini
+          src/agora.py conf/agora-basic.ini -workingDir=example/results -nbThreads=4
 """
 
 arguments = utils.myTools.checkArgs(

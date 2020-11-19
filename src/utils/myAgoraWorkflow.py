@@ -252,7 +252,7 @@ class AgoraWorkflow:
         self.allAncGenesDirName = "all"
         self.interm = {}
         self.refMethod = {}
-        # With agora1 and agora2, people may use %s instead of $(name)s
+        # With agora-*.py, people may use %s instead of $(name)s
         if '%(name)s' not in files['genes']:
             files['genes'] = files['genes'].replace('%s', '%(name)s')
 
