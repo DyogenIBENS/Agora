@@ -537,7 +537,7 @@ This step inserts the contigs of non-robust families created above and inserts t
 
 ```bash
 mkdir -p example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all
-src/buildSynteny.integr-halfinsert.py \
+src/buildSynteny.integr-insertion.py \
   example/data/Species.nwk \
   A0 \
   example/results/pairwise/pairs-all/%s.list.bz2 \

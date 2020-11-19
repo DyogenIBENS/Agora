@@ -56,7 +56,7 @@ workflow.addPairwiseAnalysis(ancGenesDirName)
 workflow.addIntegrationAnalysis("denovo", [], ancGenesDirName)
 workflow.addIntegrationAnalysis("fillin", [], workflow.allAncGenesDirName)
 workflow.addIntegrationAnalysis("extend", ["+onlySingletons"], workflow.allAncGenesDirName)
-workflow.addIntegrationAnalysis("halfinsert", [], workflow.allAncGenesDirName)
+workflow.addIntegrationAnalysis("insertion", [], workflow.allAncGenesDirName)
 workflow.addIntegrationAnalysis("groups", [], None)
 workflow.addIntegrationAnalysis("publish", [], None, taskName="//")
 

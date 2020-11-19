@@ -378,8 +378,8 @@ class AgoraWorkflow:
             dep.append(("integr", self.prevMethod))
             args.append("-IN.ancDiags=" + self.files["integrBlocks"] % {"method": self.prevMethod, "name": "%s"})
 
-        if methodName == "halfinsert":
-            # The script needs singleton reference for "halfinsert"
+        if methodName == "insertion":
+            # The script needs singleton reference for "insertion"
             dep.append(("integr", self.refMethod[newMethod][0]))
             args.append("-REF.ancDiags=" + self.files["integrBlocks"] % {"method": self.refMethod[newMethod][0], "name": "%s"})
 
