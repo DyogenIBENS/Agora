@@ -57,7 +57,7 @@ workflow.addIntegrationAnalysis("denovo", [], ancGenesDirName)
 workflow.addIntegrationAnalysis("fillin", [], workflow.allAncGenesDirName)
 workflow.addIntegrationAnalysis("fusion", ["+onlySingletons"], workflow.allAncGenesDirName)
 workflow.addIntegrationAnalysis("insertion", [], workflow.allAncGenesDirName)
-workflow.addIntegrationAnalysis("groups", [], None)
+workflow.addIntegrationAnalysis("scaffolds", [], None)
 workflow.addIntegrationAnalysis("publish", [], None, taskName="//")
 
 # Launching tasks in multiple threads

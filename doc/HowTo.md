@@ -212,7 +212,7 @@ genome assembly:
 
 * The pairwise comparisons provide "reads" of the ancestral genomes
 * The reads are assembled into contigs ("Graph linearisation" step)
-* The contigs are assembled into scaffolds ("Block assembly" step)
+* The contigs are assembled into scaffolds ("Scaffolding" step)
 
 #### All in one: `agora-basic.py`
 
@@ -330,7 +330,7 @@ src/buildSynteny.integr-denovo.py \
   2> example/results/integrDiags/denovo-all/log
 ```
 
-##### Block assembly
+##### Scaffolding
 
 In this step, we basically reiterate the same process (pairwise comparisons
 and integration into an adjacency graph) but on the previous CARs, which allows
@@ -339,7 +339,7 @@ The result is a set of CARs made of CARs, that are much longer than in the previ
 
 ```bash
 mkdir -p example/results/integrDiags/denovo-all.groups/
-src/buildSynteny.integr-groups.py \
+src/buildSynteny.integr-scaffolds.py \
   example/data/Species.nwk \
   A0 \
   -IN.ancDiags=example/results/integrDiags/denovo-all/diags.%s.list.bz2 \
@@ -390,7 +390,7 @@ linearise them to obtain robust contigs. It then _fills these in_
 with non-robust genes, builds contigs of non-robust
 genes (_non-robust families fusion_) and inserts these in the filled-in robust
 contigs (_single side junction_). Finally it assembles the resulting
-contigs (block assembly) into Contiguous Ancestral Regions (CARs).
+contigs (scaffolding) into Contiguous Ancestral Regions (CARs).
 
 #### All in one: `agora-vertebrates.py`
 
@@ -548,14 +548,14 @@ src/buildSynteny.integr-insertion.py \
   2> example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all/log
 ```
 
-##### Block assembly
+##### Scaffolding
 
 Like in non-robust mode, this step does pairwise comparisons and a graph linearisation
 of the CARs themselves, which allows finding higher-level adjacencies.
 
 ```bash
 mkdir -p example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all.groups
-src/buildSynteny.integr-groups.py \
+src/buildSynteny.integr-scaffolds.py \
   example/data/Species.nwk \
   A0 \
   -IN.ancDiags=example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all/diags.%s.list.bz2 \

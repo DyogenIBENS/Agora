@@ -49,7 +49,7 @@ workflow = utils.myAgoraWorkflow.AgoraWorkflow(arguments["target"] or phylTree.r
 workflow.addAncGenesGenerationAnalysis()
 workflow.addPairwiseAnalysis(workflow.allAncGenesDirName)
 workflow.addIntegrationAnalysis("denovo", ['+searchLoops'], workflow.allAncGenesDirName)
-workflow.addIntegrationAnalysis("groups", [], None)
+workflow.addIntegrationAnalysis("scaffolds", [], None)
 workflow.addIntegrationAnalysis("publish", [], None, taskName="//")
 
 # Launching tasks in multiple threads

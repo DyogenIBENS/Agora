@@ -370,7 +370,7 @@ class AgoraWorkflow:
             dep.append(("pairwise", pairwiseName))
             args.append(self.files["pairwiseOutput"] % {"filt": pairwiseName, "name": "%s"})
 
-        if methodName in ["denovo", "groups", "publish"]:
+        if methodName in ["denovo", "scaffolds", "publish"]:
             args.append("-ancGenesFiles=" + self.files["ancGenesData"] % {"filt": "all", "name": "%s"})
 
         # No input data to consider for the denovo method
@@ -383,7 +383,7 @@ class AgoraWorkflow:
             dep.append(("integr", self.refMethod[newMethod][0]))
             args.append("-REF.ancDiags=" + self.files["integrBlocks"] % {"method": self.refMethod[newMethod][0], "name": "%s"})
 
-        if methodName == "groups":
+        if methodName == "scaffolds":
             args.append("-genesFiles=" + self.files["genes"] % {"name": "%s"})
             args.extend(self.defaultExtantSpeciesFilter)
 
