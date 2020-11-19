@@ -26,7 +26,7 @@ __doc__ = """
 
 arguments = utils.myTools.checkArgs(
     [("agora.conf", file)],
-    [("workingDir", str, "."), ("nbThreads", int, multiprocessing.cpu_count()), ("sequential", bool, False), ("printWorkflowGraph", str, ""),
+    [("workingDir", str, "."), ("nbThreads", int, multiprocessing.cpu_count()), ("sequential", bool, True), ("printWorkflowGraph", str, ""),
      ],
     __doc__)
 

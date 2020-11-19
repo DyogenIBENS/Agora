@@ -26,7 +26,7 @@ __doc__ = """
 arguments = utils.myTools.checkArgs(
     [("speciesTree", file), ("geneTrees", file), ("genes", str)],
     [("minSize", float, 1.0), ("maxSize", float, 1.0), ("target", str, ""), ("extantSpeciesFilter", str, ""),
-     ("workingDir", str, "."), ("nbThreads", int, multiprocessing.cpu_count()), ("sequential", bool, False)],
+     ("workingDir", str, "."), ("nbThreads", int, multiprocessing.cpu_count()), ("sequential", bool, True)],
     __doc__)
 
 # Path configuration

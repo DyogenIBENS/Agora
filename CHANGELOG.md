@@ -10,8 +10,10 @@
    positional command-line argument.
 3. [change] -- Removed the multithreading option of
    `buildSynteny.integr-copy.py` as it does not give any benefits.
-4. [new] -- Print memory usage stats when running workflows.
-5. [new] -- Decreased the memory usage of `ALL.filterGeneFamilies-size.py`,
+4. [change] -- Run the workflow steps sequentially by default in the agora
+   scripts, with an option to enable their parallelisation.
+5. [new] -- Print memory usage stats when running workflows.
+6. [new] -- Decreased the memory usage of `ALL.filterGeneFamilies-size.py`,
    `buildSynteny.pairwise-conservedPairs.py`, and `buildSynteny.integr-groups.py`.
 
 ## 2020-06-25 - v1.4
