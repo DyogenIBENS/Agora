@@ -379,7 +379,7 @@ ancestral genes.
 
 > AGORA workflow with selection of robust families
 
-![](agora_robust.jpg)
+![](agora-vertebrates.jpg)
 
 From the complete list of ancestral genes, AGORA identifies a subset
 of robust genes according to a user-defined criterion.
@@ -392,13 +392,13 @@ genes (_non-robust families fusion_) and inserts these in the filled-in robust
 contigs (_single side junction_). Finally it assembles the resulting
 contigs (block assembly) into Contiguous Ancestral Regions (CARs).
 
-#### All in one: `agora2.py`
+#### All in one: `agora-vertebrates.py`
 
-The whole workflow can be run automatically with `agora2.py` using
+The whole workflow can be run automatically with `agora-vertebrates.py` using
 the same syntax as `agora-basic.py`
 
 ```bash
-src/agora2.py /path/to/species-tree.nwk /path/to/gene-trees.nhx /path/to/genes.%s.list
+src/agora-vertebrates.py /path/to/species-tree.nwk /path/to/gene-trees.nhx /path/to/genes.%s.list
 ```
 
 This configuration file is set to select
@@ -411,13 +411,13 @@ These two parameters can be changed according to the dynamics of the species
 considered.
 
 ```bash
-src/agora2.py /path/to/species-tree.nwk /path/to/gene-trees.nhx /path/to/genes.%s.list -minSize=0.9 -maxSize=1.1
+src/agora-vertebrates.py /path/to/species-tree.nwk /path/to/gene-trees.nhx /path/to/genes.%s.list -minSize=0.9 -maxSize=1.1
 ```
 
 To regenerate the reference output of the example dataset, run:
 
 ```bash
-src/agora2.py \
+src/agora-vertebrates.py \
   example/data/Species.nwk \
   example/data/GeneTreeForest.nhx.bz2 \
   example/data/genes/genes.%s.list.bz2 \
@@ -593,8 +593,8 @@ The AGORA method is also available through a script named `agora.py`, which
 runs all the steps of the reconstructions according to a configuration file.
 
 The configuration file lists the input and output paths, and describes the steps
-of the workflows. The `agora-basic.py` and `agora2.py` scripts are equivalent to the
-[`agora-basic.ini`](../conf/agora-basic.ini) and [`agora-robust.ini`](../conf/agora-robust.ini)
+of the workflows. The `agora-basic.py` and `agora-vertebrates.py` scripts are equivalent to the
+[`agora-basic.ini`](../conf/agora-basic.ini) and [`agora-vertebrates.ini`](../conf/agora-vertebrates.ini)
 configuration files.
 
 For instance, this will run reconstructions directly, without selecting
@@ -688,7 +688,7 @@ src/buildSynteny.integr-copy.py \
 
 The [`agora-iterativerobust.ini`](../conf/agora-iterativerobust.ini) configuration
 file use the same multiple filters (_1.0-1.0_, _0.9-1.1_, _0.77-1.33_) but on
-**every** ancestor. Compared to the [`agora-robust.ini`](../conf/agora-robust.ini) workflow, it first extends the _1.0-1.0_ reconstructions with the "less robust"
+**every** ancestor. Compared to the [`agora-vertebrates.ini`](../conf/agora-vertebrates.ini) workflow, it first extends the _1.0-1.0_ reconstructions with the "less robust"
 _0.9-1.1_ families only, then with the "even less robust" _0.77-1.33_ families,
 and finally with the complete set of families.
 

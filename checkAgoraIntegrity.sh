@@ -61,12 +61,12 @@ print_and_run_commands "${extractGeneFamiliesCommandLines[@]}"
 #########################################
 print_title 'creation of the configuration file'
 
-sed  s,../example/data/Species.conf,speciesTree.phylTree, ./conf/agora-robust.ini > tmp/agora-robust.ini
+sed  s,../example/data/Species.conf,speciesTree.phylTree, ./conf/agora-vertebrates.ini > tmp/agora.ini
 
 print_title 'check the agora.py encapsulated script'
 agoraCommandLines=(
 # agora.py
-"src/agora.py tmp/agora-robust.ini -workingDir=tmp -nbThreads=1"
+"src/agora.py tmp/agora.ini -workingDir=tmp -nbThreads=1"
 )
 
 print_and_run_commands "${agoraCommandLines[@]}"
