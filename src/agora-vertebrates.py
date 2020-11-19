@@ -54,7 +54,7 @@ workflow.addAncGenesFilterAnalysis(ancGenesDirName, "size", [str(arguments['minS
 workflow.addPairwiseAnalysis(workflow.allAncGenesDirName)
 workflow.addPairwiseAnalysis(ancGenesDirName)
 workflow.addIntegrationAnalysis("denovo", [], ancGenesDirName)
-workflow.addIntegrationAnalysis("refine", [], workflow.allAncGenesDirName)
+workflow.addIntegrationAnalysis("fillin", [], workflow.allAncGenesDirName)
 workflow.addIntegrationAnalysis("extend", ["+onlySingletons"], workflow.allAncGenesDirName)
 workflow.addIntegrationAnalysis("halfinsert", [], workflow.allAncGenesDirName)
 workflow.addIntegrationAnalysis("groups", [], None)

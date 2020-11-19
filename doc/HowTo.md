@@ -503,7 +503,7 @@ following paths in the complete ancestral adjacency graph.
 
 ```bash
 mkdir -p example/results/integrDiags/denovo-size-1.0-1.0.refine-all
-src/buildSynteny.integr-refine.py \
+src/buildSynteny.integr-fillin.py \
   example/data/Species.nwk \
   A0 \
   example/results/pairwise/pairs-all/%s.list.bz2 \

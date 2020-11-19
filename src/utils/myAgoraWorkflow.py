@@ -341,7 +341,7 @@ class AgoraWorkflow:
                 newMethod = self.prevMethod + "." + taskName
             if not ancestor:
                 ancestor = self.refMethod[self.prevMethod][1]
-            if methodName == "refine":
+            if methodName == "fillin":
                 self.refMethod[newMethod] = (newMethod, ancestor)
             else:
                 self.refMethod[newMethod] = self.refMethod[self.prevMethod]
