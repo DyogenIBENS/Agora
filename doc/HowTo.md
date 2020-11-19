@@ -520,7 +520,7 @@ are mostly non-robust genes, and tries to assemble them into contigs.
 
 ```bash
 mkdir -p example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all
-src/buildSynteny.integr-extend.py \
+src/buildSynteny.integr-fusion.py \
   example/data/Species.nwk \
   A0 \
   example/results/pairwise/pairs-all/%s.list.bz2 \
