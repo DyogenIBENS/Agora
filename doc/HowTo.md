@@ -57,7 +57,7 @@ AGORA does not reconstruct:
 
 AGORA can be run in two modes. The first and simplest uses all possible
 adjacencies found in extant genomes to reconstruct ancestral
-adjacencies, eventually leading to contiguous ancestral regions. In
+adjacencies, eventually leading to ancestral genomes. In
 principle this should work fine if the genomes are perfectly sequenced
 and annotated, but they rarely are. Also, gene duplications are
 difficult to resolve accurately in gene phylogenies, and AGORA is
@@ -390,7 +390,7 @@ linearise them to obtain robust contigs. It then _fills these in_
 with non-robust genes, builds contigs of non-robust
 genes (_non-robust families fusion_) and inserts these in the filled-in robust
 contigs (_single side junction_). Finally it assembles the resulting
-contigs (scaffolding) into Contiguous Ancestral Regions (CARs).
+contigs (scaffolding) into ancestral genomes.
 
 #### All in one: `agora-vertebrates.py`
 
