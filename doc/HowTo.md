@@ -324,7 +324,7 @@ src/buildSynteny.integr-denovo.py \
   A0 \
   example/results/pairwise/pairs-all/%s.list.bz2 \
   +searchLoops \
-  -OUT.ancBlocks=example/results/ancBlocks/denovo-all/diags.%s.list.bz2 \
+  -OUT.ancBlocks=example/results/ancBlocks/denovo-all/blocks.%s.list.bz2 \
   -LOG.ancGraph=example/results/ancBlocks/denovo-all/graph.%s.log.bz2 \
   -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
   2> example/results/ancBlocks/denovo-all/log
@@ -342,8 +342,8 @@ mkdir -p example/results/ancBlocks/denovo-all.groups/
 src/buildSynteny.integr-scaffolds.py \
   example/data/Species.nwk \
   A0 \
-  -IN.ancBlocks=example/results/ancBlocks/denovo-all/diags.%s.list.bz2 \
-  -OUT.ancBlocks=example/results/ancBlocks/denovo-all.groups/diags.%s.list.bz2 \
+  -IN.ancBlocks=example/results/ancBlocks/denovo-all/blocks.%s.list.bz2 \
+  -OUT.ancBlocks=example/results/ancBlocks/denovo-all.groups/blocks.%s.list.bz2 \
   -LOG.ancGraph=example/results/ancBlocks/denovo-all.groups/graph.%s.log.bz2 \
   -genesFiles=example/data/genes/genes.%s.list.bz2 \
   -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
@@ -352,16 +352,16 @@ src/buildSynteny.integr-scaffolds.py \
 
 ##### Conversion to ancestral genomes
 
-The previous script outputs the ancestral reconstructions as _diags_ files
+The previous script outputs the ancestral reconstructions as _blocks_ files
 There is a last script to convert these files to a format very similar to
 the input _genes_ files, named _ancGenomes_:
 
 ```bash
 mkdir -p example/results/ancGenomes/standard
-src/convert.ancGenomes.diags-genes.py \
+src/convert.ancGenomes.blocks-to-genes.py \
   example/data/Species.nwk \
   A0 \
-  -IN.ancBlocks=example/results/ancBlocks/denovo-all.groups/diags.%s.list.bz2 \
+  -IN.ancBlocks=example/results/ancBlocks/denovo-all.groups/blocks.%s.list.bz2 \
   -OUT.ancGenomes=example/results/ancGenomes/standard/ancGenome.%s.list.bz2 \
   -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
   2> example/results/ancGenomes/standard/log
@@ -490,7 +490,7 @@ src/buildSynteny.integr-denovo.py \
   example/data/Species.nwk \
   A0 \
   example/results/pairwise/pairs-size-1.0-1.0/%s.list.bz2 \
-  -OUT.ancBlocks=example/results/ancBlocks/denovo-size-1.0-1.0/diags.%s.list.bz2 \
+  -OUT.ancBlocks=example/results/ancBlocks/denovo-size-1.0-1.0/blocks.%s.list.bz2 \
   -LOG.ancGraph=example/results/ancBlocks/denovo-size-1.0-1.0/graph.%s.log.bz2 \
   -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
   2> example/results/ancBlocks/denovo-size-1.0-1.0/log
@@ -507,8 +507,8 @@ src/buildSynteny.integr-fillin.py \
   example/data/Species.nwk \
   A0 \
   example/results/pairwise/pairs-all/%s.list.bz2 \
-  -IN.ancBlocks=example/results/ancBlocks/denovo-size-1.0-1.0/diags.%s.list.bz2 \
-  -OUT.ancBlocks=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all/diags.%s.list.bz2 \
+  -IN.ancBlocks=example/results/ancBlocks/denovo-size-1.0-1.0/blocks.%s.list.bz2 \
+  -OUT.ancBlocks=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all/blocks.%s.list.bz2 \
   -LOG.ancGraph=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all/graph.%s.log.bz2 \
   2> example/results/ancBlocks/denovo-size-1.0-1.0.refine-all/log
 ```
@@ -525,8 +525,8 @@ src/buildSynteny.integr-fusion.py \
   A0 \
   example/results/pairwise/pairs-all/%s.list.bz2 \
   +onlySingletons \
-  -IN.ancBlocks=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all/diags.%s.list.bz2 \
-  -OUT.ancBlocks=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all/diags.%s.list.bz2 \
+  -IN.ancBlocks=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all/blocks.%s.list.bz2 \
+  -OUT.ancBlocks=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all/blocks.%s.list.bz2 \
   -LOG.ancGraph=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all/graph.%s.log.bz2 \
   2> example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all/log
 ```
@@ -541,9 +541,9 @@ src/buildSynteny.integr-insertion.py \
   example/data/Species.nwk \
   A0 \
   example/results/pairwise/pairs-all/%s.list.bz2 \
-  -IN.ancBlocks=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all/diags.%s.list.bz2 \
-  -REF.ancDiags=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all/diags.%s.list.bz2 \
-  -OUT.ancBlocks=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all/diags.%s.list.bz2 \
+  -IN.ancBlocks=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all/blocks.%s.list.bz2 \
+  -REF.ancBlocks=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all/blocks.%s.list.bz2 \
+  -OUT.ancBlocks=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all/blocks.%s.list.bz2 \
   -LOG.ancGraph=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all/graph.%s.log.bz2 \
   2> example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all/log
 ```
@@ -558,8 +558,8 @@ mkdir -p example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all.hal
 src/buildSynteny.integr-scaffolds.py \
   example/data/Species.nwk \
   A0 \
-  -IN.ancBlocks=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all/diags.%s.list.bz2 \
-  -OUT.ancBlocks=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all.groups/diags.%s.list.bz2 \
+  -IN.ancBlocks=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all/blocks.%s.list.bz2 \
+  -OUT.ancBlocks=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all.groups/blocks.%s.list.bz2 \
   -LOG.ancGraph=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all.groups/graph.%s.log.bz2 \
   -genesFiles=example/data/genes/genes.%s.list.bz2 \
   -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
@@ -568,14 +568,14 @@ src/buildSynteny.integr-scaffolds.py \
 
 ##### Conversion to ancestral genomes
 
-This step converts the _diags_ files to _ancGenomes_:
+This step converts the _blocks_ files to _ancGenomes_:
 
 ```bash
 mkdir -p example/results/ancGenomes/robust
-src/convert.ancGenomes.diags-genes.py \
+src/convert.ancGenomes.blocks-to-genes.py \
   example/data/Species.nwk \
   A0 \
-  -IN.ancBlocks=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all.groups/diags.%s.list.bz2 \
+  -IN.ancBlocks=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all.groups/blocks.%s.list.bz2 \
   -OUT.ancGenomes=example/results/ancGenomes/robust/ancGenome.%s.list.bz2 \
   -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
   2> example/results/ancGenomes/robust/log
@@ -656,7 +656,7 @@ src/buildSynteny.integr-denovo.py \
   example/data/Species.nwk \
   =A3 \
   example/results/pairwise/pairs-size-1.0-1.0/%s.list.bz2 \
-  -OUT.ancBlocks=example/results/ancBlocks/denovo-size-1.0-1.0/diags.%s.list.bz2 \
+  -OUT.ancBlocks=example/results/ancBlocks/denovo-size-1.0-1.0/blocks.%s.list.bz2 \
   -LOG.ancGraph=example/results/ancBlocks/denovo-size-1.0-1.0/graph.%s.log.bz2 \
   -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
   2> example/results/ancBlocks/denovo-size-1.0-1.0/log
@@ -666,7 +666,7 @@ src/buildSynteny.integr-denovo.py \
   example/data/Species.nwk \
   =A1,=A2 \
   example/results/pairwise/pairs-size-0.9-1.1/%s.list.bz2 \
-  -OUT.ancBlocks=example/results/ancBlocks/denovo-size-0.9-1.1/diags.%s.list.bz2 \
+  -OUT.ancBlocks=example/results/ancBlocks/denovo-size-0.9-1.1/blocks.%s.list.bz2 \
   -LOG.ancGraph=example/results/ancBlocks/denovo-size-0.9-1.1/graph.%s.log.bz2 \
   -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
   2> example/results/ancBlocks/denovo-size-0.9-1.1/log
@@ -679,8 +679,8 @@ mkdir -p example/results/ancBlocks/denovo-size-custom
 src/buildSynteny.integr-copy.py \
   example/data/Species.nwk \
   =A3 \
-  -IN.ancBlocks=example/results/ancBlocks/denovo-size-1.0-1.0/diags.%s.list.bz2 \
-  -OUT.ancBlocks=example/results/ancBlocks/denovo-size-custom/diags.%s.list.bz2 \
+  -IN.ancBlocks=example/results/ancBlocks/denovo-size-1.0-1.0/blocks.%s.list.bz2 \
+  -OUT.ancBlocks=example/results/ancBlocks/denovo-size-custom/blocks.%s.list.bz2 \
   2> example/results/ancBlocks/denovo-size-custom/log
 ```
 
@@ -700,15 +700,12 @@ src/agora.py conf/agora-iterativerobust.ini -workingDir=output_dir
 
 ## Output file formats
 
-### The _diags_ files
+### The _blocks_ files
 
 These files are present under `example/results/ancBlocks/*`.
 Each of these contains a file per ancestral reconstructed genome
-(e.g. `diags.A0.list.bz2`). The files are tab-separated, and values
-in each field are further separated by single spaces. The term _diag_
-historically refers to the diagonal lines that appear in 2 dimensional
-matrices comparing 2 genomes and reflecting successive conserved
-adjacencies.
+(e.g. `blocks.A0.list.bz2`). The files are tab-separated, and values
+in each field are further separated by single spaces.
 
 The fields are:
 
