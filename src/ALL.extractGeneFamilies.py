@@ -29,7 +29,7 @@ sys.setrecursionlimit(10000)
 ###########
 
 arguments = utils.myTools.checkArgs(
-    [("speciesTree", file), ("proteinTree", file)],
+    [("speciesTree", file), ("geneTrees", file)],
     [("OUT.ancGenesFiles", str, ""), ("reuseNames", bool, False)],
     __doc__
 )
@@ -102,7 +102,7 @@ def extractGeneFamilies(node, baseName, previousAnc, lastWrittenAnc):
 
 
 geneFamilies = collections.defaultdict(list)
-for tree in utils.myProteinTree.loadTree(arguments["proteinTree"]):
+for tree in utils.myProteinTree.loadTree(arguments["geneTrees"]):
     extractGeneFamilies(tree.root, tree.info[tree.root]["tree_name"], None, None)
     if tree.info[tree.root]["format"] == "NHX":
         tree.printNewick(sys.stdout, withDist=True, withTags=True, withAncSpeciesNames=True, withAncGenesNames=True)
