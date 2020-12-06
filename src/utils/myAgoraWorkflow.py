@@ -233,9 +233,9 @@ class AgoraWorkflow:
         'geneTreesWithAncNames': 'GeneTreeForest.withAncGenes.nhx.bz2',
         'pairwiseOutput': 'pairwise/pairs-%(filt)s/%(name)s.list.bz2',
         'pairwiseLog': 'pairwise/pairs-%(filt)s/log',
-        'integrBlocks': 'integrDiags/%(method)s/diags.%(name)s.list.bz2',
-        'integrOutput': 'integrDiags/%(method)s/graph.%(name)s.log.bz2',
-        'integrLog': 'integrDiags/%(method)s/log',
+        'ancBlocks': 'integrDiags/%(method)s/diags.%(name)s.list.bz2',
+        'ancGraphs': 'integrDiags/%(method)s/graph.%(name)s.log.bz2',
+        'ancLog': 'integrDiags/%(method)s/log',
         'ancGenomesOutput': 'ancGenomes/%(method)s/ancGenome.%(name)s.list.bz2',
         'ancGenomesLog': 'ancGenomes/%(method)s/log',
     }
@@ -362,8 +362,8 @@ class AgoraWorkflow:
             args.append("-OUT.ancGenomes=" + self.files["ancGenomesOutput"] % {"method": newMethod, "name": "%s"})
             logfile = self.files["ancGenomesLog"]
         else:
-            args.append("-OUT.ancBlocks=" + self.files["integrBlocks"] % {"method": newMethod, "name": "%s"})
-            logfile = self.files["integrLog"]
+            args.append("-OUT.ancBlocks=" + self.files["ancBlocks"] % {"method": newMethod, "name": "%s"})
+            logfile = self.files["ancLog"]
 
         dep = []
         if pairwiseName is not None:
@@ -376,19 +376,19 @@ class AgoraWorkflow:
         # No input data to consider for the denovo method
         if methodName != "denovo":
             dep.append(("integr", self.prevMethod))
-            args.append("-IN.ancBlocks=" + self.files["integrBlocks"] % {"method": self.prevMethod, "name": "%s"})
+            args.append("-IN.ancBlocks=" + self.files["ancBlocks"] % {"method": self.prevMethod, "name": "%s"})
 
         if methodName == "insertion":
             # The script needs singleton reference for "insertion"
             dep.append(("integr", self.refMethod[newMethod][0]))
-            args.append("-REF.ancDiags=" + self.files["integrBlocks"] % {"method": self.refMethod[newMethod][0], "name": "%s"})
+            args.append("-REF.ancDiags=" + self.files["ancBlocks"] % {"method": self.refMethod[newMethod][0], "name": "%s"})
 
         if methodName == "scaffolds":
             args.append("-genesFiles=" + self.files["genes"] % {"name": "%s"})
             args.extend(self.defaultExtantSpeciesFilter)
 
         if methodName not in ["copy", "publish"]:
-            args.append("-LOG.ancGraph=" + self.files["integrOutput"] % {"method": newMethod, "name": "%s"})
+            args.append("-LOG.ancGraph=" + self.files["ancGraphs"] % {"method": newMethod, "name": "%s"})
 
         # Most of the methods are multithreaded
         multithreaded = methodName not in ["copy"]
