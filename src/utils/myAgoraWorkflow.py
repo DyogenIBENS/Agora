@@ -381,7 +381,7 @@ class AgoraWorkflow:
         if methodName == "insertion":
             # The script needs singleton reference for "insertion"
             dep.append(("integr", self.refMethod[newMethod][0]))
-            args.append("-REF.ancDiags=" + self.files["ancBlocks"] % {"method": self.refMethod[newMethod][0], "name": "%s"})
+            args.append("-REF.ancBlocks=" + self.files["ancBlocks"] % {"method": self.refMethod[newMethod][0], "name": "%s"})
 
         if methodName == "scaffolds":
             args.append("-genesFiles=" + self.files["genes"] % {"name": "%s"})

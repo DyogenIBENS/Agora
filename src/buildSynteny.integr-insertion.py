@@ -28,7 +28,7 @@ import utils.myTools
 # Arguments
 arguments = utils.myTools.checkArgs(
     [("speciesTree", file), ("target", str), ("IN.pairwiseDiags", str)],
-    [("IN.ancBlocks", str, ""), ("OUT.ancBlocks", str, ""), ("REF.ancDiags", str, ""), ("LOG.ancGraph", str, "halfinsert_log/%s.log.bz2"),
+    [("IN.ancBlocks", str, ""), ("OUT.ancBlocks", str, ""), ("REF.ancBlocks", str, ""), ("LOG.ancGraph", str, "halfinsert_log/%s.log.bz2"),
      ("nbThreads", int, 0),
      ("selectionFunction", str, "newscore/float(oldscore) if oldscore else newscore")],
     __doc__
@@ -51,7 +51,7 @@ def do(anc):
 
     pairwiseDiags = loadPairwise(anc)
     (integr, singletons) = utils.myGraph.loadIntegr(arguments["IN.ancBlocks"] % phylTree.fileName[anc])
-    (_, refsing) = utils.myGraph.loadIntegr(arguments["REF.ancDiags"] % phylTree.fileName[anc])
+    (_, refsing) = utils.myGraph.loadIntegr(arguments["REF.ancBlocks"] % phylTree.fileName[anc])
 
     for (x, _) in integr:
         assert (x[0][0] in refsing) == (x[-1][0] in refsing), x
