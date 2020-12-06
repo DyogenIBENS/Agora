@@ -318,16 +318,16 @@ for each ancestor and combine them into adjacency graphs, from which
 a first set of CARs are derived.
 
 ```bash
-mkdir -p example/results/integrDiags/denovo-all/
+mkdir -p example/results/ancBlocks/denovo-all/
 src/buildSynteny.integr-denovo.py \
   example/data/Species.nwk \
   A0 \
   example/results/pairwise/pairs-all/%s.list.bz2 \
   +searchLoops \
-  -OUT.ancDiags=example/results/integrDiags/denovo-all/diags.%s.list.bz2 \
-  -LOG.ancGraph=example/results/integrDiags/denovo-all/graph.%s.log.bz2 \
+  -OUT.ancDiags=example/results/ancBlocks/denovo-all/diags.%s.list.bz2 \
+  -LOG.ancGraph=example/results/ancBlocks/denovo-all/graph.%s.log.bz2 \
   -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
-  2> example/results/integrDiags/denovo-all/log
+  2> example/results/ancBlocks/denovo-all/log
 ```
 
 ##### Scaffolding
@@ -338,16 +338,16 @@ finding higher-level adjacencies.
 The result is a set of CARs made of CARs, that are much longer than in the previous steps.
 
 ```bash
-mkdir -p example/results/integrDiags/denovo-all.groups/
+mkdir -p example/results/ancBlocks/denovo-all.groups/
 src/buildSynteny.integr-scaffolds.py \
   example/data/Species.nwk \
   A0 \
-  -IN.ancDiags=example/results/integrDiags/denovo-all/diags.%s.list.bz2 \
-  -OUT.ancDiags=example/results/integrDiags/denovo-all.groups/diags.%s.list.bz2 \
-  -LOG.ancGraph=example/results/integrDiags/denovo-all.groups/graph.%s.log.bz2 \
+  -IN.ancDiags=example/results/ancBlocks/denovo-all/diags.%s.list.bz2 \
+  -OUT.ancDiags=example/results/ancBlocks/denovo-all.groups/diags.%s.list.bz2 \
+  -LOG.ancGraph=example/results/ancBlocks/denovo-all.groups/graph.%s.log.bz2 \
   -genesFiles=example/data/genes/genes.%s.list.bz2 \
   -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
-  2> example/results/integrDiags/denovo-all.groups/log
+  2> example/results/ancBlocks/denovo-all.groups/log
 ```
 
 ##### Conversion to ancestral genomes
@@ -361,7 +361,7 @@ mkdir -p example/results/ancGenomes/standard
 src/convert.ancGenomes.diags-genes.py \
   example/data/Species.nwk \
   A0 \
-  -IN.ancDiags=example/results/integrDiags/denovo-all.groups/diags.%s.list.bz2 \
+  -IN.ancDiags=example/results/ancBlocks/denovo-all.groups/diags.%s.list.bz2 \
   -OUT.ancGenomes=example/results/ancGenomes/standard/ancGenome.%s.list.bz2 \
   -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
   2> example/results/ancGenomes/standard/log
@@ -485,15 +485,15 @@ identified above for each ancestor and combines them into adjacency graphs,
 from which a first set of CARs are derived.
 
 ```bash
-mkdir -p example/results/integrDiags/denovo-size-1.0-1.0
+mkdir -p example/results/ancBlocks/denovo-size-1.0-1.0
 src/buildSynteny.integr-denovo.py \
   example/data/Species.nwk \
   A0 \
   example/results/pairwise/pairs-size-1.0-1.0/%s.list.bz2 \
-  -OUT.ancDiags=example/results/integrDiags/denovo-size-1.0-1.0/diags.%s.list.bz2 \
-  -LOG.ancGraph=example/results/integrDiags/denovo-size-1.0-1.0/graph.%s.log.bz2 \
+  -OUT.ancDiags=example/results/ancBlocks/denovo-size-1.0-1.0/diags.%s.list.bz2 \
+  -LOG.ancGraph=example/results/ancBlocks/denovo-size-1.0-1.0/graph.%s.log.bz2 \
   -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
-  2> example/results/integrDiags/denovo-size-1.0-1.0/log
+  2> example/results/ancBlocks/denovo-size-1.0-1.0/log
 ```
 
 ##### Fill-in
@@ -502,15 +502,15 @@ This step inserts non-robust genes in each interval of the ancestral contigs,
 following paths in the complete ancestral adjacency graph.
 
 ```bash
-mkdir -p example/results/integrDiags/denovo-size-1.0-1.0.refine-all
+mkdir -p example/results/ancBlocks/denovo-size-1.0-1.0.refine-all
 src/buildSynteny.integr-fillin.py \
   example/data/Species.nwk \
   A0 \
   example/results/pairwise/pairs-all/%s.list.bz2 \
-  -IN.ancDiags=example/results/integrDiags/denovo-size-1.0-1.0/diags.%s.list.bz2 \
-  -OUT.ancDiags=example/results/integrDiags/denovo-size-1.0-1.0.refine-all/diags.%s.list.bz2 \
-  -LOG.ancGraph=example/results/integrDiags/denovo-size-1.0-1.0.refine-all/graph.%s.log.bz2 \
-  2> example/results/integrDiags/denovo-size-1.0-1.0.refine-all/log
+  -IN.ancDiags=example/results/ancBlocks/denovo-size-1.0-1.0/diags.%s.list.bz2 \
+  -OUT.ancDiags=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all/diags.%s.list.bz2 \
+  -LOG.ancGraph=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all/graph.%s.log.bz2 \
+  2> example/results/ancBlocks/denovo-size-1.0-1.0.refine-all/log
 ```
 
 ##### Non-robust families fusion
@@ -519,16 +519,16 @@ This step takes all the remaining singletons (`+onlySingletons` option), which
 are mostly non-robust genes, and tries to assemble them into contigs.
 
 ```bash
-mkdir -p example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all
+mkdir -p example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all
 src/buildSynteny.integr-fusion.py \
   example/data/Species.nwk \
   A0 \
   example/results/pairwise/pairs-all/%s.list.bz2 \
   +onlySingletons \
-  -IN.ancDiags=example/results/integrDiags/denovo-size-1.0-1.0.refine-all/diags.%s.list.bz2 \
-  -OUT.ancDiags=example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all/diags.%s.list.bz2 \
-  -LOG.ancGraph=example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all/graph.%s.log.bz2 \
-  2> example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all/log
+  -IN.ancDiags=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all/diags.%s.list.bz2 \
+  -OUT.ancDiags=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all/diags.%s.list.bz2 \
+  -LOG.ancGraph=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all/graph.%s.log.bz2 \
+  2> example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all/log
 ```
 
 ##### Single-side junction
@@ -536,16 +536,16 @@ src/buildSynteny.integr-fusion.py \
 This step inserts the contigs of non-robust families created above and inserts them in the CARs.
 
 ```bash
-mkdir -p example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all
+mkdir -p example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all
 src/buildSynteny.integr-insertion.py \
   example/data/Species.nwk \
   A0 \
   example/results/pairwise/pairs-all/%s.list.bz2 \
-  -IN.ancDiags=example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all/diags.%s.list.bz2 \
-  -REF.ancDiags=example/results/integrDiags/denovo-size-1.0-1.0.refine-all/diags.%s.list.bz2 \
-  -OUT.ancDiags=example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all/diags.%s.list.bz2 \
-  -LOG.ancGraph=example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all/graph.%s.log.bz2 \
-  2> example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all/log
+  -IN.ancDiags=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all/diags.%s.list.bz2 \
+  -REF.ancDiags=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all/diags.%s.list.bz2 \
+  -OUT.ancDiags=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all/diags.%s.list.bz2 \
+  -LOG.ancGraph=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all/graph.%s.log.bz2 \
+  2> example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all/log
 ```
 
 ##### Scaffolding
@@ -554,16 +554,16 @@ Like in non-robust mode, this step does pairwise comparisons and a graph lineari
 of the CARs themselves, which allows finding higher-level adjacencies.
 
 ```bash
-mkdir -p example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all.groups
+mkdir -p example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all.groups
 src/buildSynteny.integr-scaffolds.py \
   example/data/Species.nwk \
   A0 \
-  -IN.ancDiags=example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all/diags.%s.list.bz2 \
-  -OUT.ancDiags=example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all.groups/diags.%s.list.bz2 \
-  -LOG.ancGraph=example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all.groups/graph.%s.log.bz2 \
+  -IN.ancDiags=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all/diags.%s.list.bz2 \
+  -OUT.ancDiags=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all.groups/diags.%s.list.bz2 \
+  -LOG.ancGraph=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all.groups/graph.%s.log.bz2 \
   -genesFiles=example/data/genes/genes.%s.list.bz2 \
   -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
-  2> example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all.groups/log
+  2> example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all.groups/log
 ```
 
 ##### Conversion to ancestral genomes
@@ -575,7 +575,7 @@ mkdir -p example/results/ancGenomes/robust
 src/convert.ancGenomes.diags-genes.py \
   example/data/Species.nwk \
   A0 \
-  -IN.ancDiags=example/results/integrDiags/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all.groups/diags.%s.list.bz2 \
+  -IN.ancDiags=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all.groups/diags.%s.list.bz2 \
   -OUT.ancGenomes=example/results/ancGenomes/robust/ancGenome.%s.list.bz2 \
   -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
   2> example/results/ancGenomes/robust/log
@@ -651,37 +651,37 @@ Then these different sets can be used on different ancestors to generate
 the first set of ancestral adjacencies, e.g.:
 
 ```bash
-mkdir -p example/results/integrDiags/denovo-size-1.0-1.0
+mkdir -p example/results/ancBlocks/denovo-size-1.0-1.0
 src/buildSynteny.integr-denovo.py \
   example/data/Species.nwk \
   =A3 \
   example/results/pairwise/pairs-size-1.0-1.0/%s.list.bz2 \
-  -OUT.ancDiags=example/results/integrDiags/denovo-size-1.0-1.0/diags.%s.list.bz2 \
-  -LOG.ancGraph=example/results/integrDiags/denovo-size-1.0-1.0/graph.%s.log.bz2 \
+  -OUT.ancDiags=example/results/ancBlocks/denovo-size-1.0-1.0/diags.%s.list.bz2 \
+  -LOG.ancGraph=example/results/ancBlocks/denovo-size-1.0-1.0/graph.%s.log.bz2 \
   -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
-  2> example/results/integrDiags/denovo-size-1.0-1.0/log
+  2> example/results/ancBlocks/denovo-size-1.0-1.0/log
 
-mkdir -p example/results/integrDiags/denovo-size-0.9-1.1
+mkdir -p example/results/ancBlocks/denovo-size-0.9-1.1
 src/buildSynteny.integr-denovo.py \
   example/data/Species.nwk \
   =A1,=A2 \
   example/results/pairwise/pairs-size-0.9-1.1/%s.list.bz2 \
-  -OUT.ancDiags=example/results/integrDiags/denovo-size-0.9-1.1/diags.%s.list.bz2 \
-  -LOG.ancGraph=example/results/integrDiags/denovo-size-0.9-1.1/graph.%s.log.bz2 \
+  -OUT.ancDiags=example/results/ancBlocks/denovo-size-0.9-1.1/diags.%s.list.bz2 \
+  -LOG.ancGraph=example/results/ancBlocks/denovo-size-0.9-1.1/graph.%s.log.bz2 \
   -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
-  2> example/results/integrDiags/denovo-size-0.9-1.1/log
+  2> example/results/ancBlocks/denovo-size-0.9-1.1/log
 ```
 
 These sets can be combined by running the copy script multiple times, like this:
 
 ```bash
-mkdir -p example/results/integrDiags/denovo-size-custom
+mkdir -p example/results/ancBlocks/denovo-size-custom
 src/buildSynteny.integr-copy.py \
   example/data/Species.nwk \
   =A3 \
-  -IN.ancDiags=example/results/integrDiags/denovo-size-1.0-1.0/diags.%s.list.bz2 \
-  -OUT.ancDiags=example/results/integrDiags/denovo-size-custom/diags.%s.list.bz2 \
-  2> example/results/integrDiags/denovo-size-custom/log
+  -IN.ancDiags=example/results/ancBlocks/denovo-size-1.0-1.0/diags.%s.list.bz2 \
+  -OUT.ancDiags=example/results/ancBlocks/denovo-size-custom/diags.%s.list.bz2 \
+  2> example/results/ancBlocks/denovo-size-custom/log
 ```
 
 ##### Iterative reconstructions with less and less robust families
@@ -702,7 +702,7 @@ src/agora.py conf/agora-iterativerobust.ini -workingDir=output_dir
 
 ### The _diags_ files
 
-These files are present under `example/results/integrDiags/*`.
+These files are present under `example/results/ancBlocks/*`.
 Each of these contains a file per ancestral reconstructed genome
 (e.g. `diags.A0.list.bz2`). The files are tab-separated, and values
 in each field are further separated by single spaces. The term _diag_
