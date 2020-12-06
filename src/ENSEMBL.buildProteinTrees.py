@@ -21,12 +21,12 @@ import utils.myPhylTree
 import utils.myProteinTree
 
 arguments = utils.myTools.checkArgs( \
-	[("phylTree.conf",file), ("ensemblTree",file)], \
+	[("speciesTree",file), ("ensemblTree",file)], \
 	[("cutoff",str,"-1"), ("defaultFamName",str,"GCUSGT%08d"), ("scoreMethod",int,[1,2,3]), ("newNodeID",int,100000000), ("recurs",bool,False)], \
 	__doc__ \
 )
 
-phylTree = utils.myPhylTree.PhylogeneticTree(arguments["phylTree.conf"])
+phylTree = utils.myPhylTree.PhylogeneticTree(arguments["speciesTree"])
 sys.setrecursionlimit(20000)
 
 # Limites automatiques de score de duplication

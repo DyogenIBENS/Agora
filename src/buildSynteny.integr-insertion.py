@@ -27,7 +27,7 @@ import utils.myTools
 
 # Arguments
 arguments = utils.myTools.checkArgs(
-    [("phylTree.conf", file), ("target", str), ("IN.pairwiseDiags", str)],
+    [("speciesTree", file), ("target", str), ("IN.pairwiseDiags", str)],
     [("IN.ancBlocks", str, ""), ("OUT.ancBlocks", str, ""), ("REF.ancDiags", str, ""), ("LOG.ancGraph", str, "halfinsert_log/%s.log.bz2"),
      ("nbThreads", int, 0),
      ("selectionFunction", str, "newscore/float(oldscore) if oldscore else newscore")],
@@ -213,7 +213,7 @@ def do(anc):
 start = time.time()
 # Load species tree and target ancestral genome
 
-phylTree = utils.myPhylTree.PhylogeneticTree(arguments["phylTree.conf"])
+phylTree = utils.myPhylTree.PhylogeneticTree(arguments["speciesTree"])
 targets = phylTree.getTargetsAnc(arguments["target"])
 
 

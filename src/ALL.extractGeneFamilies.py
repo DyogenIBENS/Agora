@@ -29,12 +29,12 @@ sys.setrecursionlimit(10000)
 ###########
 
 arguments = utils.myTools.checkArgs(
-    [("phylTree.conf", file), ("proteinTree", file)],
+    [("speciesTree", file), ("proteinTree", file)],
     [("OUT.ancGenesFiles", str, ""), ("reuseNames", bool, False)],
     __doc__
 )
 
-phylTree = utils.myPhylTree.PhylogeneticTree(arguments["phylTree.conf"])
+phylTree = utils.myPhylTree.PhylogeneticTree(arguments["speciesTree"])
 
 dupCount = collections.defaultdict(int)
 

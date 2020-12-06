@@ -22,7 +22,7 @@ import utils.myGenomes
 
 # Arguments
 arguments = utils.myTools.checkArgs(
-	[("phylTree.conf",file), ("target",str)], \
+	[("speciesTree",file), ("target",str)], \
 	[("extantSpeciesFilter",str,""), ("genesFiles",str,""), ("ancGenesFiles",str,""), ("OUT.pairwise",str,"")],
 	__doc__
 )
@@ -31,7 +31,7 @@ arguments = utils.myTools.checkArgs(
 st = start = time.time()
 #Species tree
 #############
-phylTree = utils.myPhylTree.PhylogeneticTree(arguments["phylTree.conf"])
+phylTree = utils.myPhylTree.PhylogeneticTree(arguments["speciesTree"])
 
 # Species to use
 ################

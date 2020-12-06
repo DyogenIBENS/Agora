@@ -28,13 +28,13 @@ import utils.myTools
 
 # Arguments
 arguments = utils.myTools.checkArgs(
-    [("phylTree.conf", file), ("target", str)],
+    [("speciesTree", file), ("target", str)],
     [("nbThreads", int, 0), ("IN.ancBlocks", str, ""), ("ancGenesFiles", str, ""), ("OUT.ancGenomes", str, "ancGenomes/ancGenome.%s.list.bz2")],
     __doc__
 )
 
 # Load species tree - target ancestral genome and the extant species used to assemble blocs
-phylTree = utils.myPhylTree.PhylogeneticTree(arguments["phylTree.conf"])
+phylTree = utils.myPhylTree.PhylogeneticTree(arguments["speciesTree"])
 targets = phylTree.getTargetsAnc(arguments["target"])
 
 def do(anc):

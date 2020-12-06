@@ -33,7 +33,7 @@ import utils.myTools
 
 # Arguments
 arguments = utils.myTools.checkArgs( \
-    [("phylTree.conf", file), ("target", str)], \
+    [("speciesTree", file), ("target", str)], \
     [("minimalWeight", int, 1), ("anchorSize", int, 2), ("minChromLength", int, 2), \
      ("nbThreads", int, 0),
      ("extantSpeciesFilter", str, ""), \
@@ -187,7 +187,7 @@ def do(anc):
 
 
 # Load species tree - target ancestral genome and the extant species used to assemble blocs
-phylTree = utils.myPhylTree.PhylogeneticTree(arguments["phylTree.conf"])
+phylTree = utils.myPhylTree.PhylogeneticTree(arguments["speciesTree"])
 
 (listSpecies, targets, accessoryAncestors) = phylTree.getTargetsForPairwise(arguments["target"], arguments["extantSpeciesFilter"])
 

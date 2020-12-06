@@ -20,11 +20,11 @@ import utils.myPhylTree
 import utils.myTools
 
 arguments = utils.myTools.checkArgs(
-    [("phylTree.conf", file), ("target", str), ("IN.ancGenesFiles", str), ("OUT.ancGenesFiles", str), ("minSize", str),("maxSize", str)],
+    [("speciesTree", file), ("target", str), ("IN.ancGenesFiles", str), ("OUT.ancGenesFiles", str), ("minSize", str),("maxSize", str)],
     [],
     __doc__)
 
-phylTree = utils.myPhylTree.PhylogeneticTree(arguments["phylTree.conf"])
+phylTree = utils.myPhylTree.PhylogeneticTree(arguments["speciesTree"])
 target = phylTree.officialName[arguments["target"]]
 
 lstAncGenes = {}

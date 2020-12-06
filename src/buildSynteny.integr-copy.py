@@ -18,13 +18,13 @@ import utils.myPhylTree
 import utils.myTools
 
 # Arguments
-arguments = utils.myTools.checkArgs([("phylTree.conf", file), ("target", str)],
+arguments = utils.myTools.checkArgs([("speciesTree", file), ("target", str)],
                                     [("IN.ancBlocks", str, ""), ("OUT.ancBlocks", str, "")],
                                     __doc__
                                     )
 
 start = time.time()
-phylTree = utils.myPhylTree.PhylogeneticTree(arguments["phylTree.conf"])
+phylTree = utils.myPhylTree.PhylogeneticTree(arguments["speciesTree"])
 targets = phylTree.getTargetsAnc(arguments["target"])
 
 for anc in targets:

@@ -30,7 +30,7 @@ import utils.myTools
 
 # Arguments
 arguments = utils.myTools.checkArgs(
-    [("phylTree.conf", file), ("target", str), ("pairwiseDiags", str)],
+    [("speciesTree", file), ("target", str), ("pairwiseDiags", str)],
     [("minimalWeight", int, 1), ("searchLoops", bool, False),
      ("LOG.ancGraph", str, "denovo_log/%s.log.bz2"),
      ("OUT.ancBlocks", str, "anc/diags.%s.list.bz2"),
@@ -95,7 +95,7 @@ def do(anc):
 start = time.time()
 
 # Load species tree and target ancestral genome
-phylTree = utils.myPhylTree.PhylogeneticTree(arguments["phylTree.conf"])
+phylTree = utils.myPhylTree.PhylogeneticTree(arguments["speciesTree"])
 targets = phylTree.getTargetsAnc(arguments["target"])
 
 print >> sys.stderr, targets

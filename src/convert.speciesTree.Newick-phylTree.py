@@ -16,9 +16,9 @@ import utils.myPhylTree as myPhylTree
 import utils.myTools as myTools
 
 
-arguments = myTools.checkArgs([("phylTree.conf",file)], [("fromNewick",bool,True)], __doc__)
+arguments = myTools.checkArgs([("speciesTree",file)], [("fromNewick",bool,True)], __doc__)
 
-phylTree = myPhylTree.PhylogeneticTree(arguments["phylTree.conf"])
+phylTree = myPhylTree.PhylogeneticTree(arguments["speciesTree"])
 
 if arguments["fromNewick"]:
     phylTree.printPhylTree()

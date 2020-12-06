@@ -43,7 +43,7 @@ import utils.myTools
 
 # Arguments
 arguments = utils.myTools.checkArgs(
-    [("phylTree.conf", file), ("target", str), ("pairwiseDiags", str)],
+    [("speciesTree", file), ("target", str), ("pairwiseDiags", str)],
     [("IN.ancBlocks", str, ""), ("OUT.ancBlocks", str, ""), ("LOG.ancGraph", str, "refine_log/%s.log.bz2"),
      ("nbThreads", int, 0),
      ("minimalWeight", int, 1), ("mustExtend", bool, False), ("loop", bool, False), ("timeout", int, 150),
@@ -674,7 +674,7 @@ def do(anc):
 
 
 start = time.time()
-phylTree = utils.myPhylTree.PhylogeneticTree(arguments["phylTree.conf"])
+phylTree = utils.myPhylTree.PhylogeneticTree(arguments["speciesTree"])
 targets = phylTree.getTargetsAnc(arguments["target"])
 
 # Initialisation des fonctions de recherche

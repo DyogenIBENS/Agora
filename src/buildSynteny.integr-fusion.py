@@ -25,7 +25,7 @@ import utils.myTools
 
 # Arguments
 arguments = utils.myTools.checkArgs(
-    [("phylTree.conf", file), ("target", str), ("pairwiseDiags", str)],
+    [("speciesTree", file), ("target", str), ("pairwiseDiags", str)],
     [("minimalWeight", int, 1), ("searchLoops", bool, True), ("onlySingletons", bool, False),
      ("nbThreads", int, 0),
      ("IN.ancBlocks", str, ""), ("OUT.ancBlocks", str, ""), ("LOG.ancGraph", str, "extend_log/%s.log.bz2")],
@@ -94,7 +94,7 @@ start = time.time()
 
 
 # Load species tree and target ancestral genome
-phylTree = utils.myPhylTree.PhylogeneticTree(arguments["phylTree.conf"])
+phylTree = utils.myPhylTree.PhylogeneticTree(arguments["speciesTree"])
 targets = phylTree.getTargetsAnc(arguments["target"])
 
 n_cpu = arguments["nbThreads"] or multiprocessing.cpu_count()
