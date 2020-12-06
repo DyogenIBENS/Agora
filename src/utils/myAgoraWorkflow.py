@@ -233,7 +233,7 @@ class AgoraWorkflow:
         'geneTreesWithAncNames': 'GeneTreeForest.withAncGenes.nhx.bz2',
         'pairwiseOutput': 'pairwise/pairs-%(filt)s/%(name)s.list.bz2',
         'pairwiseLog': 'pairwise/pairs-%(filt)s/log',
-        'ancBlocks': 'integrDiags/%(method)s/diags.%(name)s.list.bz2',
+        'ancBlocks': 'integrDiags/%(method)s/blocks.%(name)s.list.bz2',
         'ancGraphs': 'integrDiags/%(method)s/graph.%(name)s.log.bz2',
         'ancLog': 'integrDiags/%(method)s/log',
         'ancGenomesOutput': 'ancGenomes/%(method)s/ancGenome.%(name)s.list.bz2',
@@ -358,7 +358,7 @@ class AgoraWorkflow:
 
         if methodName == "publish":
             # "publish" is not an integration method
-            args[0] = os.path.join(self.scriptDir, "convert.ancGenomes.diags-genes.py")
+            args[0] = os.path.join(self.scriptDir, "convert.ancGenomes.blocks-to-genes.py")
             args.append("-OUT.ancGenomes=" + self.files["ancGenomesOutput"] % {"method": newMethod, "name": "%s"})
             logfile = self.files["ancGenomesLog"]
         else:
