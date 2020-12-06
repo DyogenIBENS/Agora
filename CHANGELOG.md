@@ -1,3 +1,8 @@
+## 2020-12-07 - v2.0
+
+1. [major change] -- Renamed all scripts and most options to match the
+   upcoming publication.
+
 ## 2020-10-01 - v1.5
 
 1. [bugfix] -- Added the missing `+onlySingletons` option to the
