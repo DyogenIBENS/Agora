@@ -362,7 +362,7 @@ class AgoraWorkflow:
             args.append("-OUT.ancGenomes=" + self.files["ancGenomesOutput"] % {"method": newMethod, "name": "%s"})
             logfile = self.files["ancGenomesLog"]
         else:
-            args.append("-OUT.ancDiags=" + self.files["integrBlocks"] % {"method": newMethod, "name": "%s"})
+            args.append("-OUT.ancBlocks=" + self.files["integrBlocks"] % {"method": newMethod, "name": "%s"})
             logfile = self.files["integrLog"]
 
         dep = []
@@ -376,7 +376,7 @@ class AgoraWorkflow:
         # No input data to consider for the denovo method
         if methodName != "denovo":
             dep.append(("integr", self.prevMethod))
-            args.append("-IN.ancDiags=" + self.files["integrBlocks"] % {"method": self.prevMethod, "name": "%s"})
+            args.append("-IN.ancBlocks=" + self.files["integrBlocks"] % {"method": self.prevMethod, "name": "%s"})
 
         if methodName == "insertion":
             # The script needs singleton reference for "insertion"

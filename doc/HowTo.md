@@ -324,7 +324,7 @@ src/buildSynteny.integr-denovo.py \
   A0 \
   example/results/pairwise/pairs-all/%s.list.bz2 \
   +searchLoops \
-  -OUT.ancDiags=example/results/ancBlocks/denovo-all/diags.%s.list.bz2 \
+  -OUT.ancBlocks=example/results/ancBlocks/denovo-all/diags.%s.list.bz2 \
   -LOG.ancGraph=example/results/ancBlocks/denovo-all/graph.%s.log.bz2 \
   -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
   2> example/results/ancBlocks/denovo-all/log
@@ -342,8 +342,8 @@ mkdir -p example/results/ancBlocks/denovo-all.groups/
 src/buildSynteny.integr-scaffolds.py \
   example/data/Species.nwk \
   A0 \
-  -IN.ancDiags=example/results/ancBlocks/denovo-all/diags.%s.list.bz2 \
-  -OUT.ancDiags=example/results/ancBlocks/denovo-all.groups/diags.%s.list.bz2 \
+  -IN.ancBlocks=example/results/ancBlocks/denovo-all/diags.%s.list.bz2 \
+  -OUT.ancBlocks=example/results/ancBlocks/denovo-all.groups/diags.%s.list.bz2 \
   -LOG.ancGraph=example/results/ancBlocks/denovo-all.groups/graph.%s.log.bz2 \
   -genesFiles=example/data/genes/genes.%s.list.bz2 \
   -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
@@ -361,7 +361,7 @@ mkdir -p example/results/ancGenomes/standard
 src/convert.ancGenomes.diags-genes.py \
   example/data/Species.nwk \
   A0 \
-  -IN.ancDiags=example/results/ancBlocks/denovo-all.groups/diags.%s.list.bz2 \
+  -IN.ancBlocks=example/results/ancBlocks/denovo-all.groups/diags.%s.list.bz2 \
   -OUT.ancGenomes=example/results/ancGenomes/standard/ancGenome.%s.list.bz2 \
   -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
   2> example/results/ancGenomes/standard/log
@@ -490,7 +490,7 @@ src/buildSynteny.integr-denovo.py \
   example/data/Species.nwk \
   A0 \
   example/results/pairwise/pairs-size-1.0-1.0/%s.list.bz2 \
-  -OUT.ancDiags=example/results/ancBlocks/denovo-size-1.0-1.0/diags.%s.list.bz2 \
+  -OUT.ancBlocks=example/results/ancBlocks/denovo-size-1.0-1.0/diags.%s.list.bz2 \
   -LOG.ancGraph=example/results/ancBlocks/denovo-size-1.0-1.0/graph.%s.log.bz2 \
   -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
   2> example/results/ancBlocks/denovo-size-1.0-1.0/log
@@ -507,8 +507,8 @@ src/buildSynteny.integr-fillin.py \
   example/data/Species.nwk \
   A0 \
   example/results/pairwise/pairs-all/%s.list.bz2 \
-  -IN.ancDiags=example/results/ancBlocks/denovo-size-1.0-1.0/diags.%s.list.bz2 \
-  -OUT.ancDiags=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all/diags.%s.list.bz2 \
+  -IN.ancBlocks=example/results/ancBlocks/denovo-size-1.0-1.0/diags.%s.list.bz2 \
+  -OUT.ancBlocks=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all/diags.%s.list.bz2 \
   -LOG.ancGraph=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all/graph.%s.log.bz2 \
   2> example/results/ancBlocks/denovo-size-1.0-1.0.refine-all/log
 ```
@@ -525,8 +525,8 @@ src/buildSynteny.integr-fusion.py \
   A0 \
   example/results/pairwise/pairs-all/%s.list.bz2 \
   +onlySingletons \
-  -IN.ancDiags=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all/diags.%s.list.bz2 \
-  -OUT.ancDiags=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all/diags.%s.list.bz2 \
+  -IN.ancBlocks=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all/diags.%s.list.bz2 \
+  -OUT.ancBlocks=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all/diags.%s.list.bz2 \
   -LOG.ancGraph=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all/graph.%s.log.bz2 \
   2> example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all/log
 ```
@@ -541,9 +541,9 @@ src/buildSynteny.integr-insertion.py \
   example/data/Species.nwk \
   A0 \
   example/results/pairwise/pairs-all/%s.list.bz2 \
-  -IN.ancDiags=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all/diags.%s.list.bz2 \
+  -IN.ancBlocks=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all/diags.%s.list.bz2 \
   -REF.ancDiags=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all/diags.%s.list.bz2 \
-  -OUT.ancDiags=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all/diags.%s.list.bz2 \
+  -OUT.ancBlocks=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all/diags.%s.list.bz2 \
   -LOG.ancGraph=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all/graph.%s.log.bz2 \
   2> example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all/log
 ```
@@ -558,8 +558,8 @@ mkdir -p example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all.hal
 src/buildSynteny.integr-scaffolds.py \
   example/data/Species.nwk \
   A0 \
-  -IN.ancDiags=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all/diags.%s.list.bz2 \
-  -OUT.ancDiags=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all.groups/diags.%s.list.bz2 \
+  -IN.ancBlocks=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all/diags.%s.list.bz2 \
+  -OUT.ancBlocks=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all.groups/diags.%s.list.bz2 \
   -LOG.ancGraph=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all.groups/graph.%s.log.bz2 \
   -genesFiles=example/data/genes/genes.%s.list.bz2 \
   -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
@@ -575,7 +575,7 @@ mkdir -p example/results/ancGenomes/robust
 src/convert.ancGenomes.diags-genes.py \
   example/data/Species.nwk \
   A0 \
-  -IN.ancDiags=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all.groups/diags.%s.list.bz2 \
+  -IN.ancBlocks=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all.groups/diags.%s.list.bz2 \
   -OUT.ancGenomes=example/results/ancGenomes/robust/ancGenome.%s.list.bz2 \
   -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
   2> example/results/ancGenomes/robust/log
@@ -656,7 +656,7 @@ src/buildSynteny.integr-denovo.py \
   example/data/Species.nwk \
   =A3 \
   example/results/pairwise/pairs-size-1.0-1.0/%s.list.bz2 \
-  -OUT.ancDiags=example/results/ancBlocks/denovo-size-1.0-1.0/diags.%s.list.bz2 \
+  -OUT.ancBlocks=example/results/ancBlocks/denovo-size-1.0-1.0/diags.%s.list.bz2 \
   -LOG.ancGraph=example/results/ancBlocks/denovo-size-1.0-1.0/graph.%s.log.bz2 \
   -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
   2> example/results/ancBlocks/denovo-size-1.0-1.0/log
@@ -666,7 +666,7 @@ src/buildSynteny.integr-denovo.py \
   example/data/Species.nwk \
   =A1,=A2 \
   example/results/pairwise/pairs-size-0.9-1.1/%s.list.bz2 \
-  -OUT.ancDiags=example/results/ancBlocks/denovo-size-0.9-1.1/diags.%s.list.bz2 \
+  -OUT.ancBlocks=example/results/ancBlocks/denovo-size-0.9-1.1/diags.%s.list.bz2 \
   -LOG.ancGraph=example/results/ancBlocks/denovo-size-0.9-1.1/graph.%s.log.bz2 \
   -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
   2> example/results/ancBlocks/denovo-size-0.9-1.1/log
@@ -679,8 +679,8 @@ mkdir -p example/results/ancBlocks/denovo-size-custom
 src/buildSynteny.integr-copy.py \
   example/data/Species.nwk \
   =A3 \
-  -IN.ancDiags=example/results/ancBlocks/denovo-size-1.0-1.0/diags.%s.list.bz2 \
-  -OUT.ancDiags=example/results/ancBlocks/denovo-size-custom/diags.%s.list.bz2 \
+  -IN.ancBlocks=example/results/ancBlocks/denovo-size-1.0-1.0/diags.%s.list.bz2 \
+  -OUT.ancBlocks=example/results/ancBlocks/denovo-size-custom/diags.%s.list.bz2 \
   2> example/results/ancBlocks/denovo-size-custom/log
 ```
 

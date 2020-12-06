@@ -19,7 +19,7 @@ import utils.myTools
 
 # Arguments
 arguments = utils.myTools.checkArgs([("phylTree.conf", file), ("target", str)],
-                                    [("IN.ancDiags", str, ""), ("OUT.ancDiags", str, "")],
+                                    [("IN.ancBlocks", str, ""), ("OUT.ancBlocks", str, "")],
                                     __doc__
                                     )
 
@@ -28,8 +28,8 @@ phylTree = utils.myPhylTree.PhylogeneticTree(arguments["phylTree.conf"])
 targets = phylTree.getTargetsAnc(arguments["target"])
 
 for anc in targets:
-    fi = utils.myFile.openFile(arguments["IN.ancDiags"] % phylTree.fileName[anc], "r")
-    fo = utils.myFile.openFile(arguments["OUT.ancDiags"] % phylTree.fileName[anc], "w")
+    fi = utils.myFile.openFile(arguments["IN.ancBlocks"] % phylTree.fileName[anc], "r")
+    fo = utils.myFile.openFile(arguments["OUT.ancBlocks"] % phylTree.fileName[anc], "w")
     for l in fi:
         print >> fo, l,
     fo.close()

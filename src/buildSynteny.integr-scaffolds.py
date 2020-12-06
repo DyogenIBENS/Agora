@@ -12,7 +12,7 @@ __doc__ = """
 
         Usage:
             src/buildSynteny.integr-scaffolds.py Species.conf Boreoeutheria \
-            -IN.ancDiags=diags/integr/denovo-all/anc/diags.%s.list.bz2 -OUT.ancDiags=diags/integr/denovo-all.groups/anc/diags.%s.list.bz2
+            -IN.ancBlocks=diags/integr/denovo-all/anc/diags.%s.list.bz2 -OUT.ancBlocks=diags/integr/denovo-all.groups/anc/diags.%s.list.bz2
             -ancGenesFiles=ancGenes/all/ancGenes.%s.list.bz2 -genesFiles=genes.%s.list.bz2 2> diags/integr/denovo-all.groups/log
 """
 
@@ -37,9 +37,9 @@ arguments = utils.myTools.checkArgs( \
     [("minimalWeight", int, 1), ("anchorSize", int, 2), ("minChromLength", int, 2), \
      ("nbThreads", int, 0),
      ("extantSpeciesFilter", str, ""), \
-     ("IN.ancDiags", str, ""), \
+     ("IN.ancBlocks", str, ""), \
      ("LOG.ancGraph", str, "groups_log/%s.log.bz2"),
-     ("OUT.ancDiags", str, "anc/diags.%s.list.bz2"), \
+     ("OUT.ancBlocks", str, "anc/diags.%s.list.bz2"), \
      ("genesFiles", str, ""), \
      ("ancGenesFiles", str, "")], \
     __doc__ \
@@ -125,7 +125,7 @@ def do(anc):
     ini_stdout = sys.stdout
     sys.stdout = utils.myFile.openFile(arguments["LOG.ancGraph"] % phylTree.fileName[anc], "w")
 
-    dicGenomesAnc = utils.myGenomes.Genome(arguments["IN.ancDiags"] % phylTree.fileName[anc], ancGenes=genesAnc[anc],
+    dicGenomesAnc = utils.myGenomes.Genome(arguments["IN.ancBlocks"] % phylTree.fileName[anc], ancGenes=genesAnc[anc],
                                              withDict=False)
 
     allAdj = getAllAdj(anc, dicGenomesAnc)
@@ -139,7 +139,7 @@ def do(anc):
     gr.cleanGraphTopDown(2 * arguments["minimalWeight"])
 
     stats = []
-    f = utils.myFile.openFile(arguments["OUT.ancDiags"] % phylTree.fileName[anc], "w")
+    f = utils.myFile.openFile(arguments["OUT.ancBlocks"] % phylTree.fileName[anc], "w")
     notseen = set(dicGenomesAnc.lstGenes)
 
     def toString(x, rev=False):

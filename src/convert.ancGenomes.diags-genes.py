@@ -11,7 +11,7 @@ __doc__ = """
 
     usage:
         src/convert.ancGenomes.diags-genes.py example/data/Species.conf A0 \
-                -IN.ancDiags=example/results/integrDiags/final/diags.%s.list.bz2 \
+                -IN.ancBlocks=example/results/integrDiags/final/diags.%s.list.bz2 \
                 -OUT.ancGenomes=example/results/ancGenomes/final/ancGenome.%s.list.bz2 \
                 -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2
 """
@@ -29,7 +29,7 @@ import utils.myTools
 # Arguments
 arguments = utils.myTools.checkArgs(
     [("phylTree.conf", file), ("target", str)],
-    [("nbThreads", int, 0), ("IN.ancDiags", str, ""), ("ancGenesFiles", str, ""), ("OUT.ancGenomes", str, "ancGenomes/ancGenome.%s.list.bz2")],
+    [("nbThreads", int, 0), ("IN.ancBlocks", str, ""), ("ancGenesFiles", str, ""), ("OUT.ancGenomes", str, "ancGenomes/ancGenome.%s.list.bz2")],
     __doc__
 )
 
@@ -39,7 +39,7 @@ targets = phylTree.getTargetsAnc(arguments["target"])
 
 def do(anc):
     ancGenes = utils.myGenomes.Genome(arguments["ancGenesFiles"] % phylTree.fileName[anc])
-    genome = utils.myGenomes.Genome(arguments["IN.ancDiags"] % phylTree.fileName[anc], ancGenes=ancGenes)
+    genome = utils.myGenomes.Genome(arguments["IN.ancBlocks"] % phylTree.fileName[anc], ancGenes=ancGenes)
     ancGenomeFile = utils.myFile.openFile(arguments["OUT.ancGenomes"] % phylTree.fileName[anc], "w")
     genome.printEnsembl(ancGenomeFile)
     ancGenomeFile.close()

@@ -28,7 +28,7 @@ arguments = utils.myTools.checkArgs(
     [("phylTree.conf", file), ("target", str), ("pairwiseDiags", str)],
     [("minimalWeight", int, 1), ("searchLoops", bool, True), ("onlySingletons", bool, False),
      ("nbThreads", int, 0),
-     ("IN.ancDiags", str, ""), ("OUT.ancDiags", str, ""), ("LOG.ancGraph", str, "extend_log/%s.log.bz2")],
+     ("IN.ancBlocks", str, ""), ("OUT.ancBlocks", str, ""), ("LOG.ancGraph", str, "extend_log/%s.log.bz2")],
     __doc__
 )
 
@@ -39,7 +39,7 @@ def do(anc):
     sys.stdout = utils.myFile.openFile(arguments["LOG.ancGraph"] % phylTree.fileName[anc], "w")
 
     graph = utils.myGraph.WeightedDiagGraph()
-    (integr, singletons) = utils.myGraph.loadIntegr(arguments["IN.ancDiags"] % phylTree.fileName[anc])
+    (integr, singletons) = utils.myGraph.loadIntegr(arguments["IN.ancBlocks"] % phylTree.fileName[anc])
     if not arguments["onlySingletons"]:
         for (b, w) in integr:
             graph.addWeightedDiag(b, [x + 10000 for x in w])
@@ -54,7 +54,7 @@ def do(anc):
     # cutting the graph
     graph.cleanGraphTopDown(arguments["minimalWeight"], searchLoops=arguments["searchLoops"])
 
-    f = utils.myFile.openFile(arguments["OUT.ancDiags"] % phylTree.fileName[anc], "w")
+    f = utils.myFile.openFile(arguments["OUT.ancBlocks"] % phylTree.fileName[anc], "w")
     s = []
 
     if arguments["onlySingletons"]:

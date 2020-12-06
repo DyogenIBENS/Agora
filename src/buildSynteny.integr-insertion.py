@@ -28,7 +28,7 @@ import utils.myTools
 # Arguments
 arguments = utils.myTools.checkArgs(
     [("phylTree.conf", file), ("target", str), ("IN.pairwiseDiags", str)],
-    [("IN.ancDiags", str, ""), ("OUT.ancDiags", str, ""), ("REF.ancDiags", str, ""), ("LOG.ancGraph", str, "halfinsert_log/%s.log.bz2"),
+    [("IN.ancBlocks", str, ""), ("OUT.ancBlocks", str, ""), ("REF.ancDiags", str, ""), ("LOG.ancGraph", str, "halfinsert_log/%s.log.bz2"),
      ("nbThreads", int, 0),
      ("selectionFunction", str, "newscore/float(oldscore) if oldscore else newscore")],
     __doc__
@@ -50,7 +50,7 @@ def do(anc):
     sys.stdout = utils.myFile.openFile(arguments["LOG.ancGraph"] % phylTree.fileName[anc], "w")
 
     pairwiseDiags = loadPairwise(anc)
-    (integr, singletons) = utils.myGraph.loadIntegr(arguments["IN.ancDiags"] % phylTree.fileName[anc])
+    (integr, singletons) = utils.myGraph.loadIntegr(arguments["IN.ancBlocks"] % phylTree.fileName[anc])
     (_, refsing) = utils.myGraph.loadIntegr(arguments["REF.ancDiags"] % phylTree.fileName[anc])
 
     for (x, _) in integr:
@@ -140,7 +140,7 @@ def do(anc):
 
     #print >> sys.stderr, "Final blocks of ", anc,
     print "Final blocks of ", anc,
-    f = utils.myFile.openFile(arguments["OUT.ancDiags"] % phylTree.fileName[anc], "w")
+    f = utils.myFile.openFile(arguments["OUT.ancBlocks"] % phylTree.fileName[anc], "w")
     ll = []
     # Build and print new chromosomes
     for (i, (inib, iniw)) in enumerate(iniblocks):

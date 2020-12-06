@@ -11,7 +11,7 @@ __doc__ = """
 
     usage:
         src/buildSynteny.integr-denovo.py Species.conf Boreoeutheria diags/pairwise/pairs-all/%s.list.bz2
-        -ancGenesFiles=ancGenes/all/ancGenes.%s.list.bz2 -OUT.ancDiags=diags/integr/denovo-all/anc/diags.%s.list.bz2
+        -ancGenesFiles=ancGenes/all/ancGenes.%s.list.bz2 -OUT.ancBlocks=diags/integr/denovo-all/anc/diags.%s.list.bz2
         2> diags/integr/denovo-all/log
 """
 
@@ -33,7 +33,7 @@ arguments = utils.myTools.checkArgs(
     [("phylTree.conf", file), ("target", str), ("pairwiseDiags", str)],
     [("minimalWeight", int, 1), ("searchLoops", bool, False),
      ("LOG.ancGraph", str, "denovo_log/%s.log.bz2"),
-     ("OUT.ancDiags", str, "anc/diags.%s.list.bz2"),
+     ("OUT.ancBlocks", str, "anc/diags.%s.list.bz2"),
      ("ancGenesFiles", str, ""),
      ("nbThreads", int, 0),
      ],
@@ -63,7 +63,7 @@ def do(anc):
     # Cut the graph in subgraph
     graph.cleanGraphTopDown(arguments["minimalWeight"], searchLoops=arguments["searchLoops"])
 
-    f = utils.myFile.openFile(arguments["OUT.ancDiags"] % phylTree.fileName[anc], "w")
+    f = utils.myFile.openFile(arguments["OUT.ancBlocks"] % phylTree.fileName[anc], "w")
     s = []
 
     # Graph linearizing

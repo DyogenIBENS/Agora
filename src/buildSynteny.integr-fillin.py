@@ -44,7 +44,7 @@ import utils.myTools
 # Arguments
 arguments = utils.myTools.checkArgs(
     [("phylTree.conf", file), ("target", str), ("pairwiseDiags", str)],
-    [("IN.ancDiags", str, ""), ("OUT.ancDiags", str, ""), ("LOG.ancGraph", str, "refine_log/%s.log.bz2"),
+    [("IN.ancBlocks", str, ""), ("OUT.ancBlocks", str, ""), ("LOG.ancGraph", str, "refine_log/%s.log.bz2"),
      ("nbThreads", int, 0),
      ("minimalWeight", int, 1), ("mustExtend", bool, False), ("loop", bool, False), ("timeout", int, 150),
      ("func", str, "0,32|100,40t|10000")],
@@ -424,7 +424,7 @@ def do(anc):
 
     pairwiseDiags = loadPairwise(arguments["pairwiseDiags"] % phylTree.fileName[anc])
 
-    (integr, singletons) = utils.myGraph.loadIntegr(arguments["IN.ancDiags"] % phylTree.fileName[anc])
+    (integr, singletons) = utils.myGraph.loadIntegr(arguments["IN.ancBlocks"] % phylTree.fileName[anc])
     newintegr = integr
 
     while len(integr) > 0:
@@ -658,7 +658,7 @@ def do(anc):
         integr = newintegr
 
     # Impression des resultats finaux
-    f = utils.myFile.openFile(arguments["OUT.ancDiags"] % phylTree.fileName[anc], "w")
+    f = utils.myFile.openFile(arguments["OUT.ancBlocks"] % phylTree.fileName[anc], "w")
     for (i, (newb, news)) in enumerate(newintegr):
         print >> f, utils.myFile.myTSV.printLine(
             [anc, len(newb), utils.myFile.myTSV.printLine([x[0] for x in newb], delim=" "),
