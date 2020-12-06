@@ -1,27 +1,29 @@
-------------------------------------------------------------------------------
-| Key           | Values                                                     |
-------------------------------------------------------------------------------
-| phylTree.conf | example/data/Species.nwk                                   |
-| target        | A0                                                         |
-| genesFiles    | example/data/genes/genes.%s.list.bz2                       |
-| ancGenesFiles | example/results/ancGenes/size-0.9-1.1/ancGenes.%s.list.bz2 |
-| OUT.pairwise  | example/results/pairwise/pairs-size-0.9-1.1/%s.list.bz2    |
-------------------------------------------------------------------------------
-Loading genome of example/data/genes/genes.M5.list.bz2 ... (Ensembl) OK
-Loading genome of example/results/ancGenes/size-0.9-1.1/ancGenes.A2.list.bz2 ... (ancestral genes) OK
+------------------------------------------------------------------------------------
+| Key                 | Values                                                     |
+------------------------------------------------------------------------------------
+| speciesTree         | example/data/Species.nwk                                   |
+| target              | A0                                                         |
+| extantSpeciesFilter | A0                                                         |
+| genesFiles          | example/data/genes/genes.%s.list.bz2                       |
+| ancGenesFiles       | example/results/ancGenes/size-0.9-1.1/ancGenes.%s.list.bz2 |
+| OUT.pairwise        | example/results/pairwise/pairs-size-0.9-1.1/%s.list.bz2    |
+------------------------------------------------------------------------------------
+Loading genome of example/results/ancGenes/size-0.9-1.1/ancGenes.A1.list.bz2 ... (ancestral genes) OK
 Loading genome of example/results/ancGenes/size-0.9-1.1/ancGenes.A0.list.bz2 ... (ancestral genes) OK
+Loading genome of example/results/ancGenes/size-0.9-1.1/ancGenes.A3.list.bz2 ... (ancestral genes) OK
+Loading genome of example/results/ancGenes/size-0.9-1.1/ancGenes.A2.list.bz2 ... (ancestral genes) OK
+time for loading 0.558533191681
+Loading genome of example/data/genes/genes.M5.list.bz2 ... (Ensembl) OK
 Extraction of pairs of genes from M5  ... OK
 Loading genome of example/data/genes/genes.M4.list.bz2 ... (Ensembl) OK
 Extraction of pairs of genes from M4  ... OK
 Loading genome of example/data/genes/genes.M1.list.bz2 ... (Ensembl) OK
-Loading genome of example/results/ancGenes/size-0.9-1.1/ancGenes.A3.list.bz2 ... (ancestral genes) OK
-Loading genome of example/results/ancGenes/size-0.9-1.1/ancGenes.A1.list.bz2 ... (ancestral genes) OK
 Extraction of pairs of genes from M1  ... OK
 Loading genome of example/data/genes/genes.M3.list.bz2 ... (Ensembl) OK
 Extraction of pairs of genes from M3  ... OK
 Loading genome of example/data/genes/genes.M2.list.bz2 ... (Ensembl) OK
 Extraction of pairs of genes from M2  ... OK
-time for task1 2.00034999847
+time for task1 1.50289607048
 Number of pairs for A1 [('A3', 13035), ('M3', 12336)]
 Intersection between A3 and M3 ... OK
 11521 conserved pairs between descendants A1
@@ -34,9 +36,9 @@ Intersection between M1 and M2 ... OK
 Number of pairs for A2 [('M4', 9806), ('M5', 8177)]
 Intersection between M4 and M5 ... OK
 8059 conserved pairs between descendants A2
-time for task 2 1.47434306145
+time for task 2 1.15676903725
 11850 conserved pairs for A1
 7523 conserved pairs for A0
 14116 conserved pairs for A3
 9275 conserved pairs for A2
-Elapsed time task3: 0.484797954559 4.99209117889
+Elapsed time task3: 0.324243068695 3.5424861908

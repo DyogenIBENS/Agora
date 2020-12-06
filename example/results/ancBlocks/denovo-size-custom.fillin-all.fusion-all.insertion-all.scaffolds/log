@@ -1,0 +1,54 @@
+---------------------------------------------------------------------------------------------------------------------------------------
+| Key                 | Values                                                                                                        |
+---------------------------------------------------------------------------------------------------------------------------------------
+| speciesTree         | example/data/Species.nwk                                                                                      |
+| target              | A0                                                                                                            |
+| minimalWeight       | 1                                                                                                             |
+| anchorSize          | 2                                                                                                             |
+| minChromLength      | 2                                                                                                             |
+| nbThreads           | 1                                                                                                             |
+| extantSpeciesFilter | A0                                                                                                            |
+| IN.ancBlocks        | example/results/ancBlocks/denovo-size-custom.fillin-all.fusion-all.insertion-all/blocks.%s.list.bz2           |
+| LOG.ancGraph        | example/results/ancBlocks/denovo-size-custom.fillin-all.fusion-all.insertion-all.scaffolds/graph.%s.txt.bz2   |
+| OUT.ancBlocks       | example/results/ancBlocks/denovo-size-custom.fillin-all.fusion-all.insertion-all.scaffolds/blocks.%s.list.bz2 |
+| genesFiles          | example/data/genes/genes.%s.list.bz2                                                                          |
+| ancGenesFiles       | example/results/ancGenes/all/ancGenes.%s.list.bz2                                                             |
+---------------------------------------------------------------------------------------------------------------------------------------
+Loading genome of example/results/ancGenes/all/ancGenes.A1.list.bz2 ... (ancestral genes) OK
+Loading genome of example/results/ancGenes/all/ancGenes.A0.list.bz2 ... (ancestral genes) OK
+Loading genome of example/results/ancGenes/all/ancGenes.A3.list.bz2 ... (ancestral genes) OK
+Loading genome of example/results/ancGenes/all/ancGenes.A2.list.bz2 ... (ancestral genes) OK
+Loading genome of example/data/genes/genes.M5.list.bz2 ... (Ensembl) OK
+Loading genome of example/data/genes/genes.M4.list.bz2 ... (Ensembl) OK
+Loading genome of example/data/genes/genes.M1.list.bz2 ... (Ensembl) OK
+Loading genome of example/data/genes/genes.M3.list.bz2 ... (Ensembl) OK
+Loading genome of example/data/genes/genes.M2.list.bz2 ... (Ensembl) OK
+Loading genome of example/results/ancBlocks/denovo-size-custom.fillin-all.fusion-all.insertion-all/blocks.A1.list.bz2 ... (ancestral genome: diags) OK
+Diagonals extraction between A1 and M5 ... 2 [2/4/7] [4/7/12] 32 [5.24/4.31-2337] 214 adjacencies / 519 blocs
+Diagonals extraction between A1 and M4 ... 2 [2/5/13] [10/20/34] 109 [9.82/11.71-1234] 396 adjacencies / 513 blocs
+Diagonals extraction between A1 and M1 ... 2 [2/6/17] [13/29/54] 131 [13.70/17.83-1119] 480 adjacencies / 609 blocs
+Diagonals extraction between A1 and M3 ... 2 [2/4/15] [15/35/65] 153 [13.01/19.51-1139] 485 adjacencies / 616 blocs
+Diagonals extraction between A1 and M2 ... 2 [2/6/16] [12/26/43] 124 [12.40/15.17-1232] 461 adjacencies / 620 blocs
+Integrated blocs of A1 2 [3/11/78] [87/180/278] 531 [55.86/88.96-289] + 1195 singletons
+Loading genome of example/results/ancBlocks/denovo-size-custom.fillin-all.fusion-all.insertion-all/blocks.A0.list.bz2 ... (ancestral genome: diags) OK
+Diagonals extraction between A0 and M5 ... 2 [2/4/7] [4/7/12] 49 [5.32/4.55-2278] 520 adjacencies / 1293 blocs
+Diagonals extraction between A0 and M4 ... 2 [2/5/11] [7/13/24] 87 [8.39/9.12-1418] 1201 adjacencies / 1249 blocs
+Diagonals extraction between A0 and M1 ... 2 [3/5/10] [6/12/20] 100 [7.74/7.86-1742] 1183 adjacencies / 1326 blocs
+Diagonals extraction between A0 and M3 ... 2 [2/4/9] [6/11/19] 67 [7.11/7.19-1775] 1185 adjacencies / 1313 blocs
+Diagonals extraction between A0 and M2 ... 2 [3/5/10] [6/11/18] 80 [7.28/7.07-1835] 1169 adjacencies / 1320 blocs
+Integrated blocs of A0 2 [3/10/24] [18/38/63] 176 [17.98/21.49-789] + 2087 singletons
+Loading genome of example/results/ancBlocks/denovo-size-custom.fillin-all.fusion-all.insertion-all/blocks.A3.list.bz2 ... (ancestral genome: diags) OK
+Diagonals extraction between A3 and M5 ... 2 [2/4/6] [4/7/11] 48 [5.08/4.27-2403] 79 adjacencies / 241 blocs
+Diagonals extraction between A3 and M4 ... 2 [2/5/12] [9/19/31] 75 [9.61/11.04-1247] 142 adjacencies / 238 blocs
+Diagonals extraction between A3 and M1 ... 2 [2/7/27] [29/63/122] 227 [22.25/34.95-747] 231 adjacencies / 331 blocs
+Diagonals extraction between A3 and M3 ... 2 [2/5/14] [12/26/49] 146 [11.42/15.76-1275] 204 adjacencies / 309 blocs
+Diagonals extraction between A3 and M2 ... 2 [2/6/24] [27/52/88] 235 [19.20/28.85-864] 193 adjacencies / 344 blocs
+Integrated blocs of A3 2 [2/8/104] [170/276/454] 661 [80.07/133.22-214] + 985 singletons
+Loading genome of example/results/ancBlocks/denovo-size-custom.fillin-all.fusion-all.insertion-all/blocks.A2.list.bz2 ... (ancestral genome: diags) OK
+Diagonals extraction between A2 and M5 ... 2 [2/4/8] [5/9/17] 54 [6.48/6.26-1946] 109 adjacencies / 746 blocs
+Diagonals extraction between A2 and M4 ... 2 [2/6/16] [14/35/57] 162 [13.38/19.05-920] 669 adjacencies / 716 blocs
+Diagonals extraction between A2 and M1 ... 2 [2/5/10] [7/14/27] 107 [8.39/9.51-1605] 539 adjacencies / 734 blocs
+Diagonals extraction between A2 and M3 ... 2 [2/5/10] [7/14/24] 82 [8.11/9.35-1551] 521 adjacencies / 710 blocs
+Diagonals extraction between A2 and M2 ... 2 [2/5/10] [7/13/23] 87 [7.96/8.47-1676] 539 adjacencies / 735 blocs
+Integrated blocs of A2 2 [3/11/50] [57/109/197] 482 [38.01/61.20-381] + 1088 singletons
+Elapsed time: 4.80317997932

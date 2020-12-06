@@ -1,9 +1,0 @@
--------------------------------------------------------------------------------------
-| Key           | Values                                                            |
--------------------------------------------------------------------------------------
-| phylTree.conf | example/data/Species.nwk                                          |
-| target        | =A3                                                               |
-| IN.ancDiags   | example/results/integrDiags/denovo-size-1.0-1.0/diags.%s.list.bz2 |
-| OUT.ancDiags  | example/results/integrDiags/denovo-size-custom/diags.%s.list.bz2  |
--------------------------------------------------------------------------------------
-Time elapsed: 0.119036912918

@@ -1,18 +1,19 @@
-------------------------------------------------------------------------------------
-| Key            | Values                                                          |
-------------------------------------------------------------------------------------
-| phylTree.conf  | example/data/Species.nwk                                        |
-| target         | A0                                                              |
-| nbThreads      | 1                                                               |
-| IN.ancDiags    | example/results/integrDiags/denovo-all.groups/diags.%s.list.bz2 |
-| ancGenesFiles  | example/results/ancGenes/all/ancGenes.%s.list.bz2               |
-| OUT.ancGenomes | example/results/ancGenomes/standard/ancGenome.%s.list.bz2       |
-------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------
+| Key            | Values                                                            |
+--------------------------------------------------------------------------------------
+| speciesTree    | example/data/Species.nwk                                          |
+| target         | A0                                                                |
+| nbThreads      | 1                                                                 |
+| IN.ancBlocks   | example/results/ancBlocks/denovo-all.scaffolds/blocks.%s.list.bz2 |
+| ancGenesFiles  | example/results/ancGenes/all/ancGenes.%s.list.bz2                 |
+| OUT.ancGenomes | example/results/ancGenomes/standard/ancGenome.%s.list.bz2         |
+--------------------------------------------------------------------------------------
 Loading genome of example/results/ancGenes/all/ancGenes.A1.list.bz2 ... (ancestral genes) OK
-Loading genome of example/results/integrDiags/denovo-all.groups/diags.A1.list.bz2 ... (ancestral genome: diags) OK
+Loading genome of example/results/ancBlocks/denovo-all.scaffolds/blocks.A1.list.bz2 ... (ancestral genome: diags) OK
 Loading genome of example/results/ancGenes/all/ancGenes.A0.list.bz2 ... (ancestral genes) OK
-Loading genome of example/results/integrDiags/denovo-all.groups/diags.A0.list.bz2 ... (ancestral genome: diags) OK
+Loading genome of example/results/ancBlocks/denovo-all.scaffolds/blocks.A0.list.bz2 ... (ancestral genome: diags) OK
 Loading genome of example/results/ancGenes/all/ancGenes.A3.list.bz2 ... (ancestral genes) OK
-Loading genome of example/results/integrDiags/denovo-all.groups/diags.A3.list.bz2 ... (ancestral genome: diags) OK
+Loading genome of example/results/ancBlocks/denovo-all.scaffolds/blocks.A3.list.bz2 ... (ancestral genome: diags) OK
 Loading genome of example/results/ancGenes/all/ancGenes.A2.list.bz2 ... (ancestral genes) OK
-Loading genome of example/results/integrDiags/denovo-all.groups/diags.A2.list.bz2 ... (ancestral genome: diags) OK
+Loading genome of example/results/ancBlocks/denovo-all.scaffolds/blocks.A2.list.bz2 ... (ancestral genome: diags) OK
+Time elapsed: 1.78298306465

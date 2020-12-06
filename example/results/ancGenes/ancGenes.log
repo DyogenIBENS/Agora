@@ -1,8 +1,8 @@
 -------------------------------------------------------------------------
 | Key               | Values                                            |
 -------------------------------------------------------------------------
-| phylTree.conf     | example/data/Species.nwk                          |
-| proteinTree       | example/data/GeneTreeForest.nhx.bz2               |
+| speciesTree       | example/data/Species.nwk                          |
+| geneTrees         | example/data/GeneTreeForest.nhx.bz2               |
 | OUT.ancGenesFiles | example/results/ancGenes/all/ancGenes.%s.list.bz2 |
 | reuseNames        | False                                             |
 -------------------------------------------------------------------------
