@@ -30,7 +30,7 @@ import utils.myTools
 
 # Arguments
 arguments = utils.myTools.checkArgs(
-    [("speciesTree", file), ("target", str), ("pairwiseDiags", str)],
+    [("speciesTree", file), ("target", str), ("pairwise", str)],
     [("minimalWeight", int, 1), ("searchLoops", bool, False),
      ("LOG.ancGraph", str, "denovo_log/%s.log.bz2"),
      ("OUT.ancBlocks", str, "anc/diags.%s.list.bz2"),
@@ -43,7 +43,7 @@ arguments = utils.myTools.checkArgs(
 
 def do(anc):
 
-    diags = utils.myGraph.loadConservedPairsAnc(arguments["pairwiseDiags"] % phylTree.fileName[anc])
+    diags = utils.myGraph.loadConservedPairsAnc(arguments["pairwise"] % phylTree.fileName[anc])
 
     g = utils.myGenomes.Genome(arguments["ancGenesFiles"] % phylTree.fileName[anc], withDict=False).lstGenes
     singletons = set(xrange(len(g[None]))) if None in g else set(g)

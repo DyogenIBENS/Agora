@@ -25,7 +25,7 @@ import utils.myTools
 
 # Arguments
 arguments = utils.myTools.checkArgs(
-    [("speciesTree", file), ("target", str), ("pairwiseDiags", str)],
+    [("speciesTree", file), ("target", str), ("pairwise", str)],
     [("minimalWeight", int, 1), ("searchLoops", bool, True), ("onlySingletons", bool, False),
      ("nbThreads", int, 0),
      ("IN.ancBlocks", str, ""), ("OUT.ancBlocks", str, ""), ("LOG.ancGraph", str, "extend_log/%s.log.bz2")],
@@ -44,7 +44,7 @@ def do(anc):
         for (b, w) in integr:
             graph.addWeightedDiag(b, [x + 10000 for x in w])
 
-    diags = utils.myGraph.loadConservedPairsAnc(arguments["pairwiseDiags"] % phylTree.fileName[anc])
+    diags = utils.myGraph.loadConservedPairsAnc(arguments["pairwise"] % phylTree.fileName[anc])
     for x in diags:
         if not arguments["onlySingletons"] or ((x[0][0] in singletons) and (x[1][0] in singletons)):
             graph.addLink(*x)

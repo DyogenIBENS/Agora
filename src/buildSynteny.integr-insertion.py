@@ -27,7 +27,7 @@ import utils.myTools
 
 # Arguments
 arguments = utils.myTools.checkArgs(
-    [("speciesTree", file), ("target", str), ("IN.pairwiseDiags", str)],
+    [("speciesTree", file), ("target", str), ("pairwise", str)],
     [("IN.ancBlocks", str, ""), ("OUT.ancBlocks", str, ""), ("REF.ancBlocks", str, ""), ("LOG.ancGraph", str, "halfinsert_log/%s.log.bz2"),
      ("nbThreads", int, 0),
      ("selectionFunction", str, "newscore/float(oldscore) if oldscore else newscore")],
@@ -218,7 +218,7 @@ targets = phylTree.getTargetsAnc(arguments["target"])
 
 
 def loadPairwise(anc):
-    lstPairwise = utils.myGraph.loadConservedPairsAnc(arguments["IN.pairwiseDiags"] % phylTree.fileName[anc])
+    lstPairwise = utils.myGraph.loadConservedPairsAnc(arguments["pairwise"] % phylTree.fileName[anc])
     pairwiseDiags = collections.defaultdict(dict)
     for d in lstPairwise:
         pairwiseDiags[d[0]][d[1]] = d[2]
