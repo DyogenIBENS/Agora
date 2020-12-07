@@ -14,8 +14,8 @@ DYOGEN Laboratory, Institut de Biologie de l'École Normale Supérieure
   * [What AGORA does and does not do](#what-agora-does-and-does-not-do)
 * [Input file formats](#input-file-formats)
 * [Running AGORA](#running-agora)
-  * [AGORA with no selection of robust families](#agora-with-no-selection-of-robust-families)
-  * [AGORA with selection of robust families](#agora-with-selection-of-robust-families)
+  * [AGORA with no selection of constrained families](#agora-with-no-selection-of-constrained-families)
+  * [AGORA with selection of constrained families](#agora-with-selection-of-constrained-families)
   * [Advanced AGORA usage](#advanced-agora-usage)
 * [Output file formats](#output-file-formats)
 
@@ -62,13 +62,13 @@ principle this should work fine if the genomes are perfectly sequenced
 and annotated, but they rarely are. Also, gene duplications are
 difficult to resolve accurately in gene phylogenies, and AGORA is
 sensitive to errors in gene trees. A second, more complex version first
-identifies "robust" gene familes, on the basis of a user-defined
+identifies "constrained" gene familes, on the basis of a user-defined
 criterion. Typically this can be a requirement that there are as many
 genes on a tree as there are species, thus limiting the chances that
 duplications have occurred. AGORA first builds a temporary ancestral
-genome with these genes (ignoring all other families) as a robust
+genome with these genes (ignoring all other families) as a constrained
 backbone. Then, it use remaining gene families to fill in the space
-between robust genes, but without breaking a chain of robust genes.
+between constrained genes, but without breaking a chain of constrained genes.
 
 In this HowTo, all the paths are relative to the root of the repository.
 The individual script commands usually complete within seconds on the
@@ -160,7 +160,7 @@ genes files have to be named:
 * `prefix.Mus.musculus.suffix`
 * `prefix.Canis.familiaris.suffix`
 
-In [`example/data`](../example/data), the five species named in the [species-tree](../example/data/Species.nwk)
+In [`example/data`](../example/data), the five species named in the [species tree](../example/data/Species.nwk)
 are `M1`, `M2`, `M3`, `M4`, and `M5`, and the genes files are named [`genes.M1.list.bz2`](../example/data/genes/genes.M1.list.bz2), etc.
 
 ## Running AGORA
@@ -174,8 +174,8 @@ explained below, and the output is a set of CARs.
 AGORA comes with two presets (predefined workflows) and a mechanism
 to _roll your own_ workflow:
 
-  * [AGORA with no selection of robust families](#agora-with-no-selection-of-robust-families)
-  * [AGORA with selection of robust families](#agora-with-selection-of-robust-families)
+  * [AGORA with no selection of constrained families](#agora-with-no-selection-of-constrained-families)
+  * [AGORA with selection of constrained families](#agora-with-selection-of-constrained-families)
   * [Advanced AGORA usage](#advanced-agora-usage)
 
 
@@ -197,13 +197,13 @@ Compression is also supported on the standard output by adding `+gz`, `+bz2`,
 `+lzma`, or `+xz` on the command-line.
 
 
-### AGORA with no selection of robust families
+### AGORA with no selection of constrained families
 
 This is the simplest and quickest reconstruction. AGORA compares all extant
 genomes pairwise to extract conserved adjacencies, generates the ancestral
 adjacency graphs and linearises them to produce CARs.
 
-> AGORA workflow with no selection of robust families
+> AGORA workflow with no selection of constrained families
 
 ![](agora-basic.jpg)
 
@@ -370,25 +370,25 @@ src/convert.ancGenomes.blocks-to-genes.py \
 More information about these files in [Output file formats](#output-file-formats)
 below.
 
-### AGORA with selection of robust families
+### AGORA with selection of constrained families
 
 This approach builds ancestral adjacencies considering a subset of
-the genes. The idea here is to build "robust" ancestral adjacency
+the genes. The idea here is to build "constrained" ancestral adjacency
 scaffolds, and to insert within these adjacencies the remaining
 ancestral genes.
 
-> AGORA workflow with selection of robust families
+> AGORA workflow with selection of constrained families
 
 ![](agora-vertebrates.jpg)
 
 From the complete list of ancestral genes, AGORA identifies a subset
-of robust genes according to a user-defined criterion.
+of constrained genes according to a user-defined criterion.
 It compares all extant genomes pairwise (considering all genes and
-robust genes separately), build the adjacency graphs on the comparisons
-of robust genes and
-linearise them to obtain robust contigs. It then _fills these in_
-with non-robust genes, builds contigs of non-robust
-genes (_non-robust families fusion_) and inserts these in the filled-in robust
+constrained genes separately), build the adjacency graphs on the comparisons
+of constrained genes and
+linearise them to obtain constrained contigs. It then _fills these in_
+with non-constrained genes, builds contigs of non-constrained
+genes (_non-constrained families fusion_) and inserts these in the filled-in constrained
 contigs (_single side junction_). Finally it assembles the resulting
 contigs (scaffolding) into ancestral genomes.
 
@@ -427,14 +427,14 @@ src/agora-vertebrates.py \
 
 #### Step by step
 
-##### Selection of robust genes
+##### Selection of constrained genes
 
 This script filters the complete set of ancestral genes and selects the
 ones that match the required number of extant genes (relative to the number
 of extant species.
 
 &#9888; **Warning**: this assumes you have already extracted the ancestral
-genes from the gene trees (see running AGORA with no selection of robust families).
+genes from the gene trees (see running AGORA with no selection of constrained families).
 
 ```bash
 src/ALL.filterGeneFamilies-size.py \
@@ -450,7 +450,7 @@ src/ALL.filterGeneFamilies-size.py \
 ##### Pairwise comparison
 
 This step is run once for all ancestral genes, and once for the set of
-robust families.
+constrained families.
 
 For all ancestral genes:
 
@@ -465,7 +465,7 @@ src/buildSynteny.pairwise-conservedPairs.py \
   2> example/results/pairwise/pairs-all/log
 ```
 
-For the robust gene families:
+For the constrained gene families:
 
 ```bash
 mkdir -p example/results/pairwise/pairs-size-1.0-1.0
@@ -480,7 +480,7 @@ src/buildSynteny.pairwise-conservedPairs.py \
 
 ##### Graph linearisation
 
-This step integrates all the pairwise comparisons of robust genes
+This step integrates all the pairwise comparisons of constrained genes
 identified above for each ancestor and combines them into adjacency graphs,
 from which a first set of CARs are derived.
 
@@ -496,9 +496,9 @@ src/buildSynteny.integr-denovo.py \
   2> example/results/ancBlocks/denovo-size-1.0-1.0/log
 ```
 
-##### Fill-in
+##### "Fill-in" integration
 
-This step inserts non-robust genes in each interval of the ancestral contigs,
+This step inserts non-constrained genes in each interval of the ancestral contigs,
 following paths in the complete ancestral adjacency graph.
 
 ```bash
@@ -513,10 +513,10 @@ src/buildSynteny.integr-fillin.py \
   2> example/results/ancBlocks/denovo-size-1.0-1.0.refine-all/log
 ```
 
-##### Non-robust families fusion
+##### "Fusion" integration
 
 This step takes all the remaining singletons (`+onlySingletons` option), which
-are mostly non-robust genes, and tries to assemble them into contigs.
+are mostly non-constrained genes, and tries to assemble them into contigs.
 
 ```bash
 mkdir -p example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all
@@ -531,9 +531,9 @@ src/buildSynteny.integr-fusion.py \
   2> example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all/log
 ```
 
-##### Single-side junction
+##### "Insertion" integration
 
-This step inserts the contigs of non-robust families created above and inserts them in the CARs.
+This step inserts the contigs of non-constrained families created above and inserts them in the CARs.
 
 ```bash
 mkdir -p example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all
@@ -550,7 +550,7 @@ src/buildSynteny.integr-insertion.py \
 
 ##### Scaffolding
 
-Like in non-robust mode, this step does pairwise comparisons and a graph linearisation
+Like in non-constrained mode, this step does pairwise comparisons and a graph linearisation
 of the CARs themselves, which allows finding higher-level adjacencies.
 
 ```bash
@@ -571,14 +571,14 @@ src/buildSynteny.integr-scaffolds.py \
 This step converts the _blocks_ files to _ancGenomes_:
 
 ```bash
-mkdir -p example/results/ancGenomes/robust
+mkdir -p example/results/ancGenomes/constrained
 src/convert.ancGenomes.blocks-to-genes.py \
   example/data/Species.nwk \
   A0 \
   -IN.ancBlocks=example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all.groups/blocks.%s.list.bz2 \
-  -OUT.ancGenomes=example/results/ancGenomes/robust/ancGenome.%s.list.bz2 \
+  -OUT.ancGenomes=example/results/ancGenomes/constrained/ancGenome.%s.list.bz2 \
   -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
-  2> example/results/ancGenomes/robust/log
+  2> example/results/ancGenomes/constrained/log
 ```
 
 More information about these files in [Output file formats](#output-file-formats)
@@ -598,7 +598,7 @@ of the workflows. The `agora-basic.py` and `agora-vertebrates.py` scripts are eq
 configuration files.
 
 For instance, this will run reconstructions directly, without selecting
-robust families:
+constrained families:
 
 ```bash
 src/agora.py conf/agora-basic.ini -workingDir=output_dir
@@ -606,16 +606,16 @@ src/agora.py conf/agora-basic.ini -workingDir=output_dir
 
 The script also accepts the `-nbThreads=XX` parameter.
 
-#### AGORA with different selections of robust families
+#### AGORA with different selections of constrained families
 
-The selection of robust families can be further tuned to use multiple sets
-of robust genes. Along the _1.0-1.0_ robust families used above,
+The selection of constrained families can be further tuned to use multiple sets
+of constrained genes. Along the _1.0-1.0_ constrained families used above,
 we can define other, more relaxed, sets, like _0.9-1.1_, which tolerates
 a 10% deviation between the number of extant genes and extant species,
 and so forth.
 
 The following two configuration files showcase different ways of running AGORA
-with multiple sets of robust families, and demonstrate the power of using a
+with multiple sets of constrained families, and demonstrate the power of using a
 configuration file.
 
 ##### Different parameters for each ancestor
@@ -632,7 +632,7 @@ src/agora.py conf/agora-multirobust.ini -workingDir=output_dir
 
 ##### Indicative steps
 
-The most efficient way of extracting multiple sets of robust families
+The most efficient way of extracting multiple sets of constrained families
 is to do all at once, for instance:
 
 ```bash
@@ -684,12 +684,12 @@ src/buildSynteny.integr-copy.py \
   2> example/results/ancBlocks/denovo-size-custom/log
 ```
 
-##### Iterative reconstructions with less and less robust families
+##### Iterative reconstructions with less and less constrained families
 
 The [`agora-iterativerobust.ini`](../conf/agora-iterativerobust.ini) configuration
 file use the same multiple filters (_1.0-1.0_, _0.9-1.1_, _0.77-1.33_) but on
-**every** ancestor. Compared to the [`agora-vertebrates.ini`](../conf/agora-vertebrates.ini) workflow, it first extends the _1.0-1.0_ reconstructions with the "less robust"
-_0.9-1.1_ families only, then with the "even less robust" _0.77-1.33_ families,
+**every** ancestor. Compared to the [`agora-vertebrates.ini`](../conf/agora-vertebrates.ini) workflow, it first extends the _1.0-1.0_ reconstructions with the "less constrained"
+_0.9-1.1_ families only, then with the "even less constrained" _0.77-1.33_ families,
 and finally with the complete set of families.
 
 Test it `agora.py`:
