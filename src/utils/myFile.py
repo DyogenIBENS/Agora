@@ -151,8 +151,10 @@ def openFile(nom, mode):
                 os.makedirs(os.path.dirname(nom))
             except OSError:
                 pass
+        if ("t" not in mode) and ("b" not in mode):
+            mode = mode + "t"
         i = nom.find(".zip/")
-        if (mode == "r") and (i >= 0):
+        if ("r" in mode) and (i >= 0):
             import zipfile
             import io
             f = zipfile.ZipFile(nom[:i+4], "r")
@@ -160,15 +162,15 @@ def openFile(nom, mode):
         # Compression bzip2
         elif nom.endswith(".bz2"):
             import bz2
-            f = bz2.open(nom, mode+"t")
+            f = bz2.open(nom, mode)
         # Compression gzip
         elif nom.endswith(".gz"):
             import gzip
-            f = gzip.open(nom, mode+"t")
+            f = gzip.open(nom, mode)
         # Compression lzma
         elif nom.endswith(".lzma") or nom.endswith(".xz"):
             import lzma
-            f = lzma.open(nom, mode+"t")
+            f = lzma.open(nom, mode)
         else:
             f = open(nom, mode)
     return f
