@@ -27,7 +27,7 @@ for anc in targets:
 		fo = utils.myFile.openFile(arguments["OUT.ancGenesFiles"] % phylTree.fileName[anc], "w")
 		for l in fi:
 			if int(l.split("\t")[1]) >= arguments["minLength"]:
-				print(l, end=' ', file=fo)
+				fo.write(l)
 			else:
 				print("%s\t0\t\t\t" % anc, file=fo)
 		fi.close()

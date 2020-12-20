@@ -38,7 +38,7 @@ for anc in targets:
 		f = utils.myFile.openFile(arguments["OUT.ancGenesFiles"] % phylTree.fileName[anc], "w")
 		for (s,l) in zip(ls, ll):
 			if s >= cutoff:
-				print(l, end=' ', file=f)
+				f.write(l)
 			else:
 				print("%s\t0\t\t\t" % anc, file=f)
 		f.close()

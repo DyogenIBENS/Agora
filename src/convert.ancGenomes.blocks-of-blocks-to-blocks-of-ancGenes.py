@@ -78,7 +78,7 @@ def do(anc):
             lengths.append(n)
         else:
             ns += 1
-        print(l, end=' ', file=fo)
+        fo.write(l)
 
     # S'assure que tous les blocs ont ete employes
     assert len(ref) == 0

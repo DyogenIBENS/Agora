@@ -50,6 +50,6 @@ for anc in targets:
 
     fo = utils.myFile.openFile(arguments["OUT.ancBlocks"] % phylTree.fileName[anc], "w")
     for l in lines[bestBlocks]:
-        print(l, end=' ', file=fo)
+        fo.write(l)
     fo.close()
 

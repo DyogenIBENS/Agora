@@ -183,10 +183,10 @@ class TaskList():
 
         # This is where the .bz2 compression would happen
         for l in p.stdout:
-            print(l, end=' ', file=stdout)
+            stdout.write(l)
         r = p.wait()
         for l in p.stdout:
-            print(l, end=' ', file=stdout)
+            stdout.write(l)
         stdout.close()
         stderr.close()
         self.printCPUUsageStats("task %d report:" % i, start)

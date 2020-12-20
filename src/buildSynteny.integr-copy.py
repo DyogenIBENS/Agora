@@ -32,7 +32,7 @@ for anc in targets:
     fi = utils.myFile.openFile(arguments["IN.ancBlocks"] % phylTree.fileName[anc], "r")
     fo = utils.myFile.openFile(arguments["OUT.ancBlocks"] % phylTree.fileName[anc], "w")
     for l in fi:
-        print(l, end=' ', file=fo)
+        fo.write(l)
     fo.close()
     fi.close()
 
