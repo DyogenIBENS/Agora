@@ -118,7 +118,7 @@ for esp in listSpecies:
 
 # Now that all the genomes have been loaded, let's empty the cache and restore intern
 name_hash = {}
-utils.myGenomes.intern = intern
+utils.myGenomes.intern = sys.intern
 
 print("time for task1", time.time() - start, file=sys.stderr)
 start = time.time()
