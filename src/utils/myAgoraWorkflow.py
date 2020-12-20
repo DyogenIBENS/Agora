@@ -167,7 +167,7 @@ class TaskList():
     def goLaunch(self, i, args, out, log):
         start = time.time()
         stdout = myFile.openFile(out or os.devnull, "w")
-        stderr = myFile.openFile(log or os.devnull, "w")
+        stderr = myFile.openFile(log, "wb") if log else subprocess.DEVNULL
         # stderr must have a fileno, so must be a regular file (not a .bz2 etc)
         # stdout can be anything, incl. a .bz2
         try:
@@ -188,7 +188,8 @@ class TaskList():
         for l in p.stdout:
             stdout.write(l)
         stdout.close()
-        stderr.close()
+        if log:
+            stderr.close()
         self.printCPUUsageStats("task %d report:" % i, start)
         time.sleep(5)
         self.queue.put((i, r))
