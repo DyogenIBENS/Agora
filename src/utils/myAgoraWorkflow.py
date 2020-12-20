@@ -166,7 +166,7 @@ class TaskList():
     # Launch program function
     def goLaunch(self, i, args, out, log):
         start = time.time()
-        stdout = myFile.openFile(out or os.devnull, "w")
+        stdout = myFile.openFile(out or os.devnull, "wb")
         stderr = myFile.openFile(log, "wb") if log else subprocess.DEVNULL
         # stderr must have a fileno, so must be a regular file (not a .bz2 etc)
         # stdout can be anything, incl. a .bz2
