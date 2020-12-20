@@ -19,4 +19,4 @@ from utils.myTools import file
 arguments = myTools.checkArgs( [("tree",file)], [], __doc__)
 
 for tree in myProteinTree.loadTree(arguments["tree"]):
-    myProteinTree.printTree(sys.stdout, tree.data, tree.info, tree.root)
+    myProteinTree.ProteinTree(tree.data, tree.info, tree.root).printTree(sys.stdout)
