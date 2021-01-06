@@ -234,7 +234,7 @@ class AgoraWorkflow:
         'pairwiseOutput': 'pairwise/pairs-%(filt)s/%(name)s.list.bz2',
         'pairwiseLog': 'pairwise/pairs-%(filt)s/log',
         'ancBlocks': 'ancBlocks/%(method)s/blocks.%(name)s.list.bz2',
-        'ancGraphs': 'ancBlocks/%(method)s/graph.%(name)s.log.bz2',
+        'ancGraphs': 'ancBlocks/%(method)s/graph.%(name)s.txt.bz2',
         'ancLog': 'ancBlocks/%(method)s/log',
         'ancGenomesOutput': 'ancGenomes/%(method)s/ancGenome.%(name)s.list.bz2',
         'ancGenomesLog': 'ancGenomes/%(method)s/log',
