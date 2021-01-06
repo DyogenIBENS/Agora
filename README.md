@@ -29,8 +29,8 @@ Copyright for this code is held jointly by the Dyogen (DYnamic and Organisation 
 of the Institut de Biologie de l'Ecole Normale Supérieure (IBENS) 46 rue d'Ulm Paris, the European Bioinformatics Institute outstation of the European Molecular Biology Laboratory,
 and the individual authors.
 
-- Copyright © 2006-2020 IBENS/Dyogen : Alexandra LOUIS, Thi Thuy Nga NGUYEN, Matthieu MUFFATO and Hugues ROEST CROLLIUS
-- Copyright © 2020 EMBL-European Bioinformatics Institute
+- Copyright © 2006-2021 IBENS/Dyogen : Alexandra LOUIS, Thi Thuy Nga NGUYEN, Matthieu MUFFATO and Hugues ROEST CROLLIUS
+- Copyright © 2021 EMBL-European Bioinformatics Institute
 
 ## Contact
 
