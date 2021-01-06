@@ -5,6 +5,7 @@ set -e
 # immediately
 red='\e[0;31m'
 green='\e[0;32m'
+blue='\e[0;36m'
 NC='\e[0m' # No Color
 
 print_and_run_commands () {
@@ -19,9 +20,9 @@ print_and_run_commands () {
 print_title () {
     t=$1
     l=$(eval "printf '%0.s=' {1..${#t}}")
-    printf "${red}${l}${NC}\n"
-    printf "${red}${t}${NC}\n"
-    printf "${red}${l}${NC}\n"
+    printf "${blue}${l}${NC}\n"
+    printf "${blue}${t}${NC}\n"
+    printf "${blue}${l}${NC}\n"
 }
 
 error () {
