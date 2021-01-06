@@ -6,7 +6,7 @@
 | nbThreads      | 1                                                                                                              |
 | IN.ancBlocks   | example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all.scaffolds/blocks.%s.list.bz2 |
 | ancGenesFiles  | example/results/ancGenes/all/ancGenes.%s.list.bz2                                                              |
-| OUT.ancGenomes | example/results/ancGenomes/robust/ancGenome.%s.list.bz2                                                        |
+| OUT.ancGenomes | example/results/ancGenomes/vertebrates-workflow/ancGenome.%s.list.bz2                                          |
 -----------------------------------------------------------------------------------------------------------------------------------
 Loading genome of example/results/ancGenes/all/ancGenes.A1.list.bz2 ... (ancestral genes) OK
 Loading genome of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all.scaffolds/blocks.A1.list.bz2 ... (ancestral genome: diags) OK
@@ -16,4 +16,4 @@ Loading genome of example/results/ancGenes/all/ancGenes.A3.list.bz2 ... (ancestr
 Loading genome of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all.scaffolds/blocks.A3.list.bz2 ... (ancestral genome: diags) OK
 Loading genome of example/results/ancGenes/all/ancGenes.A2.list.bz2 ... (ancestral genes) OK
 Loading genome of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all.scaffolds/blocks.A2.list.bz2 ... (ancestral genome: diags) OK
-Time elapsed: 1.745210886
+Time elapsed: 1.7725379467

@@ -71,7 +71,7 @@ agoraCommandLines=(
 
 print_and_run_commands "${agoraCommandLines[@]}"
 
-NbAncGenomes=`ls tmp/ancGenomes/robust/ancGenome.* | wc -l`
+NbAncGenomes=`ls tmp/ancGenomes/vertebrates-workflow/ancGenome.* | wc -l`
 
 if [ ${NbAncGenomes} != 4 ]
     then
@@ -83,7 +83,7 @@ verifCommandLines=(
 for i in $(seq 0 3)
 do
     ANCGENOME_FILENAME="ancGenome.A${i}.list.bz2"
-    verifCommandLines+=("cmp 'tmp/ancGenomes/robust/$ANCGENOME_FILENAME' 'example/results/ancGenomes/robust/$ANCGENOME_FILENAME'")
+    verifCommandLines+=("cmp 'tmp/ancGenomes/vertebrates-workflow/$ANCGENOME_FILENAME' 'example/results/ancGenomes/vertebrates-workflow/$ANCGENOME_FILENAME'")
 done
 
 print_title 'output verification'
@@ -91,6 +91,6 @@ print_title 'output verification'
 print_and_run_commands "${verifCommandLines[@]}"
 
 echo
-printf "${green} The ancestral genomes are available in tmp/ancGenomes/robust/${NC}\n"
+printf "${green} The ancestral genomes are available in tmp/ancGenomes/vertebrates-workflow/${NC}\n"
 printf "${green} Everything seems OK! Enjoy AGORA${NC}\n"
 
