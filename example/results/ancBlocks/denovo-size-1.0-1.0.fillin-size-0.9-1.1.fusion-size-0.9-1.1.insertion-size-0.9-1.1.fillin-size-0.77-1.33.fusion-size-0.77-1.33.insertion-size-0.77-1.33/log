@@ -1,0 +1,26 @@
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Key               | Values                                                                                                                                                                |
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| speciesTree       | example/data/Species.nwk                                                                                                                                              |
+| target            | A0                                                                                                                                                                    |
+| pairwise          | example/results/pairwise/pairs-size-0.77-1.33/%s.list.bz2                                                                                                             |
+| IN.ancBlocks      | example/results/ancBlocks/denovo-size-1.0-1.0.fillin-size-0.9-1.1.fusion-size-0.9-1.1.insertion-size-0.9-1.1.fillin-size-0.77-1.33.fusion-size-0.77-1.33/blocks.%s.list.bz2 |
+| OUT.ancBlocks     | example/results/ancBlocks/denovo-size-1.0-1.0.fillin-size-0.9-1.1.fusion-size-0.9-1.1.insertion-size-0.9-1.1.fillin-size-0.77-1.33.fusion-size-0.77-1.33.insertion-size-0.77-1.33/blocks.%s.list.bz2 |
+| REF.ancBlocks     | example/results/ancBlocks/denovo-size-1.0-1.0.fillin-size-0.9-1.1.fusion-size-0.9-1.1.insertion-size-0.9-1.1.fillin-size-0.77-1.33/blocks.%s.list.bz2                 |
+| LOG.ancGraph      | example/results/ancBlocks/denovo-size-1.0-1.0.fillin-size-0.9-1.1.fusion-size-0.9-1.1.insertion-size-0.9-1.1.fillin-size-0.77-1.33.fusion-size-0.77-1.33.insertion-size-0.77-1.33/graph.%s.txt.bz2 |
+| nbThreads         | 1                                                                                                                                                                     |
+| selectionFunction | newscore/float(oldscore) if oldscore else newscore                                                                                                                    |
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-size-0.9-1.1.fusion-size-0.9-1.1.insertion-size-0.9-1.1.fillin-size-0.77-1.33.fusion-size-0.77-1.33/blocks.A1.list.bz2 ... 2 [5/14/35] [27/56/91] 250 [26.24/32.32-519] + 3720 singletons OK
+Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-size-0.9-1.1.fusion-size-0.9-1.1.insertion-size-0.9-1.1.fillin-size-0.77-1.33/blocks.A1.list.bz2 ... 2 [6/16/39] [30/61/95] 250 [28.75/33.95-446] + 4516 singletons OK
+2 [6/16/41] [32/59/94] 252 [28.95/33.85-474] + 3619 singletons
+Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-size-0.9-1.1.fusion-size-0.9-1.1.insertion-size-0.9-1.1.fillin-size-0.77-1.33.fusion-size-0.77-1.33/blocks.A0.list.bz2 ... 2 [3/6/16] [13/27/48] 164 [13.01/16.74-904] + 4511 singletons OK
+Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-size-0.9-1.1.fusion-size-0.9-1.1.insertion-size-0.9-1.1.fillin-size-0.77-1.33/blocks.A0.list.bz2 ... 2 [5/11/25] [18/33/54] 164 [18.52/19.64-525] + 6549 singletons OK
+2 [4/9/21] [15/32/55] 169 [16.37/19.10-762] + 3801 singletons
+Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-size-0.9-1.1.fusion-size-0.9-1.1.insertion-size-0.9-1.1.fillin-size-0.77-1.33.fusion-size-0.77-1.33/blocks.A3.list.bz2 ... 2 [8/33/80] [70/138/247] 529 [64.17/87.77-237] + 2910 singletons OK
+Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-size-0.9-1.1.fusion-size-0.9-1.1.insertion-size-0.9-1.1.fillin-size-0.77-1.33/blocks.A3.list.bz2 ... 2 [10/38/91] [77/140/247] 529 [69.65/90.60-214] + 3213 singletons OK
+2 [9/38/91] [74/140/253] 529 [68.68/90.06-222] + 2872 singletons
+Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-size-0.9-1.1.fusion-size-0.9-1.1.insertion-size-0.9-1.1.fillin-size-0.77-1.33.fusion-size-0.77-1.33/blocks.A2.list.bz2 ... 2 [3/7/21] [17/40/67] 168 [16.88/22.06-723] + 3368 singletons OK
+Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-size-0.9-1.1.fusion-size-0.9-1.1.insertion-size-0.9-1.1.fillin-size-0.77-1.33/blocks.A2.list.bz2 ... 2 [6/13/31] [21/44/71] 168 [22.63/24.59-489] + 4502 singletons OK
+2 [5/10/25] [19/44/72] 181 [20.67/24.70-631] + 2529 singletons
+Elapsed time: 0.853837013245
