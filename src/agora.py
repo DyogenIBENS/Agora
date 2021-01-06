@@ -17,7 +17,7 @@ import utils.myPhylTree
 import utils.myTools
 
 __doc__ = """
-    Run all the AGORA programs thanks to configuration file
+    Run all the AGORA programs according to configuration file
 
     Usage:
           src/agora.py conf/agora-basic.ini

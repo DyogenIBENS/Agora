@@ -15,7 +15,7 @@ import utils.myPhylTree
 import utils.myTools
 
 __doc__ = """
-    Run all the AGORA programs with the v2 preset (with robust families)
+    Run the Vertebrates workflow of AGORA (i.e. with constrained families)
 
     Usage:
           src/agora-vertebrates.py example/data/Species.nwk example/data/GeneTreeForest.nhx.bz2 example/data/genes/genes.%s.list.bz2

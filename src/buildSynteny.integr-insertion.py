@@ -7,7 +7,7 @@
 # This is free software; you may copy, modify and/or distribute this work under the terms of the GNU General Public License, version 3 or later and the CeCiLL v2 license in France
 
 __doc__ = """
-	Insere les blocs de genes non robustes a l'interieur et aux extremites
+	Insere les blocs de genes non contraints a l'interieur et aux extremites
 """
 
 import collections

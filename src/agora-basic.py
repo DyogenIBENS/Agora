@@ -15,7 +15,7 @@ import utils.myPhylTree
 import utils.myTools
 
 __doc__ = """
-    Run all the AGORA programs with the v1 preset (all families at once)
+    Run the default AGORA workflow (all families at once)
 
     Usage:
           src/agora-basic.py example/data/Species.nwk example/data/GeneTreeForest.nhx.bz2 example/data/genes/genes.%s.list.bz2

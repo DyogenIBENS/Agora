@@ -7,7 +7,7 @@
 # This is free software; you may copy, modify and/or distribute this work under the terms of the GNU General Public License, version 3 or later and the CeCiLL v2 license in France
 
 __doc__ = """
-	Just a script to copy the ancestral blocks of robusts genes (skeleton) in the good directory to continue the procedure
+	Just a script to copy ancestral blocks to another directory to continue the procedure
 """
 
 import time

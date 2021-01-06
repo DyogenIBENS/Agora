@@ -280,7 +280,7 @@ src/ALL.extractGeneFamilies.py \
 
 Be careful to provide the correct path to write the _ancGenes_ files
 (`ancGenes/all/ancGenes.%s.list.bz2`), it will be important if you use
-AGORA on _robust_ family in a second step (see article). The `%s` is
+AGORA on constrained families in a second step (see article). The `%s` is
 automatically replaced by the extant and ancestral species name, as
 indicated in the species tree.
 
@@ -620,14 +620,14 @@ configuration file.
 
 ##### Different parameters for each ancestor
 
-The [`agora-multirobust.ini`](../conf/agora-multirobust.ini) configuration
+The [`agora-multi-constrained.ini`](../conf/agora-multi-constrained.ini) configuration
 file tells AGORA to use multiple filters on different
 ancestors, and how to conbine the results.
 
 Run the entire workflow with `agora.py`:
 
 ```bash
-src/agora.py conf/agora-multirobust.ini -workingDir=output_dir
+src/agora.py conf/agora-multi-constrained.ini -workingDir=output_dir
 ```
 
 ##### Indicative steps
@@ -686,7 +686,7 @@ src/buildSynteny.integr-copy.py \
 
 ##### Iterative reconstructions with less and less constrained families
 
-The [`agora-iterativerobust.ini`](../conf/agora-iterativerobust.ini) configuration
+The [`agora-iterative-constrained.ini`](../conf/agora-iterative-constrained.ini) configuration
 file use the same multiple filters (_1.0-1.0_, _0.9-1.1_, _0.77-1.33_) but on
 **every** ancestor. Compared to the [`agora-vertebrates.ini`](../conf/agora-vertebrates.ini) workflow, it first extends the _1.0-1.0_ reconstructions with the "less constrained"
 _0.9-1.1_ families only, then with the "even less constrained" _0.77-1.33_ families,
@@ -695,7 +695,7 @@ and finally with the complete set of families.
 Test it `agora.py`:
 
 ```bash
-src/agora.py conf/agora-iterativerobust.ini -workingDir=output_dir
+src/agora.py conf/agora-iterative-constrained.ini -workingDir=output_dir
 ```
 
 ## Output file formats

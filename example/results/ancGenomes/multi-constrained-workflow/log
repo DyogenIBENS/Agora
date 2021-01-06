@@ -6,7 +6,7 @@
 | nbThreads      | 1                                                                                                             |
 | IN.ancBlocks   | example/results/ancBlocks/denovo-size-custom.fillin-all.fusion-all.insertion-all.scaffolds/blocks.%s.list.bz2 |
 | ancGenesFiles  | example/results/ancGenes/all/ancGenes.%s.list.bz2                                                             |
-| OUT.ancGenomes | example/results/ancGenomes/multi-robust-workflow/ancGenome.%s.list.bz2                                        |
+| OUT.ancGenomes | example/results/ancGenomes/multi-constrained-workflow/ancGenome.%s.list.bz2                                   |
 ----------------------------------------------------------------------------------------------------------------------------------
 Loading genome of example/results/ancGenes/all/ancGenes.A1.list.bz2 ... (ancestral genes) OK
 Loading genome of example/results/ancBlocks/denovo-size-custom.fillin-all.fusion-all.insertion-all.scaffolds/blocks.A1.list.bz2 ... (ancestral genome: diags) OK
