@@ -233,9 +233,9 @@ class AgoraWorkflow:
         'geneTreesWithAncNames': 'GeneTreeForest.withAncGenes.nhx.bz2',
         'pairwiseOutput': 'pairwise/pairs-%(filt)s/%(name)s.list.bz2',
         'pairwiseLog': 'pairwise/pairs-%(filt)s/log',
-        'ancBlocks': 'integrDiags/%(method)s/blocks.%(name)s.list.bz2',
-        'ancGraphs': 'integrDiags/%(method)s/graph.%(name)s.log.bz2',
-        'ancLog': 'integrDiags/%(method)s/log',
+        'ancBlocks': 'ancBlocks/%(method)s/blocks.%(name)s.list.bz2',
+        'ancGraphs': 'ancBlocks/%(method)s/graph.%(name)s.log.bz2',
+        'ancLog': 'ancBlocks/%(method)s/log',
         'ancGenomesOutput': 'ancGenomes/%(method)s/ancGenome.%(name)s.list.bz2',
         'ancGenomesLog': 'ancGenomes/%(method)s/log',
     }
@@ -393,7 +393,7 @@ class AgoraWorkflow:
         # Most of the methods are multithreaded
         multithreaded = methodName not in ["copy"]
 
-        # The publish method doesn't generate integrDiags and can't be used as an input method
+        # The publish method doesn't generate ancBlocks and can't be used as an input method
         if methodName != "publish":
             self.prevMethod = newMethod
 

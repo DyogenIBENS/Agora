@@ -11,7 +11,7 @@ __doc__ = """
 
     usage:
         src/convert.ancGenomes.blocks-to-genes.py example/data/Species.conf A0 \
-                -IN.ancBlocks=example/results/integrDiags/final/diags.%s.list.bz2 \
+                -IN.ancBlocks=example/results/ancBlocks/final/diags.%s.list.bz2 \
                 -OUT.ancGenomes=example/results/ancGenomes/final/ancGenome.%s.list.bz2 \
                 -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2
 """
