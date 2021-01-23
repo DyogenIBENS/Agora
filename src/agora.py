@@ -80,7 +80,7 @@ workflow = utils.myAgoraWorkflow.AgoraWorkflow(phylTree.root, phylTree.root, scr
 
 
 # all ancGenes task - gather nickname and only launch if explicitly requested to (backwards compatibility)
-allname = "all"
+allname = workflow.allAncGenesTaskName
 launchall = False
 patternall = re.compile(r'=.*\ball\b')
 for x in bysections["ancgenes"]:
@@ -91,7 +91,7 @@ for x in bysections["ancgenes"]:
 
 workflow.addAncGenesGenerationAnalysis(launchall)
 
-ancGenes = {allname: "all", "0": "all"}
+ancGenes = {allname: workflow.allAncGenesDirName, "0": workflow.allAncGenesDirName}
 
 # Parse the section
 for x in bysections["ancgenes"]:

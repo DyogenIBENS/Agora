@@ -371,7 +371,7 @@ class AgoraWorkflow:
             args.append(self.files["pairwiseOutput"] % {"filt": pairwiseName, "name": "%s"})
 
         if methodName in ["denovo", "scaffolds", "publish"]:
-            args.append("-ancGenesFiles=" + self.files["ancGenesData"] % {"filt": "all", "name": "%s"})
+            args.append("-ancGenesFiles=" + self.files["ancGenesData"] % {"filt": self.allAncGenesDirName, "name": "%s"})
 
         # No input data to consider for the denovo method
         if methodName != "denovo":
