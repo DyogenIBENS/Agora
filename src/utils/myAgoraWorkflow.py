@@ -280,11 +280,9 @@ class AgoraWorkflow:
             return self.addDummy(taskFullName)
 
     # FIXME: both this and the callers implement their own naming scheme (size-0.9-1.1). Risk is that they diverge
-    def addAncGenesFilterAnalysis(self, methodName, params, taskName=None, ancestor=None, launch=True):
+    def addAncGenesFilterAnalysis(self, methodName, params, ancestor=None, launch=True):
 
-        if taskName is None:
-            taskName = "-".join([methodName] + params)
-
+        taskName = "-".join([methodName] + params)
         return self.tasklist.addTask(
             ("ancgenes", taskName),
             [("ancgenes", self.allAncGenesName)],
