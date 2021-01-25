@@ -46,7 +46,7 @@ maxsizes = [float(x) for x in arguments["maxSize"].split(",")]
 outDir = []
 
 for i in range(len(minsizes)):
-    outDir.append(arguments["OUT.ancGenesFiles"] % (minsizes[i], maxsizes[i], "%s"))
+    outDir.append(arguments["OUT.ancGenesFiles"] % (minsizes[i] + "-" + maxsizes[i], "%s"))
 
 # Initialisation
 print >> sys.stderr, "Structures creation ...",

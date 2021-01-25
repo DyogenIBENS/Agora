@@ -38,8 +38,7 @@ for (f, s) in utils.myAgoraWorkflow.AgoraWorkflow.defaultPaths.iteritems():
     files[f] = os.path.normpath(os.path.join(outputDir, s))
 scriptDir = os.path.dirname(os.path.abspath(__file__))
 
-dirnameTemplate = "size-%s-%s"
-ancGenesDirName = dirnameTemplate % (arguments['minSize'], arguments['maxSize'])
+constrainedAncGenesDirName = "-".join(["size", arguments['minSize'], arguments['maxSize']])
 
 phylTree = utils.myPhylTree.PhylogeneticTree(arguments["speciesTree"])
 # Check that the syntax is correct
@@ -50,10 +49,10 @@ if arguments["extantSpeciesFilter"]:
 
 workflow = utils.myAgoraWorkflow.AgoraWorkflow(arguments["target"] or phylTree.root, arguments["extantSpeciesFilter"], scriptDir, files)
 workflow.addAncGenesGenerationAnalysis()
-workflow.addAncGenesFilterAnalysis("size", [str(arguments['minSize']), str(arguments['maxSize'])], dirnameTemplate)
+workflow.addAncGenesFilterAnalysis("size", [str(arguments['minSize']), str(arguments['maxSize'])])
 workflow.addPairwiseAnalysis(workflow.allAncGenesName)
-workflow.addPairwiseAnalysis(ancGenesDirName)
-workflow.addIntegrationAnalysis("denovo", [], ancGenesDirName)
+workflow.addPairwiseAnalysis(constrainedAncGenesDirName)
+workflow.addIntegrationAnalysis("denovo", [], constrainedAncGenesDirName)
 workflow.addIntegrationAnalysis("fillin", [], workflow.allAncGenesName)
 workflow.addIntegrationAnalysis("fusion", ["+onlySingletons"], workflow.allAncGenesName)
 workflow.addIntegrationAnalysis("insertion", [], workflow.allAncGenesName)

@@ -279,7 +279,8 @@ class AgoraWorkflow:
         else:
             return self.addDummy(taskFullName)
 
-    def addAncGenesFilterAnalysis(self, methodName, params, dirnameTemplate, taskName=None, ancestor=None, launch=True):
+    # FIXME: both this and the callers implement their own naming scheme (size-0.9-1.1). Risk is that they diverge
+    def addAncGenesFilterAnalysis(self, methodName, params, taskName=None, ancestor=None, launch=True):
 
         if taskName is None:
             taskName = "-".join([methodName] + params)
@@ -293,7 +294,7 @@ class AgoraWorkflow:
                     self.files["speciesTree"],
                     ancestor or self.defaultRoot,
                     self.files["ancGenesData"] % {"filt": self.allAncGenesName, "name": "%s"},
-                    self.files["ancGenesData"] % {"filt": dirnameTemplate, "name": "%s"}
+                    self.files["ancGenesData"] % {"filt": methodName + "-%s", "name": "%s"}
                 ] + params,
                 None,
                 self.files["ancGenesLog"] % {"filt": taskName},
