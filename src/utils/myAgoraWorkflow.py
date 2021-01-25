@@ -324,10 +324,10 @@ class AgoraWorkflow:
         if taskName is None:
             taskName = methodName
 
-        if pairwiseName:
-            taskName = taskName[:-1] if taskName.endswith("/") else (taskName+ "-" + pairwiseName)
-        elif taskName.endswith("/"):
+        if taskName.endswith("/"):
             taskName = taskName[:-1]
+        elif pairwiseName:
+            taskName = taskName + "-" + pairwiseName
 
         if methodName == "denovo":
             newMethod = taskName
