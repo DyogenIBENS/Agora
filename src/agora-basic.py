@@ -47,8 +47,8 @@ if arguments["extantSpeciesFilter"]:
 
 workflow = utils.myAgoraWorkflow.AgoraWorkflow(arguments["target"] or phylTree.root, arguments["extantSpeciesFilter"], scriptDir, files)
 workflow.addAncGenesGenerationAnalysis()
-workflow.addPairwiseAnalysis(workflow.allAncGenesDirName)
-workflow.addIntegrationAnalysis("denovo", ['+searchLoops'], workflow.allAncGenesDirName)
+workflow.addPairwiseAnalysis(workflow.allAncGenesName)
+workflow.addIntegrationAnalysis("denovo", ['+searchLoops'], workflow.allAncGenesName)
 workflow.addIntegrationAnalysis("scaffolds", [], None)
 workflow.addIntegrationAnalysis("publish", [], None, taskName="//")
 

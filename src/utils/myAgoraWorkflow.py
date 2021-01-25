@@ -248,8 +248,7 @@ class AgoraWorkflow:
         self.tasklist = TaskList()
         self.scriptDir = scriptDir
         self.files = files
-        self.allAncGenesTaskName = "all"
-        self.allAncGenesDirName = "all"
+        self.allAncGenesName = "all"
         self.interm = {}
         self.refMethod = {}
         # With agora-*.py, people may use %s instead of %(name)s
@@ -260,7 +259,7 @@ class AgoraWorkflow:
         return self.tasklist.addTask(taskFullName, dependencies, (None, None, None, False))
 
     def addAncGenesGenerationAnalysis(self, launch=True):
-        taskFullName = ("ancgenes", self.allAncGenesTaskName)
+        taskFullName = ("ancgenes", self.allAncGenesName)
         if launch:
             return self.tasklist.addTask(
                 taskFullName,
@@ -270,7 +269,7 @@ class AgoraWorkflow:
                         os.path.join(self.scriptDir, "ALL.extractGeneFamilies.py"),
                         self.files["speciesTree"],
                         self.files["geneTrees"],
-                        "-OUT.ancGenesFiles=" + self.files["ancGenesData"] % {"filt": self.allAncGenesDirName, "name": "%s"},
+                        "-OUT.ancGenesFiles=" + self.files["ancGenesData"] % {"filt": self.allAncGenesName, "name": "%s"},
                     ],
                     self.files["geneTreesWithAncNames"],
                     self.files["ancGenesLog"] % {"filt": "ancGenes"},
@@ -283,13 +282,13 @@ class AgoraWorkflow:
     def addAncGenesFilterAnalysis(self, taskName, methodName, params, dirnameTemplate, ancestor=None, launch=True):
         return self.tasklist.addTask(
             ("ancgenes", taskName),
-            [("ancgenes", self.allAncGenesTaskName)],
+            [("ancgenes", self.allAncGenesName)],
             (
                 [
                     os.path.join(self.scriptDir, "ALL.filterGeneFamilies-%s.py" % methodName),
                     self.files["speciesTree"],
                     ancestor or self.defaultRoot,
-                    self.files["ancGenesData"] % {"filt": self.allAncGenesDirName, "name": "%s"},
+                    self.files["ancGenesData"] % {"filt": self.allAncGenesName, "name": "%s"},
                     self.files["ancGenesData"] % {"filt": dirnameTemplate, "name": "%s"}
                 ] + params,
                 None,
@@ -298,21 +297,21 @@ class AgoraWorkflow:
             )
         )
 
-    def addPairwiseAnalysis(self, taskName, methodName="conservedPairs", params=[], ancestor=None, launch=True):
+    def addPairwiseAnalysis(self, ancGenesName, methodName="conservedPairs", params=[], ancestor=None, launch=True):
         return self.tasklist.addTask(
-            ("pairwise", taskName),
-            [("ancgenes",taskName)],
+            ("pairwise", ancGenesName),
+            [("ancgenes",ancGenesName)],
             (
                 [
                     os.path.join(self.scriptDir, "buildSynteny.pairwise-%s.py" % methodName),
                     self.files["speciesTree"],
                     ancestor or self.defaultRoot,
-                    "-ancGenesFiles=" + self.files["ancGenesData"] % {"filt": taskName, "name": "%s"},
+                    "-ancGenesFiles=" + self.files["ancGenesData"] % {"filt": ancGenesName, "name": "%s"},
                     "-genesFiles=" + self.files["genes"] % {"name": "%s"},
-                    "-OUT.pairwise=" + self.files["pairwiseOutput"] % {"filt": taskName, "name": "%s"}
+                    "-OUT.pairwise=" + self.files["pairwiseOutput"] % {"filt": ancGenesName, "name": "%s"}
                 ] + self.defaultExtantSpeciesFilter + params,
                 None,
-                self.files["pairwiseLog"] % {"filt": taskName},
+                self.files["pairwiseLog"] % {"filt": ancGenesName},
                 launch,
             )
         )
@@ -371,7 +370,7 @@ class AgoraWorkflow:
             args.append(self.files["pairwiseOutput"] % {"filt": pairwiseName, "name": "%s"})
 
         if methodName in ["denovo", "scaffolds", "publish"]:
-            args.append("-ancGenesFiles=" + self.files["ancGenesData"] % {"filt": self.allAncGenesDirName, "name": "%s"})
+            args.append("-ancGenesFiles=" + self.files["ancGenesData"] % {"filt": self.allAncGenesName, "name": "%s"})
 
         # No input data to consider for the denovo method
         if methodName != "denovo":
