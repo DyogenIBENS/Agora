@@ -117,10 +117,10 @@ for x in bysections["ancgenes"]:
     minSizesStr = ",".join(minSizes)
     maxSizesStr = ",".join(maxSizes)
 
-    taskname = dirnameTemplate % (minSizesStr, maxSizesStr)
-    workflow.addAncGenesFilterAnalysis(taskname, "size", [minSizesStr, maxSizesStr], dirnameTemplate, root, "*" not in x[0])
+    workflow.addAncGenesFilterAnalysis("size", [minSizesStr, maxSizesStr], dirnameTemplate, root, "*" not in x[0])
 
     if len(ancGenesDirNames) > 1:
+        taskname = dirnameTemplate % (minSizesStr, maxSizesStr)
         for dirname in ancGenesDirNames:
             workflow.addDummy(("ancgenes", dirname), [("ancgenes", taskname)])
 

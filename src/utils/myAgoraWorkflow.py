@@ -279,7 +279,11 @@ class AgoraWorkflow:
         else:
             return self.addDummy(taskFullName)
 
-    def addAncGenesFilterAnalysis(self, taskName, methodName, params, dirnameTemplate, ancestor=None, launch=True):
+    def addAncGenesFilterAnalysis(self, methodName, params, dirnameTemplate, taskName=None, ancestor=None, launch=True):
+
+        if taskName is None:
+            taskName = "-".join([methodName] + params)
+
         return self.tasklist.addTask(
             ("ancgenes", taskName),
             [("ancgenes", self.allAncGenesName)],
