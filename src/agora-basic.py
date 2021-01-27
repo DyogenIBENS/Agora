@@ -50,7 +50,7 @@ workflow.addAncGenesGenerationAnalysis()
 workflow.addPairwiseAnalysis(workflow.allAncGenesName)
 workflow.addIntegrationAnalysis("denovo", ['+searchLoops'], workflow.allAncGenesName)
 workflow.addIntegrationAnalysis("scaffolds", [], None)
-workflow.addIntegrationAnalysis("publish", [], None, taskName="//")
+workflow.addIntegrationAnalysis("publish", [], None, taskName="/basic-workflow")
 
 # Launching tasks in multiple threads
 #####################################
