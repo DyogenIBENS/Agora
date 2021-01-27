@@ -32,7 +32,7 @@ arguments = utils.myTools.checkArgs(
 	 ("genesFiles",str,""), ("ancGenesFiles",str,""), ("iniAncGenesFiles",str,""), ("OUT.pairwise",str,""),
 	 ("anchorSize",int,2),
 	 ("nbThreads", int, 0),
-	 ("verbose",bool,True)],
+	 ("LOG.pairwise", str, "")],
 	__doc__
 )
 
@@ -65,6 +65,8 @@ def getAllAdj(anc):
 		if (len(x) >= 2) and (len(x) < anchorSize):
 			anchorSize = len(x)
 
+	log = arguments["LOG.pairwise"] % phylTree.fileName[anc]
+	f = utils.myFile.openFile(log, "w")
 	for esp in listSpecies:
 
 		dicA = {}
@@ -74,8 +76,7 @@ def getAllAdj(anc):
 		for (n,((c1,d1),(c2,d2),da)) in enumerate(utils.myGraph.calcDiags(dicGenomes[esp], dicGenomes[anc], genesAnc[phylTree.dicParents[anc][esp]], orthosFilter=utils.myGraph.OrthosFilterType.InBothSpecies, minChromLength=anchorSize)):
 			if len(da) < anchorSize:
 				continue
-			if arguments["verbose"]:
-				print >> sys.stderr, "DIAG", anc, esp, n, (c1,c2), len(da), (d1,d2,da)
+			print >> f, "DIAG", anc, esp, n, (c1,c2), len(da), (d1,d2,da)
 			for ((i1,s1),(i2,s2)) in itertools.izip(d1, d2):
 				dicM[(c1,i1)] = (n,s1)
 				dicA[(c2,i2)] = (n,s1)
@@ -86,36 +87,32 @@ def getAllAdj(anc):
 		notdup = set()
 		for cA in newGA:
 			notdup.update(x[0] for x in newGA[cA])
-			if arguments["verbose"]:
-				print >> sys.stderr, anc, esp, "ANC", cA, len(newGA[cA]), newGA[cA]
+			print >> f, anc, esp, "ANC", cA, len(newGA[cA]), newGA[cA]
 		newGM = rewriteGenome(dicGenomes[esp], dicM)
 
 		(extr1,extr2) = getExtremities(newGA)
 
 		na = 0
 		for (cM,l) in newGM.iteritems():
-			if arguments["verbose"]:
-				print >> sys.stderr, anc, esp, "MOD", cM, len(newGM[cM]), newGM[cM]
+			print >> f, anc, esp, "MOD", cM, len(newGM[cM]), newGM[cM]
 			# Permet de selectionner lors d'une duplication segmentale, le meme bloc que chez l'ancetre
 			l = [x for x in l if x[0] in notdup]
-			if arguments["verbose"]:
-				print >> sys.stderr, anc, esp, "FMOD", cM, len(l), l
+			print >> f, anc, esp, "FMOD", cM, len(l), l
 			for (x1,x2) in utils.myTools.myIterator.slidingTuple(l):
 				if (x1 in extr2) and (x2 in extr1):
 					(i1,s1) = extr2[x1]
 					(i2,s2) = extr1[x2]
 					if i1 == i2:
-						if arguments["verbose"]:
-							print >> sys.stderr, "LOOP", extr2[x1], extr1[x2]
+						print >> f, "LOOP", extr2[x1], extr1[x2]
 						continue
-					if arguments["verbose"]:
-						print >> sys.stderr, "ADJ", anc, esp, (x1,x2), (extr2[x1],extr1[x2])
+					print >> f, "ADJ", anc, esp, (x1,x2), (extr2[x1],extr1[x2])
 					na += 1
 					if i1 < i2:
 						allAdj[ ((i1,s1),(i2,s2)) ].append(esp)
 					else:
 						allAdj[ ((i2,-s2),(i1,-s1)) ].append(esp)
 		print >> sys.stderr, "Extraction des diagonales entre %s et %s ..." % (anc,esp), utils.myMaths.myStats.txtSummary(stats), "%d adjacences / %d blocs" % (na, len(newGA)), "(ancre: %d)" % anchorSize
+	f.close()
 
 	# -1 designe l'outgroup, 1,2,3... designent les descendants
 	ind = dict.fromkeys(set(phylTree.outgroupSpecies[anc]).intersection(listSpecies), -1)
