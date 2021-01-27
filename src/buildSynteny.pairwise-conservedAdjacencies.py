@@ -10,9 +10,13 @@ __doc__ = """
 	Extract all block adjacenties that are conserved between pairs of species.
 """
 
-import sys
-import itertools
 import collections
+import itertools
+import multiprocessing
+import sys
+import time
+
+from joblib import Parallel, delayed
 
 import utils.myPhylTree
 import utils.myGenomes
@@ -27,6 +31,7 @@ arguments = utils.myTools.checkArgs(
 	[("extantSpeciesFilter",str,""), \
 	 ("genesFiles",str,""), ("ancGenesFiles",str,""), ("iniAncGenesFiles",str,""), ("OUT.pairwise",str,""),
 	 ("anchorSize",int,2),
+	 ("nbThreads", int, 0),
 	 ("verbose",bool,True)],
 	__doc__
 )
@@ -156,7 +161,8 @@ for (e1,e2) in itertools.combinations(listSpecies, 2):
 	for anc in targets.intersection(phylTree.dicLinks[e1][e2][1:-1]):
 		toStudy[anc].append((e1,e2))
 
-for anc in targets:
-	getAllAdj(anc)
-
+start = time.time()
+n_cpu = arguments["nbThreads"] or multiprocessing.cpu_count()
+Parallel(n_jobs=n_cpu)(delayed(getAllAdj)(anc) for anc in targets)
+print >> sys.stderr, "Elapsed time:", (time.time() - start)
 
