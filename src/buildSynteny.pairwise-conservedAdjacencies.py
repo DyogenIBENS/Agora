@@ -25,7 +25,7 @@ import utils.myGraph
 arguments = utils.myTools.checkArgs(
 	[("speciesTree",file), ("target",str)], \
 	[("genesFiles",str,""), ("ancGenesFiles",str,""),
-	("iniAncGenesFiles",str,""), ("usedSpecies",str,""), ("anchorSize",int,2), ("verbose",bool,True)],
+	("iniAncGenesFiles",str,""), ("extantSpeciesFilter",str,""), ("anchorSize",int,2), ("verbose",bool,True)],
 	__doc__
 )
 
@@ -134,21 +134,17 @@ def getAllAdj(anc):
 # L'arbre phylogenetique
 phylTree = utils.myPhylTree.PhylogeneticTree(arguments["speciesTree"])
 
-targets = phylTree.getTargetsAnc(arguments["target"])
-listSpecies = phylTree.getTargetsSpec(arguments["usedSpecies"] if len(arguments["usedSpecies"]) > 0 else phylTree.root)
+(listSpecies, targets, accessoryAncestors) = phylTree.getTargetsForPairwise(arguments["target"], arguments["extantSpeciesFilter"])
 
 dicGenomes = {}
 for e in listSpecies:
 	dicGenomes[e] = utils.myGenomes.Genome(arguments["genesFiles"] % phylTree.fileName[e])
 
 genesAnc = {}
-for anc in targets:
+for anc in targets.union(accessoryAncestors):
 	genesAnc[anc] = utils.myGenomes.Genome(arguments["iniAncGenesFiles"] % phylTree.fileName[anc])
+for anc in targets:
 	dicGenomes[anc] = utils.myGenomes.Genome(arguments["ancGenesFiles"] % phylTree.fileName[anc], ancGenes=genesAnc[anc], withDict=False)
-
-for anc in [phylTree.dicParents[e][a] for (e,a) in itertools.product(listSpecies, targets)]:
-	if anc not in genesAnc:
-		genesAnc[anc] = utils.myGenomes.Genome(arguments["iniAncGenesFiles"] % phylTree.fileName[anc])
 
 toStudy = collections.defaultdict(list)
 for (e1,e2) in itertools.combinations(listSpecies, 2):
