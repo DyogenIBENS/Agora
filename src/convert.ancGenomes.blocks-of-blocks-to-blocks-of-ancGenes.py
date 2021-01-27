@@ -12,14 +12,14 @@ __doc__ = """
 
 import sys
 
-import utils.myDiags
+import utils.myGraph
 import utils.myFile
 import utils.myTools
 import utils.myGenomes
 
 arguments = utils.myTools.checkArgs( [("scaffoldsFile",file), ("contigsFile",file)], [], __doc__)
 
-(diags,singletons) = utils.myDiags.loadIntegr(arguments["scaffoldsFile"])
+(diags,singletons) = utils.myGraph.loadIntegr(arguments["scaffoldsFile"])
 
 ref = {}
 f = utils.myFile.openFile(arguments["contigsFile"], "r")

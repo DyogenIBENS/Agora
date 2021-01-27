@@ -19,7 +19,7 @@ import utils.myGenomes
 import utils.myFile
 import utils.myTools
 import utils.myMaths
-import utils.myDiags
+import utils.myGraph
 
 # Arguments
 arguments = utils.myTools.checkArgs(
@@ -64,7 +64,7 @@ def getAllAdj(anc):
 		dicM = {}
 		stats = []
 
-		for (n,((c1,d1),(c2,d2),da)) in enumerate(utils.myDiags.calcDiags(dicGenomes[esp], dicGenomes[anc], genesAnc[phylTree.dicParents[anc][esp]], orthosFilter=utils.myDiags.OrthosFilterType.InBothSpecies, minChromLength=anchorSize)):
+		for (n,((c1,d1),(c2,d2),da)) in enumerate(utils.myGraph.calcDiags(dicGenomes[esp], dicGenomes[anc], genesAnc[phylTree.dicParents[anc][esp]], orthosFilter=utils.myGraph.OrthosFilterType.InBothSpecies, minChromLength=anchorSize)):
 			if len(da) < anchorSize:
 				continue
 			if arguments["verbose"]:
