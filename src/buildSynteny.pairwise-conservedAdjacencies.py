@@ -24,8 +24,10 @@ import utils.myGraph
 # Arguments
 arguments = utils.myTools.checkArgs(
 	[("speciesTree",file), ("target",str)], \
-	[("genesFiles",str,""), ("ancGenesFiles",str,""),
-	("iniAncGenesFiles",str,""), ("extantSpeciesFilter",str,""), ("anchorSize",int,2), ("verbose",bool,True)],
+	[("extantSpeciesFilter",str,""), \
+	 ("genesFiles",str,""), ("ancGenesFiles",str,""), ("iniAncGenesFiles",str,""), ("OUT.pairwise",str,""),
+	 ("anchorSize",int,2),
+	 ("verbose",bool,True)],
 	__doc__
 )
 
@@ -115,6 +117,8 @@ def getAllAdj(anc):
 	for (i,(x,_)) in enumerate(phylTree.items[anc]):
 		ind.update(dict.fromkeys(set(phylTree.species[x]).intersection(listSpecies), i+1))
 
+	res = arguments["OUT.pairwise"] % phylTree.fileName[anc]
+	f = utils.myFile.openFile(res, "w")
 	for ancPair in allAdj:
 
 		# Calcul des poids
@@ -123,11 +127,12 @@ def getAllAdj(anc):
 			weights[ind[esp]] += 1
 		weight = sum(x*y for (x,y) in itertools.combinations(weights.values(), 2))
 
-		print utils.myFile.myTSV.printLine(
+		print >> f, utils.myFile.myTSV.printLine(
 			[anc] + list(ancPair[0] + ancPair[1]) +
 			[None, None, weight,
 			"|".join("%s/%d" % (esp,ind[esp]) for esp in sorted(allAdj[ancPair]))]
 		)
+	f.close()
 
 
 
