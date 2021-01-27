@@ -7,7 +7,7 @@
 # This is free software; you may copy, modify and/or distribute this work under the terms of the GNU General Public License, version 3 or later and the CeCiLL v2 license in France
 
 __doc__ = """
-	Convertit un genome (scaffolds = suite de contigs) en genome (uniquement des contigs)
+	Convert a genome written as blocks of contigs to blocks of ancGenes
 """
 
 import sys

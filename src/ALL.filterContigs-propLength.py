@@ -7,7 +7,7 @@
 # This is free software; you may copy, modify and/or distribute this work under the terms of the GNU General Public License, version 3 or later and the CeCiLL v2 license in France
 
 __doc__ = """
-	Filtre les contigs d'une taille minimale
+	Filter ancestral blocks (as if they were ancestral genes), keeping the largest blocks that account for minProp % of the genome
 """
 
 import sys
@@ -18,9 +18,9 @@ import utils.myMaths
 import utils.myTools
 import utils.myPhylTree
 
-arguments = utils.myTools.checkArgs( [("phylTree.conf",file), ("target",str), ("IN.ancGenesFiles",str), ("OUT.ancGenesFiles",str), ("minProp",int)], [], __doc__ )
+arguments = utils.myTools.checkArgs( [("speciesTree",file), ("target",str), ("IN.ancGenesFiles",str), ("OUT.ancGenesFiles",str), ("minProp",int)], [], __doc__ )
 
-phylTree = utils.myPhylTree.PhylogeneticTree(arguments["phylTree.conf"])
+phylTree = utils.myPhylTree.PhylogeneticTree(arguments["speciesTree"])
 target = phylTree.officialName[arguments["target"]]
 
 for anc in phylTree.listAncestr:

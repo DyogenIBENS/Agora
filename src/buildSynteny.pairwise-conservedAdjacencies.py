@@ -7,7 +7,7 @@
 # This is free software; you may copy, modify and/or distribute this work under the terms of the GNU General Public License, version 3 or later and the CeCiLL v2 license in France
 
 __doc__ = """
-	Extrait les adjacences de contigs conservees
+	Extract all block adjacenties that are conserved between pairs of species.
 """
 
 import sys
@@ -23,7 +23,7 @@ import utils.myGraph
 
 # Arguments
 arguments = utils.myTools.checkArgs(
-	[("phylTree.conf",file), ("target",str)], \
+	[("speciesTree",file), ("target",str)], \
 	[("genesFiles",str,""), ("ancGenesFiles",str,""),
 	("iniAncGenesFiles",str,""), ("usedSpecies",str,""), ("anchorSize",int,2), ("verbose",bool,True)],
 	__doc__
@@ -132,7 +132,7 @@ def getAllAdj(anc):
 
 
 # L'arbre phylogenetique
-phylTree = utils.myPhylTree.PhylogeneticTree(arguments["phylTree.conf"])
+phylTree = utils.myPhylTree.PhylogeneticTree(arguments["speciesTree"])
 
 targets = phylTree.getTargetsAnc(arguments["target"])
 listSpecies = phylTree.getTargetsSpec(arguments["usedSpecies"] if len(arguments["usedSpecies"]) > 0 else phylTree.root)
