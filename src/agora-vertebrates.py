@@ -38,7 +38,7 @@ for (f, s) in utils.myAgoraWorkflow.AgoraWorkflow.defaultPaths.iteritems():
     files[f] = os.path.normpath(os.path.join(outputDir, s))
 scriptDir = os.path.dirname(os.path.abspath(__file__))
 
-constrainedAncGenesDirName = "-".join(["size", arguments['minSize'], arguments['maxSize']])
+constrainedAncGenesDirName = "size-%s-%s" % (arguments['minSize'], arguments['maxSize'])
 
 phylTree = utils.myPhylTree.PhylogeneticTree(arguments["speciesTree"])
 # Check that the syntax is correct
