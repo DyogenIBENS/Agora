@@ -100,25 +100,30 @@ class TaskList():
             print >> sys.stderr, ">", "Inspect", self.list[i][1][2], "for more information"
         self.nrun -= self.nthreads.pop(i)
 
+    def getProcMemoryUsage(self, proc):
+        try:
+            # Slower and not available on macOS, but more accurate
+            return proc.memory_full_info().uss
+        except psutil.AccessDenied:
+            return proc.memory_info().rss
+
     def getMemoryUsage(self, pid):
         try:
             proc = psutil.Process(pid)
-            return proc.memory_full_info().uss
+            return self.getProcMemoryUsage(proc)
         except (psutil.NoSuchProcess, IOError):
             return None
 
     def getRecursiveMemoryUsage(self, pid):
         try:
             proc = psutil.Process(pid)
-            total_mem = proc.memory_full_info().uss
+            total_mem = self.getProcMemoryUsage(proc)
             children = proc.children(recursive=True)
         except (psutil.NoSuchProcess, IOError):
             return None
         for subproc in children:
             try:
-                # mem = subproc.memory_info().rss
-                # Slower but more accurate
-                mem = subproc.memory_full_info().uss
+                mem = self.getProcMemoryUsage(subproc)
                 total_mem += mem
             except (psutil.NoSuchProcess, IOError):
                 pass
