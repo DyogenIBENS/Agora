@@ -240,6 +240,7 @@ class AgoraWorkflow:
         'ancGenomesLog': 'ancGenomes/%(method)s/log',
     }
     inputParams = ["speciesTree", "geneTrees", "genes"]
+    allAncGenesName = "all"
 
 
     def __init__(self, defaultRoot, defaultExtantSpeciesFilter, scriptDir, files):
@@ -248,7 +249,6 @@ class AgoraWorkflow:
         self.tasklist = TaskList()
         self.scriptDir = scriptDir
         self.files = files
-        self.allAncGenesName = "all"
         self.interm = {}
         self.refMethod = {}
         # With agora-*.py, people may use %s instead of %(name)s
