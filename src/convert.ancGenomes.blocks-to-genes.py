@@ -22,6 +22,7 @@ import time
 
 from joblib import Parallel, delayed
 
+import utils.myFile
 import utils.myGenomes
 import utils.myPhylTree
 import utils.myTools
