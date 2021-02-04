@@ -131,11 +131,11 @@ for size in range(len(minsizes)):
 
 
     # Writing files
-    outDir = arguments["OUT.ancGenesFiles"] % (minsizes[size] + "-" + maxsizes[size], "%s")
     for anc in lstAncGenes:
         print >> sys.stderr, "Writing families of %s (size %g-%g)..." % (anc, minsizes[size], maxsizes[size]),
         n = 0
-        f = utils.myFile.openFile(outDir % phylTree.fileName[anc], "w")
+        outFile = arguments["OUT.ancGenesFiles"] % (minsizes[size] + "-" + maxsizes[size], phylTree.fileName[anc])
+        f = utils.myFile.openFile(outFile, "w")
         for (i, names) in enumerate(lstAncGenes[anc]):
             s = getGeneNames(anc, i)
             if len(s) > 0:
