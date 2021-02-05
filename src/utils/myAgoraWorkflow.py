@@ -22,6 +22,9 @@ from . import myFile
 # Managing the list of programs to launch and their dependencies
 #################################################################
 class TaskList():
+
+    rusage_unit = 1 if sys.platform == "darwin" else 1024
+
     def __init__(self):
         self.list = []
         self.dic = {}
@@ -156,7 +159,7 @@ class TaskList():
         elapsed = time.time() - start
         # Use the lock so that we don't remove the key in the middle of memoryMonitor using it
         self.memlock.acquire()
-        mem = max(ru.ru_maxrss * 1024, self.memusage.pop(os.getpid()))
+        mem = max(ru.ru_maxrss * self.rusage_unit, self.memusage.pop(os.getpid()))
         self.memlock.release()
         print intro, "%g sec CPU time / %g sec elapsed = %g%% CPU usage, %g MB RAM" % (ru.ru_utime + ru.ru_stime, elapsed, 100. * (ru.ru_utime + ru.ru_stime) / elapsed, mem / 1024. / 1024.)
 
