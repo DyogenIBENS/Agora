@@ -129,10 +129,10 @@ def getAllAdj(anc):
 			weights[ind[esp]] += 1
 		weight = sum(x*y for (x,y) in itertools.combinations(weights.values(), 2))
 
+		# to debug the weight: "|".join("%s/%d" % (esp,ind[esp]) for esp in sorted(allAdj[ancPair]))
 		print >> f, utils.myFile.myTSV.printLine(
-			[anc] + list(ancPair[0] + ancPair[1]) +
-			[None, None, weight,
-			"|".join("%s/%d" % (esp,ind[esp]) for esp in sorted(allAdj[ancPair]))]
+			list(ancPair[0] + ancPair[1]) +
+			[weight]
 		)
 	f.close()
 
