@@ -1,19 +1,19 @@
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-| Key                 | Values                                                                                                                                                              |
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-| speciesTree         | example/data/Species.nwk                                                                                                                                            |
-| target              | A0                                                                                                                                                                  |
-| minimalWeight       | 1                                                                                                                                                                   |
-| anchorSize          | 2                                                                                                                                                                   |
-| minChromLength      | 2                                                                                                                                                                   |
-| nbThreads           | 1                                                                                                                                                                   |
-| extantSpeciesFilter | A0                                                                                                                                                                  |
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Key                 | Values                                                                                                                                                     |
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| speciesTree         | example/data/Species.nwk                                                                                                                                   |
+| target              | A0                                                                                                                                                         |
+| minimalWeight       | 1                                                                                                                                                          |
+| anchorSize          | 2                                                                                                                                                          |
+| minChromLength      | 2                                                                                                                                                          |
+| nbThreads           | 1                                                                                                                                                          |
+| extantSpeciesFilter | A0                                                                                                                                                         |
 | IN.ancBlocks        | example/results/ancBlocks/denovo-size-1.0-1.0.fillin-size-0.9-1.1.fusion-size-0.9-1.1.insertion-size-0.9-1.1.fillin-size-0.77-1.33.fusion-size-0.77-1.33.insertion-size-0.77-1.33.fillin-all.fusion-all.insertion-all/blocks.%s.list.bz2 |
 | LOG.ancGraph        | example/results/ancBlocks/denovo-size-1.0-1.0.fillin-size-0.9-1.1.fusion-size-0.9-1.1.insertion-size-0.9-1.1.fillin-size-0.77-1.33.fusion-size-0.77-1.33.insertion-size-0.77-1.33.fillin-all.fusion-all.insertion-all.scaffolds/graph.%s.txt.bz2 |
 | OUT.ancBlocks       | example/results/ancBlocks/denovo-size-1.0-1.0.fillin-size-0.9-1.1.fusion-size-0.9-1.1.insertion-size-0.9-1.1.fillin-size-0.77-1.33.fusion-size-0.77-1.33.insertion-size-0.77-1.33.fillin-all.fusion-all.insertion-all.scaffolds/blocks.%s.list.bz2 |
-| genesFiles          | example/data/genes/genes.%s.list.bz2                                                                                                                                |
-| ancGenesFiles       | example/results/ancGenes/all/ancGenes.%s.list.bz2                                                                                                                   |
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| genesFiles          | example/data/genes/genes.%s.list.bz2                                                                                                                       |
+| ancGenesFiles       | example/results/ancGenes/all/ancGenes.%s.list.bz2                                                                                                          |
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Loading genome of example/results/ancGenes/all/ancGenes.A1.list.bz2 ... (ancestral genes) OK
 Loading genome of example/results/ancGenes/all/ancGenes.A0.list.bz2 ... (ancestral genes) OK
 Loading genome of example/results/ancGenes/all/ancGenes.A3.list.bz2 ... (ancestral genes) OK
@@ -51,4 +51,4 @@ Diagonals extraction between A2 and M1 ... 2 [2/5/11] [7/14/27] 107 [8.58/9.70-1
 Diagonals extraction between A2 and M3 ... 2 [2/5/11] [7/14/25] 83 [8.24/9.46-1534] 493 adjacencies / 683 blocs
 Diagonals extraction between A2 and M2 ... 2 [2/5/10] [7/13/23] 87 [8.11/8.64-1654] 508 adjacencies / 700 blocs
 Integrated blocs of A2 2 [3/12/52] [56/110/201] 483 [39.73/62.38-366] + 1029 singletons
-Elapsed time: 4.8261551857
+Elapsed time: 5.11573195457

@@ -1,16 +1,16 @@
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-| Key               | Values                                                                                                                                                                |
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-| speciesTree       | example/data/Species.nwk                                                                                                                                              |
-| target            | A0                                                                                                                                                                    |
-| pairwise          | example/results/pairwise/pairs-size-0.77-1.33/%s.list.bz2                                                                                                             |
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Key               | Values                                                                                                                                                       |
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| speciesTree       | example/data/Species.nwk                                                                                                                                     |
+| target            | A0                                                                                                                                                           |
+| pairwise          | example/results/pairwise/pairs-size-0.77-1.33/%s.list.bz2                                                                                                    |
 | IN.ancBlocks      | example/results/ancBlocks/denovo-size-1.0-1.0.fillin-size-0.9-1.1.fusion-size-0.9-1.1.insertion-size-0.9-1.1.fillin-size-0.77-1.33.fusion-size-0.77-1.33/blocks.%s.list.bz2 |
 | OUT.ancBlocks     | example/results/ancBlocks/denovo-size-1.0-1.0.fillin-size-0.9-1.1.fusion-size-0.9-1.1.insertion-size-0.9-1.1.fillin-size-0.77-1.33.fusion-size-0.77-1.33.insertion-size-0.77-1.33/blocks.%s.list.bz2 |
-| REF.ancBlocks     | example/results/ancBlocks/denovo-size-1.0-1.0.fillin-size-0.9-1.1.fusion-size-0.9-1.1.insertion-size-0.9-1.1.fillin-size-0.77-1.33/blocks.%s.list.bz2                 |
+| REF.ancBlocks     | example/results/ancBlocks/denovo-size-1.0-1.0.fillin-size-0.9-1.1.fusion-size-0.9-1.1.insertion-size-0.9-1.1.fillin-size-0.77-1.33/blocks.%s.list.bz2        |
 | LOG.ancGraph      | example/results/ancBlocks/denovo-size-1.0-1.0.fillin-size-0.9-1.1.fusion-size-0.9-1.1.insertion-size-0.9-1.1.fillin-size-0.77-1.33.fusion-size-0.77-1.33.insertion-size-0.77-1.33/graph.%s.txt.bz2 |
-| nbThreads         | 1                                                                                                                                                                     |
-| selectionFunction | newscore/float(oldscore) if oldscore else newscore                                                                                                                    |
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| nbThreads         | 1                                                                                                                                                            |
+| selectionFunction | newscore/float(oldscore) if oldscore else newscore                                                                                                           |
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-size-0.9-1.1.fusion-size-0.9-1.1.insertion-size-0.9-1.1.fillin-size-0.77-1.33.fusion-size-0.77-1.33/blocks.A1.list.bz2 ... 2 [5/14/35] [27/56/91] 250 [26.24/32.32-519] + 3720 singletons OK
 Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-size-0.9-1.1.fusion-size-0.9-1.1.insertion-size-0.9-1.1.fillin-size-0.77-1.33/blocks.A1.list.bz2 ... 2 [6/16/39] [30/61/95] 250 [28.75/33.95-446] + 4516 singletons OK
 2 [6/16/41] [32/59/94] 252 [28.95/33.85-474] + 3619 singletons
@@ -23,4 +23,4 @@ Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.filli
 Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-size-0.9-1.1.fusion-size-0.9-1.1.insertion-size-0.9-1.1.fillin-size-0.77-1.33.fusion-size-0.77-1.33/blocks.A2.list.bz2 ... 2 [3/7/21] [17/40/67] 168 [16.88/22.06-723] + 3368 singletons OK
 Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-size-0.9-1.1.fusion-size-0.9-1.1.insertion-size-0.9-1.1.fillin-size-0.77-1.33/blocks.A2.list.bz2 ... 2 [6/13/31] [21/44/71] 168 [22.63/24.59-489] + 4502 singletons OK
 2 [5/10/25] [19/44/72] 181 [20.67/24.70-631] + 2529 singletons
-Elapsed time: 0.853837013245
+Elapsed time: 1.09012198448

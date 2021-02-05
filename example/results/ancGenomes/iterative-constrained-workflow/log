@@ -1,13 +1,13 @@
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-| Key            | Values                                                                                                                                                                   |
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-| speciesTree    | example/data/Species.nwk                                                                                                                                                 |
-| target         | A0                                                                                                                                                                       |
-| nbThreads      | 1                                                                                                                                                                        |
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Key            | Values                                                                                                                                                          |
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| speciesTree    | example/data/Species.nwk                                                                                                                                        |
+| target         | A0                                                                                                                                                              |
+| nbThreads      | 1                                                                                                                                                               |
 | IN.ancBlocks   | example/results/ancBlocks/denovo-size-1.0-1.0.fillin-size-0.9-1.1.fusion-size-0.9-1.1.insertion-size-0.9-1.1.fillin-size-0.77-1.33.fusion-size-0.77-1.33.insertion-size-0.77-1.33.fillin-all.fusion-all.insertion-all.scaffolds/blocks.%s.list.bz2 |
-| ancGenesFiles  | example/results/ancGenes/all/ancGenes.%s.list.bz2                                                                                                                        |
-| OUT.ancGenomes | example/results/ancGenomes/iterative-constrained-workflow/ancGenome.%s.list.bz2                                                                                          |
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| ancGenesFiles  | example/results/ancGenes/all/ancGenes.%s.list.bz2                                                                                                               |
+| OUT.ancGenomes | example/results/ancGenomes/iterative-constrained-workflow/ancGenome.%s.list.bz2                                                                                 |
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Loading genome of example/results/ancGenes/all/ancGenes.A1.list.bz2 ... (ancestral genes) OK
 Loading genome of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-size-0.9-1.1.fusion-size-0.9-1.1.insertion-size-0.9-1.1.fillin-size-0.77-1.33.fusion-size-0.77-1.33.insertion-size-0.77-1.33.fillin-all.fusion-all.insertion-all.scaffolds/blocks.A1.list.bz2 ... (ancestral genome: diags) OK
 Loading genome of example/results/ancGenes/all/ancGenes.A0.list.bz2 ... (ancestral genes) OK
@@ -16,4 +16,4 @@ Loading genome of example/results/ancGenes/all/ancGenes.A3.list.bz2 ... (ancestr
 Loading genome of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-size-0.9-1.1.fusion-size-0.9-1.1.insertion-size-0.9-1.1.fillin-size-0.77-1.33.fusion-size-0.77-1.33.insertion-size-0.77-1.33.fillin-all.fusion-all.insertion-all.scaffolds/blocks.A3.list.bz2 ... (ancestral genome: diags) OK
 Loading genome of example/results/ancGenes/all/ancGenes.A2.list.bz2 ... (ancestral genes) OK
 Loading genome of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-size-0.9-1.1.fusion-size-0.9-1.1.insertion-size-0.9-1.1.fillin-size-0.77-1.33.fusion-size-0.77-1.33.insertion-size-0.77-1.33.fillin-all.fusion-all.insertion-all.scaffolds/blocks.A2.list.bz2 ... (ancestral genome: diags) OK
-Time elapsed: 1.7790248394
+Time elapsed: 1.91278815269

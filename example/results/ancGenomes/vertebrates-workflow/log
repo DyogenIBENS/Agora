@@ -16,4 +16,4 @@ Loading genome of example/results/ancGenes/all/ancGenes.A3.list.bz2 ... (ancestr
 Loading genome of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all.scaffolds/blocks.A3.list.bz2 ... (ancestral genome: diags) OK
 Loading genome of example/results/ancGenes/all/ancGenes.A2.list.bz2 ... (ancestral genes) OK
 Loading genome of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all.scaffolds/blocks.A2.list.bz2 ... (ancestral genome: diags) OK
-Time elapsed: 1.7725379467
+Time elapsed: 1.94311308861
