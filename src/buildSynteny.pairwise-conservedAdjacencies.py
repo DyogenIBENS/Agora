@@ -129,6 +129,10 @@ def getAllAdj(anc):
 			weights[ind[esp]] += 1
 		weight = sum(x*y for (x,y) in itertools.combinations(weights.values(), 2))
 
+		if weight == 0:
+			# None of the adjacencies is conserved through this ancestor
+			continue
+
 		# to debug the weight: "|".join("%s/%d" % (esp,ind[esp]) for esp in sorted(allAdj[ancPair]))
 		print >> f, utils.myFile.myTSV.printLine(
 			list(ancPair[0] + ancPair[1]) +
