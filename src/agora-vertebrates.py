@@ -57,7 +57,7 @@ workflow.addIntegrationAnalysis("fillin", [], workflow.allAncGenesName)
 workflow.addIntegrationAnalysis("fusion", ["+onlySingletons"], workflow.allAncGenesName)
 workflow.addIntegrationAnalysis("insertion", [], workflow.allAncGenesName)
 workflow.addIntegrationAnalysis("scaffolds", [], None)
-workflow.addIntegrationAnalysis("publish", [], None, taskName="/vertebrates-workflow")
+workflow.publishGenome(outputName="vertebrates-workflow")
 
 # Launching tasks in multiple threads
 #####################################

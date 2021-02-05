@@ -472,20 +472,15 @@ class AgoraWorkflow:
             multithreaded,
         )
 
-    def addConversionAnalysis(self, taskName=None, inputName=None, ancestor=None, launch=True):
 
-        if taskName is None:
-            taskName = "publish"
-
-        if taskName.endswith("/"):
-            taskName = taskName[:-1]
+    def publishGenome(self, outputName=None, inputName=None, ancestor=None, launch=True):
 
         if inputName:
             self.prevMethod = self.interm[inputName]
-        if taskName.startswith("/"):
-            newMethod = taskName[1:]
-        else:
-            newMethod = self.prevMethod + "." + taskName
+
+        if outputName is None:
+            outputName = self.prevMethod
+
         if not ancestor:
             ancestor = self.refMethod[self.prevMethod][1]
 
@@ -496,16 +491,16 @@ class AgoraWorkflow:
                 ancestor,
                 "-IN.ancBlocks=" + self.files["ancBlocks"] % {"method": self.prevMethod, "name": "%s"},
                 "-ancGenesFiles=" + self.files[self.ancGenesFileEntryName] % {"filt": self.allAncGenesName, "name": "%s"},
-                "-OUT.ancGenomes=" + self.files["ancGenomesOutput"] % {"method": newMethod, "name": "%s"},
+                "-OUT.ancGenomes=" + self.files["ancGenomesOutput"] % {"method": outputName, "name": "%s"},
         ]
 
         return self.tasklist.addTask(
-            ("conversion", newMethod),
+            ("conversion", outputName),
             [("integr", self.prevMethod)],
             (
                 args,
                 None,
-                self.files["ancGenomesLog"] % {"method": newMethod},
+                self.files["ancGenomesLog"] % {"method": outputName},
                 launch,
             ),
             True,
@@ -535,6 +530,9 @@ class AgoraWorkflow:
                 launch,
             )
         )
+
+    def convertToRealAncGenes(self):
+        pass
 
     def expandBlocks(self):
         self.ancGenesTaskName = "ancgenes"

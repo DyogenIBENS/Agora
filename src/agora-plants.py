@@ -64,7 +64,7 @@ conservedAdjacenciesParams = ["-anchorSize=3"]
 # TODO denovo all and compare to "scaffolds"
 workflow.addPairwiseAnalysis(workflow.allAncGenesName, params=conservedAdjacenciesParams)
 workflow.addIntegrationAnalysis("denovo", [], workflow.allAncGenesName)
-# workflow.convertToRealAncGenes()
+workflow.convertToRealAncGenes()
 workflow.markForSelection()
 
 filtBlocksMethods = [("propLength", "50"), ("propLength", "70"), ("fixedLength", "20"), ("fixedLength", "50")]
@@ -77,13 +77,11 @@ for filtParams in filtBlocksMethods:
     workflow.addIntegrationAnalysis("fillin", [], workflow.allAncGenesName)
     workflow.addIntegrationAnalysis("fusion", ["+onlySingletons"], workflow.allAncGenesName)
     workflow.addIntegrationAnalysis("insertion", [], workflow.allAncGenesName)
-    # TODO
-    # workflow.convertToRealAncGenes()
+    workflow.convertToRealAncGenes()
     workflow.markForSelection()
 # TODO name the output
 workflow.addSelectionAnalysis()
-# workflow.addIntegrationAnalysis("publish", [], None, taskName="/plants-workflow")
-# workflow.convertBlocksToGenomes("")
+# workflow.publishGenome(outputName="plants-workflow")
 
 # workflow.tasklist.printGraphviz(sys.stdout)
 # sys.exit(0)
