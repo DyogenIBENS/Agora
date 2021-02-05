@@ -19,10 +19,9 @@ import utils.myPhylTree
 arguments = utils.myTools.checkArgs( [("speciesTree",file), ("target",str), ("IN.ancGenesFiles",str), ("OUT.ancGenesFiles",str), ("minLength",int)], [], __doc__ )
 
 phylTree = utils.myPhylTree.PhylogeneticTree(arguments["speciesTree"])
-target = phylTree.officialName[arguments["target"]]
+targets = phylTree.getTargetsAnc(arguments["target"])
 
-for anc in phylTree.listAncestr:
-	if phylTree.dicParents[anc][target] == target:
+for anc in targets:
 		fi = utils.myFile.openFile(arguments["IN.ancGenesFiles"] % phylTree.fileName[anc], "r")
 		fo = utils.myFile.openFile(arguments["OUT.ancGenesFiles"] % phylTree.fileName[anc], "w")
 		for l in fi:
