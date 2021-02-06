@@ -1,19 +1,19 @@
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-| Key           | Values                                                                                                                                                           |
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-| speciesTree   | example/data/Species.nwk                                                                                                                                         |
-| target        | A0                                                                                                                                                               |
-| pairwise      | example/results/pairwise/pairs-all/%s.list.bz2                                                                                                                   |
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Key           | Values                                                                                                                                                                                   |
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| speciesTree   | example/data/Species.nwk                                                                                                                                                                 |
+| target        | A0                                                                                                                                                                                       |
+| pairwise      | example/results/pairwise/pairs-all/%s.list.bz2                                                                                                                                           |
 | IN.ancBlocks  | example/results/ancBlocks/denovo-size-1.0-1.0.fillin-size-0.9-1.1.fusion-size-0.9-1.1.insertion-size-0.9-1.1.fillin-size-0.77-1.33.fusion-size-0.77-1.33.insertion-size-0.77-1.33/blocks.%s.list.bz2 |
 | OUT.ancBlocks | example/results/ancBlocks/denovo-size-1.0-1.0.fillin-size-0.9-1.1.fusion-size-0.9-1.1.insertion-size-0.9-1.1.fillin-size-0.77-1.33.fusion-size-0.77-1.33.insertion-size-0.77-1.33.fillin-all/blocks.%s.list.bz2 |
 | LOG.ancGraph  | example/results/ancBlocks/denovo-size-1.0-1.0.fillin-size-0.9-1.1.fusion-size-0.9-1.1.insertion-size-0.9-1.1.fillin-size-0.77-1.33.fusion-size-0.77-1.33.insertion-size-0.77-1.33.fillin-all/graph.%s.txt.bz2 |
-| nbThreads     | 1                                                                                                                                                                |
-| minimalWeight | 1                                                                                                                                                                |
-| mustExtend    | False                                                                                                                                                            |
-| loop          | False                                                                                                                                                            |
-| timeout       | 150                                                                                                                                                              |
-| func          | 0,32|100,40t|10000                                                                                                                                               |
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| nbThreads     | 1                                                                                                                                                                                        |
+| minimalWeight | 1                                                                                                                                                                                        |
+| mustExtend    | False                                                                                                                                                                                    |
+| loop          | False                                                                                                                                                                                    |
+| timeout       | 150                                                                                                                                                                                      |
+| func          | 0,32|100,40t|10000                                                                                                                                                                       |
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 set(['A1', 'A0', 'A3', 'A2'])
 Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-size-0.9-1.1.fusion-size-0.9-1.1.insertion-size-0.9-1.1.fillin-size-0.77-1.33.fusion-size-0.77-1.33.insertion-size-0.77-1.33/blocks.A1.list.bz2 ... 2 [6/16/41] [32/59/94] 252 [28.95/33.85-474] + 3619 singletons OK
 Building graphs ... OK

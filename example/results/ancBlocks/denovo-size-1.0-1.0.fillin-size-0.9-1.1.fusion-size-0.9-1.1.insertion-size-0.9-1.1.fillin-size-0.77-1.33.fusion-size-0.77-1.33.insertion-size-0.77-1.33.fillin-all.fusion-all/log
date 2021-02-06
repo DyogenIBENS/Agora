@@ -1,17 +1,17 @@
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-| Key            | Values                                                                                                                                                          |
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-| speciesTree    | example/data/Species.nwk                                                                                                                                        |
-| target         | A0                                                                                                                                                              |
-| pairwise       | example/results/pairwise/pairs-all/%s.list.bz2                                                                                                                  |
-| minimalWeight  | 1                                                                                                                                                               |
-| searchLoops    | True                                                                                                                                                            |
-| onlySingletons | True                                                                                                                                                            |
-| nbThreads      | 1                                                                                                                                                               |
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Key            | Values                                                                                                                                                                                  |
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| speciesTree    | example/data/Species.nwk                                                                                                                                                                |
+| target         | A0                                                                                                                                                                                      |
+| pairwise       | example/results/pairwise/pairs-all/%s.list.bz2                                                                                                                                          |
+| minimalWeight  | 1                                                                                                                                                                                       |
+| searchLoops    | True                                                                                                                                                                                    |
+| onlySingletons | True                                                                                                                                                                                    |
+| nbThreads      | 1                                                                                                                                                                                       |
 | IN.ancBlocks   | example/results/ancBlocks/denovo-size-1.0-1.0.fillin-size-0.9-1.1.fusion-size-0.9-1.1.insertion-size-0.9-1.1.fillin-size-0.77-1.33.fusion-size-0.77-1.33.insertion-size-0.77-1.33.fillin-all/blocks.%s.list.bz2 |
 | OUT.ancBlocks  | example/results/ancBlocks/denovo-size-1.0-1.0.fillin-size-0.9-1.1.fusion-size-0.9-1.1.insertion-size-0.9-1.1.fillin-size-0.77-1.33.fusion-size-0.77-1.33.insertion-size-0.77-1.33.fillin-all.fusion-all/blocks.%s.list.bz2 |
 | LOG.ancGraph   | example/results/ancBlocks/denovo-size-1.0-1.0.fillin-size-0.9-1.1.fusion-size-0.9-1.1.insertion-size-0.9-1.1.fillin-size-0.77-1.33.fusion-size-0.77-1.33.insertion-size-0.77-1.33.fillin-all.fusion-all/graph.%s.txt.bz2 |
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-size-0.9-1.1.fusion-size-0.9-1.1.insertion-size-0.9-1.1.fillin-size-0.77-1.33.fusion-size-0.77-1.33.insertion-size-0.77-1.33.fillin-all/blocks.A1.list.bz2 ... 2 [6/17/44] [34/62/100] 273 [31.10/36.46-474] + 2596 singletons OK
 Blocs integres de A1 ... 2 [2/2/4] [2/4/9] 31 [3.67/3.33-245] + 1698 singletons OK
 Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-size-0.9-1.1.fusion-size-0.9-1.1.insertion-size-0.9-1.1.fillin-size-0.77-1.33.fusion-size-0.77-1.33.insertion-size-0.77-1.33.fillin-all/blocks.A0.list.bz2 ... 2 [4/10/22] [15/33/58] 172 [17.15/19.93-762] + 3203 singletons OK

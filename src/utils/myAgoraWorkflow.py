@@ -383,11 +383,7 @@ class AgoraWorkflow:
         if taskName.endswith("/"):
             taskName = taskName[:-1]
         elif pairwiseName:
-            if methodName == "denovo" and pairwiseName == self.allAncGenesName:
-                # to distinguish denovo-all of ancgenes and ancblocks
-                taskName = taskName + "-" + self.ancGenesTaskName + "-" + pairwiseName
-            else:
-                taskName = taskName + "-" + pairwiseName
+            taskName = taskName + "-" + pairwiseName
 
         if methodName == "denovo":
             newMethod = taskName
