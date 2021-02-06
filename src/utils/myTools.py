@@ -379,13 +379,18 @@ def addModuleOptions(namespace, options):
         __moduleoptions.append((namespace+":"+name, typ, val))
 
 
-# ask a list of file in arguments
-class FileList:
-    def __init__(self, value):
-        self.minNbFiles = value
+# List of command-line arguments of a certain type
+class ParamList:
+    def __init__(self, typ, value):
+        self.typ = typ
+        self.minNb = value
 
     def __repr__(self):
-        return '<FileList(%d)>' % self.minNbFiles
+        return '<ParamList(%s, %d)>' % (self.typ, self.minNb)
+
+# Specialised version that requires files
+def FileList(value):
+    return ParamList(file, value)
 
 
 # Parse arguments on the command line
@@ -498,22 +503,22 @@ def checkArgs(args, options, info, showArgs=True, loadOnlyDefaultOptions=False):
         else:
             if len(valArg) < len(args):
                 (s,typ) = args[len(valArg)]
-                if isinstance(typ, FileList):
+                if isinstance(typ, ParamList):
                     valArg[s] = list()
                     assert len(valArg) == len(args)
-                    valArg[s].append(putValue(file, None, t))
+                    valArg[s].append(putValue(typ.typ, None, t))
                 else:
                     valArg[s] = putValue(typ, None, t)
-            elif isinstance(args[-1][1], FileList):
-                valArg[args[-1][0]].append(putValue(file, None, t))
+            elif isinstance(args[-1][1], ParamList):
+                valArg[args[-1][0]].append(putValue(typ.typ, None, t))
             else:
                 error_usage("Too many arguments on '%s'" % t)
 
-    if len(args[-1])>0 and isinstance(args[-1][1], FileList):
+    if len(args[-1])>0 and isinstance(args[-1][1], ParamList):
         if args[-1][0] not in valArg:
             valArg[args[-1][0]] = []
-        if len(valArg[args[-1][0]]) < args[-1][1].minNbFiles:
-            error_usage("Not enough files for '%s'" % args[-1][0])
+        if len(valArg[args[-1][0]]) < args[-1][1].minNb:
+            error_usage("Not enough values for '%s'" % args[-1][0])
 
     # there is less than the minimal number of arguments
     #FIXME, the second part of the condition should be avoided by upstream corrections
