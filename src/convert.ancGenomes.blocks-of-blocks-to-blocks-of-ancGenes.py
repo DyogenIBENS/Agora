@@ -36,12 +36,16 @@ targets = phylTree.getTargetsAnc(arguments["target"])
 def do(anc):
     (diags,singletons) = utils.myGraph.loadIntegr(arguments["IN.scaffoldsFile"] % phylTree.fileName[anc])
 
+    print >> sys.stderr, "Loading reference contigs set from", arguments["IN.contigsFile"] % phylTree.fileName[anc], "...",
     ref = {}
     fi = utils.myFile.openFile(arguments["IN.contigsFile"] % phylTree.fileName[anc], "r")
     for (i,l) in enumerate(fi):
         ref[i+1] = l
     fi.close()
+    print >> sys.stderr, "OK"
 
+    print >> sys.stderr, "Writing ancBlocks of", anc, "...",
+    lengths = []
     fo = utils.myFile.openFile(arguments["OUT.ancBlocksFile"] % phylTree.fileName[anc], "w")
     for (chrom,weights) in diags:
         li = []
@@ -62,13 +66,16 @@ def do(anc):
                 ls.extend(-int(x) for x in reversed(t[3].split()))
                 lw.extend(reversed(t[4].split()))
 
+        lengths.append(n)
         print >> fo, utils.myFile.myTSV.printLine([t[0], n, utils.myFile.myTSV.printLine(li, delim=" "), utils.myFile.myTSV.printLine(ls, delim=" "), utils.myFile.myTSV.printLine(lw, delim=" ")])
 
     for c in singletons:
+        lengths.append(1)
         print >> fo, ref.pop(c),
 
     # S'assure que tous les contigs ont ete employes
     assert len(ref) == 0
+    print >> sys.stderr, utils.myMaths.myStats.txtSummary(sorted(lengths))
 
 start = time.time()
 n_cpu = arguments["nbThreads"] or multiprocessing.cpu_count()
