@@ -52,9 +52,8 @@ workflow.reconstructionPassWithAncGenesFiltering("size", [arguments['minSize'], 
 # workflow.addIntegrationAnalysis("scaffolds", [], None)
 workflow.useBlocksAsAncGenes()
 
-conservedAdjacenciesParams = ["-anchorSize=3"]
 # TODO denovo all and compare to "scaffolds"
-workflow.addPairwiseAnalysis(workflow.allAncGenesName, params=conservedAdjacenciesParams)
+workflow.addPairwiseAnalysis(workflow.allAncGenesName, params=["-anchorSize=3"])
 workflow.addIntegrationAnalysis("denovo", [], workflow.allAncGenesName)
 workflow.convertToRealAncGenes()
 workflow.markForSelection()
