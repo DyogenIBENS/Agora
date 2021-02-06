@@ -278,6 +278,7 @@ class AgoraWorkflow:
         self.ancGenesTaskName = "ancgenes"
         self.ancGenesFileEntryName = "ancGenesData"
         self.pairwiseFileEntryName = "pairwiseOutput"
+        self.allAncGenesPath = self.files["ancGenesData"] % {"filt": self.allAncGenesName, "name": "%s"}
         self.selectionPool = []
         # With agora-*.py, people may use %s instead of %(name)s
         if '%(name)s' not in files['genes']:
@@ -313,29 +314,32 @@ class AgoraWorkflow:
         taskName = "-".join([methodName] + params)
 
         if self.ancBlocksAsAncGenes:
+            taskName = self.blocksName + "-" + taskName
+            inputName = self.blocksName + "-" + self.allAncGenesName
             scriptTemplate = "ALL.filterContigs-%s.py"
-            inputName = self.files["ancBlocks"] % {"method": self.blocksName, "name": "%s"}
-            outputName = self.files["filteredBlocksData"] % {"filt": taskName, "name": "%s"}
-            logName = self.files["filteredBlocksLog"] % {"filt": taskName}
+            inputPath = self.files["filteredBlocksData"] % {"filt": self.blocksName + "-" + self.allAncGenesName, "name": "%s"}
+            outputPath = self.files["filteredBlocksData"] % {"filt": taskName, "name": "%s"}
+            logPath = self.files["filteredBlocksLog"] % {"filt": taskName}
         else:
             scriptTemplate = "ALL.filterGeneFamilies-%s.py"
-            inputName = self.files["ancGenesData"] % {"filt": self.allAncGenesName, "name": "%s"}
-            outputName = self.files["ancGenesData"] % {"filt": methodName + "-%s", "name": "%s"}
-            logName = self.files["ancGenesLog"] % {"filt": taskName}
+            inputName = self.allAncGenesName
+            inputPath = self.files["ancGenesData"] % {"filt": self.allAncGenesName, "name": "%s"}
+            outputPath = self.files["ancGenesData"] % {"filt": methodName + "-%s", "name": "%s"}
+            logPath = self.files["ancGenesLog"] % {"filt": taskName}
 
         return self.tasklist.addTask(
             (self.ancGenesTaskName, taskName),
-            [(self.ancGenesTaskName, self.allAncGenesName)],
+            [(self.ancGenesTaskName, inputName)],
             (
                 [
                     os.path.join(self.scriptDir, scriptTemplate  % methodName),
                     self.files["speciesTree"],
                     ancestor or self.defaultRoot,
-                    inputName,
-                    outputName,
+                    inputPath,
+                    outputPath,
                 ] + params,
                 None,
-                logName,
+                logPath,
                 launch,
             )
         )
@@ -345,6 +349,7 @@ class AgoraWorkflow:
         if self.ancBlocksAsAncGenes:
             if methodName is None:
                 methodName = "conservedAdjacencies"
+            ancGenesName = self.blocksName + "-" + ancGenesName
             params.append("-iniAncGenesFiles=" + self.files["ancGenesData"] % {"filt": self.allAncGenesName, "name": "%s"})
             params.append("-LOG.pairwise=" + self.files["adjacenciesDebug"] % {"filt": ancGenesName, "name": "%s"})
         else:
@@ -426,11 +431,13 @@ class AgoraWorkflow:
 
         dep = []
         if pairwiseName is not None:
+            if self.ancBlocksAsAncGenes:
+                pairwiseName = self.blocksName + "-" + pairwiseName
             dep.append(("pairwise", self.ancGenesTaskName + "-" + pairwiseName))
             args.append(self.files[self.pairwiseFileEntryName] % {"filt": pairwiseName, "name": "%s"})
 
         if methodName in ["denovo", "scaffolds", "publish"]:
-            args.append("-ancGenesFiles=" + self.files[self.ancGenesFileEntryName] % {"filt": self.allAncGenesName, "name": "%s"})
+            args.append("-ancGenesFiles=" + self.allAncGenesPath)
 
         # No input data to consider for the denovo method
         if methodName != "denovo":
@@ -501,7 +508,7 @@ class AgoraWorkflow:
                 self.files["speciesTree"],
                 ancestor,
                 "-IN.ancBlocks=" + self.files["ancBlocks"] % {"method": self.prevMethod, "name": "%s"},
-                "-ancGenesFiles=" + self.files[self.ancGenesFileEntryName] % {"filt": self.allAncGenesName, "name": "%s"},
+                "-ancGenesFiles=" + self.files["ancGenesData"] % {"filt": self.allAncGenesName, "name": "%s"},
                 "-OUT.ancGenomes=" + self.files["ancGenomesOutput"] % {"method": outputName, "name": "%s"},
         ]
 
@@ -524,9 +531,10 @@ class AgoraWorkflow:
         self.ancGenesFileEntryName = "filteredBlocksData"
         self.pairwiseFileEntryName = "adjacenciesOutput"
         self.blocksName = self.prevMethod
+        self.allAncGenesPath = self.files["ancBlocks"] % {"method": self.blocksName, "name": "%s"}
 
         return self.tasklist.addTask(
-            ("ancblocks" , self.allAncGenesName),
+            ("ancblocks" , self.blocksName + "-" + self.allAncGenesName),
             [("integr", self.blocksName)],
             (
                 [
@@ -534,10 +542,10 @@ class AgoraWorkflow:
                     self.files["speciesTree"],
                     ancestor or self.defaultRoot,
                     "-IN.ancBlocks=" + self.files["ancBlocks"] % {"method": self.blocksName, "name": "%s"},
-                    "-OUT.ancBlocks=" + self.files["filteredBlocksData"] % {"filt": self.allAncGenesName, "name": "%s"}
+                    "-OUT.ancBlocks=" + self.files["filteredBlocksData"] % {"filt": self.blocksName + "-" + self.allAncGenesName, "name": "%s"}
                 ],
                 None,
-                self.files["filteredBlocksLog"] % {"filt": self.allAncGenesName, "name": "%s"},
+                self.files["filteredBlocksLog"] % {"filt": self.blocksName + "-" + self.allAncGenesName, "name": "%s"},
                 launch,
             )
         )
@@ -571,7 +579,7 @@ class AgoraWorkflow:
                 self.files["speciesTree"],
                 ancestor,
                 "-IN.scaffoldsFile=" + self.files["ancBlocks"] % {"method": self.prevMethod, "name": "%s"},
-                "-IN.contigsFile=" + self.files["filteredBlocksData"] % {"filt": self.allAncGenesName, "name": "%s"},
+                "-IN.contigsFile=" + self.files["filteredBlocksData"] % {"filt": self.blocksName + "-" + self.allAncGenesName, "name": "%s"},
                 "-OUT.ancBlocksFile=" + self.files["ancBlocks"] % {"method": newMethod, "name": "%s"},
         ]
 
@@ -596,6 +604,7 @@ class AgoraWorkflow:
         self.ancGenesTaskName = "ancgenes"
         self.ancGenesFileEntryName = "ancGenesData"
         self.pairwiseFileEntryName = "pairwiseOutput"
+        self.allAncGenesPath = self.files["ancGenesData"] % {"filt": self.allAncGenesName, "name": "%s"}
 
     def markForSelection(self):
         self.selectionPool.append( ("integr", self.prevMethod) )

@@ -1,17 +1,17 @@
------------------------------------------------------------------------------------------
-| Key                 | Values                                                          |
------------------------------------------------------------------------------------------
-| speciesTree         | example/data/Species.nwk                                        |
-| target              | A0                                                              |
-| extantSpeciesFilter |                                                                 |
-| genesFiles          | example/data/genes/genes.%s.list.bz2                            |
-| ancGenesFiles       | example/results/filtBlocks/fixedLength-20/blocks.%s.list.bz2    |
-| iniAncGenesFiles    | example/results/ancGenes/all/ancGenes.%s.list.bz2               |
-| OUT.pairwise        | example/results/pairwise/adjacencies-fixedLength-20/%s.list.bz2 |
-| anchorSize          | 2                                                               |
-| nbThreads           | 1                                                               |
-| LOG.pairwise        | example/results/pairwise/adjacencies-fixedLength-20/%s.log.bz2  |
------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------
+| Key                 | Values                                                                                                                  |
+-------------------------------------------------------------------------------------------------------------------------------------------------
+| speciesTree         | example/data/Species.nwk                                                                                                |
+| target              | A0                                                                                                                      |
+| extantSpeciesFilter |                                                                                                                         |
+| genesFiles          | example/data/genes/genes.%s.list.bz2                                                                                    |
+| ancGenesFiles       | example/results/filtBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all-fixedLength-20/blocks.%s.list.bz2    |
+| iniAncGenesFiles    | example/results/ancGenes/all/ancGenes.%s.list.bz2                                                                       |
+| OUT.pairwise        | example/results/pairwise/adjacencies-denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all-fixedLength-20/%s.list.bz2 |
+| anchorSize          | 2                                                                                                                       |
+| nbThreads           | 1                                                                                                                       |
+| LOG.pairwise        | example/results/pairwise/adjacencies-denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all-fixedLength-20/%s.log.bz2  |
+-------------------------------------------------------------------------------------------------------------------------------------------------
 Loading genome of example/data/genes/genes.M5.list.bz2 ... (Ensembl) OK
 Loading genome of example/data/genes/genes.M4.list.bz2 ... (Ensembl) OK
 Loading genome of example/data/genes/genes.M1.list.bz2 ... (Ensembl) OK
@@ -21,10 +21,10 @@ Loading genome of example/results/ancGenes/all/ancGenes.A1.list.bz2 ... (ancestr
 Loading genome of example/results/ancGenes/all/ancGenes.A0.list.bz2 ... (ancestral genes) OK
 Loading genome of example/results/ancGenes/all/ancGenes.A3.list.bz2 ... (ancestral genes) OK
 Loading genome of example/results/ancGenes/all/ancGenes.A2.list.bz2 ... (ancestral genes) OK
-Loading genome of example/results/filtBlocks/fixedLength-20/blocks.A1.list.bz2 ... (ancestral genome: diags) OK
-Loading genome of example/results/filtBlocks/fixedLength-20/blocks.A0.list.bz2 ... (ancestral genome: diags) OK
-Loading genome of example/results/filtBlocks/fixedLength-20/blocks.A3.list.bz2 ... (ancestral genome: diags) OK
-Loading genome of example/results/filtBlocks/fixedLength-20/blocks.A2.list.bz2 ... (ancestral genome: diags) OK
+Loading genome of example/results/filtBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all-fixedLength-20/blocks.A1.list.bz2 ... (ancestral genome: diags) OK
+Loading genome of example/results/filtBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all-fixedLength-20/blocks.A0.list.bz2 ... (ancestral genome: diags) OK
+Loading genome of example/results/filtBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all-fixedLength-20/blocks.A3.list.bz2 ... (ancestral genome: diags) OK
+Loading genome of example/results/filtBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all-fixedLength-20/blocks.A2.list.bz2 ... (ancestral genome: diags) OK
 Extraction des diagonales entre A1 et M5 ... 2 [2/4/7] [5/8/12] 32 [5.69/4.62-1822] 53 adjacences / 223 blocs (ancre: 2)
 Extraction des diagonales entre A1 et M4 ... 2 [3/8/19] [13/23/37] 109 [13.02/13.49-786] 129 adjacences / 223 blocs (ancre: 2)
 Extraction des diagonales entre A1 et M1 ... 2 [4/13/28] [21/36/62] 131 [20.58/21.76-620] 129 adjacences / 227 blocs (ancre: 2)
@@ -45,4 +45,4 @@ Extraction des diagonales entre A2 et M4 ... 2 [20/30/46] [31/46/70] 162 [35.73/
 Extraction des diagonales entre A2 et M1 ... 2 [4/7/16] [10/19/32] 107 [11.77/12.06-850] 94 adjacences / 211 blocs (ancre: 2)
 Extraction des diagonales entre A2 et M3 ... 2 [3/8/16] [10/19/32] 82 [11.49/11.57-821] 102 adjacences / 211 blocs (ancre: 2)
 Extraction des diagonales entre A2 et M2 ... 2 [3/7/14] [10/17/28] 87 [10.72/10.46-924] 89 adjacences / 211 blocs (ancre: 2)
-Elapsed time: 5.37089514732
+Elapsed time: 5.32987689972
