@@ -69,12 +69,19 @@ def do(anc):
         lengths.append(n)
         print >> fo, utils.myFile.myTSV.printLine([t[0], n, utils.myFile.myTSV.printLine(li, delim=" "), utils.myFile.myTSV.printLine(ls, delim=" "), utils.myFile.myTSV.printLine(lw, delim=" ")])
 
+    ns = 0
     for c in singletons:
-        print >> fo, ref.pop(c),
+        l = ref.pop(c)
+        n = len(l[:-1].split("\t")[2].split())
+        if n >= 2:
+            lengths.append(n)
+        else:
+            ns += 1
+        print >> fo, l,
 
     # S'assure que tous les contigs ont ete employes
     assert len(ref) == 0
-    print >> sys.stderr, utils.myMaths.myStats.txtSummary(sorted(lengths)), "+", len(singletons), "singletons"
+    print >> sys.stderr, utils.myMaths.myStats.txtSummary(sorted(lengths)), "+", ns, "singletons"
 
 start = time.time()
 n_cpu = arguments["nbThreads"] or multiprocessing.cpu_count()
