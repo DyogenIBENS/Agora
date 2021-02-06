@@ -38,8 +38,6 @@ for (f, s) in utils.myAgoraWorkflow.AgoraWorkflow.defaultPaths.iteritems():
     files[f] = os.path.normpath(os.path.join(outputDir, s))
 scriptDir = os.path.dirname(os.path.abspath(__file__))
 
-constrainedAncGenesDirName = "-".join(["size", str(arguments['minSize']), str(arguments['maxSize'])])
-
 phylTree = utils.myPhylTree.PhylogeneticTree(arguments["speciesTree"])
 # Check that the syntax is correct
 if arguments["target"]:
@@ -49,15 +47,9 @@ if arguments["extantSpeciesFilter"]:
 
 workflow = utils.myAgoraWorkflow.AgoraWorkflow(arguments["target"] or phylTree.root, arguments["extantSpeciesFilter"], scriptDir, files)
 workflow.addAncGenesGenerationAnalysis()
-workflow.addAncGenesFilterAnalysis("size", [str(arguments['minSize']), str(arguments['maxSize'])])
-workflow.addPairwiseAnalysis(workflow.allAncGenesName)
-workflow.addPairwiseAnalysis(constrainedAncGenesDirName)
-workflow.addIntegrationAnalysis("denovo", [], constrainedAncGenesDirName)
-workflow.addIntegrationAnalysis("fillin", [], workflow.allAncGenesName)
-workflow.addIntegrationAnalysis("fusion", ["+onlySingletons"], workflow.allAncGenesName)
-workflow.addIntegrationAnalysis("insertion", [], workflow.allAncGenesName)
-# workflow.addIntegrationAnalysis("scaffolds", [], None)
 
+workflow.reconstructionPassWithAncGenesFiltering("size", [arguments['minSize'], arguments['maxSize']])
+# workflow.addIntegrationAnalysis("scaffolds", [], None)
 workflow.useBlocksAsAncGenes()
 
 conservedAdjacenciesParams = ["-anchorSize=3"]
@@ -70,13 +62,7 @@ workflow.markForSelection()
 filtBlocksMethods = [("propLength", "50"), ("propLength", "70"), ("fixedLength", "20"), ("fixedLength", "50")]
 
 for filtParams in filtBlocksMethods:
-    filtName = "-".join(filtParams)
-    workflow.addBlocksFilterAnalysis(filtParams[0], list(filtParams[1:]))
-    workflow.addPairwiseAnalysis(filtName, params=conservedAdjacenciesParams)
-    workflow.addIntegrationAnalysis("denovo", [], filtName)
-    workflow.addIntegrationAnalysis("fillin", [], workflow.allAncGenesName)
-    workflow.addIntegrationAnalysis("fusion", ["+onlySingletons"], workflow.allAncGenesName)
-    workflow.addIntegrationAnalysis("insertion", [], workflow.allAncGenesName)
+    workflow.reconstructionPassWithAncGenesFiltering(filtParams[0], list(filtParams[1:]))
     workflow.convertToRealAncGenes()
     workflow.markForSelection()
 # TODO name the output

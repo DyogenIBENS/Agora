@@ -473,6 +473,21 @@ class AgoraWorkflow:
         )
 
 
+    def reconstructionPassWithAncGenesFiltering(self, filteringMethod, filteringParams, ancestor=None, launch=True):
+        filteringParams = map(str, filteringParams)
+        filteredAncGenesDirName = filteringMethod + "-" + "-".join(filteringParams)
+        self.addAncGenesFilterAnalysis(filteringMethod, filteringParams, ancestor=ancestor, launch=launch)
+        # Don't run twice
+        pairwiseTaskName = ("pairwise", self.ancGenesTaskName + "-" + self.allAncGenesName)
+        if pairwiseTaskName not in self.tasklist.dic:
+            self.addPairwiseAnalysis(self.allAncGenesName, ancestor=ancestor, launch=launch)
+        self.addPairwiseAnalysis(filteredAncGenesDirName, ancestor=ancestor, launch=launch)
+        self.addIntegrationAnalysis("denovo", [], filteredAncGenesDirName, ancestor=ancestor, launch=launch)
+        self.addIntegrationAnalysis("fillin", [], self.allAncGenesName, ancestor=ancestor, launch=launch)
+        self.addIntegrationAnalysis("fusion", ["+onlySingletons"], self.allAncGenesName, ancestor=ancestor, launch=launch)
+        self.addIntegrationAnalysis("insertion", [], self.allAncGenesName, ancestor=ancestor, launch=launch)
+
+
     def publishGenome(self, outputName=None, inputName=None, ancestor=None, launch=True):
 
         if inputName:
