@@ -1,0 +1,23 @@
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Key               | Values                                                                                                                                                                   |
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| speciesTree       | example/data/Species.nwk                                                                                                                                                 |
+| target            | A0                                                                                                                                                                       |
+| nbThreads         | 1                                                                                                                                                                        |
+| IN.scaffoldsFile  | example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all.denovo-propLength-50.fillin-all.fusion-all.insertion-all/blocks.%s.list.bz2            |
+| IN.contigsFile    | example/results/filtBlocks/all/blocks.%s.list.bz2                                                                                                                        |
+| OUT.ancBlocksFile | example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all.denovo-propLength-50.fillin-all.fusion-all.insertion-all.asAncGenes/blocks.%s.list.bz2 |
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all.denovo-propLength-50.fillin-all.fusion-all.insertion-all/blocks.A1.list.bz2 ... 2 [2/3/5] [3/5/7] 15 [3.89/2.31-133] + 1350 singletons OK
+Loading reference contigs set from example/results/filtBlocks/all/blocks.A1.list.bz2 ... OK
+Writing ancBlocks of A1 ... 2 [3/11/78] [87/182/283] 477 [56.06/89.35-288] + 1195 singletons
+Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all.denovo-propLength-50.fillin-all.fusion-all.insertion-all/blocks.A0.list.bz2 ... 2 [2/2/3] [2/3/5] 11 [3.01/1.67-145] + 2733 singletons OK
+Loading reference contigs set from example/results/filtBlocks/all/blocks.A0.list.bz2 ... OK
+Writing ancBlocks of A0 ... 2 [3/9/23] [20/41/81] 217 [19.13/26.13-739] + 2139 singletons
+Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all.denovo-propLength-50.fillin-all.fusion-all.insertion-all/blocks.A3.list.bz2 ... 2 [2/3/4] [2/3/5] 8 [3.11/1.32-79] + 1118 singletons OK
+Loading reference contigs set from example/results/filtBlocks/all/blocks.A3.list.bz2 ... OK
+Writing ancBlocks of A3 ... 2 [2/8/100] [170/287/484] 1125 [80.82/146.07-212] + 985 singletons
+Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all.denovo-propLength-50.fillin-all.fusion-all.insertion-all/blocks.A2.list.bz2 ... 2 [2/3/5] [3/5/8] 18 [3.93/2.62-151] + 1313 singletons OK
+Loading reference contigs set from example/results/filtBlocks/all/blocks.A2.list.bz2 ... OK
+Writing ancBlocks of A2 ... 2 [3/10/46] [58/113/209] 482 [38.51/63.79-376] + 1088 singletons
+Time elapsed: 0.163133859634

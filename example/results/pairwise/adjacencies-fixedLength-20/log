@@ -1,0 +1,48 @@
+-----------------------------------------------------------------------------------------
+| Key                 | Values                                                          |
+-----------------------------------------------------------------------------------------
+| speciesTree         | example/data/Species.nwk                                        |
+| target              | A0                                                              |
+| extantSpeciesFilter |                                                                 |
+| genesFiles          | example/data/genes/genes.%s.list.bz2                            |
+| ancGenesFiles       | example/results/filtBlocks/fixedLength-20/blocks.%s.list.bz2    |
+| iniAncGenesFiles    | example/results/ancGenes/all/ancGenes.%s.list.bz2               |
+| OUT.pairwise        | example/results/pairwise/adjacencies-fixedLength-20/%s.list.bz2 |
+| anchorSize          | 2                                                               |
+| nbThreads           | 1                                                               |
+| LOG.pairwise        | example/results/pairwise/adjacencies-fixedLength-20/%s.log.bz2  |
+-----------------------------------------------------------------------------------------
+Loading genome of example/data/genes/genes.M5.list.bz2 ... (Ensembl) OK
+Loading genome of example/data/genes/genes.M4.list.bz2 ... (Ensembl) OK
+Loading genome of example/data/genes/genes.M1.list.bz2 ... (Ensembl) OK
+Loading genome of example/data/genes/genes.M3.list.bz2 ... (Ensembl) OK
+Loading genome of example/data/genes/genes.M2.list.bz2 ... (Ensembl) OK
+Loading genome of example/results/ancGenes/all/ancGenes.A1.list.bz2 ... (ancestral genes) OK
+Loading genome of example/results/ancGenes/all/ancGenes.A0.list.bz2 ... (ancestral genes) OK
+Loading genome of example/results/ancGenes/all/ancGenes.A3.list.bz2 ... (ancestral genes) OK
+Loading genome of example/results/ancGenes/all/ancGenes.A2.list.bz2 ... (ancestral genes) OK
+Loading genome of example/results/filtBlocks/fixedLength-20/blocks.A1.list.bz2 ... (ancestral genome: diags) OK
+Loading genome of example/results/filtBlocks/fixedLength-20/blocks.A0.list.bz2 ... (ancestral genome: diags) OK
+Loading genome of example/results/filtBlocks/fixedLength-20/blocks.A3.list.bz2 ... (ancestral genome: diags) OK
+Loading genome of example/results/filtBlocks/fixedLength-20/blocks.A2.list.bz2 ... (ancestral genome: diags) OK
+Extraction des diagonales entre A1 et M5 ... 2 [2/4/7] [5/8/12] 32 [5.69/4.62-1822] 53 adjacences / 223 blocs (ancre: 2)
+Extraction des diagonales entre A1 et M4 ... 2 [3/8/19] [13/23/37] 109 [13.02/13.49-786] 129 adjacences / 223 blocs (ancre: 2)
+Extraction des diagonales entre A1 et M1 ... 2 [4/13/28] [21/36/62] 131 [20.58/21.76-620] 129 adjacences / 227 blocs (ancre: 2)
+Extraction des diagonales entre A1 et M3 ... 2 [3/14/33] [25/44/70] 153 [22.78/25.10-540] 135 adjacences / 227 blocs (ancre: 2)
+Extraction des diagonales entre A1 et M2 ... 2 [4/14/26] [19/32/48] 124 [18.58/18.11-682] 125 adjacences / 227 blocs (ancre: 2)
+Extraction des diagonales entre A0 et M5 ... 2 [3/5/9] [6/9/16] 49 [7.00/5.66-1149] 63 adjacences / 218 blocs (ancre: 2)
+Extraction des diagonales entre A0 et M4 ... 2 [19/26/39] [25/38/57] 149 [30.54/19.63-254] 177 adjacences / 218 blocs (ancre: 2)
+Extraction des diagonales entre A0 et M1 ... 2 [5/13/24] [17/27/42] 107 [17.59/15.95-503] 139 adjacences / 218 blocs (ancre: 2)
+Extraction des diagonales entre A0 et M3 ... 2 [5/13/23] [17/25/39] 82 [16.41/14.57-507] 143 adjacences / 218 blocs (ancre: 2)
+Extraction des diagonales entre A0 et M2 ... 2 [4/11/22] [15/25/36] 104 [15.17/13.96-575] 135 adjacences / 218 blocs (ancre: 2)
+Extraction des diagonales entre A3 et M5 ... 2 [2/4/7] [4/7/11] 48 [5.21/4.36-2219] 37 adjacences / 139 blocs (ancre: 2)
+Extraction des diagonales entre A3 et M4 ... 2 [2/5/14] [10/20/32] 75 [10.18/11.52-1124] 67 adjacences / 140 blocs (ancre: 2)
+Extraction des diagonales entre A3 et M1 ... 2 [4/17/46] [37/67/126] 227 [32.69/40.57-476] 77 adjacences / 143 blocs (ancre: 2)
+Extraction des diagonales entre A3 et M3 ... 2 [2/6/18] [14/30/51] 146 [13.59/17.17-1014] 72 adjacences / 140 blocs (ancre: 2)
+Extraction des diagonales entre A3 et M2 ... 2 [4/14/41] [34/56/96] 235 [28.27/33.47-548] 55 adjacences / 143 blocs (ancre: 2)
+Extraction des diagonales entre A2 et M5 ... 2 [3/6/11] [7/12/20] 54 [8.41/7.34-1115] 5 adjacences / 211 blocs (ancre: 2)
+Extraction des diagonales entre A2 et M4 ... 2 [20/30/46] [31/46/70] 162 [35.73/25.26-250] 176 adjacences / 211 blocs (ancre: 2)
+Extraction des diagonales entre A2 et M1 ... 2 [4/7/16] [10/19/32] 107 [11.77/12.06-850] 94 adjacences / 211 blocs (ancre: 2)
+Extraction des diagonales entre A2 et M3 ... 2 [3/8/16] [10/19/32] 82 [11.49/11.57-821] 102 adjacences / 211 blocs (ancre: 2)
+Extraction des diagonales entre A2 et M2 ... 2 [3/7/14] [10/17/28] 87 [10.72/10.46-924] 89 adjacences / 211 blocs (ancre: 2)
+Elapsed time: 5.37089514732
