@@ -386,6 +386,8 @@ class AgoraWorkflow:
 
         if methodName == "denovo":
             newMethod = taskName
+            if self.ancBlocksAsAncGenes:
+                newMethod = self.blocksName + "." + newMethod
             if not ancestor:
                 ancestor = self.defaultRoot
             self.refMethod[newMethod] = (newMethod, ancestor)
