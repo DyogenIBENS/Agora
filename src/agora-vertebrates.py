@@ -15,7 +15,7 @@ import utils.myPhylTree
 import utils.myTools
 
 __doc__ = """
-    Run the Vertebrates workflow of AGORA (i.e. with constrained families)
+    Run the Vertebrates workflow of AGORA (i.e. with constrained families and a single-integration pass for scaffolding)
 
     Usage:
           src/agora-vertebrates.py example/data/Species.nwk example/data/GeneTreeForest.nhx.bz2 example/data/genes/genes.%s.list.bz2

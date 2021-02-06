@@ -15,7 +15,7 @@ import utils.myPhylTree
 import utils.myTools
 
 __doc__ = """
-    Run the Vertebrates workflow of AGORA (i.e. with constrained families)
+    Run the Plantss workflow of AGORA (i.e. with constrained families and a multi-integration pass for scaffolding)
 
     Usage:
           src/agora-plants.py example/data/Species.nwk example/data/GeneTreeForest.nhx.bz2 example/data/genes/genes.%s.list.bz2
@@ -49,27 +49,24 @@ workflow = utils.myAgoraWorkflow.AgoraWorkflow(arguments["target"] or phylTree.r
 workflow.addAncGenesGenerationAnalysis()
 
 workflow.reconstructionPassWithAncGenesFiltering("size", [arguments['minSize'], arguments['maxSize']])
-# workflow.addIntegrationAnalysis("scaffolds", [], None)
+
 workflow.useBlocksAsAncGenes()
 
-# TODO denovo all and compare to "scaffolds"
 workflow.addPairwiseAnalysis(workflow.allAncGenesName, params=["-anchorSize=3"])
 workflow.addIntegrationAnalysis("denovo", [], workflow.allAncGenesName)
 workflow.convertToRealAncGenes()
 workflow.markForSelection()
 
 filtBlocksMethods = [("propLength", "50"), ("propLength", "70"), ("fixedLength", "20"), ("fixedLength", "50")]
-
 for filtParams in filtBlocksMethods:
     workflow.reconstructionPassWithAncGenesFiltering(filtParams[0], list(filtParams[1:]))
     workflow.convertToRealAncGenes()
     workflow.markForSelection()
+
 workflow.revertToRealAncGenes()
 workflow.addSelectionAnalysis(taskName="best-scaffolds")
 workflow.publishGenome(outputName="plants-workflow")
 
-# workflow.tasklist.printGraphviz(sys.stdout)
-# sys.exit(0)
 # Launching tasks in multiple threads
 #####################################
 failed = workflow.tasklist.runAll(arguments["nbThreads"], arguments["sequential"])
