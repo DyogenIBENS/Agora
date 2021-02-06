@@ -1,0 +1,27 @@
+--------------------------------------------------------------------------------------------------
+| Key           | Values                                                                         |
+--------------------------------------------------------------------------------------------------
+| speciesTree   | example/data/Species.nwk                                                       |
+| target        | A0                                                                             |
+| pairwise      | example/results/pairwise/adjacencies-best-contigs-propLength-70/%s.list.bz2    |
+| minimalWeight | 1                                                                              |
+| searchLoops   | False                                                                          |
+| LOG.ancGraph  | example/results/ancBlocks/best-contigs.denovo-propLength-70/graph.%s.txt.bz2   |
+| OUT.ancBlocks | example/results/ancBlocks/best-contigs.denovo-propLength-70/blocks.%s.list.bz2 |
+| ancGenesFiles | example/results/ancBlocks/best-contigs/blocks.%s.list.bz2                      |
+| nbThreads     | 1                                                                              |
+--------------------------------------------------------------------------------------------------
+set(['A1', 'A0', 'A3', 'A2'])
+Loading genome of example/results/ancBlocks/best-contigs/blocks.A1.list.bz2 ... (ancestral genome: diags) OK
+Integrated blocs of A1 ... OK
+A1 min=2	N50=3	WA=2.88	max=4 + 1630 singletons OK
+Loading genome of example/results/ancBlocks/best-contigs/blocks.A0.list.bz2 ... (ancestral genome: diags) OK
+Integrated blocs of A0 ... OK
+A0 min=2	N50=2	WA=2.87	max=6 + 3012 singletons OK
+Loading genome of example/results/ancBlocks/best-contigs/blocks.A3.list.bz2 ... (ancestral genome: diags) OK
+Integrated blocs of A3 ... OK
+A3 min=2	N50=2	WA=2.44	max=4 + 1325 singletons OK
+Loading genome of example/results/ancBlocks/best-contigs/blocks.A2.list.bz2 ... (ancestral genome: diags) OK
+Integrated blocs of A2 ... OK
+A2 min=2	N50=3	WA=3.20	max=7 + 1749 singletons OK
+Elapsed time: 0.250236988068

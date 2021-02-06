@@ -1,0 +1,34 @@
+-------------------------------------------------------------------------------------------------
+| Key           | Values                                                                        |
+-------------------------------------------------------------------------------------------------
+| speciesTree   | example/data/Species.nwk                                                      |
+| target        | A0                                                                            |
+| pairwise      | example/results/pairwise/pairs-all/%s.list.bz2                                |
+| IN.ancBlocks  | example/results/ancBlocks/denovo-size-0.77-1.33/blocks.%s.list.bz2            |
+| OUT.ancBlocks | example/results/ancBlocks/denovo-size-0.77-1.33.fillin-all/blocks.%s.list.bz2 |
+| LOG.ancGraph  | example/results/ancBlocks/denovo-size-0.77-1.33.fillin-all/graph.%s.txt.bz2   |
+| nbThreads     | 1                                                                             |
+| minimalWeight | 1                                                                             |
+| mustExtend    | False                                                                         |
+| loop          | False                                                                         |
+| timeout       | 150                                                                           |
+| func          | 0,32|100,40t|10000                                                            |
+-------------------------------------------------------------------------------------------------
+set(['A1', 'A0', 'A3', 'A2'])
+Loading integrated blocks of example/results/ancBlocks/denovo-size-0.77-1.33/blocks.A1.list.bz2 ... 2 [6/20/56] [41/85/149] 316 [39.75/49.75-345] + 3624 singletons OK
+Building graphs ... OK
+adding singletons ... OK
+Final blocks of A1 2 [6/22/58] [46/92/161] 345 [42.72/53.55-345] + 2599 singletons
+Loading integrated blocks of example/results/ancBlocks/denovo-size-0.77-1.33/blocks.A0.list.bz2 ... 2 [4/7/13] [9/15/26] 98 [10.29/10.41-1210] + 3829 singletons OK
+Building graphs ... OK
+adding singletons ... OK
+Final blocks of A0 2 [4/7/14] [9/16/28] 100 [10.78/10.94-1210] + 3233 singletons
+Loading integrated blocks of example/results/ancBlocks/denovo-size-0.77-1.33/blocks.A3.list.bz2 ... 2 [9/33/91] [77/138/260] 529 [67.76/89.13-225] + 2872 singletons OK
+Building graphs ... OK
+adding singletons ... OK
+Final blocks of A3 2 [9/35/98] [82/147/278] 576 [72.09/95.27-225] + 1899 singletons
+Loading integrated blocks of example/results/ancBlocks/denovo-size-0.77-1.33/blocks.A2.list.bz2 ... 2 [4/8/16] [11/19/32] 103 [12.33/12.27-1053] + 2583 singletons OK
+Building graphs ... OK
+adding singletons ... OK
+Final blocks of A2 2 [4/9/16] [11/19/33] 111 [12.78/12.71-1053] + 2112 singletons
+total computation time 11.3711369038

@@ -1,0 +1,34 @@
+-------------------------------------------------------------------------------------------------------------
+| Key           | Values                                                                                    |
+-------------------------------------------------------------------------------------------------------------
+| speciesTree   | example/data/Species.nwk                                                                  |
+| target        | A0                                                                                        |
+| pairwise      | example/results/pairwise/adjacencies-best-contigs-all/%s.list.bz2                         |
+| IN.ancBlocks  | example/results/ancBlocks/best-contigs.denovo-propLength-70/blocks.%s.list.bz2            |
+| OUT.ancBlocks | example/results/ancBlocks/best-contigs.denovo-propLength-70.fillin-all/blocks.%s.list.bz2 |
+| LOG.ancGraph  | example/results/ancBlocks/best-contigs.denovo-propLength-70.fillin-all/graph.%s.txt.bz2   |
+| nbThreads     | 1                                                                                         |
+| minimalWeight | 1                                                                                         |
+| mustExtend    | False                                                                                     |
+| loop          | False                                                                                     |
+| timeout       | 150                                                                                       |
+| func          | 0,32|100,40t|10000                                                                        |
+-------------------------------------------------------------------------------------------------------------
+set(['A1', 'A0', 'A3', 'A2'])
+Loading integrated blocks of example/results/ancBlocks/best-contigs.denovo-propLength-70/blocks.A1.list.bz2 ... 2 [2/2/3] [2/3/4] 4 [2.65/0.78-26] + 1630 singletons OK
+Building graphs ... OK
+adding singletons ... OK
+Final blocks of A1 2 [2/3/3] [2/3/4] 6 [2.96/1.02-26] + 1622 singletons
+Loading integrated blocks of example/results/ancBlocks/best-contigs.denovo-propLength-70/blocks.A0.list.bz2 ... 2 [2/2/3] [2/2/4] 6 [2.51/0.96-63] + 3012 singletons OK
+Building graphs ... OK
+adding singletons ... OK
+Final blocks of A0 2 [2/2/3] [2/3/8] 10 [3.10/2.08-63] + 2975 singletons
+Loading integrated blocks of example/results/ancBlocks/best-contigs.denovo-propLength-70/blocks.A3.list.bz2 ... 2 [2/2/2] [2/2/3] 4 [2.29/0.57-17] + 1325 singletons OK
+Building graphs ... OK
+adding singletons ... OK
+Final blocks of A3 2 [2/2/3] [2/2/3] 4 [2.35/0.59-17] + 1324 singletons
+Loading integrated blocks of example/results/ancBlocks/best-contigs.denovo-propLength-70/blocks.A2.list.bz2 ... 2 [2/2/3] [2/3/4] 7 [2.80/1.06-56] + 1749 singletons OK
+Building graphs ... OK
+adding singletons ... OK
+Final blocks of A2 2 [2/3/4] [3/4/5] 7 [3.30/1.40-56] + 1721 singletons
+total computation time 0.111361026764

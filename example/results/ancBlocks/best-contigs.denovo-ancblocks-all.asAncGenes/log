@@ -1,0 +1,23 @@
+-----------------------------------------------------------------------------------------------------------------
+| Key               | Values                                                                                    |
+-----------------------------------------------------------------------------------------------------------------
+| speciesTree       | example/data/Species.nwk                                                                  |
+| target            | A0                                                                                        |
+| nbThreads         | 1                                                                                         |
+| IN.scaffoldsFile  | example/results/ancBlocks/best-contigs.denovo-ancblocks-all/blocks.%s.list.bz2            |
+| IN.contigsFile    | example/results/filtBlocks/best-contigs-all/blocks.%s.list.bz2                            |
+| OUT.ancBlocksFile | example/results/ancBlocks/best-contigs.denovo-ancblocks-all.asAncGenes/blocks.%s.list.bz2 |
+-----------------------------------------------------------------------------------------------------------------
+Loading integrated blocks of example/results/ancBlocks/best-contigs.denovo-ancblocks-all/blocks.A1.list.bz2 ... 2 [2/3/4] [2/4/6] 12 [3.33/1.85-105] + 1349 singletons OK
+Loading reference contigs set from example/results/filtBlocks/best-contigs-all/blocks.A1.list.bz2 ... OK
+Writing ancBlocks of A1 ... 2 [3/10/80] [100/194/360] 531 [61.63/101.74-262] + 1192 singletons
+Loading integrated blocks of example/results/ancBlocks/best-contigs.denovo-ancblocks-all/blocks.A0.list.bz2 ... 2 [2/2/3] [2/3/5] 11 [3.07/1.73-130] + 2771 singletons OK
+Loading reference contigs set from example/results/filtBlocks/best-contigs-all/blocks.A0.list.bz2 ... OK
+Writing ancBlocks of A0 ... 2 [3/9/26] [20/39/64] 173 [18.55/22.08-762] + 2139 singletons
+Loading integrated blocks of example/results/ancBlocks/best-contigs.denovo-ancblocks-all/blocks.A3.list.bz2 ... 2 [2/3/4] [2/3/5] 8 [3.08/1.32-79] + 1121 singletons OK
+Loading reference contigs set from example/results/filtBlocks/best-contigs-all/blocks.A3.list.bz2 ... OK
+Writing ancBlocks of A3 ... 2 [2/8/104] [170/276/454] 661 [79.69/132.96-215] + 985 singletons
+Loading integrated blocks of example/results/ancBlocks/best-contigs.denovo-ancblocks-all/blocks.A2.list.bz2 ... 2 [2/3/5] [3/5/7] 18 [3.80/2.43-156] + 1313 singletons OK
+Loading reference contigs set from example/results/filtBlocks/best-contigs-all/blocks.A2.list.bz2 ... OK
+Writing ancBlocks of A2 ... 2 [3/11/50] [57/109/197] 482 [38.01/61.20-381] + 1088 singletons
+Time elapsed: 0.164437055588
