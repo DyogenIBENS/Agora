@@ -592,6 +592,7 @@ class AgoraWorkflow:
 
     def revertToRealAncGenes(self):
         self.ancBlocksAsAncGenes = False
+        self.prevMethod = self.blocksName
         self.ancGenesTaskName = "ancgenes"
         self.ancGenesFileEntryName = "ancGenesData"
         self.pairwiseFileEntryName = "pairwiseOutput"
