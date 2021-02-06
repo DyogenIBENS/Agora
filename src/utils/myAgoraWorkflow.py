@@ -274,9 +274,9 @@ class AgoraWorkflow:
         self.files = files
         self.interm = {}
         self.refMethod = {}
+        self.ancBlocksAsAncGenes = False
         self.ancGenesTaskName = "ancgenes"
         self.ancGenesFileEntryName = "ancGenesData"
-        self.pairwiseDefaultMethodName = "conservedPairs"
         self.pairwiseFileEntryName = "pairwiseOutput"
         self.selectionPool = []
         # With agora-*.py, people may use %s instead of %(name)s
@@ -311,51 +311,45 @@ class AgoraWorkflow:
     def addAncGenesFilterAnalysis(self, methodName, params, ancestor=None, launch=True):
 
         taskName = "-".join([methodName] + params)
+
+        if self.ancBlocksAsAncGenes:
+            scriptTemplate = "ALL.filterContigs-%s.py"
+            inputName = self.files["ancBlocks"] % {"method": self.blocksName, "name": "%s"}
+            outputName = self.files["filteredBlocksData"] % {"filt": taskName, "name": "%s"}
+            logName = self.files["filteredBlocksLog"] % {"filt": taskName}
+        else:
+            scriptTemplate = "ALL.filterGeneFamilies-%s.py"
+            inputName = self.files["ancGenesData"] % {"filt": self.allAncGenesName, "name": "%s"}
+            outputName = self.files["ancGenesData"] % {"filt": methodName + "-%s", "name": "%s"}
+            logName = self.files["ancGenesLog"] % {"filt": taskName}
+
         return self.tasklist.addTask(
-            ("ancgenes", taskName),
-            [("ancgenes", self.allAncGenesName)],
+            (self.ancGenesTaskName, taskName),
+            [(self.ancGenesTaskName, self.allAncGenesName)],
             (
                 [
-                    os.path.join(self.scriptDir, "ALL.filterGeneFamilies-%s.py" % methodName),
+                    os.path.join(self.scriptDir, scriptTemplate  % methodName),
                     self.files["speciesTree"],
                     ancestor or self.defaultRoot,
-                    self.files["ancGenesData"] % {"filt": self.allAncGenesName, "name": "%s"},
-                    self.files["ancGenesData"] % {"filt": methodName + "-%s", "name": "%s"}
+                    inputName,
+                    outputName,
                 ] + params,
                 None,
-                self.files["ancGenesLog"] % {"filt": taskName},
-                launch,
-            )
-        )
-
-    def addBlocksFilterAnalysis(self, methodName, params, ancestor=None, launch=True):
-
-        taskName = "-".join([methodName] + params)
-        return self.tasklist.addTask(
-            ("ancblocks", taskName),
-            [("ancblocks", self.allAncGenesName)],
-            (
-                [
-                    os.path.join(self.scriptDir, "ALL.filterContigs-%s.py" % methodName),
-                    self.files["speciesTree"],
-                    ancestor or self.defaultRoot,
-                    self.files["ancBlocks"] % {"method": self.blocksName, "name": "%s"},
-                    self.files["filteredBlocksData"] % {"filt": taskName, "name": "%s"}
-                ] + params,
-                None,
-                self.files["filteredBlocksLog"] % {"filt": taskName},
+                logName,
                 launch,
             )
         )
 
     def addPairwiseAnalysis(self, ancGenesName, methodName=None, params=[], ancestor=None, launch=True):
 
-        if methodName is None:
-            methodName = self.pairwiseDefaultMethodName
-
-        if methodName == "conservedAdjacencies":
+        if self.ancBlocksAsAncGenes:
+            if methodName is None:
+                methodName = "conservedAdjacencies"
             params.append("-iniAncGenesFiles=" + self.files["ancGenesData"] % {"filt": self.allAncGenesName, "name": "%s"})
             params.append("-LOG.pairwise=" + self.files["adjacenciesDebug"] % {"filt": ancGenesName, "name": "%s"})
+        else:
+            if methodName is None:
+                methodName = "conservedPairs"
 
         return self.tasklist.addTask(
             ("pairwise", self.ancGenesTaskName + "-" + ancGenesName),
@@ -523,9 +517,9 @@ class AgoraWorkflow:
 
 
     def useBlocksAsAncGenes(self, ancestor=None, launch=True):
+        self.ancBlocksAsAncGenes = True
         self.ancGenesTaskName = "ancblocks"
         self.ancGenesFileEntryName = "filteredBlocksData"
-        self.pairwiseDefaultMethodName = "conservedAdjacencies"
         self.pairwiseFileEntryName = "adjacenciesOutput"
         self.blocksName = self.prevMethod
 
@@ -546,15 +540,59 @@ class AgoraWorkflow:
             )
         )
 
-    def convertToRealAncGenes(self):
-        pass
+        # similar to addConversionAnalysis but updates self.prevMethod and doesn't allow custom output names
+    def convertToRealAncGenes(self, taskName=None, inputName=None, outputName=None, ancestor=None, launch=True):
 
-    def expandBlocks(self):
+        if taskName is None:
+            taskName = "asAncGenes"
+
+        if inputName:
+            self.prevMethod = self.interm[inputName]
+
+        if taskName.startswith("/"):
+            newMethod = taskName[1:]
+        else:
+            newMethod = self.prevMethod + "." + taskName
+
+        if not ancestor:
+            ancestor = self.refMethod[self.prevMethod][1]
+
+        self.refMethod[newMethod] = self.refMethod[self.prevMethod]
+
+        if outputName:
+            self.interm[outputName] = newMethod
+
+        # task parameters
+        deps = [("integr", self.prevMethod)]
+        args = [
+                os.path.join(self.scriptDir, "convert.ancGenomes.blocks-of-blocks-to-blocks-of-ancGenes.py"),
+                self.files["speciesTree"],
+                ancestor,
+                "-IN.scaffoldsFile=" + self.files["ancBlocks"] % {"method": self.prevMethod, "name": "%s"},
+                "-IN.contigsFile=" + self.files["filteredBlocksData"] % {"filt": self.allAncGenesName, "name": "%s"},
+                "-OUT.ancBlocksFile=" + self.files["ancBlocks"] % {"method": newMethod, "name": "%s"},
+        ]
+
+        self.prevMethod = newMethod
+
+        return self.tasklist.addTask(
+            ("integr", newMethod),
+            deps,
+            (
+                args,
+                None,
+                self.files["ancLog"] % {"method": newMethod},
+                launch,
+            ),
+            True,
+        )
+
+
+    def revertToRealAncGenes(self):
+        self.ancBlocksAsAncGenes = False
         self.ancGenesTaskName = "ancgenes"
         self.ancGenesFileEntryName = "ancGenesData"
-        self.pairwiseDefaultMethodName = "conservedPairs"
         self.pairwiseFileEntryName = "pairwiseOutput"
-        # TODO: add analysis to convert back
 
     def markForSelection(self):
         self.selectionPool.append( ("integr", self.prevMethod) )
