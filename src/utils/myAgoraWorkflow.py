@@ -600,8 +600,45 @@ class AgoraWorkflow:
     def markForSelection(self):
         self.selectionPool.append( ("integr", self.prevMethod) )
 
-    def addSelectionAnalysis(self):
-        # TODO add analysis
-        task = self.addDummy( ("integr", "selection"), self.selectionPool)
+    def addSelectionAnalysis(self, taskName=None, outputName=None, ancestor=None, launch=True):
+
+        if taskName:
+            newMethod = taskName
+        else:
+            newMethod = "selection"
+
+        if newMethod.startswith("/"):
+            newMethod = newMethod[1:]
+        else:
+            newMethod = self.prevMethod + "." + newMethod
+
+        if outputName:
+            self.interm[outputName] = newMethod
+
+        if not ancestor:
+            ancestor = self.refMethod[self.prevMethod][1]
+
+        self.refMethod[newMethod] = self.refMethod[self.prevMethod]
+
+        # task parameters
+        args = [
+                os.path.join(self.scriptDir, "ALL.selectBestReconstruction.py"),
+                self.files["speciesTree"],
+                ancestor,
+                "-OUT.ancBlocks=" + self.files["ancBlocks"] % {"method": newMethod, "name": "%s"},
+        ] + [self.files["ancBlocks"] % {"method": method, "name": "%s"} for (_, method) in self.selectionPool]
+
+        task = self.tasklist.addTask(
+            ("integr", newMethod),
+            self.selectionPool,
+            (
+                args,
+                None,
+                self.files["ancLog"] % {"method": newMethod},
+                launch,
+            ),
+        )
+        self.prevMethod = newMethod
         self.selectionPool = []
+
         return task

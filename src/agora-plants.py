@@ -64,9 +64,9 @@ for filtParams in filtBlocksMethods:
     workflow.reconstructionPassWithAncGenesFiltering(filtParams[0], list(filtParams[1:]))
     workflow.convertToRealAncGenes()
     workflow.markForSelection()
-# TODO name the output
-workflow.addSelectionAnalysis()
-# workflow.publishGenome(outputName="plants-workflow")
+workflow.revertToRealAncGenes()
+workflow.addSelectionAnalysis(taskName="best-scaffolds")
+workflow.publishGenome(outputName="plants-workflow")
 
 # workflow.tasklist.printGraphviz(sys.stdout)
 # sys.exit(0)
