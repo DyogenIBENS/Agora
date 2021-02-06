@@ -477,7 +477,10 @@ class AgoraWorkflow:
         filteredAncGenesDirName = filteringMethod + "-" + "-".join(filteringParams)
         self.addAncGenesFilterAnalysis(filteringMethod, filteringParams, ancestor=ancestor, launch=launch)
         # Don't run twice
-        pairwiseTaskName = ("pairwise", self.ancGenesTaskName + "-" + self.allAncGenesName)
+        if self.ancBlocksAsAncGenes:
+            pairwiseTaskName = ("pairwise", self.ancGenesTaskName + "-" + self.blocksName + "-" + self.allAncGenesName)
+        else:
+            pairwiseTaskName = ("pairwise", self.ancGenesTaskName + "-" + self.allAncGenesName)
         if pairwiseTaskName not in self.tasklist.dic:
             self.addPairwiseAnalysis(self.allAncGenesName, ancestor=ancestor, launch=launch)
         self.addPairwiseAnalysis(filteredAncGenesDirName, ancestor=ancestor, launch=launch)
