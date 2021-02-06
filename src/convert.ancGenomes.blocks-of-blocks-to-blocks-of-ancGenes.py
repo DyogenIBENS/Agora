@@ -70,12 +70,11 @@ def do(anc):
         print >> fo, utils.myFile.myTSV.printLine([t[0], n, utils.myFile.myTSV.printLine(li, delim=" "), utils.myFile.myTSV.printLine(ls, delim=" "), utils.myFile.myTSV.printLine(lw, delim=" ")])
 
     for c in singletons:
-        lengths.append(1)
         print >> fo, ref.pop(c),
 
     # S'assure que tous les contigs ont ete employes
     assert len(ref) == 0
-    print >> sys.stderr, utils.myMaths.myStats.txtSummary(sorted(lengths))
+    print >> sys.stderr, utils.myMaths.myStats.txtSummary(sorted(lengths)), "+", len(singletons), "singletons"
 
 start = time.time()
 n_cpu = arguments["nbThreads"] or multiprocessing.cpu_count()
