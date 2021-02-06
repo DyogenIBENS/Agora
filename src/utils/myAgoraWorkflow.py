@@ -249,7 +249,7 @@ class AgoraWorkflow:
         'ancGenesData': 'ancGenes/%(filt)s/ancGenes.%(name)s.list.bz2',
         'ancGenesLog': 'ancGenes/%(filt)s.log',
         'filteredBlocksData': 'filtBlocks/%(filt)s/blocks.%(name)s.list.bz2',
-        'filteredBlocksLog': 'filtBlocks/%(filt)s.log',
+        'filteredBlocksLog': 'filtBlocks/%(filt)s/log',
         'geneTreesWithAncNames': 'GeneTreeForest.withAncGenes.nhx.bz2',
         'pairwiseOutput': 'pairwise/pairs-%(filt)s/%(name)s.list.bz2',
         'pairwiseLog': 'pairwise/pairs-%(filt)s/log',
