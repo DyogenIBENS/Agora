@@ -549,7 +549,6 @@ class AgoraWorkflow:
             )
         )
 
-        # similar to addConversionAnalysis but updates self.prevMethod and doesn't allow custom output names
     def convertToRealAncGenes(self, taskName=None, inputName=None, outputName=None, ancestor=None, launch=True):
 
         if taskName is None:
