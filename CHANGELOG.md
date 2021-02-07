@@ -1,3 +1,17 @@
+## 2021-02-07 - v2.1
+
+1. [change] -- Changed the parameters of gene-families filtering in the
+   Vertebrates workflow to the values used for Genomicus production.
+2. [new] -- Support for macOS (Catalina).
+3. [new] -- Added the ability to do the second reconstruction pass
+   (scaffolds) in a multi-integration fashion in the library
+   `myAgoraWorkflow`.
+4. [new] -- New preset to run reconstructions for Plants
+   (`agora-plants.py`).
+5. [new] -- New script to test all reconstruction parameters and
+   automatically select the best. It should apply to any clade
+   (`agora-generic.py`).
+
 ## 2020-12-07 - v2.0
 
 1. [major change] -- Renamed all scripts and most options to match the
