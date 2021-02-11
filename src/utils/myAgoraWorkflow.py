@@ -419,6 +419,8 @@ class AgoraWorkflow:
         if methodName == "publish":
             # "publish" is not an integration method
             args[0] = os.path.join(self.scriptDir, "convert.ancGenomes.blocks-to-genes.py")
+            args.append("+orderBySize")
+            args.append("-IN.pairwise=" + self.files["pairwiseOutput"] % {"filt": self.allAncGenesName, "name": "%s"})
             args.append("-OUT.ancGenomes=" + self.files["ancGenomesOutput"] % {"method": newMethod, "name": "%s"})
             logfile = self.files["ancGenomesLog"]
         else:
@@ -506,6 +508,8 @@ class AgoraWorkflow:
                 os.path.join(self.scriptDir, "convert.ancGenomes.blocks-to-genes.py"),
                 self.files["speciesTree"],
                 ancestor,
+                "+orderBySize",
+                "-IN.pairwise=" + self.files["pairwiseOutput"] % {"filt": self.allAncGenesName, "name": "%s"},
                 "-IN.ancBlocks=" + self.files["ancBlocks"] % {"method": self.prevMethod, "name": "%s"},
                 "-ancGenesFiles=" + self.files["ancGenesData"] % {"filt": self.allAncGenesName, "name": "%s"},
                 "-OUT.ancGenomes=" + self.files["ancGenomesOutput"] % {"method": outputName, "name": "%s"},
