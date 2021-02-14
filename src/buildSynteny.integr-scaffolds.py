@@ -163,7 +163,10 @@ def do(anc):
             tmp = toString(x, rev=(s < 0))
             tg.append(tmp[0])
             ts.append(tmp[1])
-            tw.append("(%d)" % len(dicGenomesAnc.lstGenes[x]))
+            if s > 0:
+                tw.extend(dicGenomesAnc.support[x])
+            else:
+                tw.extend(reversed(dicGenomesAnc.support[x]))
             if len(scores) > 0:
                 tw.append(str(scores.pop(0)))
             l += len(dicGenomesAnc.lstGenes[x])

@@ -230,15 +230,21 @@ class Genome:
                 print >> sys.stderr, "(ancestral genome: chrom+diags)",
 
             else:
+                # Optional column for adjacencies support scores
+                ilss = None
                 if len(c) == 2:
                     (ili,ils) = (0,1)
                 else:
                     assert len(c) >= 4
                     (ili,ils) = (2,3)
+                    ilss = 4
                     self.ancName = c[0]
 
                 if 'ancGenes' in kwargs:
                     ancGenes = kwargs["ancGenes"].lstGenes[None]
+
+                if ilss:
+                    self.support = {}
 
                 # ancestral genome: "LST-INDEX LST-STRANDS"
                 #############################################
@@ -246,6 +252,8 @@ class Genome:
                     c = l.split("\t")
                     chrom = i+1
                     lchrom = self.lstGenes[chrom]
+                    if ilss:
+                        self.support[chrom] = c[ilss].split()
                     for (pos,(index,strand)) in enumerate(itertools.izip(c[ili].split(), c[ils].split())):
                         if 'ancGenes' in kwargs:
                             lchrom.append( Gene(chrom, pos, pos+1, int(strand), ancGenes[int(index)].names) )
