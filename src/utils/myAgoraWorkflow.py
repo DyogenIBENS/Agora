@@ -316,7 +316,7 @@ class AgoraWorkflow:
         if self.ancBlocksAsAncGenes:
             taskName = self.blocksName + "-" + taskName
             inputName = self.blocksName + "-" + self.allAncGenesName
-            scriptTemplate = "ALL.filterContigs-%s.py"
+            scriptTemplate = "ALL.filterBlocks-%s.py"
             inputPath = self.files["filteredBlocksData"] % {"filt": self.blocksName + "-" + self.allAncGenesName, "name": "%s"}
             outputPath = self.files["filteredBlocksData"] % {"filt": taskName, "name": "%s"}
             logPath = self.files["filteredBlocksLog"] % {"filt": taskName}
