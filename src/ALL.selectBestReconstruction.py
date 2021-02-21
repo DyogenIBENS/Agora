@@ -7,7 +7,7 @@
 # This is free software; you may copy, modify and/or distribute this work under the terms of the GNU General Public License, version 3 or later and the CeCiLL v2 license in France
 
 __doc__ = """
-	For each ancestor, select the reconstruction that has the highest N50
+	For each ancestor, select the reconstruction that has the highest G50
 """
 
 import sys
