@@ -578,8 +578,8 @@ class AgoraWorkflow:
                 os.path.join(self.scriptDir, "convert.ancGenomes.blocks-of-blocks-to-blocks-of-ancGenes.py"),
                 self.files["speciesTree"],
                 ancestor,
-                "-IN.scaffoldsFile=" + self.files["ancBlocks"] % {"method": self.prevMethod, "name": "%s"},
-                "-IN.contigsFile=" + self.files["filteredBlocksData"] % {"filt": self.blocksName + "-" + self.allAncGenesName, "name": "%s"},
+                "-IN.blocksBlocksFile=" + self.files["ancBlocks"] % {"method": self.prevMethod, "name": "%s"},
+                "-IN.blocksGenesFile=" + self.files["filteredBlocksData"] % {"filt": self.blocksName + "-" + self.allAncGenesName, "name": "%s"},
                 "-OUT.ancBlocksFile=" + self.files["ancBlocks"] % {"method": newMethod, "name": "%s"},
         ]
 

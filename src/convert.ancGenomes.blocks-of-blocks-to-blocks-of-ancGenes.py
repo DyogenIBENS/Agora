@@ -7,7 +7,7 @@
 # This is free software; you may copy, modify and/or distribute this work under the terms of the GNU General Public License, version 3 or later and the CeCiLL v2 license in France
 
 __doc__ = """
-	Convert a genome written as blocks of contigs to blocks of ancGenes
+	Convert a genome written as blocks of blocks to blocks of ancGenes
 """
 
 import multiprocessing
@@ -25,7 +25,7 @@ import utils.myTools
 # Arguments
 arguments = utils.myTools.checkArgs(
     [("speciesTree", file), ("target", str)],
-    [("nbThreads", int, 0), ("IN.scaffoldsFile", str, ""), ("IN.contigsFile", str, ""), ("OUT.ancBlocksFile", str, "")],
+    [("nbThreads", int, 0), ("IN.blocksBlocksFile", str, ""), ("IN.blocksGenesFile", str, ""), ("OUT.ancBlocksFile", str, "")],
     __doc__
 )
 
@@ -34,11 +34,11 @@ phylTree = utils.myPhylTree.PhylogeneticTree(arguments["speciesTree"])
 targets = phylTree.getTargetsAnc(arguments["target"])
 
 def do(anc):
-    (diags,singletons) = utils.myGraph.loadIntegr(arguments["IN.scaffoldsFile"] % phylTree.fileName[anc])
+    (diags,singletons) = utils.myGraph.loadIntegr(arguments["IN.blocksBlocksFile"] % phylTree.fileName[anc])
 
-    print >> sys.stderr, "Loading reference contigs set from", arguments["IN.contigsFile"] % phylTree.fileName[anc], "...",
+    print >> sys.stderr, "Loading reference blocks set from", arguments["IN.blocksGenesFile"] % phylTree.fileName[anc], "...",
     ref = {}
-    fi = utils.myFile.openFile(arguments["IN.contigsFile"] % phylTree.fileName[anc], "r")
+    fi = utils.myFile.openFile(arguments["IN.blocksGenesFile"] % phylTree.fileName[anc], "r")
     for (i,l) in enumerate(fi):
         ref[i+1] = l
     fi.close()
@@ -79,7 +79,7 @@ def do(anc):
             ns += 1
         print >> fo, l,
 
-    # S'assure que tous les contigs ont ete employes
+    # S'assure que tous les blocs ont ete employes
     assert len(ref) == 0
     print >> sys.stderr, utils.myMaths.myStats.txtSummary(sorted(lengths)), "+", ns, "singletons"
 
