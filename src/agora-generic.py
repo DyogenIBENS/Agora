@@ -54,7 +54,7 @@ workflow.markForSelection()
 for sizeParams in [(1.0,1.0), (0.9,1.1), (0.77,1.33)]:
     workflow.reconstructionPassWithAncGenesFiltering("size", list(sizeParams))
     workflow.markForSelection()
-workflow.addSelectionAnalysis(taskName="/best-contigs")
+workflow.addSelectionAnalysis(taskName="/best-pass1")
 workflow.useBlocksAsAncGenes()
 
 workflow.addPairwiseAnalysis(workflow.allAncGenesName, params=["-anchorSize=3"])
@@ -68,7 +68,7 @@ for filtParams in filtBlocksMethods:
     workflow.convertToRealAncGenes()
     workflow.markForSelection()
 workflow.revertToRealAncGenes()
-workflow.addSelectionAnalysis(taskName="best-scaffolds")
+workflow.addSelectionAnalysis(taskName="best-pass2")
 workflow.publishGenome(outputName="generic-workflow")
 
 # Launching tasks in multiple threads

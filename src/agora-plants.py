@@ -64,7 +64,7 @@ for filtParams in filtBlocksMethods:
     workflow.markForSelection()
 
 workflow.revertToRealAncGenes()
-workflow.addSelectionAnalysis(taskName="best-scaffolds")
+workflow.addSelectionAnalysis(taskName="best-pass2")
 workflow.publishGenome(outputName="plants-workflow")
 
 # Launching tasks in multiple threads
