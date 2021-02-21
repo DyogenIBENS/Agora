@@ -25,14 +25,13 @@ from joblib import Parallel, delayed
 
 import utils.myFile
 import utils.myGenomes
-import utils.myGraph
 import utils.myPhylTree
 import utils.myTools
 
 # Arguments
 arguments = utils.myTools.checkArgs(
     [("speciesTree", file), ("target", str)],
-    [("IN.ancBlocks", str, ""), ("IN.pairwise", str, ""), ("ancGenesFiles", str, ""), ("OUT.ancGenomes", str, "ancGenomes/ancGenome.%s.list.bz2"),
+    [("IN.ancBlocks", str, ""), ("ancGenesFiles", str, ""), ("OUT.ancGenomes", str, "ancGenomes/ancGenome.%s.list.bz2"),
      ("nbThreads", int, 0), ("orderBySize", bool, False),
     ],
     __doc__
@@ -46,42 +45,18 @@ def do(anc):
     genome = utils.myGenomes.Genome(arguments["IN.ancBlocks"] % phylTree.fileName[anc], withDict=False)
 
     block_names = genome.lstGenes.keys()
+    names = {}
     if arguments["orderBySize"]:
         block_names.sort(key=lambda c: len(genome.lstGenes[c]), reverse=True)
-
-    # If pairwise are available, load them and annotate the blocks as contigs and scaffolds
-    names = {}
-    if arguments["IN.pairwise"]:
-        # Load the file and record the pairs in a set
-        diags = utils.myGraph.loadConservedPairsAnc(arguments["IN.pairwise"] % phylTree.fileName[anc])
-        pairwise = set()
-        for (xsx, ysy, weight) in diags:
-            pairwise.add( (xsx,ysy) )
-            pairwise.add( (utils.myGraph.revGene(ysy),utils.myGraph.revGene(xsx)) )
-        n_contigs = 0
-        n_scaffolds = 0
+        n_CARs = 0
         n_singletons = 0
         for s in block_names:
-            chrom = genome.lstGenes[s]
-            # Calling these contigs wouldn't be wrong, but misleading
-            if len(chrom) == 1:
+            if len(genome.lstGenes[s]) == 1:
                 n_singletons += 1
                 names[s] = "singleton_%d" % n_singletons
-                continue
-            # Iterate over each pair of consecutive (stranded) genes
-            g1 = chrom[0]
-            gs1 = (g1.names[0], g1.strand)
-            for g2 in itertools.islice(chrom, 1, None):
-                gs2 = (g2.names[0], g2.strand)
-                # If one pair is not found, it's a scaffold - that's it !
-                if (gs1,gs2) not in pairwise:
-                    n_scaffolds += 1
-                    names[s] = "scaffold_%d" % n_scaffolds
-                    break
-                g1 = g2
             else:
-                n_contigs += 1
-                names[s] = "contig_%d" % n_contigs
+                n_CARs += 1
+                names[s] = "CAR_%d" % n_CARs
     else:
         # Simply use integers
         for (i, s) in enumerate(block_names):
