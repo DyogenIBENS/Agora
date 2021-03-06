@@ -24,13 +24,13 @@ OrthosFilterType = myTools.Enum('NoFilter', 'InCommonAncestor', 'InBothSpecies')
 
 
 def loadConservedPairsAnc(filename):
-    pairwiseDiags = []
-    f = myFile.openFile(filename, "r")
-    for l in f:
-        t = l.split("\t")
-        pairwiseDiags.append(((int(t[0]), int(t[1])), (int(t[2]), int(t[3])), int(t[4])))
-    f.close()
-    return pairwiseDiags
+	pairwiseDiags = []
+	f = myFile.openFile(filename, "r")
+	for l in f:
+		t = l.split("\t")
+		pairwiseDiags.append(((int(t[0]), int(t[1])), (int(t[2]), int(t[3])), int(t[4])))
+	f.close()
+	return pairwiseDiags
 
 #
 # Chargement d'un fichier de paires conservees
@@ -303,9 +303,9 @@ def calcDiags(g1, g2, orthos, fusionThreshold=-1, sameStrand=True, orthosFilter=
 
 #@myTools.memoize
 def revGene(xxx_todo_changeme):
-    # sx is an integer for the graph construction of AGORA
-    # sx = +1 or -1, standard case
-    # however sometimes sx is not defined, and we chose 0 and the reverse of 0 is 10
+	# sx is an integer for the graph construction of AGORA
+	# sx = +1 or -1, standard case
+	# however sometimes sx is not defined, and we chose 0 and the reverse of 0 is 10
 	(x,sx) = xxx_todo_changeme
 	if sx == 0:
 		return (x, 10)
