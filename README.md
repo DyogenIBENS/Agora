@@ -27,10 +27,12 @@ and the CeCILL licence version 2 of the CNRS. These licences are contained in th
 
 Copyright for this code is held jointly by the Dyogen (DYnamic and Organisation of GENomes) team
 of the Institut de Biologie de l'Ecole Normale Supérieure (IBENS) 46 rue d'Ulm Paris, the European Bioinformatics Institute outstation of the European Molecular Biology Laboratory,
+Genome Research Ltd,
 and the individual authors.
 
 - Copyright © 2006-2021 IBENS/Dyogen : Alexandra LOUIS, Thi Thuy Nga NGUYEN, Matthieu MUFFATO and Hugues ROEST CROLLIUS
 - Copyright © 2020-2021 EMBL-European Bioinformatics Institute
+- Copyright © 2021 Genome Research Ltd
 
 ## Contact
 
