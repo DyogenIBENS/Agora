@@ -24,4 +24,4 @@ A3 min=2	N50=90	WA=115.48	max=367 + 1045 singletons OK
 Loading genome of example/results/ancGenes/all/ancGenes.A2.list.bz2 ... (ancestral genes) OK
 Integrated blocs of A2 ... OK
 A2 min=2	N50=14	WA=17.25	max=98 + 1150 singletons OK
-Elapsed time: 6.90447592735
+Elapsed time: 7.34416699409

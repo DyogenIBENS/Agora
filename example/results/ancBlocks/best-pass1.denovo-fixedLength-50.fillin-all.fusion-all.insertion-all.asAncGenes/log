@@ -1,0 +1,23 @@
+------------------------------------------------------------------------------------------------------------------------------------------------------
+| Key                 | Values                                                                                                                       |
+------------------------------------------------------------------------------------------------------------------------------------------------------
+| speciesTree         | example/data/Species.nwk                                                                                                     |
+| target              | A0                                                                                                                           |
+| nbThreads           | 1                                                                                                                            |
+| IN.blocksBlocksFile | example/results/ancBlocks/best-pass1.denovo-fixedLength-50.fillin-all.fusion-all.insertion-all/blocks.%s.list.bz2            |
+| IN.blocksGenesFile  | example/results/filtBlocks/best-pass1-all/blocks.%s.list.bz2                                                                 |
+| OUT.ancBlocksFile   | example/results/ancBlocks/best-pass1.denovo-fixedLength-50.fillin-all.fusion-all.insertion-all.asAncGenes/blocks.%s.list.bz2 |
+------------------------------------------------------------------------------------------------------------------------------------------------------
+Loading integrated blocks of example/results/ancBlocks/best-pass1.denovo-fixedLength-50.fillin-all.fusion-all.insertion-all/blocks.A1.list.bz2 ... 2 [2/3/4] [2/4/6] 12 [3.36/1.86-105] + 1346 singletons OK
+Loading reference blocks set from example/results/filtBlocks/best-pass1-all/blocks.A1.list.bz2 ... OK
+Writing ancBlocks of A1 ... 2 [3/10/78] [100/215/390] 704 [62.34/106.85-259] + 1192 singletons
+Loading integrated blocks of example/results/ancBlocks/best-pass1.denovo-fixedLength-50.fillin-all.fusion-all.insertion-all/blocks.A0.list.bz2 ... 2 [2/2/3] [2/3/5] 11 [3.05/1.70-136] + 2755 singletons OK
+Loading reference blocks set from example/results/filtBlocks/best-pass1-all/blocks.A0.list.bz2 ... OK
+Writing ancBlocks of A0 ... 2 [3/9/25] [20/39/67] 197 [18.80/25.39-752] + 2139 singletons
+Loading integrated blocks of example/results/ancBlocks/best-pass1.denovo-fixedLength-50.fillin-all.fusion-all.insertion-all/blocks.A3.list.bz2 ... 2 [2/3/4] [3/4/5] 8 [3.22/1.38-77] + 1116 singletons OK
+Loading reference blocks set from example/results/filtBlocks/best-pass1-all/blocks.A3.list.bz2 ... OK
+Writing ancBlocks of A3 ... 2 [2/7/104] [174/287/484] 1125 [82.38/149.33-208] + 985 singletons
+Loading integrated blocks of example/results/ancBlocks/best-pass1.denovo-fixedLength-50.fillin-all.fusion-all.insertion-all/blocks.A2.list.bz2 ... 2 [2/3/5] [3/5/7] 18 [3.85/2.49-154] + 1313 singletons OK
+Loading reference blocks set from example/results/filtBlocks/best-pass1-all/blocks.A2.list.bz2 ... OK
+Writing ancBlocks of A2 ... 2 [3/10/48] [57/109/208] 652 [38.21/65.10-379] + 1088 singletons
+Time elapsed: 0.171039104462

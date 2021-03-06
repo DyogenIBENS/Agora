@@ -45,4 +45,4 @@ Extraction des diagonales entre A2 et M4 ... 2 [20/30/46] [31/46/70] 162 [35.73/
 Extraction des diagonales entre A2 et M1 ... 2 [4/7/16] [10/19/32] 107 [11.77/12.06-850] 94 adjacences / 211 blocs (ancre: 2)
 Extraction des diagonales entre A2 et M3 ... 2 [3/8/16] [10/19/32] 82 [11.49/11.57-821] 102 adjacences / 211 blocs (ancre: 2)
 Extraction des diagonales entre A2 et M2 ... 2 [3/7/14] [10/17/28] 87 [10.72/10.46-924] 89 adjacences / 211 blocs (ancre: 2)
-Elapsed time: 5.32987689972
+Elapsed time: 5.18139004707

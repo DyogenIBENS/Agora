@@ -23,4 +23,4 @@ Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.filli
 Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all.denovo-propLength-50.fillin-all.fusion-all/blocks.A2.list.bz2 ... 2 [2/3/4] [2/4/6] 18 [3.49/2.23-166] + 1327 singletons OK
 Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all.denovo-propLength-50.fillin-all/blocks.A2.list.bz2 ... 2 [2/2/3] [2/3/4] 6 [2.85/1.21-27] + 1829 singletons OK
 2 [2/3/5] [3/5/8] 18 [3.93/2.62-151] + 1313 singletons
-Elapsed time: 0.140540122986
+Elapsed time: 0.137784957886

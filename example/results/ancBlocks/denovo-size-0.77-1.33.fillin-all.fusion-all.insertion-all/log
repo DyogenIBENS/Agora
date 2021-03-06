@@ -23,4 +23,4 @@ Loading integrated blocks of example/results/ancBlocks/denovo-size-0.77-1.33.fil
 Loading integrated blocks of example/results/ancBlocks/denovo-size-0.77-1.33.fillin-all.fusion-all/blocks.A2.list.bz2 ... 2 [3/7/15] [10/19/33] 111 [11.34/12.21-1246] + 1440 singletons OK
 Loading integrated blocks of example/results/ancBlocks/denovo-size-0.77-1.33.fillin-all/blocks.A2.list.bz2 ... 2 [4/9/16] [11/19/33] 111 [12.78/12.71-1053] + 2112 singletons OK
 2 [4/8/15] [10/19/33] 112 [12.04/12.52-1206] + 1054 singletons
-Elapsed time: 1.08653593063
+Elapsed time: 1.15171599388

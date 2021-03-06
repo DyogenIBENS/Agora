@@ -8,7 +8,7 @@
 | ancGenesFiles       | example/results/filtBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all-all/blocks.%s.list.bz2    |
 | iniAncGenesFiles    | example/results/ancGenes/all/ancGenes.%s.list.bz2                                                            |
 | OUT.pairwise        | example/results/pairwise/adjacencies-denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all-all/%s.list.bz2 |
-| anchorSize          | 2                                                                                                            |
+| anchorSize          | 3                                                                                                            |
 | nbThreads           | 1                                                                                                            |
 | LOG.pairwise        | example/results/pairwise/adjacencies-denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all-all/%s.log.bz2  |
 --------------------------------------------------------------------------------------------------------------------------------------
@@ -45,4 +45,4 @@ Extraction des diagonales entre A2 et M4 ... 2 [2/6/16] [14/35/57] 162 [13.38/19
 Extraction des diagonales entre A2 et M1 ... 2 [2/5/10] [7/14/27] 107 [8.39/9.51-1605] 539 adjacences / 734 blocs (ancre: 2)
 Extraction des diagonales entre A2 et M3 ... 2 [2/5/10] [7/14/24] 82 [8.11/9.35-1551] 521 adjacences / 710 blocs (ancre: 2)
 Extraction des diagonales entre A2 et M2 ... 2 [2/5/10] [7/13/23] 87 [7.96/8.47-1676] 539 adjacences / 735 blocs (ancre: 2)
-Elapsed time: 7.15614485741
+Elapsed time: 6.88233590126

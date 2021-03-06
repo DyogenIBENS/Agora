@@ -1,9 +1,0 @@
-----------------------------------------------------------------------------------
-| Key           | Values                                                         |
-----------------------------------------------------------------------------------
-| speciesTree   | example/data/Species.nwk                                       |
-| target        | A0                                                             |
-| IN.ancBlocks  | example/results/ancBlocks/best-contigs/blocks.%s.list.bz2      |
-| OUT.ancBlocks | example/results/filtBlocks/best-contigs-all/blocks.%s.list.bz2 |
-----------------------------------------------------------------------------------
-Time elapsed: 0.0953779220581

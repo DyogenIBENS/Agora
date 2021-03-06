@@ -24,4 +24,4 @@ A3 min=2	N50=2	WA=2.80	max=6 + 1303 singletons OK
 Loading genome of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all/blocks.A2.list.bz2 ... (ancestral genome: diags) OK
 Integrated blocs of A2 ... OK
 A2 min=2	N50=2	WA=2.88	max=5 + 1873 singletons OK
-Elapsed time: 0.235290050507
+Elapsed time: 0.245104074478

@@ -1,9 +1,0 @@
-------------------------------------------------------------------------------------------------
-| Key               | Values                                                                   |
-------------------------------------------------------------------------------------------------
-| speciesTree       | example/data/Species.nwk                                                 |
-| target            | A0                                                                       |
-| IN.ancGenesFiles  | example/results/filtBlocks/best-contigs-all/blocks.%s.list.bz2           |
-| OUT.ancGenesFiles | example/results/filtBlocks/best-contigs-propLength-70/blocks.%s.list.bz2 |
-| minProp           | 70                                                                       |
-------------------------------------------------------------------------------------------------

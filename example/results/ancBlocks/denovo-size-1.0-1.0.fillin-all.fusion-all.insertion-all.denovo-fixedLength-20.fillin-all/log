@@ -31,4 +31,4 @@ Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.filli
 Building graphs ... OK
 adding singletons ... OK
 Final blocks of A2 2 [2/3/4] [2/4/5] 7 [3.18/1.37-49] + 1750 singletons
-total computation time 0.117842912674
+total computation time 0.116188049316

@@ -15,4 +15,4 @@ set(['A0'])
 Loading genome of example/results/ancGenes/all/ancGenes.A0.list.bz2 ... (ancestral genes) OK
 Integrated blocs of A0 ... OK
 A0 min=2	N50=15	WA=20.83	max=98 + 3829 singletons OK
-Elapsed time: 1.31003689766
+Elapsed time: 1.37804603577

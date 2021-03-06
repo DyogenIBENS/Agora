@@ -20,4 +20,4 @@ Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.filli
 Blocs integres de A3 ... 2 [2/2/4] [2/6/11] 47 [4.13/4.50-262] + 1264 singletons OK
 Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all/blocks.A2.list.bz2 ... 2 [6/13/32] [22/45/73] 169 [23.22/25.15-489] + 4212 singletons OK
 Blocs integres de A2 ... 2 [2/2/5] [2/6/11] 28 [4.11/3.73-485] + 2221 singletons OK
-Elapsed time: 0.948744773865
+Elapsed time: 0.937900066376

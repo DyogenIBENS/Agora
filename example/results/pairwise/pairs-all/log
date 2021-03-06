@@ -12,7 +12,7 @@ Loading genome of example/results/ancGenes/all/ancGenes.A1.list.bz2 ... (ancestr
 Loading genome of example/results/ancGenes/all/ancGenes.A0.list.bz2 ... (ancestral genes) OK
 Loading genome of example/results/ancGenes/all/ancGenes.A3.list.bz2 ... (ancestral genes) OK
 Loading genome of example/results/ancGenes/all/ancGenes.A2.list.bz2 ... (ancestral genes) OK
-time for loading 0.79845905304
+time for loading 0.816387176514
 Loading genome of example/data/genes/genes.M5.list.bz2 ... (Ensembl) OK
 Extraction of pairs of genes from M5  ... OK
 Loading genome of example/data/genes/genes.M4.list.bz2 ... (Ensembl) OK
@@ -23,7 +23,7 @@ Loading genome of example/data/genes/genes.M3.list.bz2 ... (Ensembl) OK
 Extraction of pairs of genes from M3  ... OK
 Loading genome of example/data/genes/genes.M2.list.bz2 ... (Ensembl) OK
 Extraction of pairs of genes from M2  ... OK
-time for task1 1.96072411537
+time for task1 1.81202602386
 Number of pairs for A1 [('A3', 19450), ('M3', 15814)]
 Intersection between A3 and M3 ... OK
 12117 conserved pairs between descendants A1
@@ -36,9 +36,9 @@ Intersection between M1 and M2 ... OK
 Number of pairs for A2 [('M4', 12867), ('M5', 12294)]
 Intersection between M4 and M5 ... OK
 6409 conserved pairs between descendants A2
-time for task 2 1.25649499893
+time for task 2 1.22091197968
 15692 conserved pairs for A1
 12550 conserved pairs for A0
 16694 conserved pairs for A3
 13292 conserved pairs for A2
-Elapsed time task3: 0.561662912369 4.57742285728
+Elapsed time task3: 0.57427406311 4.42367601395

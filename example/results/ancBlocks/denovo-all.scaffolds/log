@@ -51,4 +51,4 @@ Diagonals extraction between A2 and M1 ... 2 [2/5/9] [5/10/16] 74 [6.63/6.07-201
 Diagonals extraction between A2 and M3 ... 2 [2/4/8] [5/9/15] 40 [6.12/5.45-2042] 1176 adjacencies / 1412 blocs
 Diagonals extraction between A2 and M2 ... 2 [2/4/8] [5/9/15] 58 [6.31/5.68-2097] 1174 adjacencies / 1435 blocs
 Integrated blocs of A2 2 [3/10/36] [36/74/117] 285 [27.84/40.71-518] + 1150 singletons
-Elapsed time: 5.60143113136
+Elapsed time: 5.90824508667
