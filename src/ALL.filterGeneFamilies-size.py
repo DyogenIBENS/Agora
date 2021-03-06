@@ -44,21 +44,21 @@ minsizes = [float(x) for x in arguments["minSize"].split(",")]
 maxsizes = [float(x) for x in arguments["maxSize"].split(",")]
 
 # Initialisation
-print >> sys.stderr, "Structures creation ...",
+print("Structures creation ...", end=' ', file=sys.stderr)
 desc = {}
 notseen = {}
 deleted = {}
 for anc in lstAncGenes:
     n = len(lstAncGenes[anc])
-    notseen[anc] = set(xrange(n))
-    desc[anc] = [[] for _ in xrange(n)]
+    notseen[anc] = set(range(n))
+    desc[anc] = [[] for _ in range(n)]
     deleted[anc] = set()
 todo = []
-print >> sys.stderr, "OK"
+print("OK", file=sys.stderr)
 
 def mkStruct(anc):
     if anc in phylTree.items:
-        print >> sys.stderr, "Browsing ancGenome", anc
+        print("Browsing ancGenome", anc, file=sys.stderr)
         # New ancestral genes have to be analyzed
         for i in notseen[anc]:
             todo.append((anc, i))
@@ -132,7 +132,7 @@ for size in range(len(minsizes)):
 
     # Writing files
     for anc in lstAncGenes:
-        print >> sys.stderr, "Writing families of %s (size %s-%s)..." % (anc, minsizes[size], maxsizes[size]),
+        print("Writing families of %s (size %s-%s)..." % (anc, minsizes[size], maxsizes[size]), end=' ', file=sys.stderr)
         n = 0
         outFile = arguments["OUT.ancGenesFiles"] % ("%s-%s" % (minsizes[size], maxsizes[size]), phylTree.fileName[anc])
         f = utils.myFile.openFile(outFile, "w")
@@ -143,11 +143,11 @@ for size in range(len(minsizes)):
                 n += 1
                 s = set(s)
                 s.add(names[0])
-                print >> f, " ".join(x for x in names if x in s)
+                print(" ".join(x for x in names if x in s), file=f)
             else:
                 # Empty family , this is necessary to conserved indexation (compared to all families)
-                print >> f, names[0]
+                print(names[0], file=f)
         f.close()
         deleted[anc] = set()
-        print >> sys.stderr, len(desc[anc]), "->", n, "OK"
+        print(len(desc[anc]), "->", n, "OK", file=sys.stderr)
 

@@ -38,7 +38,8 @@ phylTree = utils.myPhylTree.PhylogeneticTree(arguments["speciesTree"])
 
 (listSpecies, listAncestors, accessoryAncestors) = phylTree.getTargetsForPairwise(arguments["target"], arguments["extantSpeciesFilter"])
 
-def revPair((g1, g2)):
+def revPair(xxx_todo_changeme):
+	(g1, g2) = xxx_todo_changeme
 	return ((g2[0],-g2[1]),(g1[0],-g1[1]))
 
 dicAncMod = collections.defaultdict(lambda: collections.defaultdict(lambda: collections.defaultdict(list)))
@@ -53,10 +54,10 @@ utils.myGenomes.intern = myintern
 genesAnc = {}
 for anc in listAncestors.union(accessoryAncestors):
 	ancGenes = utils.myGenomes.Genome(arguments["ancGenesFiles"] % phylTree.fileName[anc])
-	genesAnc[anc] = {k: v.index for (k,v) in ancGenes.dicGenes.iteritems()}
+	genesAnc[anc] = {k: v.index for (k,v) in ancGenes.dicGenes.items()}
 	del ancGenes
 
-print >> sys.stderr, "time for loading", time.time() - start
+print("time for loading", time.time() - start, file=sys.stderr)
 start = time.time()
 
 todo = {}
@@ -74,7 +75,7 @@ del genesAnc
 def extractPairsFromSpecies(esp):
 	genome = utils.myGenomes.Genome(arguments["genesFiles"] % phylTree.fileName[esp], withDict=False)
 
-	print >> sys.stderr, "Extraction of pairs of genes from %s " % esp, "...",
+	print("Extraction of pairs of genes from %s " % esp, "...", end=' ', file=sys.stderr)
 	
 	for chrom in genome.chrList[utils.myGenomes.ContigType.Chromosome] + genome.chrList[utils.myGenomes.ContigType.Scaffold]:
 		chrom = genome.lstGenes[chrom]
@@ -108,7 +109,7 @@ def extractPairsFromSpecies(esp):
 				gm1 = gm2
 
 	del todo[esp]
-	print >> sys.stderr, "OK"
+	print("OK", file=sys.stderr)
 
 for esp in listSpecies:
 	extractPairsFromSpecies(esp)
@@ -117,7 +118,7 @@ for esp in listSpecies:
 name_hash = {}
 utils.myGenomes.intern = intern
 
-print >> sys.stderr, "time for task1", time.time() - start
+print("time for task1", time.time() - start, file=sys.stderr)
 start = time.time()
 
 
@@ -130,7 +131,7 @@ def getTargets(listAnc, lmodPair):
 		for otherAncName in listAnc:
 			if otherAncName in t:
 				lanc[(otherAncName, t[otherAncName])].append(modPair)
-	return lanc.iteritems()
+	return iter(lanc.items())
 	
 
 details = collections.defaultdict(lambda: collections.defaultdict(set))
@@ -142,12 +143,12 @@ def intersectAndPropagatePairs(anc):
 	pairs = [(x,subdicAncMod[x]) for (x,_) in phylTree.items[anc]]
 	listAnc = phylTree.allDescendants[anc].intersection(phylTree.listAncestr)
 	
-	print >> sys.stderr, "Number of pairs for", anc, [(x[0],len(x[1])) for x in pairs]
+	print("Number of pairs for", anc, [(x[0],len(x[1])) for x in pairs], file=sys.stderr)
 	
 	nbcons = 0
 	# Iterate over pairs of subtrees
 	for ((e1,gr1),(e2,gr2)) in itertools.combinations(pairs, 2):
-		print >> sys.stderr, "Intersection between", e1, "and", e2, "...",
+		print("Intersection between", e1, "and", e2, "...", end=' ', file=sys.stderr)
 		# Iterate over the ancestral pairs found in both subtrees
 		for ancPair in set(gr1).intersection(set(gr2)):
 			nbcons += 1
@@ -177,15 +178,15 @@ def intersectAndPropagatePairs(anc):
 			for ((ancName, ancPair), lmodPair) in getTargets(listAnc, rlmodPair2):
 				details[ancName][ancPair].update(lmodPair, rlmodPair1)
 
-		print >> sys.stderr, "OK"
+		print("OK", file=sys.stderr)
 
-	print >> sys.stderr, nbcons, "conserved pairs between descendants", anc
+	print(nbcons, "conserved pairs between descendants", anc, file=sys.stderr)
 
 for anc in list(dicAncMod):
 	intersectAndPropagatePairs(anc)
 
 del dicModAnc
-print >> sys.stderr, "time for task 2", time.time() - start
+print("time for task 2", time.time() - start, file=sys.stderr)
 start = time.time()
 
 # Results files.
@@ -194,10 +195,10 @@ def reportPairs(anc):
 
 	# Accessory ancestor (required to compare against outgroups)
 	if anc not in listAncestors:
-		print >> sys.stderr, "Skipping", anc, "(not a target)"
+		print("Skipping", anc, "(not a target)", file=sys.stderr)
 		return
 
-	print >> sys.stderr, len(pairs), "conserved pairs for", anc
+	print(len(pairs), "conserved pairs for", anc, file=sys.stderr)
 
 	# -1 is the outgroup species, 1,2,3... are the descendantsdescendants
 	ind = dict.fromkeys(set(phylTree.outgroupSpecies[anc]).intersection(listSpecies), -1)
@@ -215,15 +216,15 @@ def reportPairs(anc):
 		weights = collections.defaultdict(int)
 		for modPair in pairs[ancPair]:
 			weights[ind[modPair[0]]] += 1
-		weight = sum(x*y for (x,y) in itertools.combinations(weights.values(), 2))
+		weight = sum(x*y for (x,y) in itertools.combinations(list(weights.values()), 2))
 	    
-		print >> f, utils.myFile.myTSV.printLine(
+		print(utils.myFile.myTSV.printLine(
 			list(ancPair[0] + ancPair[1]) +
 			[weight]
-		)
+		), file=f)
 	f.close()
 		
 for anc in list(details):
 	reportPairs(anc)
 
-print >> sys.stderr, "Elapsed time task3:", (time.time() - start), (time.time() - st)
+print("Elapsed time task3:", (time.time() - start), (time.time() - st), file=sys.stderr)

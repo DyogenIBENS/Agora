@@ -51,7 +51,7 @@ class PhylogeneticTree:
 
         # analysing process of the tree
         def recInitialize(node, stream=open(os.devnull, 'w')):
-            print >> stream, "."
+            print(".", file=stream)
             self.dicLinks.setdefault(node, self.newCommonNamesMapperInstance())
             # each link between a node and itself is a list containing node
             self.dicLinks.get(node).setdefault(node, [node])
@@ -96,7 +96,7 @@ class PhylogeneticTree:
             self.allDescendants.setdefault(node, frozenset(family))
             return family
 
-        print >> stream, "Data analysis ",
+        print("Data analysis ", end=' ', file=stream)
         # filling
         recInitialize(self.root, stream=stream)
         # list of extant species
@@ -135,31 +135,31 @@ class PhylogeneticTree:
             self.numItems[self.indNames.get(a)] = [(self.indNames.get(son), l) for (son, l) in self.items.get(a)]
         # (e)numerateParents, all nodes excepted the leaves using indNames
         self.numParent = [None] * len(self.allNames)
-        for (e, (par, l)) in self.parent.iteritems():
+        for (e, (par, l)) in self.parent.items():
             self.numParent[self.indNames.get(e)] = (self.indNames.get(par), l)
         # self.numParent[self.indNames.get('self.root')] = None
         assert set(self.indBranches.values()) == set(range(len(self.numParent)-1))
         # official names / common names
         tmp = collections.defaultdict(list)
-        for (curr, off) in self.officialName.iteritems():
+        for (curr, off) in self.officialName.items():
             tmp[off].append(curr)
         self.commonNames = self.newCommonNamesMapperInstance()
         self.commonNames.update(tmp)
         self.dicGenes = {}
         self.dicGenomes = self.newCommonNamesMapperInstance()
 
-        print >> stream, " OK"
+        print(" OK", file=stream)
 
     def __init__(self, file=None, skipInit=False, stream=open(os.devnull, 'w')):
         if type(file) == tuple:
-            print >> stream, "Creation of the phylogenetic tree ...",
+            print("Creation of the phylogenetic tree ...", end=' ', file=stream)
             (self.items, self.root, self.officialName) = file
         else:
             self.officialName = {}
             self.items = self.newCommonNamesMapperInstance()
             if file is None:
                 return
-            print >> stream, "Loading phylogenetic tree %s ..." % file,
+            print("Loading phylogenetic tree %s ..." % file, end=' ', file=stream)
             # name and instance of file
             f = myFile.openFile(file, 'r')
             try:
@@ -175,7 +175,7 @@ class PhylogeneticTree:
             if not skipInit:
                 self.reinitTree()
             else:
-                print >> stream, "OK"
+                print("OK", file=stream)
 
     # load a phylogenetic tree into the phylTree format (with tabulations)
     def __loadFromMyFormat__(self, f):
@@ -378,9 +378,9 @@ class PhylogeneticTree:
         def recPrint(node, indent):
             names = myFile.myTSV.printLine([self.fileName[node]] + [x for x in self.commonNames.get(node, "") if isinstance(x, str) and (x != node)], delim="|")
             if node in self.listSpecies:
-                print >> fh, ("\t" * indent) + str(names)
+                print(("\t" * indent) + str(names), file=fh)
             else:
-                print >> fh, ("\t" * indent) + str(names) + "\t" + str(int(self.ages[node]))
+                print(("\t" * indent) + str(names) + "\t" + str(int(self.ages[node])), file=fh)
                 for (f, _) in self.items[node]:
                     recPrint(f, indent+1)
         recPrint(self.root, 0)
@@ -392,7 +392,7 @@ class PhylogeneticTree:
                 return a
             else:
                 return "(" + ",".join([recConvert(e) + ":" + str(l) for (e,l) in self.items[node]]) + ")%s" % a
-        print >> fh, recConvert(self.root) + ";"
+        print(recConvert(self.root) + ";", file=fh)
 
     # return the name of the last common ancestor of several species
     def lastCommonAncestor(self, species):
@@ -418,7 +418,7 @@ class PhylogeneticTree:
                 if (x[1] >= maxlength) or (x[0] not in self.items):
                     newitems.append(x)
                 else:
-                    print >> sys.stderr, "Removing node", x[0]
+                    print("Removing node", x[0], file=sys.stderr)
                     newitems.extend(self.items.pop(x[0]))
             self.items[node] = newitems
         do(self.root)
@@ -540,7 +540,7 @@ class PhylogeneticTree:
         # print "accessoryAncestors", accessoryAncestors
 
         if not listAncestors:
-            print >> sys.stderr, "No target ancestors. Received arguments: target=%s extantSpeciesFilter=%s" % (target, extantSpeciesFilter)
+            print("No target ancestors. Received arguments: target=%s extantSpeciesFilter=%s" % (target, extantSpeciesFilter), file=sys.stderr)
             sys.exit(1)
 
         return (listSpecies, listAncestors, accessoryAncestors)
@@ -549,7 +549,7 @@ class PhylogeneticTree:
     def getSubTree(self, goodSpecies, rootAnc=None):
         goodAnc = set(self.dicParents[e1][e2] for (e1, e2) in itertools.combinations(goodSpecies, 2))
         newtree = collections.defaultdict(list)
-        import myMaths
+        from . import myMaths
 
         def do(node):
             if node in goodAnc:
@@ -594,7 +594,7 @@ class PhylogeneticTree:
                 """Recursively converts the commonNamesMapper instance to a
                 dictionary. (to allow pickling for example)"""
                 as_dict = {}
-                for key, value in self.iteritems():
+                for key, value in self.items():
                     if hasattr(value, 'common_names_mapper_2_dict'):
                         value = value.common_names_mapper_2_dict()
                     as_dict[key] = value
@@ -621,14 +621,14 @@ class PhylogeneticTree:
     # load all the species of a list
     def loadSpeciesFromList(self, lst, template, storeGenomes=True):
 
-        import myGenomes
+        from . import myGenomes
 
         for esp in lst:
             esp = self.officialName[esp]
             g = myGenomes.Genome(template % self.fileName[esp])
             if storeGenomes:
                 self.dicGenomes[esp] = g
-            for (x, (c, i)) in g.dicGenes.iteritems():
+            for (x, (c, i)) in g.dicGenes.items():
                 #self.dicGenes[x] = (esp, c, i)
                 self.dicGenes[x] = GeneSpeciesPosition(esp, c, i)
 
@@ -660,9 +660,9 @@ class PhylogeneticTree:
         (parent, bLength) = self.parent[child]
         foo = "# Branch %s -> %s (%s My) #" % (parent, child, bLength)
         bar = "#" * len(foo)
-        print >> stream, bar
-        print >> stream, foo
-        print >> stream, bar
+        print(bar, file=stream)
+        print(foo, file=stream)
+        print(bar, file=stream)
 
     # FIXME, ensure that no two species has the same acronym!!
     def speciesAcronym(self, node):

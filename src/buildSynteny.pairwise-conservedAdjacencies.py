@@ -49,7 +49,7 @@ def rewriteGenome(genome, dic):
 def getExtremities(genome):
 	extr1 = {}
 	extr2 = {}
-	for (chrom,l) in genome.iteritems():
+	for (chrom,l) in genome.items():
 		(i0,s0) = l[0]
 		(i1,s1) = l[-1]
 		extr1[(i0,s0)] = (chrom,1)
@@ -61,7 +61,7 @@ def getExtremities(genome):
 def getAllAdj(anc):
 	allAdj = collections.defaultdict(list)
 	anchorSize = arguments["anchorSize"]
-	for x in dicGenomes[anc].lstGenes.itervalues():
+	for x in dicGenomes[anc].lstGenes.values():
 		if (len(x) >= 2) and (len(x) < anchorSize):
 			anchorSize = len(x)
 
@@ -76,8 +76,8 @@ def getAllAdj(anc):
 		for (n,((c1,d1),(c2,d2),da)) in enumerate(utils.myGraph.calcDiags(dicGenomes[esp], dicGenomes[anc], genesAnc[phylTree.dicParents[anc][esp]], orthosFilter=utils.myGraph.OrthosFilterType.InBothSpecies, minChromLength=anchorSize)):
 			if len(da) < anchorSize:
 				continue
-			print >> f, "DIAG", anc, esp, n, (c1,c2), len(da), (d1,d2,da)
-			for ((i1,s1),(i2,s2)) in itertools.izip(d1, d2):
+			print("DIAG", anc, esp, n, (c1,c2), len(da), (d1,d2,da), file=f)
+			for ((i1,s1),(i2,s2)) in zip(d1, d2):
 				dicM[(c1,i1)] = (n,s1)
 				dicA[(c2,i2)] = (n,s1)
 			stats.append(len(da))
@@ -87,31 +87,31 @@ def getAllAdj(anc):
 		notdup = set()
 		for cA in newGA:
 			notdup.update(x[0] for x in newGA[cA])
-			print >> f, anc, esp, "ANC", cA, len(newGA[cA]), newGA[cA]
+			print(anc, esp, "ANC", cA, len(newGA[cA]), newGA[cA], file=f)
 		newGM = rewriteGenome(dicGenomes[esp], dicM)
 
 		(extr1,extr2) = getExtremities(newGA)
 
 		na = 0
-		for (cM,l) in newGM.iteritems():
-			print >> f, anc, esp, "MOD", cM, len(newGM[cM]), newGM[cM]
+		for (cM,l) in newGM.items():
+			print(anc, esp, "MOD", cM, len(newGM[cM]), newGM[cM], file=f)
 			# Permet de selectionner lors d'une duplication segmentale, le meme bloc que chez l'ancetre
 			l = [x for x in l if x[0] in notdup]
-			print >> f, anc, esp, "FMOD", cM, len(l), l
+			print(anc, esp, "FMOD", cM, len(l), l, file=f)
 			for (x1,x2) in utils.myTools.myIterator.slidingTuple(l):
 				if (x1 in extr2) and (x2 in extr1):
 					(i1,s1) = extr2[x1]
 					(i2,s2) = extr1[x2]
 					if i1 == i2:
-						print >> f, "LOOP", extr2[x1], extr1[x2]
+						print("LOOP", extr2[x1], extr1[x2], file=f)
 						continue
-					print >> f, "ADJ", anc, esp, (x1,x2), (extr2[x1],extr1[x2])
+					print("ADJ", anc, esp, (x1,x2), (extr2[x1],extr1[x2]), file=f)
 					na += 1
 					if i1 < i2:
 						allAdj[ ((i1,s1),(i2,s2)) ].append(esp)
 					else:
 						allAdj[ ((i2,-s2),(i1,-s1)) ].append(esp)
-		print >> sys.stderr, "Extraction des diagonales entre %s et %s ..." % (anc,esp), utils.myMaths.myStats.txtSummary(stats), "%d adjacences / %d blocs" % (na, len(newGA)), "(ancre: %d)" % anchorSize
+		print("Extraction des diagonales entre %s et %s ..." % (anc,esp), utils.myMaths.myStats.txtSummary(stats), "%d adjacences / %d blocs" % (na, len(newGA)), "(ancre: %d)" % anchorSize, file=sys.stderr)
 	f.close()
 
 	# -1 designe l'outgroup, 1,2,3... designent les descendants
@@ -127,17 +127,17 @@ def getAllAdj(anc):
 		weights = collections.defaultdict(int)
 		for esp in allAdj[ancPair]:
 			weights[ind[esp]] += 1
-		weight = sum(x*y for (x,y) in itertools.combinations(weights.values(), 2))
+		weight = sum(x*y for (x,y) in itertools.combinations(list(weights.values()), 2))
 
 		if weight == 0:
 			# None of the adjacencies is conserved through this ancestor
 			continue
 
 		# to debug the weight: "|".join("%s/%d" % (esp,ind[esp]) for esp in sorted(allAdj[ancPair]))
-		print >> f, utils.myFile.myTSV.printLine(
+		print(utils.myFile.myTSV.printLine(
 			list(ancPair[0] + ancPair[1]) +
 			[weight]
-		)
+		), file=f)
 	f.close()
 
 
@@ -165,5 +165,5 @@ for (e1,e2) in itertools.combinations(listSpecies, 2):
 start = time.time()
 n_cpu = arguments["nbThreads"] or multiprocessing.cpu_count()
 Parallel(n_jobs=n_cpu)(delayed(getAllAdj)(anc) for anc in targets)
-print >> sys.stderr, "Elapsed time:", (time.time() - start)
+print("Elapsed time:", (time.time() - start), file=sys.stderr)
 

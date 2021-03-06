@@ -65,7 +65,7 @@ inputDir = os.path.dirname(arguments["agora.conf"])
 for f in utils.myAgoraWorkflow.AgoraWorkflow.inputParams:
     files[f] = os.path.normpath(os.path.join(inputDir, conffiles[f.lower()]))
 outputDir = arguments["workingDir"]
-for (f, s) in utils.myAgoraWorkflow.AgoraWorkflow.defaultPaths.iteritems():
+for (f, s) in utils.myAgoraWorkflow.AgoraWorkflow.defaultPaths.items():
     files[f] = os.path.normpath(os.path.join(outputDir, conffiles.get(f.lower(), s)))
 scriptDir = os.path.dirname(os.path.abspath(__file__))
 

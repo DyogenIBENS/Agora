@@ -36,15 +36,15 @@ targets = phylTree.getTargetsAnc(arguments["target"])
 def do(anc):
     (diags,singletons) = utils.myGraph.loadIntegr(arguments["IN.blocksBlocksFile"] % phylTree.fileName[anc])
 
-    print >> sys.stderr, "Loading reference blocks set from", arguments["IN.blocksGenesFile"] % phylTree.fileName[anc], "...",
+    print("Loading reference blocks set from", arguments["IN.blocksGenesFile"] % phylTree.fileName[anc], "...", end=' ', file=sys.stderr)
     ref = {}
     fi = utils.myFile.openFile(arguments["IN.blocksGenesFile"] % phylTree.fileName[anc], "r")
     for (i,l) in enumerate(fi):
         ref[i+1] = l
     fi.close()
-    print >> sys.stderr, "OK"
+    print("OK", file=sys.stderr)
 
-    print >> sys.stderr, "Writing ancBlocks of", anc, "...",
+    print("Writing ancBlocks of", anc, "...", end=' ', file=sys.stderr)
     lengths = []
     fo = utils.myFile.openFile(arguments["OUT.ancBlocksFile"] % phylTree.fileName[anc], "w")
     for (chrom,weights) in diags:
@@ -67,7 +67,7 @@ def do(anc):
                 lw.extend(reversed(t[4].split()))
 
         lengths.append(n)
-        print >> fo, utils.myFile.myTSV.printLine([t[0], n, utils.myFile.myTSV.printLine(li, delim=" "), utils.myFile.myTSV.printLine(ls, delim=" "), utils.myFile.myTSV.printLine(lw, delim=" ")])
+        print(utils.myFile.myTSV.printLine([t[0], n, utils.myFile.myTSV.printLine(li, delim=" "), utils.myFile.myTSV.printLine(ls, delim=" "), utils.myFile.myTSV.printLine(lw, delim=" ")]), file=fo)
 
     ns = 0
     for c in singletons:
@@ -77,13 +77,13 @@ def do(anc):
             lengths.append(n)
         else:
             ns += 1
-        print >> fo, l,
+        print(l, end=' ', file=fo)
 
     # S'assure que tous les blocs ont ete employes
     assert len(ref) == 0
-    print >> sys.stderr, utils.myMaths.myStats.txtSummary(sorted(lengths)), "+", ns, "singletons"
+    print(utils.myMaths.myStats.txtSummary(sorted(lengths)), "+", ns, "singletons", file=sys.stderr)
 
 start = time.time()
 n_cpu = arguments["nbThreads"] or multiprocessing.cpu_count()
 Parallel(n_jobs=n_cpu)(delayed(do)(anc) for anc in targets)
-print >> sys.stderr, "Time elapsed:", time.time() - start
+print("Time elapsed:", time.time() - start, file=sys.stderr)

@@ -44,7 +44,7 @@ targets = phylTree.getTargetsAnc(arguments["target"])
 def do(anc):
     genome = utils.myGenomes.Genome(arguments["IN.ancBlocks"] % phylTree.fileName[anc], withDict=False)
 
-    block_names = genome.lstGenes.keys()
+    block_names = list(genome.lstGenes.keys())
     names = {}
     if arguments["orderBySize"]:
         block_names.sort(key=lambda c: len(genome.lstGenes[c]), reverse=True)
@@ -67,10 +67,10 @@ def do(anc):
     ancGenomeFile = utils.myFile.openFile(arguments["OUT.ancGenomes"] % phylTree.fileName[anc], "w")
     for s in block_names:
         for gene in genome.lstGenes[s]:
-            print >> ancGenomeFile, utils.myFile.myTSV.printLine([names[s], gene.beginning, gene.end, gene.strand, " ".join(ancGenes[gene.names[0]].names)])
+            print(utils.myFile.myTSV.printLine([names[s], gene.beginning, gene.end, gene.strand, " ".join(ancGenes[gene.names[0]].names)]), file=ancGenomeFile)
     ancGenomeFile.close()
 
 start = time.time()
 n_cpu = arguments["nbThreads"] or multiprocessing.cpu_count()
 Parallel(n_jobs=n_cpu)(delayed(do)(anc) for anc in targets)
-print >> sys.stderr, "Time elapsed:", time.time() - start
+print("Time elapsed:", time.time() - start, file=sys.stderr)

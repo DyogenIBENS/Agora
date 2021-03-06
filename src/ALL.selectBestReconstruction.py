@@ -42,13 +42,13 @@ for anc in targets:
         ls.sort()
         lines[ancBlocksFileName] = ll
         stats[ancBlocksFileName] = utils.myMaths.myStats.getValueNX(ls, 50)
-        print >> sys.stderr, "%s @ %s: %s" % (anc, ancBlocksFileName, utils.myMaths.myStats.txtSummary(ls))
+        print("%s @ %s: %s" % (anc, ancBlocksFileName, utils.myMaths.myStats.txtSummary(ls)), file=sys.stderr)
 
     bestBlocks = max(arguments["IN.ancBlocks"], key=stats.get)
-    print >> sys.stderr, "-> Best for %s is %s" % (anc, bestBlocks)
+    print("-> Best for %s is %s" % (anc, bestBlocks), file=sys.stderr)
 
     fo = utils.myFile.openFile(arguments["OUT.ancBlocks"] % phylTree.fileName[anc], "w")
     for l in lines[bestBlocks]:
-        print >> fo, l,
+        print(l, end=' ', file=fo)
     fo.close()
 

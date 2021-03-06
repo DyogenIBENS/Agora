@@ -24,7 +24,7 @@ __doc__ = """
 
 """
 
-import Queue
+import queue
 import collections
 import itertools
 import multiprocessing
@@ -54,7 +54,8 @@ arguments = utils.myTools.checkArgs(
 
 # reverse gene
 ###############
-def rev((g, s)):
+def rev(xxx_todo_changeme):
+    (g, s) = xxx_todo_changeme
     return (g, -s)
 
 
@@ -79,7 +80,7 @@ class GraphContainer:
     def __init__(self, lstIniPairwise=[]):
 
         if len(lstIniPairwise) > 0:
-            print "graphcall", "begin", len(lstIniPairwise)
+            print("graphcall", "begin", len(lstIniPairwise))
 
         als = self.allSucc = collections.defaultdict(set)
         alp = self.allPred = collections.defaultdict(set)
@@ -106,7 +107,7 @@ class GraphContainer:
                 alp[t].update(alpg1)
 
         if len(lstIniPairwise) > 0:
-            print "graphcall", "end", len(lstIniPairwise)
+            print("graphcall", "end", len(lstIniPairwise))
 
     def findPairwise(self, gfrom, gto, lstPairwise):
 
@@ -346,7 +347,7 @@ def bestPath40(*args):
             if len(args[-1]) >= size:
                 break
         # print f, args[0], args[1], len(args[-1]), "subpairs", args[-1]
-        print f, args[0], args[1], len(args[-1])
+        print(f, args[0], args[1], len(args[-1]))
         return f(*args)
 
     return _bestPath4(*args, subfunc=reselectSize)
@@ -391,28 +392,28 @@ def bestPath44(*args):
 # Rajoute les pairwise qui commencent en "start" ou finissent en "end"
 ########################################################################
 def prepareGraph(pairwiseDiags, singletons, graphData, start, end):
-    print "preparecall", start, end
+    print("preparecall", start, end)
     newPairwise = []
     startlink = set([start])
     endlink = set([end])
 
-    for (g2, s) in pairwiseDiags[start].iteritems():
+    for (g2, s) in pairwiseDiags[start].items():
         if (g2[0] in singletons) or ((g2 == end) and not arguments["mustExtend"]):
             startlink.add(g2)
             startlink.update(graphData.allSucc[g2])
             newPairwise.append((s, start, g2))
             newPairwise.append((s, rev(g2), rev(start)))
 
-    for (g1, s) in pairwiseDiags[rev(end)].iteritems():
+    for (g1, s) in pairwiseDiags[rev(end)].items():
         if g1[0] in singletons:
             endlink.add(rev(g1))
             endlink.update(graphData.allPred[rev(g1)])
             newPairwise.append((s, rev(g1), end))
             newPairwise.append((s, rev(end), g1))
 
-    print "addpairwise", len(newPairwise)
-    print "startlink", len(startlink)
-    print "endlink", len(endlink)
+    print("addpairwise", len(newPairwise))
+    print("startlink", len(startlink))
+    print("endlink", len(endlink))
 
     return (newPairwise, startlink, endlink)
 
@@ -429,19 +430,19 @@ def do(anc):
 
     while len(integr) > 0:
 
-        print "loop"
+        print("loop")
         nsing = len(singletons)
 
-        print >> sys.stderr, "Building graphs ...",
+        print("Building graphs ...", end=' ', file=sys.stderr)
 
         # Toutes les paires entre singletons
         commonPairwise = []
-        for (g1, l) in pairwiseDiags.iteritems():
+        for (g1, l) in pairwiseDiags.items():
             if g1[0] in singletons:
-                for (g2, s) in l.iteritems():
+                for (g2, s) in l.items():
                     if g2[0] in singletons:
                         commonPairwise.append((s, g1, g2))
-        print "commonpairwise", len(commonPairwise)
+        print("commonpairwise", len(commonPairwise))
 
         # La structure de graphe de base
         sp = GraphContainer(commonPairwise)
@@ -457,13 +458,13 @@ def do(anc):
             for (j, p) in enumerate(utils.myTools.myIterator.slidingTuple(b)):
                 (newPairwise, startlink, endlink) = prepareGraph(pairwiseDiags, singletons, sp, p[0], p[1])
                 if startlink.isdisjoint(endlink):
-                    print "nogoodpairwise"
+                    print("nogoodpairwise")
                 else:
                     interv = (i, j)
                     goodPairwise[interv] = [x for x in commonPairwise if (x[1] in startlink) and (x[2] in endlink)]
                     goodPairwise[interv].extend(x for x in newPairwise if (x[1] in startlink) and (x[2] in endlink))
                     goodPairwise[interv].sort(reverse=True)
-                    print "goodpairwise", len(goodPairwise[interv])
+                    print("goodpairwise", len(goodPairwise[interv]))
                     for (_, g1, g2) in goodPairwise[interv]:
                         if g1 != p[0]:
                             dicGenes[g1[0]].add(interv)
@@ -471,7 +472,7 @@ def do(anc):
                         if g2 != p[1]:
                             dicGenes[g2[0]].add(interv)
                             dicInterv[interv].add(g2[0])
-        print >> sys.stderr, "OK"
+        print("OK", file=sys.stderr)
 
         # Supprime l'intervalle de la liste de ceux a parcourir et met a jour la liste des singletons
         def applyResult(interv, filtered, todelete):
@@ -486,7 +487,7 @@ def do(anc):
                 singletons.remove(x)
                 filtered.update(dicGenes[x])
             todelete.update(t)
-            print len(singletons), "singletons remaining"
+            print(len(singletons), "singletons remaining")
 
         def bestPathWrapper(interv):
 
@@ -494,10 +495,10 @@ def do(anc):
             end = integr[interv[0]][0][interv[1] + 1]
             lstPairwise = goodPairwise[interv]
 
-            print "searchcall", "%d/%d" % interv, start, end, "pairs", len(lstPairwise), lstPairwise
+            print("searchcall", "%d/%d" % interv, start, end, "pairs", len(lstPairwise), lstPairwise)
 
             if len(lstPairwise) >= maxsize:
-                print "toobig"
+                print("toobig")
 
             else:
                 try:
@@ -507,17 +508,17 @@ def do(anc):
                             break
                     if thread:
 
-                        queue = Queue.Queue()
+                        queue = queue.Queue()
                         def bestPathInQueue(f, args):
                             queue.put(f(*args))
 
-                        print "with thread"
+                        print("with thread")
                         p = threading.Thread(target=bestPathInQueue, args=(f, (start, end, lstPairwise)))
                         p.start()
                         # st = time.time()
                         try:
                             r = queue.get(True, arguments["timeout"])
-                        except Queue.Empty:
+                        except queue.Empty:
                             p._Thread__stop()
                             # Au cas ou le resultat serait arrive entre temps
                             r = queue.get_nowait()
@@ -532,17 +533,17 @@ def do(anc):
                     # alltime += (et - st)
 
                     if r is None:
-                        print "nopath"
+                        print("nopath")
                     else:
-                        print "solution", len(r[0]) - 2, sum(r[1]), r[0], r[1]
+                        print("solution", len(r[0]) - 2, sum(r[1]), r[0], r[1])
                         assert r[0][0] == start
                         assert r[0][-1] == end
                         assert len(r[0]) == len(r[1]) + 1
                         res[interv] = r
 
-                except Queue.Empty:
+                except queue.Empty:
                     # Graphe trop grand a examiner, il faudra revenir
-                    print "queuetimeout"
+                    print("queuetimeout")
                     p.join()
                     return False
             return True
@@ -551,16 +552,16 @@ def do(anc):
         res = {}
         timeouts = set()
 
-        print >> sys.stderr, "adding singletons ...",
+        print("adding singletons ...", end=' ', file=sys.stderr)
         while len(goodPairwise) > 0:
 
-            print "nb intervals todo", len(goodPairwise)
+            print("nb intervals todo", len(goodPairwise))
 
             # Calcul des meilleurs chemins
             paths = []
             filtered = set()
             todelete = set()
-            for interv in goodPairwise.keys():
+            for interv in list(goodPairwise.keys()):
                 res.pop(interv, None)
                 if bestPathWrapper(interv):
                     if interv in res:
@@ -576,31 +577,31 @@ def do(anc):
                 else:
                     # Pas de resultat
                     timeouts.add(interv)
-            print len(timeouts), "timeouts"
+            print(len(timeouts), "timeouts")
 
             # Association gene -> intervalles qui l'utilisent
             counts = collections.defaultdict(list)
             for interv in paths:
                 for g in res[interv][0][1:-1]:
                     counts[g[0]].append(interv)
-            print len(counts), "referenced genes"
+            print(len(counts), "referenced genes")
 
             # Regroupement des intervalles avec des resultats qui s'excluent
             comb = utils.myTools.myCombinator()
-            for l in counts.itervalues():
+            for l in counts.values():
                 comb.addLink(l)
 
             for g in comb:
                 if len(g) == 1:
-                    print "autonomous interv %d/%d" % g[0]
+                    print("autonomous interv %d/%d" % g[0])
                     applyResult(g[0], filtered, todelete)
                 else:
-                    print "mutually exluded interv", len(g), ["%d/%d" % x for x in g]
+                    print("mutually exluded interv", len(g), ["%d/%d" % x for x in g])
                     # On selectionne le resultat le mieux soutenu
                     scores = []
                     for interv in g:
                         s = 0
-                        for ((g1, g2), w) in itertools.izip(utils.myTools.myIterator.slidingTuple(res[interv][0]),
+                        for ((g1, g2), w) in zip(utils.myTools.myIterator.slidingTuple(res[interv][0]),
                                                             res[interv][1]):
                             if (len(counts[g1[0]]) > 1) or (len(counts[g2[0]]) > 1):
                                 s += w
@@ -608,16 +609,16 @@ def do(anc):
                     scores.sort(reverse=True)
 
                     # On applique son resultat
-                    print "best interv", [(x[0], "%d/%d" % x[1]) for x in scores]
+                    print("best interv", [(x[0], "%d/%d" % x[1]) for x in scores])
                     for (_, interv) in scores:
                         if todelete.isdisjoint(x[0] for x in res[interv][0][1:-1]):
                             applyResult(interv, filtered, todelete)
 
             # Mise a jour des intervalles en enlevant les liens pairwise qui ne sont plus disponibles
             filtered.intersection_update(goodPairwise)
-            print "filtered intervals", ["%d/%d" % x for x in filtered]
+            print("filtered intervals", ["%d/%d" % x for x in filtered])
             for x in filtered:
-                print "filtercall", "%d/%d" % x
+                print("filtercall", "%d/%d" % x)
                 goodPairwise[x] = [l for l in goodPairwise[x] if
                                    (l[1][0] not in todelete) and (l[2][0] not in todelete)]
                 allSucc = GraphContainer(goodPairwise[x]).allSucc
@@ -625,23 +626,23 @@ def do(anc):
                 newstart = integr[x[0]][0][x[1]]
                 newend = integr[x[0]][0][x[1] + 1]
                 if (newstart not in allSucc) or (newend not in allSucc[newstart]):
-                    print "nolink", "%d/%d" % x
+                    print("nolink", "%d/%d" % x)
                     del goodPairwise[x]
                     res.pop(x, None)
 
             for interv in timeouts:
                 applyResult(interv, filtered, todelete)
 
-        print >> sys.stderr, "OK"
+        print("OK", file=sys.stderr)
 
         # Rassemblement des nouveaux blocs ancestraux
-        print >> sys.stderr, "Final blocks of", anc,
+        print("Final blocks of", anc, end=' ', file=sys.stderr)
         newintegr = []
         for (i, (b, s)) in enumerate(integr):
             newb = []
             news = []
             newintegr.append((newb, news))
-            for (j, (p, w)) in enumerate(itertools.izip(utils.myTools.myIterator.slidingTuple(b), s)):
+            for (j, (p, w)) in enumerate(zip(utils.myTools.myIterator.slidingTuple(b), s)):
                 r = res.get((i, j))
                 if r is None:
                     newb.append(p[0])
@@ -650,8 +651,8 @@ def do(anc):
                     newb.extend(r[0][:-1])
                     news.extend(r[1])
             newb.append(p[1])
-        print >> sys.stderr, utils.myMaths.myStats.txtSummary([len(x[0]) for x in newintegr]), "+", len(
-            singletons), "singletons"
+        print(utils.myMaths.myStats.txtSummary([len(x[0]) for x in newintegr]), "+", len(
+            singletons), "singletons", file=sys.stderr)
 
         if (not arguments["loop"]) or (len(singletons) == nsing):
             break
@@ -660,12 +661,12 @@ def do(anc):
     # Impression des resultats finaux
     f = utils.myFile.openFile(arguments["OUT.ancBlocks"] % phylTree.fileName[anc], "w")
     for (i, (newb, news)) in enumerate(newintegr):
-        print >> f, utils.myFile.myTSV.printLine(
+        print(utils.myFile.myTSV.printLine(
             [anc, len(newb), utils.myFile.myTSV.printLine([x[0] for x in newb], delim=" "),
              utils.myFile.myTSV.printLine([x[1] for x in newb], delim=" "),
-             utils.myFile.myTSV.printLine(news, delim=" ")])
+             utils.myFile.myTSV.printLine(news, delim=" ")]), file=f)
     for x in singletons:
-        print >> f, utils.myFile.myTSV.printLine([anc, 1, x, 1, ""])
+        print(utils.myFile.myTSV.printLine([anc, 1, x, 1, ""]), file=f)
     f.close()
 
     # Revert to the true standard output
@@ -694,9 +695,9 @@ def loadPairwise(file):
     return pairwiseDiags
 
 
-print >> sys.stderr, targets
+print(targets, file=sys.stderr)
 
 n_cpu = arguments["nbThreads"] or multiprocessing.cpu_count()
 Parallel(n_jobs=n_cpu)(delayed(do)(anc) for anc in targets)
 
-print >> sys.stderr, "total computation time", (time.time() - start)
+print("total computation time", (time.time() - start), file=sys.stderr)

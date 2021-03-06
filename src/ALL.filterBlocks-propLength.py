@@ -35,10 +35,10 @@ for anc in targets:
 
 		cutoff = utils.myMaths.myStats.getValueNX(sorted(ls), arguments["minProp"])
 		f = utils.myFile.openFile(arguments["OUT.ancGenesFiles"] % phylTree.fileName[anc], "w")
-		for (s,l) in itertools.izip(ls, ll):
+		for (s,l) in zip(ls, ll):
 			if s >= cutoff:
-				print >> f, l,
+				print(l, end=' ', file=f)
 			else:
-				print >> f, "%s\t0\t\t\t" % anc
+				print("%s\t0\t\t\t" % anc, file=f)
 		f.close()
 

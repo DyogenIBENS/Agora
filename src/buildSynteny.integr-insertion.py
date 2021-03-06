@@ -37,7 +37,8 @@ arguments = utils.myTools.checkArgs(
 
 # reverse gene
 ###############
-def rev((g, s)):
+def rev(xxx_todo_changeme):
+    (g, s) = xxx_todo_changeme
     return (g, -s)
 
 
@@ -60,8 +61,8 @@ def do(anc):
     assert singletons.issubset(refsing)
     for x in sorted(singletons):
         toaddblocks.append(([(x, 1)], []))
-    print "iniblocks", len(iniblocks)
-    print "toaddblocks", len(toaddblocks)
+    print("iniblocks", len(iniblocks))
+    print("toaddblocks", len(toaddblocks))
 
     extr = {}
     for (i, (lg, _)) in enumerate(toaddblocks):
@@ -72,13 +73,13 @@ def do(anc):
     # Possible links inside the genes intervals
     possins = []
     for (i, (lg, lw)) in enumerate(iniblocks):
-        for (j, ((start, end), weight)) in enumerate(itertools.izip(utils.myTools.myIterator.slidingTuple(lg), lw)):
+        for (j, ((start, end), weight)) in enumerate(zip(utils.myTools.myIterator.slidingTuple(lg), lw)):
 
             def filt(items):
                 return [x for x in items if (x[0] in extr) and (x[1] > weight)]
 
-            out1 = filt(pairwiseDiags[start].iteritems())
-            out2 = filt(pairwiseDiags[rev(end)].iteritems())
+            out1 = filt(iter(pairwiseDiags[start].items()))
+            out2 = filt(iter(pairwiseDiags[rev(end)].items()))
 
             for x in out1:
                 (k, f) = extr[x[0]]
@@ -109,8 +110,8 @@ def do(anc):
     # Possible links at the end of a block
     possadd = []
     for (i, (lg, _)) in enumerate(iniblocks):
-        possadd.extend((s, (i, "end"), extr[x]) for (x, s) in pairwiseDiags[lg[-1]].iteritems() if x in extr)
-        possadd.extend((s, (i, "start"), extr[x]) for (x, s) in pairwiseDiags[rev(lg[0])].iteritems() if x in extr)
+        possadd.extend((s, (i, "end"), extr[x]) for (x, s) in pairwiseDiags[lg[-1]].items() if x in extr)
+        possadd.extend((s, (i, "start"), extr[x]) for (x, s) in pairwiseDiags[rev(lg[0])].items() if x in extr)
     possadd.sort(reverse=True)
 
     # Best link selection
@@ -139,7 +140,7 @@ def do(anc):
         toaddblocks[k] = ([], [])
 
     #print >> sys.stderr, "Final blocks of ", anc,
-    print "Final blocks of ", anc,
+    print("Final blocks of ", anc, end=' ')
     f = utils.myFile.openFile(arguments["OUT.ancBlocks"] % phylTree.fileName[anc], "w")
     ll = []
     # Build and print new chromosomes
@@ -158,7 +159,7 @@ def do(anc):
             # print "end", newb[-1], neww[-1]
             toaddblocks[k] = ([], [])
 
-        for (j, (g, weight)) in enumerate(itertools.izip(inib, iniw)):
+        for (j, (g, weight)) in enumerate(zip(inib, iniw)):
             # print "initial interval", "%d/%d" % (i,j), g, "->", inib[j+1] if j+1 < len(inib) else None, "|", weight
             newb.append(g)
 
@@ -186,10 +187,10 @@ def do(anc):
         assert len(newb) >= 2
         assert len(newb) == (len(neww) + 1)
         ll.append(len(newb))
-        print >> f, utils.myFile.myTSV.printLine([anc, len(newb),
+        print(utils.myFile.myTSV.printLine([anc, len(newb),
                                                   utils.myFile.myTSV.printLine([x[0] for x in newb], delim=" "),
                                                   utils.myFile.myTSV.printLine([x[1] for x in newb], delim=" "),
-                                                  utils.myFile.myTSV.printLine(neww, delim=" ")])
+                                                  utils.myFile.myTSV.printLine(neww, delim=" ")]), file=f)
 
     sing = 0
     for (newb, news) in toaddblocks:
@@ -199,12 +200,12 @@ def do(anc):
             ll.append(len(newb))
         else:
             sing += len(newb)
-        print >> f, utils.myFile.myTSV.printLine([anc, len(newb),
+        print(utils.myFile.myTSV.printLine([anc, len(newb),
                                                   utils.myFile.myTSV.printLine([x[0] for x in newb], delim=" "),
                                                   utils.myFile.myTSV.printLine([x[1] for x in newb], delim=" "),
-                                                  utils.myFile.myTSV.printLine(news, delim=" ")])
+                                                  utils.myFile.myTSV.printLine(news, delim=" ")]), file=f)
     f.close()
-    print >> sys.stderr, utils.myMaths.myStats.txtSummary(ll), "+", sing, "singletons"
+    print(utils.myMaths.myStats.txtSummary(ll), "+", sing, "singletons", file=sys.stderr)
 
     # Revert to the true standard output
     sys.stdout.close()
@@ -229,4 +230,4 @@ def loadPairwise(anc):
 n_cpu = arguments["nbThreads"] or multiprocessing.cpu_count()
 Parallel(n_jobs=n_cpu)(delayed(do)(anc) for anc in targets)
 
-print >> sys.stderr, "Elapsed time:", (time.time() - start)
+print("Elapsed time:", (time.time() - start), file=sys.stderr)

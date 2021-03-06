@@ -12,6 +12,7 @@ import math
 import operator
 from . import myTools
 import bisect
+from functools import reduce
 
 #############################
 # Fonctions de statistiques #
@@ -123,9 +124,9 @@ class myStats:
     @staticmethod
     def distribSummary(distribution, nbFirstVals=5, nbLastVals=3):
         assert isinstance(distribution, dict)
-        assert isinstance(distribution.values()[0], int)
+        assert isinstance(list(distribution.values())[0], int)
         distribRepr = [" %s:%s" % (distribution[val], val) for val in sorted(distribution.keys())]
-        if len(distribution.keys()) > nbFirstVals + nbLastVals:
+        if len(list(distribution.keys())) > nbFirstVals + nbLastVals:
             distribRepr = distribRepr[:nbFirstVals] + ["..."] + distribRepr[-nbLastVals:]
         return ','.join(distribRepr)
 
@@ -195,7 +196,7 @@ class permutationGenerator:
         self.l = tuple(l)
         self.n = len(l)
         fact = [1] * self.n
-        for i in xrange(self.n,1,-1):
+        for i in range(self.n,1,-1):
             fact[i-2] = i * fact[i-1]
         self.fact = fact
         self.a = [None] * self.n
@@ -208,11 +209,11 @@ class permutationGenerator:
         assert k >= 0
         assert k < self.fact[self.n-p-1]
 
-        for i in xrange(1,self.n):
+        for i in range(1,self.n):
             (self.a[i],k) = divmod(k, self.fact[i])
 
         b = self.l[:]
-        for i in xrange(1,self.n):
+        for i in range(1,self.n):
             (b[i],b[self.a[i]]) = (b[self.a[i]],b[i])
 
         return b[-p:]
@@ -229,7 +230,7 @@ class myInterpolator:
     def oneDimLinear(points, val):
         intervals = []
 
-        for ((u,FU), (v,FV)) in myTools.myIterator.slidingTuple(zip(points, val)):
+        for ((u,FU), (v,FV)) in myTools.myIterator.slidingTuple(list(zip(points, val))):
             A = (FU - FV) / (u - v)
             B = FU - A * u
             intervals.append((A, B))
@@ -249,11 +250,11 @@ class myInterpolator:
     def oneDimCubic(points, val):
         intervals = []
 
-        deriv = [0] + [(FV-FU) / (2*(v-u)) for ((u,FU), (v,FV)) in myTools.myIterator.slidingTuple(zip(points, val))] + [0]
+        deriv = [0] + [(FV-FU) / (2*(v-u)) for ((u,FU), (v,FV)) in myTools.myIterator.slidingTuple(list(zip(points, val)))] + [0]
         tangeantes = [d1+d2 for (d1,d2) in myTools.myIterator.slidingTuple(deriv)]
 
         # Generate a cubic spline for each interpolation interval.
-        for ((u,FU,DU), (v,FV,DV)) in myTools.myIterator.slidingTuple(zip(points,val,tangeantes)):
+        for ((u,FU,DU), (v,FV,DV)) in myTools.myIterator.slidingTuple(list(zip(points,val,tangeantes))):
 
             denom = float((u - v)**3)
 
@@ -286,7 +287,7 @@ class myInterpolator:
     ###############################################
     @staticmethod
     def getMultDim(interpolator, points, val):
-        linter = [interpolator(points, [x[i] for x in val]) for i in xrange(len(val[0]))]
+        linter = [interpolator(points, [x[i] for x in val]) for i in range(len(val[0]))]
         return lambda x: tuple(inter(x) for inter in linter)
 
 
@@ -329,7 +330,7 @@ class randomValue:
         elif r <= 1:
             return r
         else:
-            print >> sys.stderr, r
+            print(r, file=sys.stderr)
             raise ValueError('this case should not happen' + "mean=%s, kappa=%s and r=%s" % (mean, kappa, r))
 
     # Tirage aleatoire selon une densite issue d'une loi geometrique
@@ -346,7 +347,7 @@ class randomValue:
         n = 0
         lastm = 0
         while True:
-            for _ in xrange(niter):
+            for _ in range(niter):
                 s += int(random.paretovariate(alpha))
                 n += 1
             newm = s/n
@@ -362,7 +363,7 @@ class randomValue:
             res = randomValue.intParetoMean(alpha, precision, niter)
             tries[alpha] = res
             alpha += -step if res < m else step
-        return min((abs(y-m),x) for (x,y) in tries.iteritems())[1]
+        return min((abs(y-m),x) for (x,y) in tries.items())[1]
 
 
 ######################

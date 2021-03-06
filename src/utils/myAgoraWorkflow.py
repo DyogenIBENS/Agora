@@ -40,18 +40,18 @@ class TaskList():
         self.memlock = manager.Lock()
 
     def printGraphviz(self, fh):
-        print >> fh, "digraph", "{"
-        for (name, taskId) in self.dic.iteritems():
-            print >> fh, '%d [label="%s"]' % (taskId, "/".join(name))
+        print("digraph", "{", file=fh)
+        for (name, taskId) in self.dic.items():
+            print('%d [label="%s"]' % (taskId, "/".join(name)), file=fh)
             for dep in self.list[taskId][0]:
-                print >> fh, '%d -> %d' % (dep, taskId)
-        print >> fh, "}"
+                print('%d -> %d' % (dep, taskId), file=fh)
+        print("}", file=fh)
 
     def addTask(self, name, dep, data, multithreaded=False):
         taskId = len(self.list)
-        print "New task", taskId, name
-        print dep
-        print data
+        print("New task", taskId, name)
+        print(dep)
+        print(data)
         self.list.append((set(self.dic[x] for x in dep), data, multithreaded))
         if name in self.dic:
             if name + ("1",) in self.dic:
@@ -59,11 +59,11 @@ class TaskList():
                 for i in itertools.count(2):
                     newName = name + (str(i),)
                     if newName not in self.dic:
-                        print "! Name clash ! Renamed to", newName, "under a collector"
+                        print("! Name clash ! Renamed to", newName, "under a collector")
                         self.dic[newName] = taskId
                         break
             else:
-                print "! Name clash ! Introducing a collector task"
+                print("! Name clash ! Introducing a collector task")
                 collectorId = self.dic[name]
                 self.list.append(self.list[collectorId])
                 self.list[collectorId] = (set([taskId, taskId + 1]), (None, None, None, False), False)
@@ -71,7 +71,7 @@ class TaskList():
                 self.dic[name + ("2",)] = taskId
         else:
             self.dic[name] = taskId
-        print
+        print()
         return taskId
 
     def removeDep(self, i):
@@ -80,7 +80,7 @@ class TaskList():
 
     def getAvailable(self):
         tmp = [i for (i, task) in enumerate(self.list) if len(task[0]) == 0]
-        print "Available tasks:", tmp
+        print("Available tasks:", tmp)
         if len(tmp) > 0:
             next = tmp[0]
             self.list[next][0].add(None)
@@ -90,17 +90,17 @@ class TaskList():
 
     # Waiting for a task to finish
     def joinNext(self):
-        print "Waiting ..."
+        print("Waiting ...")
         sys.stdout.flush()
         (i, r) = self.queue.get()
-        print "task", i, "is now finished (status %d)" % r
+        print("task", i, "is now finished (status %d)" % r)
         self.proc.pop(i).join()
         if r == 0:
             self.removeDep(i)
             self.completed += 1
         else:
             self.failed += 1
-            print >> sys.stderr, ">", "Inspect", self.list[i][1][2], "for more information"
+            print(">", "Inspect", self.list[i][1][2], "for more information", file=sys.stderr)
         self.nrun -= self.nthreads.pop(i)
 
     def getProcMemoryUsage(self, proc):
@@ -142,7 +142,7 @@ class TaskList():
     def memoryMonitor(self):
         while self.memusage:
             total_mem = 0
-            for pid in self.memusage.keys():
+            for pid in list(self.memusage.keys()):
                 mem = self.getRecursiveMemoryUsage(pid)
                 if mem:
                     total_mem += mem
@@ -161,7 +161,7 @@ class TaskList():
         self.memlock.acquire()
         mem = max(ru.ru_maxrss * self.rusage_unit, self.memusage.pop(os.getpid()))
         self.memlock.release()
-        print intro, "%g sec CPU time / %g sec elapsed = %g%% CPU usage, %g MB RAM" % (ru.ru_utime + ru.ru_stime, elapsed, 100. * (ru.ru_utime + ru.ru_stime) / elapsed, mem / 1024. / 1024.)
+        print(intro, "%g sec CPU time / %g sec elapsed = %g%% CPU usage, %g MB RAM" % (ru.ru_utime + ru.ru_stime, elapsed, 100. * (ru.ru_utime + ru.ru_stime) / elapsed, mem / 1024. / 1024.))
 
     # Launch program function
     def goLaunch(self, i, args, out, log):
@@ -175,7 +175,7 @@ class TaskList():
         except Exception as e:
             stdout.close()
             stderr.close()
-            print "task %d could not start:" % i, e
+            print("task %d could not start:" % i, e)
             time.sleep(5)
             self.queue.put((i, -1))
             # FIXME: then it hangs in multiprocessing/managers (checking self.memusage)
@@ -183,10 +183,10 @@ class TaskList():
 
         # This is where the .bz2 compression would happen
         for l in p.stdout:
-            print >> stdout, l,
+            print(l, end=' ', file=stdout)
         r = p.wait()
         for l in p.stdout:
-            print >> stdout, l,
+            print(l, end=' ', file=stdout)
         stdout.close()
         stderr.close()
         self.printCPUUsageStats("task %d report:" % i, start)
@@ -204,8 +204,8 @@ class TaskList():
         # Queue
         while (self.completed + self.failed) < len(self.list):
 
-            print "Status: %d to do, %d running, %d done, %d failed -- %d total" % \
-                    (len(self.list)-len(self.proc)-self.completed-self.failed, len(self.proc), self.completed, self.failed, len(self.list))
+            print("Status: %d to do, %d running, %d done, %d failed -- %d total" % \
+                    (len(self.list)-len(self.proc)-self.completed-self.failed, len(self.proc), self.completed, self.failed, len(self.list)))
 
             if (self.nrun == nbThreads) or (sequential and self.nrun):
                 self.joinNext()
@@ -213,17 +213,17 @@ class TaskList():
                 todo = self.getAvailable()
                 if todo is None:
                     if self.nrun == 0:
-                        print "Workflow stopped because of failures"
+                        print("Workflow stopped because of failures")
                         break
                     self.joinNext()
                 else:
                     (next, dep, (args, out, log, launch), multithreaded) = todo
                     if launch:
-                        print "Launching task", next, args, ">", out, "2>", log
+                        print("Launching task", next, args, ">", out, "2>", log)
                         if multithreaded:
                             self.nthreads[next] = nbThreads - self.nrun
                             args.append("-nbThreads=%d" % self.nthreads[next])
-                            print "Using", self.nthreads[next], "threads"
+                            print("Using", self.nthreads[next], "threads")
                         else:
                             self.nthreads[next] = 1
                         self.proc[next] = multiprocessing.Process(target=self.goLaunch, args=(next, args, out, log))
@@ -231,13 +231,13 @@ class TaskList():
                         self.memusage[self.proc[next].pid] = 0
                         self.nrun += self.nthreads[next]
                     else:
-                        print "Skipping task", next, args
+                        print("Skipping task", next, args)
                         self.removeDep(next)
                         self.completed += 1
 
         assert self.nrun == 0
         if not self.failed:
-            print "Workflow complete"
+            print("Workflow complete")
         self.printCPUUsageStats("Workflow report:", start)
         monitorThread.join()
         return self.failed
@@ -474,7 +474,7 @@ class AgoraWorkflow:
 
 
     def reconstructionPassWithAncGenesFiltering(self, filteringMethod, filteringParams, ancestor=None, launch=True):
-        filteringParams = map(str, filteringParams)
+        filteringParams = list(map(str, filteringParams))
         filteredAncGenesDirName = filteringMethod + "-" + "-".join(filteringParams)
         self.addAncGenesFilterAnalysis(filteringMethod, filteringParams, ancestor=ancestor, launch=launch)
         # Don't run twice

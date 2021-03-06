@@ -23,7 +23,7 @@ def commonChrName(x):
     except TypeError:
         return None
     except ValueError:
-        return intern(x)
+        return sys.intern(x)
 
 ContigType = myTools.Enum('Chromosome', 'Scaffold', 'None', 'Random')
 def contigType(chrName):
@@ -86,17 +86,17 @@ class myFASTA:
     # write a sequence into the FASTA format
     @staticmethod
     def printSeq(f, name, seq, length=60):
-        print >> f, ">" + name
+        print(">" + name, file=f)
         while len(seq) != 0:
-            print >> f, seq[:length]
+            print(seq[:length], file=f)
             seq = seq[length:]
-        print >> f
+        print(file=f)
 
 # count nucleotides
 def getMonoNuc(seq, x1, x2, sel):
     n = 0
     gc = 0
-    for x in xrange(x1, x2+1):
+    for x in range(x1, x2+1):
         if seq[x] == "N":
             continue
         n += 1
@@ -109,7 +109,7 @@ def getMonoNuc(seq, x1, x2, sel):
 def getDiNuc(seq, x1, x2, sel):
     n = 0
     gc = 0
-    for x in xrange(x1, x2):
+    for x in range(x1, x2):
         s = seq[x:x+2]
         if "N" in s:
             continue
@@ -134,7 +134,7 @@ codon2aa = {
      'GGG': 'G', 'TAA': '*', 'TAG': '*', 'TGA': '*' }
 
 aa2codon = collections.defaultdict(list)
-for (c,p) in codon2aa.iteritems():
+for (c,p) in codon2aa.items():
     aa2codon[p].append(c)
 
 # general class for genomes
@@ -144,7 +144,7 @@ class Genome:
     def __init__(self, fichier, **kwargs):
 
         if isinstance(fichier, str):
-            print >> sys.stderr, "Loading genome of", fichier, "...",
+            print("Loading genome of", fichier, "...", end=' ', file=sys.stderr)
             f = myFile.firstLineBuffer(myFile.openFile(fichier, 'r'))
 
             # list of genes per chromosome
@@ -166,14 +166,14 @@ class Genome:
                         strand = -1 if x.startswith("-") else 1
                         self.addGene([x[1:] if x[0] in "-+" else x], chrom, i, i+1, strand)
                     chrom += 1
-                print >> sys.stderr, "(GRIMM)",
+                print("(GRIMM)", end=' ', file=sys.stderr)
 
             elif len(c) == 1:
                 # ancestral genes: "NAMES"
                 ##########################
                 for (i,l) in enumerate(f):
-                    self.lstGenes[None].append( Gene(None, i, i+1, 0, tuple(intern(x) for x in l.split())) )
-                print >> sys.stderr, "(ancestral genes)",
+                    self.lstGenes[None].append( Gene(None, i, i+1, 0, tuple(sys.intern(x) for x in l.split())) )
+                print("(ancestral genes)", end=' ', file=sys.stderr)
 
             elif (len(c) == 2) and not set(c[1]).issubset("01-"):
                 # ancestral genome: "CHR NAMES"
@@ -185,7 +185,7 @@ class Genome:
                         lastC = c[0]
                         dec = i
                     self.addGene(c[1].split(), c[0], i-dec, i-dec+1, 0)
-                print >> sys.stderr, "(ancestral genome: chrom+noms)",
+                print("(ancestral genome: chrom+noms)", end=' ', file=sys.stderr)
 
             elif (len(c) >= 5) and (" " not in c[3]) and (len(c[4]) > 0):
                 # Ensembl: "CHR BEG END STRAND NAMES"
@@ -204,7 +204,7 @@ class Genome:
                     #     pass
                     # assert (s in {None, +1} and beg < end) or (s == -1  and end < beg), 's=%s, beg=%s and end=%s' % (s, beg, end)
                     self.addGene(geneNames.split(), chr, beg, end, s)
-                print >> sys.stderr, "(Ensembl)",
+                print("(Ensembl)", end=' ', file=sys.stderr)
 
             elif (len(c) == 4) and int(c[1]) < 2:
                 # ancestral genome: "CHR STRAND LST-INDEX LST-STRANDS"
@@ -218,7 +218,7 @@ class Genome:
                         lastC = c[0]
                         pos = 0
                         currC = commonChrName(c[0])
-                    data = zip([int(x) for x in c[2].split()], [int(x) for x in c[3].split()])
+                    data = list(zip([int(x) for x in c[2].split()], [int(x) for x in c[3].split()]))
                     if int(c[1]) < 0:
                         data = [(i,-s) for (i,s) in data.__reversed__()]
                     for (index,strand) in data:
@@ -227,7 +227,7 @@ class Genome:
                         else:
                             self.lstGenes[currC].append( Gene(currC, pos, pos+1, strand, (index,)) )
                         pos += 1
-                print >> sys.stderr, "(ancestral genome: chrom+diags)",
+                print("(ancestral genome: chrom+diags)", end=' ', file=sys.stderr)
 
             else:
                 # Optional column for adjacencies support scores
@@ -254,19 +254,19 @@ class Genome:
                     lchrom = self.lstGenes[chrom]
                     if ilss:
                         self.support[chrom] = c[ilss].split()
-                    for (pos,(index,strand)) in enumerate(itertools.izip(c[ili].split(), c[ils].split())):
+                    for (pos,(index,strand)) in enumerate(zip(c[ili].split(), c[ils].split())):
                         if 'ancGenes' in kwargs:
                             lchrom.append( Gene(chrom, pos, pos+1, int(strand), ancGenes[int(index)].names) )
                         else:
                             lchrom.append( Gene(chrom, pos, pos+1, int(strand), (int(index),) ) )
-                print >> sys.stderr, "(ancestral genome: diags)",
+                print("(ancestral genome: diags)", end=' ', file=sys.stderr)
 
             f.close()
             self.name = fichier
 
         else:
             genomeBase = fichier
-            print >> sys.stderr, "Filtering of", genomeBase.name, "...",
+            print("Filtering of", genomeBase.name, "...", end=' ', file=sys.stderr)
             filterIn = set(kwargs["filterIn"]) if "filterIn" in kwargs else None
             filterOut = set(kwargs["filterOut"]) if "filterOut" in kwargs else None
 
@@ -278,17 +278,17 @@ class Genome:
                 return True
 
             self.lstGenes = {}
-            for (chrom,l) in genomeBase.lstGenes.iteritems():
+            for (chrom,l) in genomeBase.lstGenes.items():
                 l = [gene for gene in l if filt(gene)]
                 if len(l) > 0:
                     self.lstGenes[chrom] = l
             self.name = "Filter from " + genomeBase.name
-            print >> sys.stderr, "%d genes -> %d genes" % (sum(len(x) for x in genomeBase.lstGenes.itervalues()), sum(len(x) for x in self.lstGenes.itervalues())),
+            print("%d genes -> %d genes" % (sum(len(x) for x in genomeBase.lstGenes.values()), sum(len(x) for x in self.lstGenes.values())), end=' ', file=sys.stderr)
 
         self.init(**kwargs)
-        print >> sys.stderr, "OK"
+        print("OK", file=sys.stderr)
         if info:
-            print >> sys.stderr, 'INFO: because genes may be indexed by their 5\' (which is the right choice) extremity, gene.end=3\' < gene.beg=5\' may be true'
+            print('INFO: because genes may be indexed by their 5\' (which is the right choice) extremity, gene.end=3\' < gene.beg=5\' may be true', file=sys.stderr)
 
     # initialise the dictionary and the list of chromosomes
     def init(self, **kwargs):
@@ -322,7 +322,7 @@ class Genome:
         # FIXME : 0 ?
         assert strand in {-1, 0, 1, None}
         chromosome = commonChrName(chromosome)
-        self.lstGenes[chromosome].append(Gene(chromosome, beg, end, strand, tuple(intern(s) for s in names)) )
+        self.lstGenes[chromosome].append(Gene(chromosome, beg, end, strand, tuple(sys.intern(s) for s in names)) )
 
     # return genes in the chromosome that are between beg and end base pairs
     def getGenesAt(self, chr, beg, end, onlyInside=False):
@@ -344,7 +344,7 @@ class Genome:
         index = dichotFind(0, len(lst)-1)
 
         res = []
-        for i in xrange(index-1, -1, -1):
+        for i in range(index-1, -1, -1):
             g = lst[i]
             if g.end < beg:
                 break
@@ -355,7 +355,7 @@ class Genome:
         for g in reversed(res):
             yield g
 
-        for i in xrange(index, len(lst)):
+        for i in range(index, len(lst)):
             g = lst[i]
             if g.beginning > end:
                 break
@@ -373,7 +373,7 @@ class Genome:
 
     # return all genes
     def __iter__(self):
-        for t in self.lstGenes.itervalues():
+        for t in self.lstGenes.values():
             for g in t:
                 yield g
 
@@ -413,13 +413,13 @@ class Genome:
     def printEnsembl(self, f):
         for chrom in self.lstGenes:
             for gene in self.lstGenes[chrom]:
-                print >> f, myFile.myTSV.printLine([chrom, gene.beginning, gene.end, gene.strand, " ".join(gene.names)])
+                print(myFile.myTSV.printLine([chrom, gene.beginning, gene.end, gene.strand, " ".join(gene.names)]), file=f)
 
     def intoDict(self):
         # Warning : it is important to use a dict since there are sometimes a
         # jump in the numerotation of chromosomes in a genome.
         newGenome = {}
-        for c in self.lstGenes.keys():
+        for c in list(self.lstGenes.keys()):
             assert len(self.lstGenes[c]) >=1
             newGenome[c] = [(g.names[0],g.strand) for g in self.lstGenes[c]]
         return newGenome
@@ -443,7 +443,7 @@ class Genome:
             minC = float(min(lGeneCoord)) / 1000000
             maxC = float(max(lGeneCoord)) / 1000000
             lenChrom = maxC - minC
-            print >> sys.stderr, c
+            print(c, file=sys.stderr)
             chromosomesMeanInterConsideredGeneLen[str(c)] = float(lenChrom) / lenConsideredGenes if lenConsideredGenes > 0 else float(lenChrom)
             totalLenChrom += lenChrom if lenChrom > 0 else None
             totalLenConsideredGenes += lenConsideredGenes

@@ -293,7 +293,7 @@ for (nb,tree) in enumerate(utils.myProteinTree.loadTree(arguments["ensemblTree"]
 	        # On trie les bonnes duplications des mauvaises
 	        ################################################
                 nodeLowscore = []
-	        for (node,inf) in tree.info.iteritems():
+	        for (node,inf) in tree.info.items():
                         if 'tree_name' in inf:
                                 treename = inf['tree_name']
                         
@@ -385,7 +385,7 @@ for (nb,tree) in enumerate(utils.myProteinTree.loadTree(arguments["ensemblTree"]
                 for iii in tree.info:
                         NewDataTreeInfo[iii] = tree.info[iii]
                # print >> sys.stderr, 'TREEEEEEEEEEEEEEEE', NewDataTreeInfo
-	        for (node,inf) in tree.info.iteritems():
+	        for (node,inf) in tree.info.items():
                         if node in NodeToTest:
                                 ChildToRemove = []
                                # print >> sys.stderr, 'nodeatester', node
@@ -738,6 +738,6 @@ for (nb,tree) in enumerate(utils.myProteinTree.loadTree(arguments["ensemblTree"]
 	tree.printTree(sys.stdout)
 
 
-print >> sys.stderr, 'total edition', nbEdit
-print >> sys.stderr, 'total duplication', nbdup
+print('total edition', nbEdit, file=sys.stderr)
+print('total duplication', nbdup, file=sys.stderr)
 

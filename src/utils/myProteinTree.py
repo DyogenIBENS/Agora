@@ -62,8 +62,8 @@ class ProteinTree:
 
     def doBackup(self):
         self.backRoot = self.root
-        self.backData = dict((node,values[:]) for (node,values) in self.data.iteritems())
-        self.backInfo = dict((node,values.copy()) for (node,values) in self.info.iteritems())
+        self.backData = dict((node,values[:]) for (node,values) in self.data.items())
+        self.backInfo = dict((node,values.copy()) for (node,values) in self.info.items())
 
 
 
@@ -74,12 +74,12 @@ class ProteinTree:
 
             indent = "\t" * n
             # id of the node
-            print >> f, "%sid\t%d" % (indent, node)
+            print("%sid\t%d" % (indent, node), file=f)
             # informations
-            print >> f, "%sinfo\t{%s}" % (indent, ", ".join(repr(key) + ": " + repr(value) for (key, value) in sorted(self.info[node].iteritems())))
+            print("%sinfo\t{%s}" % (indent, ", ".join(repr(key) + ": " + repr(value) for (key, value) in sorted(self.info[node].items()))), file=f)
             # children
             for (g,d) in self.data.get(node,[]):
-                print >> f, "%s\tlen\t%g" % (indent, d)
+                print("%s\tlen\t%g" % (indent, d), file=f)
                 rec(n+1, g)
 
         rec(0, self.root if node is None else node)
@@ -104,7 +104,7 @@ class ProteinTree:
 
         if root is None:
             root = self.root
-        print >> f, rec(root) + ("[&&NHX:" + ":".join(("%s=%s" % ((NHX[tag],self.info[root][tag]) if tag!="Duplication" else (NHX[tag],"N" if self.info[root][tag]== 0 else "Y"))).replace(" ", ".") for tag in NHX if tag in self.info[root]) + "]" if withTags else "") + ";"
+        print(rec(root) + ("[&&NHX:" + ":".join(("%s=%s" % ((NHX[tag],self.info[root][tag]) if tag!="Duplication" else (NHX[tag],"N" if self.info[root][tag]== 0 else "Y"))).replace(" ", ".") for tag in NHX if tag in self.info[root]) + "]" if withTags else "") + ";", file=f)
         try:
             f.flush()
         except AttributeError:
@@ -121,8 +121,8 @@ class ProteinTree:
             else:
                 return "(" + ",".join([rec(x) + ":" + str(l) for (x,l)  in self.data[node]]) + ") " + self.info[node]['family_name']
         tr = rec(self.root if node is None else node)
-        print >> f, " ".join(genes)
-        print >> f, tr, ";"
+        print(" ".join(genes), file=f)
+        print(tr, ";", file=f)
 
 
     # Compact a tree by removing intermediary nodes that have only one child
@@ -284,11 +284,11 @@ class ProteinTree:
                     if anc in children:
                         lst1 = children.pop(anc)
                         lst2 = []
-                        for tmp in children.itervalues():
+                        for tmp in children.values():
                             lst2.extend(tmp)
                         items = [(anc,lst1), (anc,lst2)]
                     else:
-                        items = children.items()
+                        items = list(children.items())
 
                     newData = set()
                     for (anc,lst) in items:
@@ -395,7 +395,7 @@ def loadPhylTreeTree(f):
 # load the tree from an NHX file
 def loadNHXTree(f):
 
-    import cStringIO
+    import io
 
     ns = myTools.Namespace()
     ns.nodeid = 0
@@ -424,7 +424,7 @@ def loadNHXTree(f):
                 else:
                     info["Duplication"] = 2
             else:
-                print >> sys.stderr, "Unknown Duplication code '%s'" % (tree.info[node]["D"],)
+                print("Unknown Duplication code '%s'" % (tree.info[node]["D"],), file=sys.stderr)
                 sys.exit(1)
         else:
             info["Duplication"] = 0
@@ -466,13 +466,13 @@ def loadNHXTree(f):
 
 
 def loadTree(name):
-    print >> sys.stderr, "Loading the forest of gene trees %s ..." % name,
+    print("Loading the forest of gene trees %s ..." % name, end=' ', file=sys.stderr)
     f = myFile.openFile(name, "r") if isinstance(name, str) else name
 
     # Sniff the first line and choose the appropriate loader
     # We can't use firstLineBuffer because loadPhylTreeTree uses next()
     # and the later is not able to add the first line back
-    firstLine = f.next()
+    firstLine = next(f)
     f.seek(0)
 
     if (';' in firstLine) or ('(' in firstLine):
@@ -481,7 +481,7 @@ def loadTree(name):
     else:
         tree_format = "phylTree"
         loader = loadPhylTreeTree(f)
-    print >> sys.stderr, "(%s format)" % tree_format,
+    print("(%s format)" % tree_format, end=' ', file=sys.stderr)
 
     # Load and count the trees
     n = (0, 0, 0)
@@ -489,7 +489,7 @@ def loadTree(name):
         tree.info[tree.root]["format"] = tree_format
         n = (n[0]+1, n[1]+len(tree.data), n[2]+len(tree.info)-len(tree.data))
         yield tree
-    print >> sys.stderr, "%d roots, %d branches, %d nodes OK" % n
+    print("%d roots, %d branches, %d nodes OK" % n, file=sys.stderr)
 
     f.close()
 

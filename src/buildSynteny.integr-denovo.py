@@ -46,9 +46,9 @@ def do(anc):
     diags = utils.myGraph.loadConservedPairsAnc(arguments["pairwise"] % phylTree.fileName[anc])
 
     g = utils.myGenomes.Genome(arguments["ancGenesFiles"] % phylTree.fileName[anc], withDict=False).lstGenes
-    singletons = set(xrange(len(g[None]))) if None in g else set(g)
+    singletons = set(range(len(g[None]))) if None in g else set(g)
 
-    print >> sys.stderr, "Integrated blocs of %s ..." % anc,
+    print("Integrated blocs of %s ..." % anc, end=' ', file=sys.stderr)
 
     graph = utils.myGraph.WeightedDiagGraph()
     for x in diags:
@@ -79,13 +79,13 @@ def do(anc):
         singletons.difference_update(da)
         res = [anc, len(da), utils.myFile.myTSV.printLine(da, " "), utils.myFile.myTSV.printLine(ds, " "),
                utils.myFile.myTSV.printLine(dw, " ")]
-        print >> f, utils.myFile.myTSV.printLine(res)
+        print(utils.myFile.myTSV.printLine(res), file=f)
 
     for x in singletons:
-        print >> f, utils.myFile.myTSV.printLine([anc, 1, x, 1, ""])
+        print(utils.myFile.myTSV.printLine([anc, 1, x, 1, ""]), file=f)
     f.close()
-    print >> sys.stderr, "OK"
-    print >> sys.stderr, anc,  utils.myMaths.myStats.syntheticTxtSummary(s), "+ %d singletons OK" % len(singletons)
+    print("OK", file=sys.stderr)
+    print(anc,  utils.myMaths.myStats.syntheticTxtSummary(s), "+ %d singletons OK" % len(singletons), file=sys.stderr)
 
     # Revert to the true standard output
     sys.stdout.close()
@@ -98,9 +98,9 @@ start = time.time()
 phylTree = utils.myPhylTree.PhylogeneticTree(arguments["speciesTree"])
 targets = phylTree.getTargetsAnc(arguments["target"])
 
-print >> sys.stderr, targets
+print(targets, file=sys.stderr)
 
 n_cpu = arguments["nbThreads"] or multiprocessing.cpu_count()
 Parallel(n_jobs=n_cpu)(delayed(do)(anc) for anc in targets)
 
-print >> sys.stderr, "Elapsed time:", (time.time() - start)
+print("Elapsed time:", (time.time() - start), file=sys.stderr)

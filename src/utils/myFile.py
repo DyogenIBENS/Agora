@@ -56,7 +56,7 @@ class myTSV:
         for (i,line) in enumerate(f):
             current_line = line.replace('\n','').split(delim)
             assert len(current_line) == len(new_type_list), "Error number of columns. Line:%d" % (i+1)
-            yield tuple(t(x) for (x,t) in itertools.izip(current_line,new_type_list))
+            yield tuple(t(x) for (x,t) in zip(current_line,new_type_list))
         f.close()
 
     # load MySQL dumps (join truncated lines)
@@ -83,16 +83,16 @@ class firstLineBuffer:
     def __init__(self, f):
         self.f = f
         try:
-            self.firstLine = self.next()
+            self.firstLine = next(self)
         except StopIteration:
             self.firstLine = ""
 
     def __iter__(self):
         yield self.firstLine
         while True:
-            yield self.next()
+            yield next(self)
 
-    def next(self):
+    def __next__(self):
         while True:
             l = self.f.next().replace('\n', '').replace('\r', '')
             # Suppression of the lines with comments
@@ -150,9 +150,9 @@ def openFile(nom, mode):
         i = nom.find(".zip/")
         if (mode == "r") and (i >= 0):
             import zipfile
-            import cStringIO
+            import io
             f = zipfile.ZipFile(nom[:i+4], "r")
-            f = cStringIO.StringIO(f.read(nom[i+5:]))
+            f = io.StringIO(f.read(nom[i+5:]))
         # Compression bzip2
         elif nom.endswith(".bz2"):
             import bz2

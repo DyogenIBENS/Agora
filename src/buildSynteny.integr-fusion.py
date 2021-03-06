@@ -49,7 +49,7 @@ def do(anc):
         if not arguments["onlySingletons"] or ((x[0][0] in singletons) and (x[1][0] in singletons)):
             graph.addLink(*x)
 
-    print >> sys.stderr, "Blocs integres de %s ..." % anc,
+    print("Blocs integres de %s ..." % anc, end=' ', file=sys.stderr)
 
     # cutting the graph
     graph.cleanGraphTopDown(arguments["minimalWeight"], searchLoops=arguments["searchLoops"])
@@ -60,10 +60,10 @@ def do(anc):
     if arguments["onlySingletons"]:
         # If this option is set, the blocks are printed as they are
         for (b, w) in integr:
-            print >> f, utils.myFile.myTSV.printLine([anc, len(b),
+            print(utils.myFile.myTSV.printLine([anc, len(b),
                                                       utils.myFile.myTSV.printLine([x[0] for x in b], " "),
                                                       utils.myFile.myTSV.printLine([x[1] for x in b], " "),
-                                                      utils.myFile.myTSV.printLine(w, " ")])
+                                                      utils.myFile.myTSV.printLine(w, " ")]), file=f)
 
     # Integrated blocks extraction
     for (d, dw) in graph.getBestDiags():
@@ -76,14 +76,14 @@ def do(anc):
 
         s.append(len(da))
         singletons.difference_update(da)
-        print >> f, utils.myFile.myTSV.printLine(
+        print(utils.myFile.myTSV.printLine(
             [anc, len(da), utils.myFile.myTSV.printLine(da, " "), utils.myFile.myTSV.printLine(ds, " "),
-             utils.myFile.myTSV.printLine(dw, " ")])
+             utils.myFile.myTSV.printLine(dw, " ")]), file=f)
 
     for x in singletons:
-        print >> f, utils.myFile.myTSV.printLine([anc, 1, x, 1, ""])
+        print(utils.myFile.myTSV.printLine([anc, 1, x, 1, ""]), file=f)
     f.close()
-    print >> sys.stderr, utils.myMaths.myStats.txtSummary(s), "+ %d singletons OK" % len(singletons)
+    print(utils.myMaths.myStats.txtSummary(s), "+ %d singletons OK" % len(singletons), file=sys.stderr)
 
     # Revert to the true standard output
     sys.stdout.close()
@@ -100,4 +100,4 @@ targets = phylTree.getTargetsAnc(arguments["target"])
 n_cpu = arguments["nbThreads"] or multiprocessing.cpu_count()
 Parallel(n_jobs=n_cpu)(delayed(do)(anc) for anc in targets)
 
-print >> sys.stderr, "Elapsed time:", (time.time() - start)
+print("Elapsed time:", (time.time() - start), file=sys.stderr)

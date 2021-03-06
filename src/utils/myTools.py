@@ -34,14 +34,14 @@ class Namespace: pass
 #3
 class Enum(object):
     def __init__(self, *keys):
-        self.__dict__.update(zip(keys, range(len(keys))))
+        self.__dict__.update(list(zip(keys, list(range(len(keys))))))
 
 def applyFunctions(fun, data):
-    for (f, x) in itertools.izip(fun, data):
+    for (f, x) in zip(fun, data):
         yield f(x)
 
 def funcFilter(fun):
-    return lambda data: (f(x) for (f, x) in itertools.izip(fun, data))
+    return lambda data: (f(x) for (f, x) in zip(fun, data))
 
 def __delitem__(self, key):
     dict.__delitem__(self, self[key])
@@ -64,7 +64,7 @@ def printTable(table, output, spaceBetweenColumns=2):
         ["".join([str(e).ljust(l + spaceBetweenColumns)
                   for e, l in zip(r, max_lens)])
          for r in table])
-    print >> output, res
+    print(res, file=output)
     return res
 
 # FIXME: to print well in stream, the user needs to ensure that between two calls to printProgressIn, nothing had been
@@ -72,7 +72,7 @@ def printTable(table, output, spaceBetweenColumns=2):
 class ProgressBar:
     def __init__(self, totalLength, step=1):
         self.totalLength = totalLength
-        self.listOfPercentage = range(0, 101, step)[1:]
+        self.listOfPercentage = list(range(0, 101, step))[1:]
 
     def printProgressIn(self, stream, currentLength, prefixLabel=None):
         progress = int(float(currentLength*100)/self.totalLength)
@@ -131,7 +131,7 @@ def tictac(functionToExcecute):
         res = functionToExcecute(*args,**kargs)
         tac = time.time()
         deltaTicTac = tac - tic
-        print >> sys.stderr, "Function \"%s\" was executed in %s seconds" % (functionToExcecute.__name__, deltaTicTac)
+        print("Function \"%s\" was executed in %s seconds" % (functionToExcecute.__name__, deltaTicTac), file=sys.stderr)
         return res
     return modifiedFunction
 
@@ -177,7 +177,7 @@ class memoize:
         except TypeError:
             # uncachable -- for instance, passing a list as an argument.
             # Better to not cache than to blow up entirely.
-            print >> sys.stderr, "Warning: %s is not cacheable (from %s/%s)" % (args, self, self.func)
+            print("Warning: %s is not cacheable (from %s/%s)" % (args, self, self.func), file=sys.stderr)
             return self.func(*args)
 
     def reinit_stats(self):
@@ -262,7 +262,7 @@ class myIterator:
             raise StopIteration
         else:
             # idxW0, idx of the left extremity of the sliding window
-            for idxW0 in xrange(len(lst) - width + 1):
+            for idxW0 in range(len(lst) - width + 1):
                 yield tuple(lst[idxW0: idxW0 + width])
 
 # liste of partitions of size k in range(n)
@@ -276,7 +276,7 @@ def partitions(n, k):
         for x in partitions(n-1, k-1):
             all.append( x + [[n-1]] )
         for x in partitions(n-1, k):
-            for i in xrange(k):
+            for i in range(k):
                 all.append( [y if i != j else y + [n-1] for (j,y) in enumerate(x)] )
         return all
     else:
@@ -293,7 +293,7 @@ def getRange(s):
         return lst
     else:
         (start,_,end) = s.partition(':')
-        return range(int(start), int(end)+1)
+        return list(range(int(start), int(end)+1))
 
 
 # hashable dict class, useful to use it as a key
@@ -314,7 +314,7 @@ class myCombinator:
     def __init__(self, ini = []):
         self.grp = list(ini)
         self.dic = {}
-        for i in xrange(len(self.grp)):
+        for i in range(len(self.grp)):
             self.grp[i] = list(set(self.grp[i]))
             for x in self.grp[i]:
                 self.dic[x] = i
@@ -402,19 +402,19 @@ def checkArgs(args, options, info, showArgs=True, loadOnlyDefaultOptions=False):
     options = options + __moduleoptions
     # print error informations if wrong arguments
     def error_usage(reason):
-        print >> sys.stderr, "- ERROR -", reason
-        print >> sys.stderr, " Usage :", sys.argv[0]
+        print("- ERROR -", reason, file=sys.stderr)
+        print(" Usage :", sys.argv[0], file=sys.stderr)
         for (i,t) in enumerate(args):
-            print >> sys.stderr, "\t", "%d:" % (i+1), t[0], list(t[1].__dict__) if isinstance(t[1], Enum) else t[1]
+            print("\t", "%d:" % (i+1), t[0], list(t[1].__dict__) if isinstance(t[1], Enum) else t[1], file=sys.stderr)
         for t in options:
             if isinstance(t[1], Enum):
-                print >> sys.stderr, "\t", "  -%s %s (%s)" % (t[0], list(t[1].__dict__), t[2])
+                print("\t", "  -%s %s (%s)" % (t[0], list(t[1].__dict__), t[2]), file=sys.stderr)
             elif t[1] == bool:
-                print >> sys.stderr, "\t", "+/-%s (%s)" % (t[0],t[2])
+                print("\t", "+/-%s (%s)" % (t[0],t[2]), file=sys.stderr)
             else:
-                print >> sys.stderr, "\t", "  -%s %s (%s)" % t
+                print("\t", "  -%s %s (%s)" % t, file=sys.stderr)
         if info != "":
-            print >> sys.stderr, "\n", info
+            print("\n", info, file=sys.stderr)
         sys.exit(1)
 
     def putValue(typ, authorisedVals, v):
@@ -542,21 +542,21 @@ def printArguments(arguments, stream=open(os.devnull, 'w')):
         rows = 50
         columns = 80
 
-    for (key, value) in arguments.iteritems():
+    for (key, value) in arguments.items():
         longestKey = max(len(str(key)), longestKey)
         longestValue = max(len(str(value)), longestValue)
     longestValue = min(longestValue, rows - longestKey - 7)
     lines = []
     lines.append('| ' + 'Key'.ljust(longestKey) + ' | ' + 'Values'.ljust(longestValue) + ' |')
-    for (key, value) in arguments.iteritems():
+    for (key, value) in arguments.items():
         lines.append('| ' + str(key).ljust(longestKey) + ' | ' + str(value).ljust(longestValue) + ' |')
     longestLine = min(max([len(line) for line in lines]), rows)
-    print >> stream, '-' * longestLine
-    print >> stream, lines[0]
-    print >> stream, '-' * longestLine
+    print('-' * longestLine, file=stream)
+    print(lines[0], file=stream)
+    print('-' * longestLine, file=stream)
     for line in lines[1:]:
-        print >> stream, line
-    print >> stream, '-' * longestLine
+        print(line, file=stream)
+    print('-' * longestLine, file=stream)
 
 # http://stackoverflow.com/questions/566746/how-to-get-console-window-width-in-python
 # """ getTerminalSize()
@@ -575,7 +575,7 @@ def getTerminalSize():
    if current_os == 'Linux' or current_os == 'Darwin' or  current_os.startswith('CYGWIN'):
        tuple_xy = _getTerminalSize_linux()
    if tuple_xy is None:
-       print "default"
+       print("default")
        tuple_xy = (80, 25)      # default value
    return tuple_xy
 
@@ -650,14 +650,14 @@ def isSorted(l, increasingOrder=False, stricly=False, key=lambda x: x):
     assert isinstance(increasingOrder, bool)
     if increasingOrder:
         if stricly:
-            res= all(key(l[i]) < key(l[i+1]) for i in xrange(len(l)-1))
+            res= all(key(l[i]) < key(l[i+1]) for i in range(len(l)-1))
         else:
-            res = all(key(l[i]) <= key(l[i+1]) for i in xrange(len(l)-1))
+            res = all(key(l[i]) <= key(l[i+1]) for i in range(len(l)-1))
     else:
         if stricly:
-            res = all(key(l[i]) > key(l[i+1]) for i in xrange(len(l)-1))
+            res = all(key(l[i]) > key(l[i+1]) for i in range(len(l)-1))
         else:
-            res = all(key(l[i]) >= key(l[i+1]) for i in xrange(len(l)-1))
+            res = all(key(l[i]) >= key(l[i+1]) for i in range(len(l)-1))
     return res
 
 def keyNaturalSort(chrName):

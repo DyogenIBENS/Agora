@@ -60,7 +60,7 @@ def rewriteGenome(genome, dic):
 def getExtremities(genome):
     extr1 = {}
     extr2 = {}
-    for (chrom, l) in genome.iteritems():
+    for (chrom, l) in genome.items():
         (i0, s0) = l[0]
         (i1, s1) = l[-1]
         extr1[(i0, s0)] = (chrom, 1)
@@ -77,7 +77,7 @@ def getAllAdj(anc, dicGenomesAnc):
         dicA = {}
         dicM = {}
         stats = []
-        print >> sys.stderr, "Diagonals extraction between %s and %s ..." % (anc, esp),
+        print("Diagonals extraction between %s and %s ..." % (anc, esp), end=' ', file=sys.stderr)
 
         for (n, ((c1, d1), (c2, d2), da)) in enumerate(
                 utils.myGraph.calcDiags(dicGenomes[esp], dicGenomesAnc, genesAnc[phylTree.dicParents[anc][esp]],
@@ -86,12 +86,12 @@ def getAllAdj(anc, dicGenomesAnc):
             if len(da) < arguments["anchorSize"]:
                 continue
             # print "DIAG", anc, esp, n, (c1,c2), len(da), (d1,d2,da)
-            for ((i1, s1), (i2, s2)) in itertools.izip(d1, d2):
+            for ((i1, s1), (i2, s2)) in zip(d1, d2):
                 dicM[(c1, i1)] = (n, s1)
                 dicA[(c2, i2)] = (n, s1)
             stats.append(len(da))
 
-        print >> sys.stderr, utils.myMaths.myStats.txtSummary(stats),
+        print(utils.myMaths.myStats.txtSummary(stats), end=' ', file=sys.stderr)
 
         newGA = rewriteGenome(dicGenomesAnc, dicA)
         # List of selected blocks in the ancestor
@@ -104,7 +104,7 @@ def getAllAdj(anc, dicGenomesAnc):
         (extr1, extr2) = getExtremities(newGA)
 
         tmp = []
-        for (cM, l) in newGM.iteritems():
+        for (cM, l) in newGM.items():
             # print anc, esp, "MOD", cM, len(newGM[cM]), newGM[cM]
             # Allows to select during a segmental duplication, the same block than the ancestor
             l = [x for x in l if x[0] in notdup]
@@ -116,7 +116,7 @@ def getAllAdj(anc, dicGenomesAnc):
 
         allAdj[esp] = set(tmp)
         allAdj[esp].update(((i2, -s2), (i1, -s1)) for ((i1, s1), (i2, s2)) in tmp)
-        print >> sys.stderr, "%d adjacencies / %d blocs" % (len(tmp), len(newGA))
+        print("%d adjacencies / %d blocs" % (len(tmp), len(newGA)), file=sys.stderr)
     return allAdj
 
 
@@ -170,18 +170,18 @@ def do(anc):
             if len(scores) > 0:
                 tw.append(str(scores.pop(0)))
             l += len(dicGenomesAnc.lstGenes[x])
-        print >> f, utils.myFile.myTSV.printLine([anc, l, " ".join(tg), " ".join(ts), " ".join(tw)])
+        print(utils.myFile.myTSV.printLine([anc, l, " ".join(tg), " ".join(ts), " ".join(tw)]), file=f)
         stats.append(l)
 
     # Write the single blocks
     for x in sorted(notseen):
-        print >> f, utils.myFile.myTSV.printLine(
-            (anc, len(dicGenomesAnc.lstGenes[x])) + toString(x) + ("(%d)" % len(dicGenomesAnc.lstGenes[x]),))
+        print(utils.myFile.myTSV.printLine(
+            (anc, len(dicGenomesAnc.lstGenes[x])) + toString(x) + ("(%d)" % len(dicGenomesAnc.lstGenes[x]),)), file=f)
         if len(dicGenomesAnc.lstGenes[x]) > 1:
             stats.append(len(dicGenomesAnc.lstGenes[x]))
 
-    print >> sys.stderr, "Integrated blocs of", anc, utils.myMaths.myStats.txtSummary(stats), "+", len(
-        genesAnc[anc].lstGenes[None]) - sum(stats), "singletons"
+    print("Integrated blocs of", anc, utils.myMaths.myStats.txtSummary(stats), "+", len(
+        genesAnc[anc].lstGenes[None]) - sum(stats), "singletons", file=sys.stderr)
     f.close()
 
     # Revert to the true standard output
@@ -245,4 +245,4 @@ for (e1, e2) in itertools.combinations(listSpecies, 2):
 start = time.time()
 n_cpu = arguments["nbThreads"] or multiprocessing.cpu_count()
 Parallel(n_jobs=n_cpu)(delayed(do)(anc) for anc in targets)
-print >> sys.stderr, "Elapsed time:", (time.time() - start)
+print("Elapsed time:", (time.time() - start), file=sys.stderr)

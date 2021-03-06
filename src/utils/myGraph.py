@@ -36,7 +36,7 @@ def loadConservedPairsAnc(filename):
 # Chargement d'un fichier de paires conservees
 ################################################
 def loadConservedPairs(filename, targets):
-	print >> sys.stderr, "Loading conserved pairs of %s ..." % filename,
+	print("Loading conserved pairs of %s ..." % filename, end=' ', file=sys.stderr)
 	pairwiseDiags = collections.defaultdict(list)
 	f = myFile.openFile(filename, "r")
 	for l in f:
@@ -44,7 +44,7 @@ def loadConservedPairs(filename, targets):
 		if t[0] in targets:
 			pairwiseDiags[t[0]].append( ((int(t[1]),int(t[2])), (int(t[3]),int(t[4])), int(t[7])) )
 	f.close()
-	print >> sys.stderr, "OK"
+	print("OK", file=sys.stderr)
 	return pairwiseDiags
 
 
@@ -54,7 +54,7 @@ def loadConservedPairs(filename, targets):
 def loadIntegr(filename):
 	integr = []
 	singletons = set()
-	print >> sys.stderr, "Loading integrated blocks of %s ..." % filename,
+	print("Loading integrated blocks of %s ..." % filename, end=' ', file=sys.stderr)
 	f = myFile.openFile(filename, "r")
 	for l in f:
 		t = l.split("\t")
@@ -66,9 +66,9 @@ def loadIntegr(filename):
 		if len(diagA) == 1:
 			singletons.update(diagA)
 		else:
-			integr.append((zip(diagA,diagS),diagW))
+			integr.append((list(zip(diagA,diagS)),diagW))
 	f.close()
-	print >> sys.stderr, myMaths.myStats.txtSummary([len(x[0]) for x in integr]), "+", len(singletons), "singletons OK"
+	print(myMaths.myStats.txtSummary([len(x[0]) for x in integr]), "+", len(singletons), "singletons OK", file=sys.stderr)
 	return (integr,singletons)
 
 #
@@ -149,10 +149,10 @@ class queueWithBackup:
 		return self
 	
 	# Le prochain element renvoye vient soit du buffer, soit du generateur principal
-	def next(self):
+	def __next__(self):
 		if len(self.todofirst) > 0:
 			return self.todofirst.pop()
-		return self.gen.next()
+		return next(self.gen)
 	
 	# L'element reinsere est mis en attente
 	def putBack(self, x):
@@ -228,7 +228,7 @@ def calcDiags(g1, g2, orthos, fusionThreshold=-1, sameStrand=True, orthosFilter=
 	def markGeneIntersection():
 		def usedValues(genome):
 			val = set()
-			for x in genome.itervalues():
+			for x in genome.values():
 				val.update(i for (i,_) in x)
 			return val
 		def rewrite(genome, inters):
@@ -244,7 +244,7 @@ def calcDiags(g1, g2, orthos, fusionThreshold=-1, sameStrand=True, orthosFilter=
 	# Enleve les chromosomes trop petits
 	def filterSize(genome):
 		flag = False
-		for c in genome.keys():
+		for c in list(genome.keys()):
 			if len(genome[c]) < minChromLength:
 				flag = True
 				del genome[c]
@@ -284,7 +284,7 @@ def calcDiags(g1, g2, orthos, fusionThreshold=-1, sameStrand=True, orthosFilter=
 		assert False
 	
 	# Pour chaque gene ancestral, ses positions dans le genome 2
-	newLoc = [[] for x in xrange(len(orthos.lstGenes[None]))]
+	newLoc = [[] for x in range(len(orthos.lstGenes[None]))]
 	for c in newg2:
 		for (i,(ianc,s)) in enumerate(newg2[c]):
 			if ianc != -1:
@@ -302,10 +302,11 @@ def calcDiags(g1, g2, orthos, fusionThreshold=-1, sameStrand=True, orthosFilter=
 				yield ((c1,d1), (c2,d2), da)
 
 #@myTools.memoize
-def revGene((x,sx)):
+def revGene(xxx_todo_changeme):
     # sx is an integer for the graph construction of AGORA
     # sx = +1 or -1, standard case
     # however sometimes sx is not defined, and we chose 0 and the reverse of 0 is 10
+	(x,sx) = xxx_todo_changeme
 	if sx == 0:
 		return (x, 10)
 	elif sx == 10:
@@ -355,20 +356,20 @@ class WeightedDiagGraph:
 	################################################
 	def addWeightedDiag(self, diag, weights):
 		assert len(diag) == (len(weights)+1)
-		for ((xsx,ysy),w) in itertools.izip(myTools.myIterator.slidingTuple(diag), weights):
+		for ((xsx,ysy),w) in zip(myTools.myIterator.slidingTuple(diag), weights):
 			self.addLink(xsx, ysy, w)
 		
 	#
 	# Affiche le graphe initial
 	#############################
 	def printIniGraph(self):
-		print "INIGRAPH %d {" % len(self.aretes)
-		for (xsx,l) in self.aretes.iteritems():
+		print("INIGRAPH %d {" % len(self.aretes))
+		for (xsx,l) in self.aretes.items():
 			if len(l) > 0:
-				print "\t", xsx, "> {%d}" % len(l)
-				for (ysy,w) in l.iteritems():
-					print "\t\t", ysy, "[%s]" % w
-		print "}"
+				print("\t", xsx, "> {%d}" % len(l))
+				for (ysy,w) in l.items():
+					print("\t\t", ysy, "[%s]" % w)
+		print("}")
 
 
 	#
@@ -382,7 +383,7 @@ class WeightedDiagGraph:
 		allNodes = set(self.aretes)
 		
 		if searchLoops:
-			for (xsx,l) in self.aretes.items():
+			for (xsx,l) in list(self.aretes.items()):
 				if len(l) != 2:
 					continue
 				ll = [(len(self.aretes[revGene(ysy)]),ysy) for ysy in l]
@@ -402,14 +403,14 @@ class WeightedDiagGraph:
 					next = list(self.aretes[next])[0]
 					length += 1
 				else:
-					print "loop", length, xsx, target
+					print("loop", length, xsx, target)
 					self.aretes[xsx].pop(target)
 					self.aretes[revGene(target)].pop(revGene(xsx))
 
-		for (xsx,l) in self.aretes.iteritems():
+		for (xsx,l) in self.aretes.items():
 			allSucc[xsx] = []
 			allPred[xsx] = []
-			for (ysy,c) in l.iteritems():
+			for (ysy,c) in l.items():
 				if (c >= minimalWeight) and (xsx < ysy):
 					allEdges.append( (c,xsx,ysy) )
 		
@@ -436,15 +437,15 @@ class WeightedDiagGraph:
 			# 3 cas ambigus
 			if xsx in res:
 				# > 1 successeur
-				print "not used /successor", xsx, ysy, c
+				print("not used /successor", xsx, ysy, c)
 				continue
 			if rysy in res:
 				# > 1 predecesseur
-				print "not used /predecessor", xsx, ysy, c
+				print("not used /predecessor", xsx, ysy, c)
 				continue
 			if xsx in allSucc[ysy]:
 				# Cycle
-				print "not used /cycle", xsx, ysy, c
+				print("not used /cycle", xsx, ysy, c)
 				continue
 			assert rysy not in allSucc[rxsx]
 
@@ -452,16 +453,16 @@ class WeightedDiagGraph:
 			addEdge(c, rysy, rxsx)
 	
 		allNodes.difference_update(res)
-		allNodes.difference_update(ysy for (ysy,_) in res.itervalues())
+		allNodes.difference_update(ysy for (ysy,_) in res.values())
 
 		self.aretes = res
 		self.singletons = allNodes
 
 		# Affichage du graphe
-		print "GRAPH %d {" % len(self.aretes)
-		for (tx,(ty,c)) in self.aretes.iteritems():
-			print "\t", tx, ">", ty, "[%s]" % c
-		print "}"
+		print("GRAPH %d {" % len(self.aretes))
+		for (tx,(ty,c)) in self.aretes.items():
+			print("\t", tx, ">", ty, "[%s]" % c)
+		print("}")
 
 
 
@@ -475,7 +476,7 @@ class WeightedDiagGraph:
 		
 			res = []
 			scores = []
-			print "begin", xsx
+			print("begin", xsx)
 			
 			# On part de src et on prend les successeurs jusqu'a la fin du chemin
 			while xsx in self.aretes:
@@ -484,7 +485,7 @@ class WeightedDiagGraph:
 				
 				# Le prochain noeud a visiter
 				(ysy,c) = self.aretes.pop(xsx)
-				print "pop edge", xsx, ysy, c
+				print("pop edge", xsx, ysy, c)
 				scores.append(c)
 
 				# Traitement de l'arete inverse
@@ -497,7 +498,7 @@ class WeightedDiagGraph:
 			assert revGene(xsx) not in self.aretes
 			assert len(res) >= 2
 
-			print "end", len(res), res
+			print("end", len(res), res)
 
 			return (res,scores)
 
@@ -514,7 +515,7 @@ class WeightedDiagGraph:
 		assert self.singletons == set(revGene(xsx) for xsx in self.singletons)
 		for (x,sx) in self.singletons:
 			if sx == 1:
-				print "singleton", x
+				print("singleton", x)
 				yield ([(x,1)],[])
 
 
