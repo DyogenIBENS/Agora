@@ -89,11 +89,11 @@ class TaskList():
         tmp = [i for (i, task) in enumerate(self.list) if len(task[0]) == 0]
         print("Available tasks:", tmp)
         if len(tmp) > 0:
-            next = tmp[0]
+            taskId = tmp[0]
             # Add something (None) to the dependency list so that the task is never selected again
             # This way the task numbers remain the same
-            self.list[next][0].add(None)
-            return (next,) + self.list[next]
+            self.list[taskId][0].add(None)
+            return taskId
         else:
             return None
 
@@ -240,23 +240,23 @@ class TaskList():
             if (self.nrun == nbThreads) or (sequential and self.nrun):
                 self.joinNext()
             else:
-                todo = self.getAvailable()
-                if todo is None:
+                taskId = self.getAvailable()
+                if taskId is None:
                     if self.nrun == 0:
                         print("Workflow stopped because of failures")
                         break
                     self.joinNext()
                 else:
-                    (next, dep, command, multithreaded) = todo
+                    command = self.list[taskId][1]
                     # Check if this step has already run
                     launch = True
-                    status_file = self.getJsonPath(next)
+                    status_file = self.getJsonPath(taskId)
                     if status_file:
                         print("Control file", status_file, end=' ')
                         if os.path.exists(status_file):
                             with open(status_file, 'r') as fh:
                                 j = json.load(fh)
-                            if j == self.getJsonPayload(next):
+                            if j == self.getJsonPayload(taskId):
                                 launch = False
                                 print("present - same parameters")
                             else:
@@ -264,21 +264,21 @@ class TaskList():
                         else:
                             print("missing")
                     if launch:
-                        print("Launching task", next, command.args, ">", command.out, "2>", command.log)
-                        if multithreaded:
-                            self.nthreads[next] = nbThreads - self.nrun
+                        print("Launching task", taskId, command.args, ">", command.out, "2>", command.log)
+                        if self.list[taskId][2]:
+                            self.nthreads[taskId] = nbThreads - self.nrun
                             # Creating a new list so that the original list remains available for the Json dump
-                            command = Command(command.args + ["-nbThreads=%d" % self.nthreads[next]], command.out, command.log)
-                            print("Using", self.nthreads[next], "threads")
+                            command = Command(command.args + ["-nbThreads=%d" % self.nthreads[taskId]], command.out, command.log)
+                            print("Using", self.nthreads[taskId], "threads")
                         else:
-                            self.nthreads[next] = 1
-                        self.proc[next] = multiprocessing.Process(target=self.goLaunch, args=(next, command, status_file))
-                        self.proc[next].start()
-                        self.memusage[self.proc[next].pid] = 0
-                        self.nrun += self.nthreads[next]
+                            self.nthreads[taskId] = 1
+                        self.proc[taskId] = multiprocessing.Process(target=self.goLaunch, args=(taskId, command, status_file))
+                        self.proc[taskId].start()
+                        self.memusage[self.proc[taskId].pid] = 0
+                        self.nrun += self.nthreads[taskId]
                     else:
-                        print("Skipping task", next, "(already done)", command.args)
-                        self.removeDep(next)
+                        print("Skipping task", taskId, "(already done)", command.args)
+                        self.removeDep(taskId)
                         self.completed += 1
 
         assert self.nrun == 0
