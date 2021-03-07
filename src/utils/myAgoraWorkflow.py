@@ -421,6 +421,10 @@ class AgoraWorkflow:
 
     def addIntegrationAnalysis(self, methodName, params, pairwiseName, taskName=None, inputName=None, outputName=None, ancestor=None):
 
+        # Legacy interface, still used in .ini-based workflows
+        if methodName == "publish":
+            return self.publishGenome(outputName=taskName, inputName=inputName, ancestor=ancestor)
+
         if taskName is None:
             taskName = methodName
 
@@ -460,15 +464,8 @@ class AgoraWorkflow:
                 ancestor,
         ] + params
 
-        if methodName == "publish":
-            # "publish" is not an integration method
-            args[0] = os.path.join(self.scriptDir, "convert.ancGenomes.blocks-to-genes.py")
-            args.append("+orderBySize")
-            args.append("-OUT.ancGenomes=" + self.files["ancGenomesOutput"] % {"method": newMethod, "name": "%s"})
-            logfile = self.files["ancGenomesLog"]
-        else:
-            args.append("-OUT.ancBlocks=" + self.files["ancBlocks"] % {"method": newMethod, "name": "%s"})
-            logfile = self.files["ancLog"]
+        args.append("-OUT.ancBlocks=" + self.files["ancBlocks"] % {"method": newMethod, "name": "%s"})
+        logfile = self.files["ancLog"]
 
         dep = []
         if pairwiseName is not None:
@@ -477,7 +474,7 @@ class AgoraWorkflow:
             dep.append(("pairwise", self.ancGenesTaskName + "-" + pairwiseName))
             args.append(self.files[self.pairwiseFileEntryName] % {"filt": pairwiseName, "name": "%s"})
 
-        if methodName in ["denovo", "scaffolds", "publish"]:
+        if methodName in ["denovo", "scaffolds"]:
             args.append("-ancGenesFiles=" + self.allAncGenesPath)
 
         # No input data to consider for the denovo method
@@ -494,18 +491,16 @@ class AgoraWorkflow:
             args.append("-genesFiles=" + self.files["genes"] % {"name": "%s"})
             args.extend(self.defaultExtantSpeciesFilter)
 
-        if methodName not in ["copy", "publish"]:
+        if methodName != "copy":
             args.append("-LOG.ancGraph=" + self.files["ancGraphs"] % {"method": newMethod, "name": "%s"})
 
         # Most of the methods are multithreaded
         multithreaded = methodName not in ["copy"]
 
-        # The publish method doesn't generate ancBlocks and can't be used as an input method
-        if methodName != "publish":
-            self.prevMethod = newMethod
+        self.prevMethod = newMethod
 
         return self.tasklist.addTask(
-            ("integr" if methodName != "publish" else "publish", newMethod),
+            ("integr", newMethod),
             dep,
             Command(
                 args,
