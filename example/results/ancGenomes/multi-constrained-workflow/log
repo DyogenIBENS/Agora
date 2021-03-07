@@ -9,12 +9,12 @@
 | nbThreads      | 1                                                                                                             |
 | orderBySize    | True                                                                                                          |
 ----------------------------------------------------------------------------------------------------------------------------------
-Loading genome of example/results/ancBlocks/denovo-size-custom.fillin-all.fusion-all.insertion-all.scaffolds/blocks.A1.list.bz2 ... (ancestral genome: diags) OK
-Loading genome of example/results/ancGenes/all/ancGenes.A1.list.bz2 ... (ancestral genes) OK
 Loading genome of example/results/ancBlocks/denovo-size-custom.fillin-all.fusion-all.insertion-all.scaffolds/blocks.A0.list.bz2 ... (ancestral genome: diags) OK
 Loading genome of example/results/ancGenes/all/ancGenes.A0.list.bz2 ... (ancestral genes) OK
-Loading genome of example/results/ancBlocks/denovo-size-custom.fillin-all.fusion-all.insertion-all.scaffolds/blocks.A3.list.bz2 ... (ancestral genome: diags) OK
-Loading genome of example/results/ancGenes/all/ancGenes.A3.list.bz2 ... (ancestral genes) OK
+Loading genome of example/results/ancBlocks/denovo-size-custom.fillin-all.fusion-all.insertion-all.scaffolds/blocks.A1.list.bz2 ... (ancestral genome: diags) OK
+Loading genome of example/results/ancGenes/all/ancGenes.A1.list.bz2 ... (ancestral genes) OK
 Loading genome of example/results/ancBlocks/denovo-size-custom.fillin-all.fusion-all.insertion-all.scaffolds/blocks.A2.list.bz2 ... (ancestral genome: diags) OK
 Loading genome of example/results/ancGenes/all/ancGenes.A2.list.bz2 ... (ancestral genes) OK
-Time elapsed: 1.71596097946
+Loading genome of example/results/ancBlocks/denovo-size-custom.fillin-all.fusion-all.insertion-all.scaffolds/blocks.A3.list.bz2 ... (ancestral genome: diags) OK
+Loading genome of example/results/ancGenes/all/ancGenes.A3.list.bz2 ... (ancestral genes) OK
+Time elapsed: 1.512024164199829

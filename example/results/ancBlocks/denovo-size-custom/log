@@ -6,4 +6,4 @@
 | IN.ancBlocks  | example/results/ancBlocks/denovo-size-0.77-1.33/blocks.%s.list.bz2 |
 | OUT.ancBlocks | example/results/ancBlocks/denovo-size-custom/blocks.%s.list.bz2    |
 --------------------------------------------------------------------------------------
-Time elapsed: 0.0244390964508
+Time elapsed: 0.026732206344604492
