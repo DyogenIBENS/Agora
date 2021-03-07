@@ -194,6 +194,7 @@ def do(anc):
 phylTree = utils.myPhylTree.PhylogeneticTree(arguments["speciesTree"])
 
 (listSpecies, targets, accessoryAncestors) = phylTree.getTargetsForPairwise(arguments["target"], arguments["extantSpeciesFilter"])
+listSpecies = sorted(listSpecies)
 
 # Gene names don't matter by themselves. What is important is that they link the dicGenomes
 # and the genesAnc. utils.myGenomes uses sys.intern() to make them refer to the same string
@@ -228,7 +229,7 @@ def myintern_species(s):
 utils.myGenomes.intern = myintern_species
 
 dicGenomes = {}
-for e in sorted(listSpecies):
+for e in listSpecies:
     dicGenomes[e] = utils.myGenomes.Genome(arguments["genesFiles"] % phylTree.fileName[e], withDict=False)
     for s in species_names:
         del name_hash[s]
