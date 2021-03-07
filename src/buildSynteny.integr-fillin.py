@@ -698,6 +698,6 @@ def loadPairwise(file):
 print(targets, file=sys.stderr)
 
 n_cpu = arguments["nbThreads"] or multiprocessing.cpu_count()
-Parallel(n_jobs=n_cpu)(delayed(do)(anc) for anc in targets)
+Parallel(n_jobs=n_cpu)(delayed(do)(anc) for anc in sorted(targets))
 
 print("total computation time", (time.time() - start), file=sys.stderr)

@@ -86,5 +86,5 @@ def do(anc):
 
 start = time.time()
 n_cpu = arguments["nbThreads"] or multiprocessing.cpu_count()
-Parallel(n_jobs=n_cpu)(delayed(do)(anc) for anc in targets)
+Parallel(n_jobs=n_cpu)(delayed(do)(anc) for anc in sorted(targets))
 print("Time elapsed:", time.time() - start, file=sys.stderr)

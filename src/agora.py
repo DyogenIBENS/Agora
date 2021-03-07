@@ -82,15 +82,13 @@ workflow = utils.myAgoraWorkflow.AgoraWorkflow(phylTree.root, phylTree.root, scr
 
 # all ancGenes task - gather nickname and only launch if explicitly requested to (backwards compatibility)
 allname = workflow.allAncGenesName
-launchall = False
 patternall = re.compile(r'=.*\ball\b')
 for x in bysections["ancgenes"]:
     if patternall.search(x):
         x = partition(x, "=")
-        launchall = "*" not in x[0]
-        allname = x[0].replace("*", "").strip()
+        allname = x[0].strip()
 
-workflow.addAncGenesGenerationAnalysis(launchall)
+workflow.addAncGenesGenerationAnalysis()
 
 ancGenes = {allname: workflow.allAncGenesName, "0": workflow.allAncGenesName}
 
@@ -101,7 +99,7 @@ for x in bysections["ancgenes"]:
     x = partition(x, "=")
     (params, root) = partition(x[1], "!")
     # index
-    t = x[0].replace("*", "").split(",")
+    t = x[0].split(",")
     sizes = params.split(",")
     assert len(t) == len(sizes)
     minSizes = []
@@ -118,7 +116,7 @@ for x in bysections["ancgenes"]:
     minSizesStr = ",".join(minSizes)
     maxSizesStr = ",".join(maxSizes)
 
-    workflow.addAncGenesFilterAnalysis("size", [minSizesStr, maxSizesStr], root, "*" not in x[0])
+    workflow.addAncGenesFilterAnalysis("size", [minSizesStr, maxSizesStr], root)
 
     if len(ancGenesDirNames) > 1:
         taskname = dirnameTemplate % (minSizesStr, maxSizesStr)
@@ -131,22 +129,21 @@ for x in bysections["ancgenes"]:
 
 for x in bysections.get("pairwise", []):
     x = partition(x, "=")
-    dirname = ancGenes[x[0].replace("*", "").strip()]
+    dirname = ancGenes[x[0].strip()]
     (params, root) = partition(x[1], "!")
     params = params.split()
 
     # Pairwise comparison tasks
-    workflow.addPairwiseAnalysis(dirname, params[0], params[1:], root, "*" not in x[0])
+    workflow.addPairwiseAnalysis(dirname, params[0], params[1:], root)
 
 # Integration section
 #####################
 for x in bysections.get("integration", []):
-    tolaunch = ("*" not in x)
 
     (params, root) = partition(x, "!")
     (params, input) = partition(params, "<")
     (params, output) = partition(params, ">")
-    params = params.replace("*", "").split()
+    params = params.split()
 
     currMethod = None
     # method's name
@@ -158,7 +155,7 @@ for x in bysections.get("integration", []):
     if params[-1].startswith("("):
         dirname = ancGenes[params.pop()[1:-1]]
 
-    workflow.addIntegrationAnalysis(params[0], params[1:], dirname, currMethod, input, output, root, tolaunch)
+    workflow.addIntegrationAnalysis(params[0], params[1:], dirname, currMethod, input, output, root)
 
 # Print the workflow and exit
 if arguments["printWorkflowGraph"]:
