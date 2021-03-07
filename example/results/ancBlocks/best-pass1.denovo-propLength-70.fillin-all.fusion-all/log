@@ -12,12 +12,12 @@
 | OUT.ancBlocks  | example/results/ancBlocks/best-pass1.denovo-propLength-70.fillin-all.fusion-all/blocks.%s.list.bz2 |
 | LOG.ancGraph   | example/results/ancBlocks/best-pass1.denovo-propLength-70.fillin-all.fusion-all/graph.%s.txt.bz2   |
 -----------------------------------------------------------------------------------------------------------------------
-Loading integrated blocks of example/results/ancBlocks/best-pass1.denovo-propLength-70.fillin-all/blocks.A1.list.bz2 ... 2 [2/3/3] [2/3/4] 6 [2.96/1.02-26] + 1622 singletons OK
-Blocs integres de A1 ... 2 [2/2/3] [2/3/5] 12 [2.96/1.62-90] + 1356 singletons OK
 Loading integrated blocks of example/results/ancBlocks/best-pass1.denovo-propLength-70.fillin-all/blocks.A0.list.bz2 ... 2 [2/2/3] [2/3/8] 10 [3.10/2.08-63] + 2975 singletons OK
-Blocs integres de A0 ... 2 [2/2/3] [2/3/3] 8 [2.60/0.96-99] + 2718 singletons OK
+Blocs integres de A0 ... 2 [2/2/3] [2/3/3] 8 [2.61/0.97-98] + 2719 singletons OK
+Loading integrated blocks of example/results/ancBlocks/best-pass1.denovo-propLength-70.fillin-all/blocks.A1.list.bz2 ... 2 [2/3/3] [2/3/4] 6 [2.96/1.02-26] + 1622 singletons OK
+Blocs integres de A1 ... 2 [2/2/3] [2/3/5] 12 [2.93/1.60-91] + 1355 singletons OK
+Loading integrated blocks of example/results/ancBlocks/best-pass1.denovo-propLength-70.fillin-all/blocks.A2.list.bz2 ... 2 [2/3/4] [3/4/5] 7 [3.34/1.44-56] + 1719 singletons OK
+Blocs integres de A2 ... 2 [2/2/4] [2/4/8] 18 [3.49/2.47-112] + 1328 singletons OK
 Loading integrated blocks of example/results/ancBlocks/best-pass1.denovo-propLength-70.fillin-all/blocks.A3.list.bz2 ... 2 [2/2/3] [2/2/3] 4 [2.35/0.59-17] + 1324 singletons OK
-Blocs integres de A3 ... 2 [2/3/3] [2/3/4] 7 [2.91/1.13-67] + 1129 singletons OK
-Loading integrated blocks of example/results/ancBlocks/best-pass1.denovo-propLength-70.fillin-all/blocks.A2.list.bz2 ... 2 [2/3/4] [3/4/5] 7 [3.30/1.40-56] + 1721 singletons OK
-Blocs integres de A2 ... 2 [2/3/4] [2/4/6] 18 [3.49/2.44-113] + 1327 singletons OK
-Elapsed time: 0.108403921127
+Blocs integres de A3 ... 2 [2/3/3] [2/3/4] 7 [2.92/1.13-66] + 1131 singletons OK
+Elapsed time: 0.10046195983886719

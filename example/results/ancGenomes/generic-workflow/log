@@ -9,12 +9,12 @@
 | nbThreads      | 1                                                                  |
 | orderBySize    | True                                                               |
 ---------------------------------------------------------------------------------------
-Loading genome of example/results/ancBlocks/best-pass1.best-pass2/blocks.A1.list.bz2 ... (ancestral genome: diags) OK
-Loading genome of example/results/ancGenes/all/ancGenes.A1.list.bz2 ... (ancestral genes) OK
 Loading genome of example/results/ancBlocks/best-pass1.best-pass2/blocks.A0.list.bz2 ... (ancestral genome: diags) OK
 Loading genome of example/results/ancGenes/all/ancGenes.A0.list.bz2 ... (ancestral genes) OK
-Loading genome of example/results/ancBlocks/best-pass1.best-pass2/blocks.A3.list.bz2 ... (ancestral genome: diags) OK
-Loading genome of example/results/ancGenes/all/ancGenes.A3.list.bz2 ... (ancestral genes) OK
+Loading genome of example/results/ancBlocks/best-pass1.best-pass2/blocks.A1.list.bz2 ... (ancestral genome: diags) OK
+Loading genome of example/results/ancGenes/all/ancGenes.A1.list.bz2 ... (ancestral genes) OK
 Loading genome of example/results/ancBlocks/best-pass1.best-pass2/blocks.A2.list.bz2 ... (ancestral genome: diags) OK
 Loading genome of example/results/ancGenes/all/ancGenes.A2.list.bz2 ... (ancestral genes) OK
-Time elapsed: 1.75300598145
+Loading genome of example/results/ancBlocks/best-pass1.best-pass2/blocks.A3.list.bz2 ... (ancestral genome: diags) OK
+Loading genome of example/results/ancGenes/all/ancGenes.A3.list.bz2 ... (ancestral genes) OK
+Time elapsed: 1.440735101699829

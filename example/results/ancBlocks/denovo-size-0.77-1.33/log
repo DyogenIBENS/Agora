@@ -2,7 +2,7 @@
 | Key           | Values                                                             |
 --------------------------------------------------------------------------------------
 | speciesTree   | example/data/Species.nwk                                           |
-| target        | =A0                                                                |
+| target        | A0                                                                 |
 | pairwise      | example/results/pairwise/pairs-size-0.77-1.33/%s.list.bz2          |
 | minimalWeight | 1                                                                  |
 | searchLoops   | False                                                              |
@@ -11,8 +11,17 @@
 | ancGenesFiles | example/results/ancGenes/all/ancGenes.%s.list.bz2                  |
 | nbThreads     | 1                                                                  |
 --------------------------------------------------------------------------------------
-set(['A0'])
+Targets: ['A0', 'A1', 'A2', 'A3']
 Loading genome of example/results/ancGenes/all/ancGenes.A0.list.bz2 ... (ancestral genes) OK
 Integrated blocs of A0 ... OK
 A0 min=2	N50=15	WA=20.83	max=98 + 3829 singletons OK
-Elapsed time: 1.37804603577
+Loading genome of example/results/ancGenes/all/ancGenes.A1.list.bz2 ... (ancestral genes) OK
+Integrated blocs of A1 ... OK
+A1 min=2	N50=85	WA=102.01	max=316 + 3624 singletons OK
+Loading genome of example/results/ancGenes/all/ancGenes.A2.list.bz2 ... (ancestral genes) OK
+Integrated blocs of A2 ... OK
+A2 min=2	N50=19	WA=24.54	max=103 + 2583 singletons OK
+Loading genome of example/results/ancGenes/all/ancGenes.A3.list.bz2 ... (ancestral genes) OK
+Integrated blocs of A3 ... OK
+A3 min=2	N50=138	WA=185.00	max=529 + 2872 singletons OK
+Elapsed time: 6.311383008956909

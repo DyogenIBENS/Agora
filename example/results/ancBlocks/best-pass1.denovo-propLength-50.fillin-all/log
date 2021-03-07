@@ -14,21 +14,21 @@
 | timeout       | 150                                                                                     |
 | func          | 0,32|100,40t|10000                                                                      |
 -----------------------------------------------------------------------------------------------------------
-set(['A1', 'A0', 'A3', 'A2'])
-Loading integrated blocks of example/results/ancBlocks/best-pass1.denovo-propLength-50/blocks.A1.list.bz2 ... 2 [2/2/2] [2/2/2] 3 [2.10/0.30-10] + 1678 singletons OK
-Building graphs ... OK
-adding singletons ... OK
-Final blocks of A1 2 [2/2/2] [2/2/3] 3 [2.30/0.46-10] + 1676 singletons
+Targets: ['A0', 'A1', 'A2', 'A3']
 Loading integrated blocks of example/results/ancBlocks/best-pass1.denovo-propLength-50/blocks.A0.list.bz2 ... 2 [2/2/2] [2/2/3] 3 [2.20/0.40-20] + 3126 singletons OK
 Building graphs ... OK
 adding singletons ... OK
 Final blocks of A0 2 [2/2/2] [2/2/3] 3 [2.20/0.40-20] + 3126 singletons
-Loading integrated blocks of example/results/ancBlocks/best-pass1.denovo-propLength-50/blocks.A3.list.bz2 ... 2 [2/2/2] [2/2/2] 2 [2.00/0.00-5] + 1354 singletons OK
+Loading integrated blocks of example/results/ancBlocks/best-pass1.denovo-propLength-50/blocks.A1.list.bz2 ... 2 [2/2/2] [2/2/2] 3 [2.10/0.30-10] + 1678 singletons OK
 Building graphs ... OK
 adding singletons ... OK
-Final blocks of A3 2 [2/2/2] [2/2/2] 2 [2.00/0.00-5] + 1354 singletons
+Final blocks of A1 2 [2/2/2] [2/2/3] 3 [2.30/0.46-10] + 1676 singletons
 Loading integrated blocks of example/results/ancBlocks/best-pass1.denovo-propLength-50/blocks.A2.list.bz2 ... 2 [2/2/2] [2/2/3] 4 [2.33/0.61-27] + 1843 singletons OK
 Building graphs ... OK
 adding singletons ... OK
 Final blocks of A2 2 [2/2/3] [2/3/4] 6 [2.85/1.21-27] + 1829 singletons
-total computation time 0.087347984314
+Loading integrated blocks of example/results/ancBlocks/best-pass1.denovo-propLength-50/blocks.A3.list.bz2 ... 2 [2/2/2] [2/2/2] 2 [2.00/0.00-5] + 1354 singletons OK
+Building graphs ... OK
+adding singletons ... OK
+Final blocks of A3 2 [2/2/2] [2/2/2] 2 [2.00/0.00-5] + 1354 singletons
+total computation time 0.08034515380859375

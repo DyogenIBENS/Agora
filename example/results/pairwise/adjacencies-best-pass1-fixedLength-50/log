@@ -12,37 +12,37 @@
 | nbThreads           | 1                                                                          |
 | LOG.pairwise        | example/results/pairwise/adjacencies-best-pass1-fixedLength-50/%s.log.bz2  |
 ----------------------------------------------------------------------------------------------------
-Loading genome of example/data/genes/genes.M5.list.bz2 ... (Ensembl) OK
-Loading genome of example/data/genes/genes.M4.list.bz2 ... (Ensembl) OK
 Loading genome of example/data/genes/genes.M1.list.bz2 ... (Ensembl) OK
-Loading genome of example/data/genes/genes.M3.list.bz2 ... (Ensembl) OK
 Loading genome of example/data/genes/genes.M2.list.bz2 ... (Ensembl) OK
-Loading genome of example/results/ancGenes/all/ancGenes.A1.list.bz2 ... (ancestral genes) OK
+Loading genome of example/data/genes/genes.M3.list.bz2 ... (Ensembl) OK
+Loading genome of example/data/genes/genes.M4.list.bz2 ... (Ensembl) OK
+Loading genome of example/data/genes/genes.M5.list.bz2 ... (Ensembl) OK
 Loading genome of example/results/ancGenes/all/ancGenes.A0.list.bz2 ... (ancestral genes) OK
-Loading genome of example/results/ancGenes/all/ancGenes.A3.list.bz2 ... (ancestral genes) OK
+Loading genome of example/results/ancGenes/all/ancGenes.A1.list.bz2 ... (ancestral genes) OK
 Loading genome of example/results/ancGenes/all/ancGenes.A2.list.bz2 ... (ancestral genes) OK
-Loading genome of example/results/filtBlocks/best-pass1-fixedLength-50/blocks.A1.list.bz2 ... (ancestral genome: diags) OK
+Loading genome of example/results/ancGenes/all/ancGenes.A3.list.bz2 ... (ancestral genes) OK
 Loading genome of example/results/filtBlocks/best-pass1-fixedLength-50/blocks.A0.list.bz2 ... (ancestral genome: diags) OK
-Loading genome of example/results/filtBlocks/best-pass1-fixedLength-50/blocks.A3.list.bz2 ... (ancestral genome: diags) OK
+Loading genome of example/results/filtBlocks/best-pass1-fixedLength-50/blocks.A1.list.bz2 ... (ancestral genome: diags) OK
 Loading genome of example/results/filtBlocks/best-pass1-fixedLength-50/blocks.A2.list.bz2 ... (ancestral genome: diags) OK
-Extraction des diagonales entre A1 et M5 ... 2 [2/4/8] [5/9/14] 37 [6.13/5.19-1499] 13 adjacences / 103 blocs (ancre: 2)
-Extraction des diagonales entre A1 et M4 ... 2 [3/10/23] [18/32/51] 149 [16.71/18.11-538] 32 adjacences / 103 blocs (ancre: 2)
-Extraction des diagonales entre A1 et M1 ... 2 [4/13/32] [23/48/72] 131 [22.80/24.98-487] 48 adjacences / 104 blocs (ancre: 2)
-Extraction des diagonales entre A1 et M3 ... 2 [4/13/40] [30/55/77] 188 [25.69/28.67-418] 44 adjacences / 104 blocs (ancre: 2)
-Extraction des diagonales entre A1 et M2 ... 2 [4/12/27] [19/36/57] 139 [19.14/20.73-576] 39 adjacences / 104 blocs (ancre: 2)
-Extraction des diagonales entre A0 et M5 ... 2 [3/5/9] [6/11/19] 49 [7.57/6.58-471] 4 adjacences / 55 blocs (ancre: 2)
-Extraction des diagonales entre A0 et M4 ... 2 [42/50/61] [49/59/75] 149 [50.97/24.42-67] 29 adjacences / 55 blocs (ancre: 2)
+Loading genome of example/results/filtBlocks/best-pass1-fixedLength-50/blocks.A3.list.bz2 ... (ancestral genome: diags) OK
 Extraction des diagonales entre A0 et M1 ... 2 [5/14/30] [22/38/62] 107 [21.66/21.52-180] 23 adjacences / 55 blocs (ancre: 2)
-Extraction des diagonales entre A0 et M3 ... 2 [6/14/27] [20/37/57] 82 [19.87/18.77-184] 20 adjacences / 55 blocs (ancre: 2)
 Extraction des diagonales entre A0 et M2 ... 2 [6/12/26] [17/32/53] 104 [18.43/17.85-210] 18 adjacences / 55 blocs (ancre: 2)
-Extraction des diagonales entre A3 et M5 ... 2 [2/4/7] [4/7/12] 48 [5.28/4.43-1989] 19 adjacences / 97 blocs (ancre: 2)
-Extraction des diagonales entre A3 et M4 ... 2 [2/6/15] [11/21/33] 75 [10.70/11.94-964] 37 adjacences / 97 blocs (ancre: 2)
-Extraction des diagonales entre A3 et M1 ... 2 [5/19/57] [46/74/127] 227 [37.16/43.84-379] 40 adjacences / 97 blocs (ancre: 2)
-Extraction des diagonales entre A3 et M3 ... 2 [2/8/20] [15/32/53] 146 [14.96/18.16-844] 40 adjacences / 97 blocs (ancre: 2)
-Extraction des diagonales entre A3 et M2 ... 2 [4/15/47] [38/63/99] 235 [30.82/35.68-454] 29 adjacences / 97 blocs (ancre: 2)
-Extraction des diagonales entre A2 et M5 ... 2 [3/6/11] [7/13/22] 54 [8.95/7.98-657] 3 adjacences / 85 blocs (ancre: 2)
-Extraction des diagonales entre A2 et M4 ... 2 [39/50/66] [48/63/87] 162 [52.31/29.44-106] 54 adjacences / 85 blocs (ancre: 2)
+Extraction des diagonales entre A0 et M3 ... 2 [6/14/27] [20/37/57] 82 [19.87/18.77-184] 20 adjacences / 55 blocs (ancre: 2)
+Extraction des diagonales entre A0 et M4 ... 2 [42/50/61] [49/59/75] 149 [50.97/24.42-67] 29 adjacences / 55 blocs (ancre: 2)
+Extraction des diagonales entre A0 et M5 ... 2 [3/5/9] [6/11/19] 49 [7.57/6.58-471] 4 adjacences / 55 blocs (ancre: 2)
+Extraction des diagonales entre A1 et M1 ... 2 [4/13/32] [23/48/72] 131 [22.80/24.96-487] 48 adjacences / 104 blocs (ancre: 2)
+Extraction des diagonales entre A1 et M2 ... 2 [4/12/27] [19/36/57] 139 [19.13/20.73-576] 39 adjacences / 104 blocs (ancre: 2)
+Extraction des diagonales entre A1 et M3 ... 2 [4/13/40] [30/55/77] 188 [25.69/28.67-418] 44 adjacences / 104 blocs (ancre: 2)
+Extraction des diagonales entre A1 et M4 ... 2 [3/10/23] [18/32/51] 149 [16.70/18.11-538] 32 adjacences / 103 blocs (ancre: 2)
+Extraction des diagonales entre A1 et M5 ... 2 [2/4/8] [5/9/14] 37 [6.14/5.20-1498] 13 adjacences / 103 blocs (ancre: 2)
 Extraction des diagonales entre A2 et M1 ... 2 [4/8/17] [12/22/39] 107 [13.30/14.13-472] 30 adjacences / 85 blocs (ancre: 2)
-Extraction des diagonales entre A2 et M3 ... 2 [4/9/18] [12/21/37] 82 [13.18/13.28-452] 31 adjacences / 85 blocs (ancre: 2)
 Extraction des diagonales entre A2 et M2 ... 2 [4/7/16] [11/19/33] 87 [11.91/12.12-525] 27 adjacences / 85 blocs (ancre: 2)
-Elapsed time: 4.32992911339
+Extraction des diagonales entre A2 et M3 ... 2 [4/9/18] [12/21/37] 82 [13.18/13.28-452] 31 adjacences / 85 blocs (ancre: 2)
+Extraction des diagonales entre A2 et M4 ... 2 [39/50/66] [48/63/87] 162 [52.31/29.44-106] 54 adjacences / 85 blocs (ancre: 2)
+Extraction des diagonales entre A2 et M5 ... 2 [3/6/11] [7/13/22] 54 [8.95/7.98-657] 3 adjacences / 85 blocs (ancre: 2)
+Extraction des diagonales entre A3 et M1 ... 2 [5/19/57] [46/74/127] 227 [37.16/43.84-379] 40 adjacences / 97 blocs (ancre: 2)
+Extraction des diagonales entre A3 et M2 ... 2 [4/15/47] [38/63/99] 235 [30.83/35.68-454] 29 adjacences / 97 blocs (ancre: 2)
+Extraction des diagonales entre A3 et M3 ... 2 [2/8/20] [15/32/53] 147 [14.98/18.17-843] 40 adjacences / 97 blocs (ancre: 2)
+Extraction des diagonales entre A3 et M4 ... 2 [2/6/15] [11/21/33] 75 [10.67/11.93-966] 37 adjacences / 97 blocs (ancre: 2)
+Extraction des diagonales entre A3 et M5 ... 2 [2/4/7] [4/7/12] 48 [5.28/4.43-1989] 19 adjacences / 97 blocs (ancre: 2)
+Elapsed time: 3.92879581451416

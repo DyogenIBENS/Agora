@@ -12,12 +12,12 @@
 | OUT.ancBlocks  | example/results/ancBlocks/denovo-size-0.77-1.33.fillin-all.fusion-all/blocks.%s.list.bz2 |
 | LOG.ancGraph   | example/results/ancBlocks/denovo-size-0.77-1.33.fillin-all.fusion-all/graph.%s.txt.bz2   |
 -------------------------------------------------------------------------------------------------------------
-Loading integrated blocks of example/results/ancBlocks/denovo-size-0.77-1.33.fillin-all/blocks.A1.list.bz2 ... 2 [6/22/58] [46/92/161] 345 [42.72/53.55-345] + 2599 singletons OK
-Blocs integres de A1 ... 2 [2/2/4] [2/4/9] 31 [3.68/3.35-245] + 1697 singletons OK
 Loading integrated blocks of example/results/ancBlocks/denovo-size-0.77-1.33.fillin-all/blocks.A0.list.bz2 ... 2 [4/7/14] [9/16/28] 100 [10.78/10.94-1210] + 3233 singletons OK
 Blocs integres de A0 ... 2 [2/2/4] [2/4/8] 22 [3.52/2.89-227] + 2435 singletons OK
-Loading integrated blocks of example/results/ancBlocks/denovo-size-0.77-1.33.fillin-all/blocks.A3.list.bz2 ... 2 [9/35/98] [82/147/278] 576 [72.09/95.27-225] + 1899 singletons OK
-Blocs integres de A3 ... 2 [2/2/3] [2/3/6] 16 [3.00/2.21-214] + 1258 singletons OK
+Loading integrated blocks of example/results/ancBlocks/denovo-size-0.77-1.33.fillin-all/blocks.A1.list.bz2 ... 2 [6/22/58] [46/92/161] 345 [42.72/53.55-345] + 2599 singletons OK
+Blocs integres de A1 ... 2 [2/2/4] [2/4/9] 31 [3.68/3.35-245] + 1697 singletons OK
 Loading integrated blocks of example/results/ancBlocks/denovo-size-0.77-1.33.fillin-all/blocks.A2.list.bz2 ... 2 [4/9/16] [11/19/33] 111 [12.78/12.71-1053] + 2112 singletons OK
 Blocs integres de A2 ... 2 [2/2/4] [2/4/7] 22 [3.48/2.81-193] + 1440 singletons OK
-Elapsed time: 0.724626064301
+Loading integrated blocks of example/results/ancBlocks/denovo-size-0.77-1.33.fillin-all/blocks.A3.list.bz2 ... 2 [9/35/98] [82/147/278] 576 [72.09/95.27-225] + 1899 singletons OK
+Blocs integres de A3 ... 2 [2/2/3] [2/3/6] 16 [3.00/2.21-214] + 1258 singletons OK
+Elapsed time: 0.5543580055236816

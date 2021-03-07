@@ -6,4 +6,4 @@
 | IN.ancBlocks  | example/results/ancBlocks/best-pass1/blocks.%s.list.bz2      |
 | OUT.ancBlocks | example/results/filtBlocks/best-pass1-all/blocks.%s.list.bz2 |
 --------------------------------------------------------------------------------
-Time elapsed: 0.0912489891052
+Time elapsed: 0.09547591209411621
