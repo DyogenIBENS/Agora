@@ -251,6 +251,9 @@ class TaskList():
                     command = self.list[taskId].command
                     # Check if this step has already run
                     launch = True
+                    if not command.args:
+                        print("Dummy task")
+                        launch = False
                     status_file = self.getJsonPath(taskId)
                     if status_file:
                         print("Control file", status_file, end=' ')
@@ -278,7 +281,7 @@ class TaskList():
                         self.memusage[self.proc[taskId].pid] = 0
                         self.nrun += self.nthreads[taskId]
                     else:
-                        print("Skipping task", taskId, "(already done)", command.args)
+                        print("Skipping task", taskId)
                         self.removeDep(taskId)
                         self.completed += 1
 
