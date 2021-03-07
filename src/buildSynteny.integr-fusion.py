@@ -99,6 +99,6 @@ phylTree = utils.myPhylTree.PhylogeneticTree(arguments["speciesTree"])
 targets = phylTree.getTargetsAnc(arguments["target"])
 
 n_cpu = arguments["nbThreads"] or multiprocessing.cpu_count()
-Parallel(n_jobs=n_cpu)(delayed(do)(anc) for anc in targets)
+Parallel(n_jobs=n_cpu)(delayed(do)(anc) for anc in sorted(targets))
 
 print("Elapsed time:", (time.time() - start), file=sys.stderr)

@@ -24,7 +24,7 @@ arguments = utils.myTools.checkArgs( [("speciesTree",file), ("target",str), ("IN
 phylTree = utils.myPhylTree.PhylogeneticTree(arguments["speciesTree"])
 targets = phylTree.getTargetsAnc(arguments["target"])
 
-for anc in targets:
+for anc in sorted(targets):
 
 		ls = []
 		ll = []

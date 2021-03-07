@@ -68,7 +68,7 @@ def getAllAdj(anc):
 
 	log = arguments["LOG.pairwise"] % phylTree.fileName[anc]
 	f = utils.myFile.openFile(log, "w")
-	for esp in listSpecies:
+	for esp in sorted(listSpecies):
 
 		dicA = {}
 		dicM = {}
@@ -149,13 +149,13 @@ phylTree = utils.myPhylTree.PhylogeneticTree(arguments["speciesTree"])
 (listSpecies, targets, accessoryAncestors) = phylTree.getTargetsForPairwise(arguments["target"], arguments["extantSpeciesFilter"])
 
 dicGenomes = {}
-for e in listSpecies:
+for e in sorted(listSpecies):
 	dicGenomes[e] = utils.myGenomes.Genome(arguments["genesFiles"] % phylTree.fileName[e])
 
 genesAnc = {}
-for anc in targets.union(accessoryAncestors):
+for anc in sorted(targets.union(accessoryAncestors)):
 	genesAnc[anc] = utils.myGenomes.Genome(arguments["iniAncGenesFiles"] % phylTree.fileName[anc])
-for anc in targets:
+for anc in sorted(targets):
 	dicGenomes[anc] = utils.myGenomes.Genome(arguments["ancGenesFiles"] % phylTree.fileName[anc], ancGenes=genesAnc[anc], withDict=False)
 
 toStudy = collections.defaultdict(list)
@@ -165,6 +165,6 @@ for (e1,e2) in itertools.combinations(listSpecies, 2):
 
 start = time.time()
 n_cpu = arguments["nbThreads"] or multiprocessing.cpu_count()
-Parallel(n_jobs=n_cpu)(delayed(getAllAdj)(anc) for anc in targets)
+Parallel(n_jobs=n_cpu)(delayed(getAllAdj)(anc) for anc in sorted(targets))
 print("Elapsed time:", (time.time() - start), file=sys.stderr)
 

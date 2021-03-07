@@ -54,7 +54,7 @@ def myintern(s):
 utils.myGenomes.intern = myintern
 
 genesAnc = {}
-for anc in listAncestors.union(accessoryAncestors):
+for anc in sorted(listAncestors.union(accessoryAncestors)):
 	ancGenes = utils.myGenomes.Genome(arguments["ancGenesFiles"] % phylTree.fileName[anc])
 	genesAnc[anc] = {k: v.index for (k,v) in ancGenes.dicGenes.items()}
 	del ancGenes
@@ -113,7 +113,7 @@ def extractPairsFromSpecies(esp):
 	del todo[esp]
 	print("OK", file=sys.stderr)
 
-for esp in listSpecies:
+for esp in sorted(listSpecies):
 	extractPairsFromSpecies(esp)
 
 # Now that all the genomes have been loaded, let's empty the cache and restore intern
@@ -184,7 +184,7 @@ def intersectAndPropagatePairs(anc):
 
 	print(nbcons, "conserved pairs between descendants", anc, file=sys.stderr)
 
-for anc in list(dicAncMod):
+for anc in sorted(dicAncMod):
 	intersectAndPropagatePairs(anc)
 
 del dicModAnc
@@ -226,7 +226,7 @@ def reportPairs(anc):
 		), file=f)
 	f.close()
 		
-for anc in list(details):
+for anc in sorted(details):
 	reportPairs(anc)
 
 print("Elapsed time task3:", (time.time() - start), (time.time() - st), file=sys.stderr)

@@ -30,7 +30,7 @@ target = phylTree.officialName[arguments["target"]]
 
 lstAncGenes = {}
 dicAncGenes = {}
-for anc in phylTree.listAncestr.union(phylTree.listSpecies):
+for anc in sorted(phylTree.listAncestr.union(phylTree.listSpecies)):
     if phylTree.dicParents[anc][target] == target:
         ancGenes = utils.myGenomes.Genome(arguments["IN.ancGenesFiles"] % phylTree.fileName[anc])
         lstAncGenes[anc] = [gene.names for gene in ancGenes.lstGenes[None]]
@@ -58,7 +58,7 @@ todo = []
 print("OK", file=sys.stderr)
 
 def mkStruct(anc):
-    if anc in phylTree.items:
+    if anc in sorted(phylTree.items):
         print("Browsing ancGenome", anc, file=sys.stderr)
         # New ancestral genes have to be analyzed
         for i in notseen[anc]:
@@ -132,7 +132,7 @@ for size in range(len(minsizes)):
 
 
     # Writing files
-    for anc in lstAncGenes:
+    for anc in sorted(lstAncGenes):
         print("Writing families of %s (size %s-%s)..." % (anc, minsizes[size], maxsizes[size]), end=' ', file=sys.stderr)
         n = 0
         outFile = arguments["OUT.ancGenesFiles"] % ("%s-%s" % (minsizes[size], maxsizes[size]), phylTree.fileName[anc])

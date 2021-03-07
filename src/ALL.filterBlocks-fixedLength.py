@@ -22,7 +22,7 @@ arguments = utils.myTools.checkArgs( [("speciesTree",file), ("target",str), ("IN
 phylTree = utils.myPhylTree.PhylogeneticTree(arguments["speciesTree"])
 targets = phylTree.getTargetsAnc(arguments["target"])
 
-for anc in targets:
+for anc in sorted(targets):
 		fi = utils.myFile.openFile(arguments["IN.ancGenesFiles"] % phylTree.fileName[anc], "r")
 		fo = utils.myFile.openFile(arguments["OUT.ancGenesFiles"] % phylTree.fileName[anc], "w")
 		for l in fi:

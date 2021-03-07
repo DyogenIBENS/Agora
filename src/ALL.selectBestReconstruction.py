@@ -28,7 +28,7 @@ arguments = utils.myTools.checkArgs(
 phylTree = utils.myPhylTree.PhylogeneticTree(arguments["speciesTree"])
 targets = phylTree.getTargetsAnc(arguments["target"])
 
-for anc in targets:
+for anc in sorted(targets):
 
     stats = {}
     lines = {}

@@ -213,7 +213,7 @@ def myintern(s):
 utils.myGenomes.intern = myintern
 
 genesAnc = {}
-for anc in targets.union(accessoryAncestors):
+for anc in sorted(targets.union(accessoryAncestors)):
     genesAnc[anc] = utils.myGenomes.Genome(arguments["ancGenesFiles"] % phylTree.fileName[anc])
 
 # Here's another trick. Once we have loaded all the ancestral genes, we have indexed the
@@ -228,7 +228,7 @@ def myintern_species(s):
 utils.myGenomes.intern = myintern_species
 
 dicGenomes = {}
-for e in listSpecies:
+for e in sorted(listSpecies):
     dicGenomes[e] = utils.myGenomes.Genome(arguments["genesFiles"] % phylTree.fileName[e], withDict=False)
     for s in species_names:
         del name_hash[s]
@@ -245,5 +245,5 @@ for (e1, e2) in itertools.combinations(listSpecies, 2):
 
 start = time.time()
 n_cpu = arguments["nbThreads"] or multiprocessing.cpu_count()
-Parallel(n_jobs=n_cpu)(delayed(do)(anc) for anc in targets)
+Parallel(n_jobs=n_cpu)(delayed(do)(anc) for anc in sorted(targets))
 print("Elapsed time:", (time.time() - start), file=sys.stderr)
