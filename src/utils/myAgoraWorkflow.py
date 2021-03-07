@@ -23,6 +23,7 @@ from . import myFile
 
 # A command that will be run. args represents the entire command-line, incl. the executable
 Command = collections.namedtuple("Command", ['args', 'out', 'log'])
+Task = collections.namedtuple("Task", ['dependencies', 'command', 'multithreaded'])
 
 
 # Managing the list of programs to launch and their dependencies
@@ -50,7 +51,7 @@ class TaskList():
         print("digraph", "{", file=fh)
         for (name, taskId) in self.dic.items():
             print('%d [label="%s"]' % (taskId, "/".join(name)), file=fh)
-            for dep in self.list[taskId][0]:
+            for dep in self.list[taskId].dependencies:
                 print('%d -> %d' % (dep, taskId), file=fh)
         print("}", file=fh)
 
@@ -59,10 +60,10 @@ class TaskList():
         print("New task", taskId, name)
         print(dep)
         print(command)
-        self.list.append((set(self.dic[x] for x in dep), command, multithreaded))
+        self.list.append(Task(set(self.dic[x] for x in dep), command, multithreaded))
         if name in self.dic:
             if name + ("1",) in self.dic:
-                self.list[self.dic[name]][0].add(taskId)
+                self.list[self.dic[name]].dependencies.add(taskId)
                 for i in itertools.count(2):
                     newName = name + (str(i),)
                     if newName not in self.dic:
@@ -73,7 +74,7 @@ class TaskList():
                 print("! Name clash ! Introducing a collector task")
                 collectorId = self.dic[name]
                 self.list.append(self.list[collectorId])
-                self.list[collectorId] = (set([taskId, taskId + 1]), Command(None, None, None), False)
+                self.list[collectorId] = Task(set([taskId, taskId + 1]), Command(None, None, None), False)
                 self.dic[name + ("1",)] = taskId + 1
                 self.dic[name + ("2",)] = taskId
         else:
@@ -83,16 +84,16 @@ class TaskList():
 
     def removeDep(self, i):
         for t in self.list:
-            t[0].discard(i)
+            t.dependencies.discard(i)
 
     def getAvailable(self):
-        tmp = [i for (i, task) in enumerate(self.list) if len(task[0]) == 0]
+        tmp = [i for (i, task) in enumerate(self.list) if len(task.dependencies) == 0]
         print("Available tasks:", tmp)
         if len(tmp) > 0:
             taskId = tmp[0]
             # Add something (None) to the dependency list so that the task is never selected again
             # This way the task numbers remain the same
-            self.list[taskId][0].add(None)
+            self.list[taskId].dependencies.add(None)
             return taskId
         else:
             return None
@@ -109,17 +110,17 @@ class TaskList():
             self.completed += 1
         else:
             self.failed += 1
-            print(">", "Inspect", self.list[i][1][2], "for more information", file=sys.stderr)
+            print(">", "Inspect", self.list[i].command.log, "for more information", file=sys.stderr)
         self.nrun -= self.nthreads.pop(i)
 
     def getJsonPath(self, i):
-        command = self.list[i][1]
+        command = self.list[i].command
         if command.log or command.out:
             return (command.log or command.out) + self.status_filename
         return None
 
     def getJsonPayload(self, i):
-        command = self.list[i][1]
+        command = self.list[i].command
         return {
                 'command': command.args,
                 'out': command.out,
@@ -247,7 +248,7 @@ class TaskList():
                         break
                     self.joinNext()
                 else:
-                    command = self.list[taskId][1]
+                    command = self.list[taskId].command
                     # Check if this step has already run
                     launch = True
                     status_file = self.getJsonPath(taskId)
@@ -265,7 +266,7 @@ class TaskList():
                             print("missing")
                     if launch:
                         print("Launching task", taskId, command.args, ">", command.out, "2>", command.log)
-                        if self.list[taskId][2]:
+                        if self.list[taskId].multithreaded:
                             self.nthreads[taskId] = nbThreads - self.nrun
                             # Creating a new list so that the original list remains available for the Json dump
                             command = Command(command.args + ["-nbThreads=%d" % self.nthreads[taskId]], command.out, command.log)
