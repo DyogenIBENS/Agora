@@ -190,7 +190,7 @@ class TaskList():
     # Launch program function
     def goLaunch(self, i, command, status_file):
         start = time.time()
-        if os.path.exists(status_file):
+        if status_file and os.path.exists(status_file):
             os.remove(status_file)
         stdout = myFile.openFile(command.out or os.devnull, "wb")
         stderr = myFile.openFile(command.log, "wb") if command.log else subprocess.DEVNULL
