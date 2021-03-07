@@ -90,13 +90,13 @@ class ProteinTree:
 
     # print the tree into the Newick format (with parentheses)
     def printNewick(self, f, root=None, withDist=True, withTags=False, withAncSpeciesNames=False, withAncGenesNames=False):
-        NHX = {"Duplication": "D", "Bootstrap": "B", "taxon_name": "S", "duplication_confidence_score": "SIS", "dubious_duplication": "DD"}
+        NHX = [("Duplication", "D"), ("Bootstrap", "B"), ("taxon_name", "S"), ("duplication_confidence_score", "SIS"), ("dubious_duplication", "DD")]
         def rec(node):
             if node in self.data:
                 return "(" + ",".join(
                         rec(g)
                         + ((":%g" % l) if withDist else "")
-                        + ("[&&NHX:" + ":".join(("%s=%s" % ((NHX[tag],self.info[g][tag]) if tag!="Duplication" else (NHX[tag],"N" if self.info[g][tag]== 0 else "Y"))).replace(" ", ".") for tag in NHX if tag in self.info[g]) + "]" if withTags else "")
+                        + ("[&&NHX:" + ":".join(("%s=%s" % ((tag,self.info[g][key]) if key!="Duplication" else (tag,"N" if self.info[g][key] == 0 else "Y"))).replace(" ", ".") for (key, tag) in NHX if key in self.info[g]) + "]" if withTags else "")
                         for (g,l) in self.data[node]
                 ) + ")" + (self.info[node]["taxon_name"].replace(' ', '.') if withAncSpeciesNames and ("taxon_name" in self.info[node]) else '')+(self.info[node]['family_name'].split("/")[0]if withAncGenesNames and ("taxon_name" in self.info[node]) else '')
             else:
@@ -104,7 +104,7 @@ class ProteinTree:
 
         if root is None:
             root = self.root
-        print(rec(root) + ("[&&NHX:" + ":".join(("%s=%s" % ((NHX[tag],self.info[root][tag]) if tag!="Duplication" else (NHX[tag],"N" if self.info[root][tag]== 0 else "Y"))).replace(" ", ".") for tag in NHX if tag in self.info[root]) + "]" if withTags else "") + ";", file=f)
+        print(rec(root) + ("[&&NHX:" + ":".join(("%s=%s" % ((tag,self.info[root][key]) if key!="Duplication" else (tag,"N" if self.info[root][key]== 0 else "Y"))).replace(" ", ".") for (key, tag) in NHX if key in self.info[root]) + "]" if withTags else "") + ";", file=f)
         try:
             f.flush()
         except AttributeError:
