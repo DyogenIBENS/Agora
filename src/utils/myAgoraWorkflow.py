@@ -24,12 +24,13 @@ from . import myFile
 # A command that will be run. args represents the entire command-line, incl. the executable
 Command = collections.namedtuple("Command", ['args', 'out', 'log'])
 
+
 # Managing the list of programs to launch and their dependencies
 #################################################################
 class TaskList():
 
     rusage_unit = 1 if sys.platform == "darwin" else 1024
-    status_filename = 'agora_complete'
+    status_filename = '.agora'
 
     def __init__(self):
         self.list = []
@@ -114,7 +115,7 @@ class TaskList():
     def getJsonPath(self, i):
         command = self.list[i][1]
         if command.log or command.out:
-            return os.path.join(os.path.dirname(command.log or command.out), self.status_filename)
+            return (command.log or command.out) + self.status_filename
         return None
 
     def getJsonPayload(self, i):
