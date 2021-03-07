@@ -6,6 +6,7 @@
 # mail : agora@bio.ens.psl.eu
 # This is free software; you may copy, modify and/or distribute this work under the terms of the GNU General Public License, version 3 or later and the CeCiLL v2 license in France
 
+import collections
 import itertools
 import json
 import multiprocessing
@@ -19,6 +20,9 @@ import threading
 import psutil
 
 from . import myFile
+
+# A command that will be run. args represents the entire command-line, incl. the executable
+Command = collections.namedtuple("Command", ['args', 'out', 'log'])
 
 # Managing the list of programs to launch and their dependencies
 #################################################################
@@ -49,12 +53,12 @@ class TaskList():
                 print('%d -> %d' % (dep, taskId), file=fh)
         print("}", file=fh)
 
-    def addTask(self, name, dep, data, multithreaded=False):
+    def addTask(self, name, dep, command, multithreaded=False):
         taskId = len(self.list)
         print("New task", taskId, name)
         print(dep)
-        print(data)
-        self.list.append((set(self.dic[x] for x in dep), data, multithreaded))
+        print(command)
+        self.list.append((set(self.dic[x] for x in dep), command, multithreaded))
         if name in self.dic:
             if name + ("1",) in self.dic:
                 self.list[self.dic[name]][0].add(taskId)
@@ -68,7 +72,7 @@ class TaskList():
                 print("! Name clash ! Introducing a collector task")
                 collectorId = self.dic[name]
                 self.list.append(self.list[collectorId])
-                self.list[collectorId] = (set([taskId, taskId + 1]), (None, None, None), False)
+                self.list[collectorId] = (set([taskId, taskId + 1]), Command(None, None, None), False)
                 self.dic[name + ("1",)] = taskId + 1
                 self.dic[name + ("2",)] = taskId
         else:
@@ -108,18 +112,17 @@ class TaskList():
         self.nrun -= self.nthreads.pop(i)
 
     def getJsonPath(self, i):
-        out = self.list[i][1][1]
-        log = self.list[i][1][2]
-        if log or out:
-            return os.path.join(os.path.dirname(log or out), self.status_filename)
+        command = self.list[i][1]
+        if command.log or command.out:
+            return os.path.join(os.path.dirname(command.log or command.out), self.status_filename)
         return None
 
     def getJsonPayload(self, i):
-        data = self.list[i][1]
+        command = self.list[i][1]
         return {
-                'command': data[0],
-                'out': data[1],
-                'log': data[2],
+                'command': command.args,
+                'out': command.out,
+                'log': command.log,
                 }
 
     def getProcMemoryUsage(self, proc):
@@ -183,16 +186,16 @@ class TaskList():
         print(intro, "%g sec CPU time / %g sec elapsed = %g%% CPU usage, %g MB RAM" % (ru.ru_utime + ru.ru_stime, elapsed, 100. * (ru.ru_utime + ru.ru_stime) / elapsed, mem / 1024. / 1024.))
 
     # Launch program function
-    def goLaunch(self, i, args, out, log, status_file):
+    def goLaunch(self, i, command, status_file):
         start = time.time()
         if os.path.exists(status_file):
             os.remove(status_file)
-        stdout = myFile.openFile(out or os.devnull, "wb")
-        stderr = myFile.openFile(log, "wb") if log else subprocess.DEVNULL
+        stdout = myFile.openFile(command.out or os.devnull, "wb")
+        stderr = myFile.openFile(command.log, "wb") if command.log else subprocess.DEVNULL
         # stderr must have a fileno, so must be a regular file (not a .bz2 etc)
         # stdout can be anything, incl. a .bz2
         try:
-            p = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=stderr)
+            p = subprocess.Popen(command.args, stdout=subprocess.PIPE, stderr=stderr)
         except Exception as e:
             stdout.close()
             stderr.close()
@@ -209,7 +212,7 @@ class TaskList():
         for l in p.stdout:
             stdout.write(l)
         stdout.close()
-        if log:
+        if command.log:
             stderr.close()
         if r == 0 and status_file:
             report = self.getJsonPayload(i)
@@ -243,7 +246,7 @@ class TaskList():
                         break
                     self.joinNext()
                 else:
-                    (next, dep, (args, out, log), multithreaded) = todo
+                    (next, dep, command, multithreaded) = todo
                     # Check if this step has already run
                     launch = True
                     status_file = self.getJsonPath(next)
@@ -260,20 +263,20 @@ class TaskList():
                         else:
                             print("missing")
                     if launch:
-                        print("Launching task", next, args, ">", out, "2>", log)
+                        print("Launching task", next, command.args, ">", command.out, "2>", command.log)
                         if multithreaded:
                             self.nthreads[next] = nbThreads - self.nrun
                             # Creating a new list so that the original list remains available for the Json dump
-                            args = args + ["-nbThreads=%d" % self.nthreads[next]]
+                            command = Command(command.args + ["-nbThreads=%d" % self.nthreads[next]], command.out, command.log)
                             print("Using", self.nthreads[next], "threads")
                         else:
                             self.nthreads[next] = 1
-                        self.proc[next] = multiprocessing.Process(target=self.goLaunch, args=(next, args, out, log, status_file))
+                        self.proc[next] = multiprocessing.Process(target=self.goLaunch, args=(next, command, status_file))
                         self.proc[next].start()
                         self.memusage[self.proc[next].pid] = 0
                         self.nrun += self.nthreads[next]
                     else:
-                        print("Skipping task", next, "(already done)", args)
+                        print("Skipping task", next, "(already done)", command.args)
                         self.removeDep(next)
                         self.completed += 1
 
@@ -327,14 +330,14 @@ class AgoraWorkflow:
             files['genes'] = files['genes'].replace('%s', '%(name)s')
 
     def addDummy(self, taskFullName, dependencies=[]):
-        return self.tasklist.addTask(taskFullName, dependencies, (None, None, None, False))
+        return self.tasklist.addTask(taskFullName, dependencies, Command(None, None, None), False)
 
     def addAncGenesGenerationAnalysis(self):
             taskFullName = ("ancgenes", self.allAncGenesName)
             return self.tasklist.addTask(
                 taskFullName,
                 [],
-                (
+                Command(
                     [
                         os.path.join(self.scriptDir, "ALL.extractGeneFamilies.py"),
                         self.files["speciesTree"],
@@ -368,7 +371,7 @@ class AgoraWorkflow:
         return self.tasklist.addTask(
             (self.ancGenesTaskName, taskName),
             [(self.ancGenesTaskName, inputName)],
-            (
+            Command(
                 [
                     os.path.join(self.scriptDir, scriptTemplate  % methodName),
                     self.files["speciesTree"],
@@ -396,7 +399,7 @@ class AgoraWorkflow:
         return self.tasklist.addTask(
             ("pairwise", self.ancGenesTaskName + "-" + ancGenesName),
             [(self.ancGenesTaskName, ancGenesName)],
-            (
+            Command(
                 [
                     os.path.join(self.scriptDir, "buildSynteny.pairwise-%s.py" % methodName),
                     self.files["speciesTree"],
@@ -499,7 +502,7 @@ class AgoraWorkflow:
         return self.tasklist.addTask(
             ("integr" if methodName != "publish" else "publish", newMethod),
             dep,
-            (
+            Command(
                 args,
                 None,
                 logfile % {"method": newMethod},
@@ -551,7 +554,7 @@ class AgoraWorkflow:
         return self.tasklist.addTask(
             ("conversion", outputName),
             [("integr", self.prevMethod)],
-            (
+            Command(
                 args,
                 None,
                 self.files["ancGenomesLog"] % {"method": outputName},
@@ -571,7 +574,7 @@ class AgoraWorkflow:
         return self.tasklist.addTask(
             ("ancblocks" , self.blocksName + "-" + self.allAncGenesName),
             [("integr", self.blocksName)],
-            (
+            Command(
                 [
                     os.path.join(self.scriptDir, "buildSynteny.integr-copy.py"),
                     self.files["speciesTree"],
@@ -621,7 +624,7 @@ class AgoraWorkflow:
         return self.tasklist.addTask(
             ("integr", newMethod),
             deps,
-            (
+            Command(
                 args,
                 None,
                 self.files["ancLog"] % {"method": newMethod},
@@ -672,7 +675,7 @@ class AgoraWorkflow:
         task = self.tasklist.addTask(
             ("integr", newMethod),
             self.selectionPool,
-            (
+            Command(
                 args,
                 None,
                 self.files["ancLog"] % {"method": newMethod},
