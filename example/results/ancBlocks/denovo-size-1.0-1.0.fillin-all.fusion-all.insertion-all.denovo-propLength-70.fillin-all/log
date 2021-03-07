@@ -14,21 +14,21 @@
 | timeout       | 150                                                                                                                                  |
 | func          | 0,32|100,40t|10000                                                                                                                   |
 --------------------------------------------------------------------------------------------------------------------------------------------------------
-set(['A1', 'A0', 'A3', 'A2'])
-Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all.denovo-propLength-70/blocks.A1.list.bz2 ... 2 [2/2/3] [2/3/4] 6 [2.75/1.07-44] + 1746 singletons OK
-Building graphs ... OK
-adding singletons ... OK
-Final blocks of A1 2 [2/3/4] [3/4/6] 7 [3.36/1.54-44] + 1719 singletons
+Targets: ['A0', 'A1', 'A2', 'A3']
 Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all.denovo-propLength-70/blocks.A0.list.bz2 ... 2 [2/2/3] [2/2/4] 6 [2.51/0.96-63] + 3012 singletons OK
 Building graphs ... OK
 adding singletons ... OK
 Final blocks of A0 2 [2/2/3] [2/3/8] 10 [3.10/2.08-63] + 2975 singletons
+Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all.denovo-propLength-70/blocks.A1.list.bz2 ... 2 [2/2/3] [2/3/4] 6 [2.75/1.07-44] + 1746 singletons OK
+Building graphs ... OK
+adding singletons ... OK
+Final blocks of A1 2 [2/3/4] [3/4/6] 7 [3.36/1.54-44] + 1719 singletons
+Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all.denovo-propLength-70/blocks.A2.list.bz2 ... 2 [2/2/3] [2/3/4] 7 [2.84/1.07-56] + 1747 singletons OK
+Building graphs ... OK
+adding singletons ... OK
+Final blocks of A2 2 [2/3/4] [3/4/5] 7 [3.34/1.44-56] + 1719 singletons
 Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all.denovo-propLength-70/blocks.A3.list.bz2 ... 2 [2/2/2] [2/2/3] 4 [2.29/0.57-17] + 1325 singletons OK
 Building graphs ... OK
 adding singletons ... OK
 Final blocks of A3 2 [2/2/3] [2/2/3] 4 [2.35/0.59-17] + 1324 singletons
-Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all.denovo-propLength-70/blocks.A2.list.bz2 ... 2 [2/2/3] [2/3/4] 7 [2.80/1.06-56] + 1749 singletons OK
-Building graphs ... OK
-adding singletons ... OK
-Final blocks of A2 2 [2/3/4] [3/4/5] 7 [3.30/1.40-56] + 1721 singletons
-total computation time 0.11757183075
+total computation time 0.1001427173614502

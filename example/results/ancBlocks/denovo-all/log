@@ -11,7 +11,7 @@
 | ancGenesFiles | example/results/ancGenes/all/ancGenes.%s.list.bz2       |
 | nbThreads     | 1                                                       |
 ---------------------------------------------------------------------------
-Targets: {'A2', 'A3', 'A1', 'A0'}
+Targets: ['A0', 'A1', 'A2', 'A3']
 Loading genome of example/results/ancGenes/all/ancGenes.A0.list.bz2 ... (ancestral genes) OK
 Integrated blocs of A0 ... OK
 A0 min=2	N50=10	WA=12.67	max=58 + 2229 singletons OK

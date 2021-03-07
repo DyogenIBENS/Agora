@@ -11,17 +11,17 @@
 | ancGenesFiles | example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all/blocks.%s.list.bz2                       |
 | nbThreads     | 1                                                                                                                          |
 ----------------------------------------------------------------------------------------------------------------------------------------------
-set(['A1', 'A0', 'A3', 'A2'])
-Loading genome of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all/blocks.A1.list.bz2 ... (ancestral genome: diags) OK
-Integrated blocs of A1 ... OK
-A1 min=2	N50=3	WA=3.49	max=10 + 1697 singletons OK
+Targets: ['A0', 'A1', 'A2', 'A3']
 Loading genome of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all/blocks.A0.list.bz2 ... (ancestral genome: diags) OK
 Integrated blocs of A0 ... OK
 A0 min=2	N50=2	WA=2.33	max=3 + 3116 singletons OK
-Loading genome of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all/blocks.A3.list.bz2 ... (ancestral genome: diags) OK
-Integrated blocs of A3 ... OK
-A3 min=2	N50=3	WA=2.92	max=6 + 1263 singletons OK
+Loading genome of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all/blocks.A1.list.bz2 ... (ancestral genome: diags) OK
+Integrated blocs of A1 ... OK
+A1 min=2	N50=3	WA=3.49	max=10 + 1697 singletons OK
 Loading genome of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all/blocks.A2.list.bz2 ... (ancestral genome: diags) OK
 Integrated blocs of A2 ... OK
 A2 min=2	N50=3	WA=3.08	max=7 + 1774 singletons OK
-Elapsed time: 0.282638072968
+Loading genome of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all/blocks.A3.list.bz2 ... (ancestral genome: diags) OK
+Integrated blocs of A3 ... OK
+A3 min=2	N50=3	WA=2.92	max=6 + 1263 singletons OK
+Elapsed time: 0.21193504333496094

@@ -11,17 +11,17 @@
 | ancGenesFiles | example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all/blocks.%s.list.bz2            |
 | nbThreads     | 1                                                                                                               |
 -----------------------------------------------------------------------------------------------------------------------------------
-set(['A1', 'A0', 'A3', 'A2'])
-Loading genome of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all/blocks.A1.list.bz2 ... (ancestral genome: diags) OK
-Integrated blocs of A1 ... OK
-A1 min=2	N50=5	WA=5.25	max=15 + 1350 singletons OK
+Targets: ['A0', 'A1', 'A2', 'A3']
 Loading genome of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all/blocks.A0.list.bz2 ... (ancestral genome: diags) OK
 Integrated blocs of A0 ... OK
-A0 min=2	N50=3	WA=4.05	max=11 + 2771 singletons OK
-Loading genome of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all/blocks.A3.list.bz2 ... (ancestral genome: diags) OK
-Integrated blocs of A3 ... OK
-A3 min=2	N50=3	WA=3.64	max=8 + 1121 singletons OK
+A0 min=2	N50=3	WA=4.07	max=11 + 2772 singletons OK
+Loading genome of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all/blocks.A1.list.bz2 ... (ancestral genome: diags) OK
+Integrated blocs of A1 ... OK
+A1 min=2	N50=5	WA=5.24	max=15 + 1350 singletons OK
 Loading genome of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all/blocks.A2.list.bz2 ... (ancestral genome: diags) OK
 Integrated blocs of A2 ... OK
-A2 min=2	N50=5	WA=5.36	max=18 + 1313 singletons OK
-Elapsed time: 0.327978134155
+A2 min=2	N50=5	WA=5.41	max=18 + 1313 singletons OK
+Loading genome of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all/blocks.A3.list.bz2 ... (ancestral genome: diags) OK
+Integrated blocs of A3 ... OK
+A3 min=2	N50=3	WA=3.67	max=8 + 1122 singletons OK
+Elapsed time: 0.29923081398010254

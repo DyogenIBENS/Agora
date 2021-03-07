@@ -12,12 +12,12 @@
 | OUT.ancBlocks  | example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all.denovo-fixedLength-20.fillin-all.fusion-all/blocks.%s.list.bz2 |
 | LOG.ancGraph   | example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all.denovo-fixedLength-20.fillin-all.fusion-all/graph.%s.txt.bz2   |
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all.denovo-fixedLength-20.fillin-all/blocks.A1.list.bz2 ... 2 [2/3/4] [3/4/5] 10 [3.36/1.66-59] + 1669 singletons OK
-Blocs integres de A1 ... 2 [2/2/3] [2/3/4] 15 [2.97/1.82-98] + 1378 singletons OK
 Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all.denovo-fixedLength-20.fillin-all/blocks.A0.list.bz2 ... 2 [2/2/2] [2/2/3] 4 [2.33/0.62-24] + 3114 singletons OK
-Blocs integres de A0 ... 2 [2/2/4] [2/3/5] 11 [3.09/1.75-123] + 2734 singletons OK
-Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all.denovo-fixedLength-20.fillin-all/blocks.A3.list.bz2 ... 2 [2/2/3] [2/3/4] 6 [2.79/1.04-39] + 1255 singletons OK
-Blocs integres de A3 ... 2 [2/2/3] [2/3/3] 7 [2.71/1.04-48] + 1125 singletons OK
+Blocs integres de A0 ... 2 [2/2/4] [2/3/5] 11 [3.11/1.76-122] + 2735 singletons OK
+Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all.denovo-fixedLength-20.fillin-all/blocks.A1.list.bz2 ... 2 [2/3/4] [3/4/5] 10 [3.36/1.66-59] + 1669 singletons OK
+Blocs integres de A1 ... 2 [2/2/3] [2/3/5] 15 [2.99/1.84-97] + 1379 singletons OK
 Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all.denovo-fixedLength-20.fillin-all/blocks.A2.list.bz2 ... 2 [2/3/4] [2/4/5] 7 [3.18/1.37-49] + 1750 singletons OK
-Blocs integres de A2 ... 2 [2/3/4] [2/4/8] 18 [3.63/2.51-117] + 1325 singletons OK
-Elapsed time: 0.116734981537
+Blocs integres de A2 ... 2 [2/3/4] [2/4/8] 18 [3.66/2.55-116] + 1325 singletons OK
+Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all.denovo-fixedLength-20.fillin-all/blocks.A3.list.bz2 ... 2 [2/2/3] [2/3/4] 6 [2.79/1.04-39] + 1255 singletons OK
+Blocs integres de A3 ... 2 [2/2/3] [2/3/3] 7 [2.72/1.05-47] + 1127 singletons OK
+Elapsed time: 0.10179877281188965
