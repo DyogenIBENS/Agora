@@ -7,6 +7,7 @@
 # This is free software; you may copy, modify and/or distribute this work under the terms of the GNU General Public License, version 3 or later and the CeCiLL v2 license in France
 
 import itertools
+import json
 import multiprocessing
 import os
 import resource
@@ -24,6 +25,7 @@ from . import myFile
 class TaskList():
 
     rusage_unit = 1 if sys.platform == "darwin" else 1024
+    status_filename = 'agora_complete'
 
     def __init__(self):
         self.list = []
@@ -66,7 +68,7 @@ class TaskList():
                 print("! Name clash ! Introducing a collector task")
                 collectorId = self.dic[name]
                 self.list.append(self.list[collectorId])
-                self.list[collectorId] = (set([taskId, taskId + 1]), (None, None, None, False), False)
+                self.list[collectorId] = (set([taskId, taskId + 1]), (None, None, None), False)
                 self.dic[name + ("1",)] = taskId + 1
                 self.dic[name + ("2",)] = taskId
         else:
@@ -75,14 +77,16 @@ class TaskList():
         return taskId
 
     def removeDep(self, i):
-        for (dep, _, _) in self.list:
-            dep.discard(i)
+        for t in self.list:
+            t[0].discard(i)
 
     def getAvailable(self):
         tmp = [i for (i, task) in enumerate(self.list) if len(task[0]) == 0]
         print("Available tasks:", tmp)
         if len(tmp) > 0:
             next = tmp[0]
+            # Add something (None) to the dependency list so that the task is never selected again
+            # This way the task numbers remain the same
             self.list[next][0].add(None)
             return (next,) + self.list[next]
         else:
@@ -102,6 +106,21 @@ class TaskList():
             self.failed += 1
             print(">", "Inspect", self.list[i][1][2], "for more information", file=sys.stderr)
         self.nrun -= self.nthreads.pop(i)
+
+    def getJsonPath(self, i):
+        out = self.list[i][1][1]
+        log = self.list[i][1][2]
+        if log or out:
+            return os.path.join(os.path.dirname(log or out), self.status_filename)
+        return None
+
+    def getJsonPayload(self, i):
+        data = self.list[i][1]
+        return {
+                'command': data[0],
+                'out': data[1],
+                'log': data[2],
+                }
 
     def getProcMemoryUsage(self, proc):
         try:
@@ -164,8 +183,10 @@ class TaskList():
         print(intro, "%g sec CPU time / %g sec elapsed = %g%% CPU usage, %g MB RAM" % (ru.ru_utime + ru.ru_stime, elapsed, 100. * (ru.ru_utime + ru.ru_stime) / elapsed, mem / 1024. / 1024.))
 
     # Launch program function
-    def goLaunch(self, i, args, out, log):
+    def goLaunch(self, i, args, out, log, status_file):
         start = time.time()
+        if os.path.exists(status_file):
+            os.remove(status_file)
         stdout = myFile.openFile(out or os.devnull, "wb")
         stderr = myFile.openFile(log, "wb") if log else subprocess.DEVNULL
         # stderr must have a fileno, so must be a regular file (not a .bz2 etc)
@@ -190,6 +211,10 @@ class TaskList():
         stdout.close()
         if log:
             stderr.close()
+        if r == 0 and status_file:
+            report = self.getJsonPayload(i)
+            with open(status_file, 'w') as fh:
+                json.dump(report, fh)
         self.printCPUUsageStats("task %d report:" % i, start)
         time.sleep(5)
         self.queue.put((i, r))
@@ -218,21 +243,37 @@ class TaskList():
                         break
                     self.joinNext()
                 else:
-                    (next, dep, (args, out, log, launch), multithreaded) = todo
+                    (next, dep, (args, out, log), multithreaded) = todo
+                    # Check if this step has already run
+                    launch = True
+                    status_file = self.getJsonPath(next)
+                    if status_file:
+                        print("Control file", status_file, end=' ')
+                        if os.path.exists(status_file):
+                            with open(status_file, 'r') as fh:
+                                j = json.load(fh)
+                            if j == self.getJsonPayload(next):
+                                launch = False
+                                print("present - same parameters")
+                            else:
+                                print("present - different parameters")
+                        else:
+                            print("missing")
                     if launch:
                         print("Launching task", next, args, ">", out, "2>", log)
                         if multithreaded:
                             self.nthreads[next] = nbThreads - self.nrun
-                            args.append("-nbThreads=%d" % self.nthreads[next])
+                            # Creating a new list so that the original list remains available for the Json dump
+                            args = args + ["-nbThreads=%d" % self.nthreads[next]]
                             print("Using", self.nthreads[next], "threads")
                         else:
                             self.nthreads[next] = 1
-                        self.proc[next] = multiprocessing.Process(target=self.goLaunch, args=(next, args, out, log))
+                        self.proc[next] = multiprocessing.Process(target=self.goLaunch, args=(next, args, out, log, status_file))
                         self.proc[next].start()
                         self.memusage[self.proc[next].pid] = 0
                         self.nrun += self.nthreads[next]
                     else:
-                        print("Skipping task", next, args)
+                        print("Skipping task", next, "(already done)", args)
                         self.removeDep(next)
                         self.completed += 1
 
@@ -288,9 +329,8 @@ class AgoraWorkflow:
     def addDummy(self, taskFullName, dependencies=[]):
         return self.tasklist.addTask(taskFullName, dependencies, (None, None, None, False))
 
-    def addAncGenesGenerationAnalysis(self, launch=True):
-        taskFullName = ("ancgenes", self.allAncGenesName)
-        if launch:
+    def addAncGenesGenerationAnalysis(self):
+            taskFullName = ("ancgenes", self.allAncGenesName)
             return self.tasklist.addTask(
                 taskFullName,
                 [],
@@ -303,14 +343,11 @@ class AgoraWorkflow:
                     ],
                     self.files["geneTreesWithAncNames"],
                     self.files["ancGenesLog"] % {"filt": "ancGenes"},
-                    launch,
                 )
             )
-        else:
-            return self.addDummy(taskFullName)
 
     # FIXME: both this and the callers implement their own naming scheme (size-0.9-1.1). Risk is that they diverge
-    def addAncGenesFilterAnalysis(self, methodName, params, ancestor=None, launch=True):
+    def addAncGenesFilterAnalysis(self, methodName, params, ancestor=None):
 
         taskName = "-".join([methodName] + params)
 
@@ -341,11 +378,10 @@ class AgoraWorkflow:
                 ] + params,
                 None,
                 logPath,
-                launch,
             )
         )
 
-    def addPairwiseAnalysis(self, ancGenesName, methodName=None, params=[], ancestor=None, launch=True):
+    def addPairwiseAnalysis(self, ancGenesName, methodName=None, params=[], ancestor=None):
 
         if self.ancBlocksAsAncGenes:
             if methodName is None:
@@ -371,12 +407,11 @@ class AgoraWorkflow:
                 ] + self.defaultExtantSpeciesFilter + params,
                 None,
                 self.files[self.pairwiseFileEntryName.replace("Output", "Log")] % {"filt": ancGenesName},
-                launch,
             ),
             methodName == "conservedAdjacencies",  # Only this one is multithreaded
         )
 
-    def addIntegrationAnalysis(self, methodName, params, pairwiseName, taskName=None, inputName=None, outputName=None, ancestor=None, launch=True):
+    def addIntegrationAnalysis(self, methodName, params, pairwiseName, taskName=None, inputName=None, outputName=None, ancestor=None):
 
         if taskName is None:
             taskName = methodName
@@ -468,31 +503,30 @@ class AgoraWorkflow:
                 args,
                 None,
                 logfile % {"method": newMethod},
-                launch,
             ),
             multithreaded,
         )
 
 
-    def reconstructionPassWithAncGenesFiltering(self, filteringMethod, filteringParams, ancestor=None, launch=True):
+    def reconstructionPassWithAncGenesFiltering(self, filteringMethod, filteringParams, ancestor=None):
         filteringParams = list(map(str, filteringParams))
         filteredAncGenesDirName = filteringMethod + "-" + "-".join(filteringParams)
-        self.addAncGenesFilterAnalysis(filteringMethod, filteringParams, ancestor=ancestor, launch=launch)
+        self.addAncGenesFilterAnalysis(filteringMethod, filteringParams, ancestor=ancestor)
         # Don't run twice
         if self.ancBlocksAsAncGenes:
             pairwiseTaskName = ("pairwise", self.ancGenesTaskName + "-" + self.blocksName + "-" + self.allAncGenesName)
         else:
             pairwiseTaskName = ("pairwise", self.ancGenesTaskName + "-" + self.allAncGenesName)
         if pairwiseTaskName not in self.tasklist.dic:
-            self.addPairwiseAnalysis(self.allAncGenesName, ancestor=ancestor, launch=launch)
-        self.addPairwiseAnalysis(filteredAncGenesDirName, ancestor=ancestor, launch=launch)
-        self.addIntegrationAnalysis("denovo", [], filteredAncGenesDirName, ancestor=ancestor, launch=launch)
-        self.addIntegrationAnalysis("fillin", [], self.allAncGenesName, ancestor=ancestor, launch=launch)
-        self.addIntegrationAnalysis("fusion", ["+onlySingletons"], self.allAncGenesName, ancestor=ancestor, launch=launch)
-        self.addIntegrationAnalysis("insertion", [], self.allAncGenesName, ancestor=ancestor, launch=launch)
+            self.addPairwiseAnalysis(self.allAncGenesName, ancestor=ancestor)
+        self.addPairwiseAnalysis(filteredAncGenesDirName, ancestor=ancestor)
+        self.addIntegrationAnalysis("denovo", [], filteredAncGenesDirName, ancestor=ancestor)
+        self.addIntegrationAnalysis("fillin", [], self.allAncGenesName, ancestor=ancestor)
+        self.addIntegrationAnalysis("fusion", ["+onlySingletons"], self.allAncGenesName, ancestor=ancestor)
+        self.addIntegrationAnalysis("insertion", [], self.allAncGenesName, ancestor=ancestor)
 
 
-    def publishGenome(self, outputName=None, inputName=None, ancestor=None, launch=True):
+    def publishGenome(self, outputName=None, inputName=None, ancestor=None):
 
         if inputName:
             self.prevMethod = self.interm[inputName]
@@ -521,13 +555,12 @@ class AgoraWorkflow:
                 args,
                 None,
                 self.files["ancGenomesLog"] % {"method": outputName},
-                launch,
             ),
             True,
         )
 
 
-    def useBlocksAsAncGenes(self, ancestor=None, launch=True):
+    def useBlocksAsAncGenes(self, ancestor=None):
         self.ancBlocksAsAncGenes = True
         self.ancGenesTaskName = "ancblocks"
         self.ancGenesFileEntryName = "filteredBlocksData"
@@ -548,11 +581,10 @@ class AgoraWorkflow:
                 ],
                 None,
                 self.files["filteredBlocksLog"] % {"filt": self.blocksName + "-" + self.allAncGenesName, "name": "%s"},
-                launch,
             )
         )
 
-    def convertToRealAncGenes(self, taskName=None, inputName=None, outputName=None, ancestor=None, launch=True):
+    def convertToRealAncGenes(self, taskName=None, inputName=None, outputName=None, ancestor=None):
 
         if taskName is None:
             taskName = "asAncGenes"
@@ -593,7 +625,6 @@ class AgoraWorkflow:
                 args,
                 None,
                 self.files["ancLog"] % {"method": newMethod},
-                launch,
             ),
             True,
         )
@@ -610,7 +641,7 @@ class AgoraWorkflow:
     def markForSelection(self):
         self.selectionPool.append( ("integr", self.prevMethod) )
 
-    def addSelectionAnalysis(self, taskName=None, outputName=None, ancestor=None, launch=True):
+    def addSelectionAnalysis(self, taskName=None, outputName=None, ancestor=None):
 
         if taskName:
             newMethod = taskName
@@ -645,7 +676,6 @@ class AgoraWorkflow:
                 args,
                 None,
                 self.files["ancLog"] % {"method": newMethod},
-                launch,
             ),
         )
         self.prevMethod = newMethod
