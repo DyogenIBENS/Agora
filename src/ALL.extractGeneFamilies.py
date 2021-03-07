@@ -110,11 +110,12 @@ for tree in utils.myProteinTree.loadTree(arguments["geneTrees"]):
     else:
         tree.printTree(sys.stdout)
 
-for (anc, lst) in geneFamilies.items():
+for anc in sorted(geneFamilies):
     if anc in phylTree.listSpecies:
         print("Writing families of genome %s ..." % anc, end=' ', file=sys.stderr)
     else:
         print("Writing families of ancestral genome %s ..." % anc, end=' ', file=sys.stderr)
+    lst = geneFamilies[anc]
     f = utils.myFile.openFile(arguments["OUT.ancGenesFiles"] % phylTree.fileName[anc], "w")
     for gg in lst:
         print(" ".join(gg), file=f)
