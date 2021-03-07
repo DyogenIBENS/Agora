@@ -695,7 +695,7 @@ def loadPairwise(file):
     return pairwiseDiags
 
 
-print(targets, file=sys.stderr)
+print("Targets:", sorted(targets), file=sys.stderr)
 
 n_cpu = arguments["nbThreads"] or multiprocessing.cpu_count()
 Parallel(n_jobs=n_cpu)(delayed(do)(anc) for anc in sorted(targets))

@@ -14,7 +14,7 @@
 | timeout       | 150                                                                         |
 | func          | 0,32|100,40t|10000                                                          |
 -----------------------------------------------------------------------------------------------
-{'A1', 'A3', 'A0', 'A2'}
+Targets: ['A0', 'A1', 'A2', 'A3']
 Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0/blocks.A0.list.bz2 ... 2 [4/10/20] [14/26/44] 137 [15.33/15.86-525] + 8226 singletons OK
 Building graphs ... OK
 adding singletons ... OK
