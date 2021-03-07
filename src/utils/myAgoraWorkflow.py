@@ -536,6 +536,7 @@ class AgoraWorkflow:
 
         if outputName is None:
             outputName = self.prevMethod
+        outputName = outputName.strip("/")
 
         if not ancestor:
             ancestor = self.refMethod[self.prevMethod][1]
