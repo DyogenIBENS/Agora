@@ -9,12 +9,12 @@
 | nbThreads      | 1                                                                 |
 | orderBySize    | True                                                              |
 --------------------------------------------------------------------------------------
-Loading genome of example/results/ancBlocks/denovo-all.scaffolds/blocks.A1.list.bz2 ... (ancestral genome: diags) OK
-Loading genome of example/results/ancGenes/all/ancGenes.A1.list.bz2 ... (ancestral genes) OK
 Loading genome of example/results/ancBlocks/denovo-all.scaffolds/blocks.A0.list.bz2 ... (ancestral genome: diags) OK
 Loading genome of example/results/ancGenes/all/ancGenes.A0.list.bz2 ... (ancestral genes) OK
-Loading genome of example/results/ancBlocks/denovo-all.scaffolds/blocks.A3.list.bz2 ... (ancestral genome: diags) OK
-Loading genome of example/results/ancGenes/all/ancGenes.A3.list.bz2 ... (ancestral genes) OK
+Loading genome of example/results/ancBlocks/denovo-all.scaffolds/blocks.A1.list.bz2 ... (ancestral genome: diags) OK
+Loading genome of example/results/ancGenes/all/ancGenes.A1.list.bz2 ... (ancestral genes) OK
 Loading genome of example/results/ancBlocks/denovo-all.scaffolds/blocks.A2.list.bz2 ... (ancestral genome: diags) OK
 Loading genome of example/results/ancGenes/all/ancGenes.A2.list.bz2 ... (ancestral genes) OK
-Time elapsed: 1.66341710091
+Loading genome of example/results/ancBlocks/denovo-all.scaffolds/blocks.A3.list.bz2 ... (ancestral genome: diags) OK
+Loading genome of example/results/ancGenes/all/ancGenes.A3.list.bz2 ... (ancestral genes) OK
+Time elapsed: 1.4708757400512695
