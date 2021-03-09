@@ -7,12 +7,12 @@
 # This is free software; you may copy, modify and/or distribute this work under the terms of the GNU General Public License, version 3 or later and the CeCiLL v2 license in France
 
 __doc__ = """
-    Transform reconstructed ancestral lists of blocks in formated ancestral genomes (lists of genes)
+    Convert an ancestral genome written (blocks of genes) to the BED format
 
-    usage:
+    Usage:
         src/convert.ancGenomes.blocks-to-genes.py example/data/Species.conf A0 \
-                -IN.ancBlocks=example/results/ancBlocks/final/diags.%s.list.bz2 \
-                -OUT.ancGenomes=example/results/ancGenomes/final/ancGenome.%s.list.bz2 \
+                -IN.ancBlocks=example/results/best-pass1.best-pass2/blocks.%s.list.bz2 \
+                -OUT.ancGenomes=example/results/ancGenomes/generic-workflow/ancGenome.%s.list.bz2 \
                 -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2
 """
 

@@ -8,6 +8,12 @@
 
 __doc__ = """
 	Convert a genome written as blocks of blocks to blocks of ancGenes
+
+    Usage:
+        src/convert.ancGenomes.blocks-of-blocks-to-blocks-of-ancGenes.py example/data/Species.conf A0 \
+                -IN.blocksBlocksFile=example/results/ancBlocks/best-pass1.denovo-fixedLength-50.fillin-all.fusion-all.insertion-all/blocks.%s.list.bz \
+                -OUT.ancBlocksFile=example/results/ancBlocks/best-pass1.denovo-fixedLength-50.fillin-all.fusion-all.insertion-all.asAncGenes/blocks.%s.list.bz2 \
+                -IN.blocksGenesFile=example/results/filtBlocks/best-pass1-all/blocks.%s.list.bz2
 """
 
 import multiprocessing
