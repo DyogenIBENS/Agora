@@ -1,3 +1,20 @@
+## 2021-03-12 - v3.0
+
+1. [bugfix] -- Translated some French comments.
+2. [change] -- Migrated to Python 3.
+3. [change] -- Settled on using "blocks" for all reconstructions: no
+   contigs / scaffolds any more.
+4. [change] -- Removed the scripts used to convert to our own tree format
+   since AGORA now natively supports Newick and NHX.
+5. [change] -- `buildSynteny.integr-scaffolds.py` now outputs all the
+   support scores, incl. the ones from the input blocks.
+6. [new] -- Up-to-date help messages for all scripts.
+7. [new] -- Option to sort the output genomes by decreasing block size.
+8. [new] -- Workflow steps are now skipped if they have already been run
+   (plus an option to force rerunning an entire workflow).
+9. [new] -- Dropped the dependency on joblib (Python's `multiprocessing`
+   now works well enough for our needs).
+
 ## 2021-02-07 - v2.1
 
 1. [change] -- Changed the parameters of gene-families filtering in the
