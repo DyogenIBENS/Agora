@@ -16,7 +16,7 @@ import utils.myTools
 from utils.myTools import file
 
 __doc__ = """
-    Run a generic workflow of AGORA that will try several parameters and select the best
+    Run an AGORA workflow that tries several parameters and selects the best
 
     Usage:
           src/agora-generic.py example/data/Species.nwk example/data/GeneTreeForest.nhx.bz2 example/data/genes/genes.%s.list.bz2

@@ -16,7 +16,7 @@ import utils.myTools
 from utils.myTools import file
 
 __doc__ = """
-    Run the Plants workflow of AGORA (i.e. with constrained families and a multi-integration pass for scaffolding)
+    Run the Plants workflow of AGORA (two multi-integration passes)
 
     Usage:
           src/agora-plants.py example/data/Species.nwk example/data/GeneTreeForest.nhx.bz2 example/data/genes/genes.%s.list.bz2

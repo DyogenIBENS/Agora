@@ -16,7 +16,7 @@ import utils.myTools
 from utils.myTools import file
 
 __doc__ = """
-    Run the default AGORA workflow (all families at once)
+    Run the basic AGORA workflow (two single-integration reconstructions)
 
     Usage:
           src/agora-basic.py example/data/Species.nwk example/data/GeneTreeForest.nhx.bz2 example/data/genes/genes.%s.list.bz2
