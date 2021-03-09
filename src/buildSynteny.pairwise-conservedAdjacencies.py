@@ -7,7 +7,15 @@
 # This is free software; you may copy, modify and/or distribute this work under the terms of the GNU General Public License, version 3 or later and the CeCiLL v2 license in France
 
 __doc__ = """
-	Extract all block adjacenties that are conserved between pairs of species.
+    Extract block adjacencies that are conserved in a given species set
+
+    Usage:
+        src/buildSynteny.pairwise-conservedAdjacencies.py example/data/Species.nwk A0 \
+                -genesFiles=example/data/genes/genes.%s.list.bz2 \
+                -ancGenesFiles=example/results/filtBlocks/best-pass1-all/blocks.%s.list.bz2 \
+                -iniAncGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
+                -OUT.pairwise=example/results/pairwise/adjacencies-best-pass1-all/%s.list.bz2 \
+                -LOG.pairwise=example/results/pairwise/adjacencies-best-pass1-all/%s.log.bz2
 """
 
 import collections

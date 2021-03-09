@@ -7,7 +7,13 @@
 # This is free software; you may copy, modify and/or distribute this work under the terms of the GNU General Public License, version 3 or later and the CeCiLL v2 license in France
 
 __doc__ = """
-	Extract all pairs of genes (adjacencies) conserved between each pair of species.
+    Extract gene adjacencies that are conserved in a given species set
+
+    Usage:
+        src/buildSynteny.pairwise-conservedPairs.py example/data/Species.nwk A0 \
+                -genesFiles=example/data/genes/genes.%s.list.bz2 \
+                -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
+                -OUT.pairwise=example/results/pairwise/pairs-all/%s.list.bz2
 """
 
 import collections
