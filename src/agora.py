@@ -26,7 +26,7 @@ __doc__ = """
 """
 
 arguments = utils.myTools.checkArgs(
-    [("agora.conf", file)],
+    [("agora.ini", file)],
     [("workingDir", str, "."), ("nbThreads", int, multiprocessing.cpu_count()), ("sequential", bool, True), ("printWorkflowGraph", str, ""),
      ],
     __doc__)
@@ -34,7 +34,7 @@ arguments = utils.myTools.checkArgs(
 # loading configuration file
 ################################
 bysections = {}
-f = utils.myFile.openFile(arguments["agora.conf"], "r")
+f = utils.myFile.openFile(arguments["agora.ini"], "r")
 for l in f:
 
     l = l.partition("#")[0].strip()
@@ -62,7 +62,7 @@ for x in bysections["files"]:
 
 # All input paths are relative to the directory of the configuration file
 files = {}
-inputDir = os.path.dirname(arguments["agora.conf"])
+inputDir = os.path.dirname(arguments["agora.ini"])
 for f in utils.myAgoraWorkflow.AgoraWorkflow.inputParams:
     files[f] = os.path.normpath(os.path.join(inputDir, conffiles[f.lower()]))
 outputDir = arguments["workingDir"]
