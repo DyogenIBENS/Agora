@@ -7,7 +7,16 @@
 # This is free software; you may copy, modify and/or distribute this work under the terms of the GNU General Public License, version 3 or later and the CeCiLL v2 license in France
 
 __doc__ = """
-	For each ancestor, select the reconstruction that has the highest G50
+    For each ancestor, select the reconstruction that has the highest G50
+
+    Usage:
+        src/ALL.selectBestReconstruction.py example/data/Species.nwk A0 \
+                -OUT.ancBlocks=example/results/ancBlocks/best-pass1.best-pass2/blocks.%s.list.bz2 \
+                example/results/ancBlocks/best-pass1.denovo-all.asAncGenes/blocks.%s.list.bz2 \
+                example/results/ancBlocks/best-pass1.denovo-propLength-50.fillin-all.fusion-all.insertion-all.asAncGenes/blocks.%s.list.bz2 \
+                example/results/ancBlocks/best-pass1.denovo-propLength-70.fillin-all.fusion-all.insertion-all.asAncGenes/blocks.%s.list.bz2 \
+                example/results/ancBlocks/best-pass1.denovo-fixedLength-20.fillin-all.fusion-all.insertion-all.asAncGenes/blocks.%s.list.bz2 \
+                example/results/ancBlocks/best-pass1.denovo-fixedLength-50.fillin-all.fusion-all.insertion-all.asAncGenes/blocks.%s.list.bz2
 """
 
 import sys

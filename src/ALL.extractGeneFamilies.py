@@ -7,13 +7,12 @@
 # This is free software; you may copy, modify and/or distribute this work under the terms of the GNU General Public License, version 3 or later and the CeCiLL v2 license in France
 
 __doc__ = """
-    Read the forest of gene trees and extract each ancestral genome gene content in separate file.
-    Extract ancestral gene content from a forest of gene trees.
-    One file per ancestor, and one file per extant species.
+    Read the forest of gene trees and extract the gene content of every ancestral genome in a separate file.
 
-        Usage:
-            ALL.extractGeneFamilies.py example/data/Species.nwk GeneTrees.bz
-  """
+    Usage:
+        src/ALL.extractGeneFamilies.py example/data/Species.nwk example/data/GeneTreeForest.nhx.bz2 \
+                -OUT.ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2
+"""
 
 import collections
 import sys

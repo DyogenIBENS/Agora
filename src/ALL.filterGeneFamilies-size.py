@@ -7,10 +7,12 @@
 # This is free software; you may copy, modify and/or distribute this work under the terms of the GNU General Public License, version 3 or later and the CeCiLL v2 license in France
 
 __doc__ = """
-    Filters ancestors genes according to the number of descendant.
+    Filter ancestral genes according to the number of extant genes
 
-    usage:
-        src/ALL.filterGeneFamilies-size.py example/data/Species.nwk Boreoeutheria ancGenes/all/ancGenes.%s.list.bz2 ancGenes/size-%s-%s/ancGenes.%s.list.bz2 1.0 1.0 > ancGenes/size.txt.bz2 2> ancGenes/size.log
+    Usage:
+        src/ALL.filterGeneFamilies-size.py example/data/Species.nwk A0 \
+                example/results/ancGenes/all/ancGenes.%s.list.bz2 example/results/ancGenes/size-%s/ancGenes.%s.list.bz2 \
+                1.0,0.9,0.77 1.0,1.1,1.33
 """
 
 import sys

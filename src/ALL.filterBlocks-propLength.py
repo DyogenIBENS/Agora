@@ -7,7 +7,13 @@
 # This is free software; you may copy, modify and/or distribute this work under the terms of the GNU General Public License, version 3 or later and the CeCiLL v2 license in France
 
 __doc__ = """
-	Filter ancestral blocks (as if they were ancestral genes), keeping the largest blocks that account for minProp % of the genome
+    Filter ancestral blocks (as if they were ancestral genes), keeping the largest blocks that account for minProp % of the genome
+
+    Usage:
+        src/ALL.filterBlocks-propLength.py example/data/Species.nwk A0 \
+                example/results/filtBlocks/best-pass1-all/blocks.%s.list.bz2 \
+                example/results/filtBlocks/best-pass1-propLength-50/blocks.%s.list.bz2 \
+                50
 """
 
 import sys
