@@ -7,7 +7,7 @@
 # This is free software; you may copy, modify and/or distribute this work under the terms of the GNU General Public License, version 3 or later and the CeCiLL v2 license in France
 
 __doc__ = """
-	Convert a genome written as blocks of blocks to blocks of ancGenes
+    Convert a genome written as blocks of blocks to blocks of ancGenes
 
     Usage:
         src/convert.ancGenomes.blocks-of-blocks-to-blocks-of-ancGenes.py example/data/Species.nwk A0 \
