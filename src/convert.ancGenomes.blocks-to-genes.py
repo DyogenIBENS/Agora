@@ -10,7 +10,7 @@ __doc__ = """
     Convert an ancestral genome written (blocks of genes) to the BED format
 
     Usage:
-        src/convert.ancGenomes.blocks-to-genes.py example/data/Species.conf A0 \
+        src/convert.ancGenomes.blocks-to-genes.py example/data/Species.nwk A0 \
                 -IN.ancBlocks=example/results/best-pass1.best-pass2/blocks.%s.list.bz2 \
                 -OUT.ancGenomes=example/results/ancGenomes/generic-workflow/ancGenome.%s.list.bz2 \
                 -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2

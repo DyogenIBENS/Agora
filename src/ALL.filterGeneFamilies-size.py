@@ -10,7 +10,7 @@ __doc__ = """
     Filters ancestors genes according to the number of descendant.
 
     usage:
-        src/ALL.filterGeneFamilies-size.py Species.conf Boreoeutheria ancGenes/all/ancGenes.%s.list.bz2 ancGenes/size-%s-%s/ancGenes.%s.list.bz2 1.0 1.0 > ancGenes/size.txt.bz2 2> ancGenes/size.log
+        src/ALL.filterGeneFamilies-size.py example/data/Species.nwk Boreoeutheria ancGenes/all/ancGenes.%s.list.bz2 ancGenes/size-%s-%s/ancGenes.%s.list.bz2 1.0 1.0 > ancGenes/size.txt.bz2 2> ancGenes/size.log
 """
 
 import sys

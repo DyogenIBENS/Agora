@@ -10,7 +10,7 @@ __doc__ = """
     Builds the ancestral graph of gene adjacencies infered from pairwise comparisons and linearizes it.
 
     usage:
-        src/buildSynteny.integr-denovo.py Species.conf Boreoeutheria diags/pairwise/pairs-all/%s.list.bz2
+        src/buildSynteny.integr-denovo.py example/data/Species.nwk Boreoeutheria diags/pairwise/pairs-all/%s.list.bz2
         -ancGenesFiles=ancGenes/all/ancGenes.%s.list.bz2 -OUT.ancBlocks=diags/integr/denovo-all/anc/diags.%s.list.bz2
         2> diags/integr/denovo-all/log
 """

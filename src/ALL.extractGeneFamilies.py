@@ -12,7 +12,7 @@ __doc__ = """
     One file per ancestor, and one file per extant species.
 
         Usage:
-            ALL.extractGeneFamilies.py PhylTree.conf GeneTrees.bz
+            ALL.extractGeneFamilies.py example/data/Species.nwk GeneTrees.bz
   """
 
 import collections

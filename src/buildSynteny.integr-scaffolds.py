@@ -11,7 +11,7 @@ __doc__ = """
     This could be compare to an "assembly" step of previous blocs.
 
         Usage:
-            src/buildSynteny.integr-scaffolds.py Species.conf Boreoeutheria \
+            src/buildSynteny.integr-scaffolds.py example/data/Species.nwk Boreoeutheria \
             -IN.ancBlocks=diags/integr/denovo-all/anc/diags.%s.list.bz2 -OUT.ancBlocks=diags/integr/denovo-all.groups/anc/diags.%s.list.bz2
             -ancGenesFiles=ancGenes/all/ancGenes.%s.list.bz2 -genesFiles=genes.%s.list.bz2 2> diags/integr/denovo-all.groups/log
 """
