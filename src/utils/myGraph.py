@@ -54,7 +54,7 @@ def loadConservedPairs(filename, targets):
 def loadIntegr(filename):
 	integr = []
 	singletons = set()
-	print("Loading integrated blocks of %s ..." % filename, end=' ', file=sys.stderr)
+	print("Loading ancestral blocks of %s ..." % filename, end=' ', file=sys.stderr)
 	f = myFile.openFile(filename, "r")
 	for l in f:
 		t = l.split("\t")

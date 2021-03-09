@@ -38,7 +38,7 @@ arguments = utils.myTools.checkArgs(
     __doc__
 )
 
-# Load species tree - target ancestral genome and the extant species used to assemble blocs
+# Load species tree - target ancestral genome and the extant species used to assemble blocks
 phylTree = utils.myPhylTree.PhylogeneticTree(arguments["speciesTree"])
 targets = phylTree.getTargetsAnc(arguments["target"])
 

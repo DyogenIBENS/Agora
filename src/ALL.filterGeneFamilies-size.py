@@ -47,7 +47,7 @@ minsizes = [float(x) for x in arguments["minSize"].split(",")]
 maxsizes = [float(x) for x in arguments["maxSize"].split(",")]
 
 # Initialisation
-print("Structures creation ...", end=' ', file=sys.stderr)
+print("Structure creation ...", end=' ', file=sys.stderr)
 desc = {}
 notseen = {}
 deleted = {}
@@ -61,7 +61,7 @@ print("OK", file=sys.stderr)
 
 def mkStruct(anc):
     if anc in sorted(phylTree.items):
-        print("Browsing ancGenome", anc, file=sys.stderr)
+        print("Processing ancGenome", anc, file=sys.stderr)
         # New ancestral genes have to be analyzed
         for i in notseen[anc]:
             todo.append((anc, i))

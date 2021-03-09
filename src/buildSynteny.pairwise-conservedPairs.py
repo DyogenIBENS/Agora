@@ -83,7 +83,7 @@ del genesAnc
 def extractPairsFromSpecies(esp):
 	genome = utils.myGenomes.Genome(arguments["genesFiles"] % phylTree.fileName[esp], withDict=False)
 
-	print("Extraction of pairs of genes from %s " % esp, "...", end=' ', file=sys.stderr)
+	print("Extraction of gene pairs from %s " % esp, "...", end=' ', file=sys.stderr)
 	
 	for chrom in genome.chrList[utils.myGenomes.ContigType.Chromosome] + genome.chrList[utils.myGenomes.ContigType.Scaffold]:
 		chrom = genome.lstGenes[chrom]

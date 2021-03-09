@@ -81,7 +81,7 @@ def getAllAdj(anc, dicGenomesAnc):
         dicA = {}
         dicM = {}
         stats = []
-        print("Diagonals extraction between %s and %s ..." % (anc, esp), end=' ', file=sys.stderr)
+        print("Gene order comparison between %s and %s ..." % (anc, esp), end=' ', file=sys.stderr)
 
         for (n, ((c1, d1), (c2, d2), da)) in enumerate(
                 utils.myGraph.calcDiags(dicGenomes[esp], dicGenomesAnc, genesAnc[phylTree.dicParents[anc][esp]],
@@ -120,7 +120,7 @@ def getAllAdj(anc, dicGenomesAnc):
 
         allAdj[esp] = set(tmp)
         allAdj[esp].update(((i2, -s2), (i1, -s1)) for ((i1, s1), (i2, s2)) in tmp)
-        print("%d adjacencies / %d blocs" % (len(tmp), len(newGA)), file=sys.stderr)
+        print("%d adjacencies / %d blocks" % (len(tmp), len(newGA)), file=sys.stderr)
     return allAdj
 
 
@@ -184,7 +184,7 @@ def do(anc):
         if len(dicGenomesAnc.lstGenes[x]) > 1:
             stats.append(len(dicGenomesAnc.lstGenes[x]))
 
-    print("Integrated blocs of", anc, utils.myMaths.myStats.txtSummary(stats), "+", len(
+    print("Output blocks of", anc, utils.myMaths.myStats.txtSummary(stats), "+", len(
         genesAnc[anc].lstGenes[None]) - sum(stats), "singletons", file=sys.stderr)
     f.close()
 
@@ -193,7 +193,7 @@ def do(anc):
     sys.stdout = ini_stdout
 
 
-# Load species tree - target ancestral genome and the extant species used to assemble blocs
+# Load species tree - target ancestral genome and the extant species used to assemble blocks
 phylTree = utils.myPhylTree.PhylogeneticTree(arguments["speciesTree"])
 
 (listSpecies, targets, accessoryAncestors) = phylTree.getTargetsForPairwise(arguments["target"], arguments["extantSpeciesFilter"])

@@ -652,7 +652,7 @@ def do(anc):
         print("OK", file=sys.stderr)
 
         # Rassemblement des nouveaux blocs ancestraux
-        print("Final blocks of", anc, end=' ', file=sys.stderr)
+        print("Output blocks of", anc, end=' ', file=sys.stderr)
         newintegr = []
         for (i, (b, s)) in enumerate(integr):
             newb = []

@@ -147,8 +147,7 @@ def do(anc):
         neww.extend(toaddblocks[k][1])
         toaddblocks[k] = ([], [])
 
-    #print >> sys.stderr, "Final blocks of ", anc,
-    print("Final blocks of ", anc, end=' ')
+    print("Output blocks of ", anc, end=' ', file=sys.stderr)
     f = utils.myFile.openFile(arguments["OUT.ancBlocks"] % phylTree.fileName[anc], "w")
     ll = []
     # Build and print new chromosomes

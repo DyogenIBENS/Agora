@@ -75,7 +75,7 @@ def do(anc):
                                                       utils.myFile.myTSV.printLine([x[1] for x in b], " "),
                                                       utils.myFile.myTSV.printLine(w, " ")]), file=f)
 
-    # Integrated blocks extraction
+    # Compute the blocks
     for (d, dw) in graph.getBestDiags():
 
         if len(d) == 1:

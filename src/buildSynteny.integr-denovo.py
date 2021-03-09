@@ -51,7 +51,7 @@ def do(anc):
     g = utils.myGenomes.Genome(arguments["ancGenesFiles"] % phylTree.fileName[anc], withDict=False).lstGenes
     singletons = set(range(len(g[None]))) if None in g else set(g)
 
-    print("Integrated blocs of %s ..." % anc, end=' ', file=sys.stderr)
+    print("Blocks of %s ..." % anc, end=' ', file=sys.stderr)
 
     graph = utils.myGraph.WeightedDiagGraph()
     for x in diags:

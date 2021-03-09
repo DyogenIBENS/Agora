@@ -120,7 +120,7 @@ def getAllAdj(anc):
 						allAdj[ ((i1,s1),(i2,s2)) ].append(esp)
 					else:
 						allAdj[ ((i2,-s2),(i1,-s1)) ].append(esp)
-		print("Extraction des diagonales entre %s et %s ..." % (anc,esp), utils.myMaths.myStats.txtSummary(stats), "%d adjacences / %d blocs" % (na, len(newGA)), "(ancre: %d)" % anchorSize, file=sys.stderr)
+		print("Gene order comparison between %s and %s ..." % (anc,esp), utils.myMaths.myStats.txtSummary(stats), "%d adjacencies / %d blocks" % (na, len(newGA)), "(anchor size: %d)" % anchorSize, file=sys.stderr)
 	f.close()
 
 	# -1 designe l'outgroup, 1,2,3... designent les descendants
