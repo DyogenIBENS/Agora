@@ -86,7 +86,7 @@ def do(anc):
             ns += 1
         fo.write(l)
 
-    # S'assure que tous les blocs ont ete employes
+    # Ensure all the blocks have been used
     assert len(ref) == 0
     print(utils.myMaths.myStats.txtSummary(sorted(lengths)), "+", ns, "singletons", file=sys.stderr)
 

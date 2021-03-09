@@ -75,8 +75,8 @@ def rev(gene):
     return (gene[0], -gene[1])
 
 
-# Decorateur pour utilisation de "with"
-#########################################
+# Context manager that implements backtracking
+##############################################
 class setBacktracker(list):
     # Place des elements dans des ensembles
     def __enter__(self):
@@ -90,8 +90,8 @@ class setBacktracker(list):
             s.remove(x)
 
 
-# Met a jour la liste des successeurs/predecesseurs
-####################################################
+# Keep the list of successors and predecessors up-to-date
+#########################################################
 class GraphContainer:
     def __init__(self, lstIniPairwise=[]):
 
@@ -405,8 +405,8 @@ def bestPath44(*args):
     return _bestPath4(*args, subfunc=None)
 
 
-# Rajoute les pairwise qui commencent en "start" ou finissent en "end"
-########################################################################
+# Gather all the adjacencies connected to "start" or "end" 
+##########################################################
 def prepareGraph(pairwiseDiags, singletons, graphData, start, end):
     print("preparecall", start, end)
     newPairwise = []
@@ -451,7 +451,7 @@ def do(anc):
 
         print("Building graphs ...", end=' ', file=sys.stderr)
 
-        # Toutes les paires entre singletons
+        # All adjacencies that link singletons
         commonPairwise = []
         for (g1, l) in pairwiseDiags.items():
             if g1[0] in singletons:
@@ -460,15 +460,15 @@ def do(anc):
                         commonPairwise.append((s, g1, g2))
         print("commonpairwise", len(commonPairwise))
 
-        # La structure de graphe de base
+        # The graph structure
         sp = GraphContainer(commonPairwise)
         # print "inisucc", len(sp.allSucc), sum(len(x) for x in sp.allSucc.itervalues())
 
-        # Dictionnaire gene -> intervalles
+        # Dictionary: gene -> interval
         dicGenes = collections.defaultdict(set)
-        # Dictionnaire intervalle -> gene
+        # Dictionary:interval -> gene
         dicInterv = collections.defaultdict(set)
-        # La liste des paires utilisables pour chaque intervalle
+        # The list of all usable adjacencies for each interval
         goodPairwise = {}
         for (i, (b, _)) in enumerate(integr):
             for (j, p) in enumerate(utils.myTools.myIterator.slidingTuple(b)):
@@ -490,7 +490,7 @@ def do(anc):
                             dicInterv[interv].add(g2[0])
         print("OK", file=sys.stderr)
 
-        # Supprime l'intervalle de la liste de ceux a parcourir et met a jour la liste des singletons
+        # Discard the interval from the todo-list and update the list of singletons 
         def applyResult(interv, filtered, todelete):
             # print "apply %d/%d" % interv
             if interv in goodPairwise:
@@ -518,7 +518,7 @@ def do(anc):
 
             else:
                 try:
-                    # Recherche du pattern de choix de fonction
+                    # Find the function that applies according to the size thresholds
                     for (size, f, thread) in func:
                         if len(lstPairwise) >= size:
                             break
@@ -536,7 +536,7 @@ def do(anc):
                             r = queue.get(True, arguments["timeout"])
                         except queue.Empty:
                             p._Thread__stop()
-                            # Au cas ou le resultat serait arrive entre temps
+                            # Just in case the result was sent after the exception was raised 
                             r = queue.get_nowait()
                         # et = time.time()
                         p.join()
@@ -558,13 +558,13 @@ def do(anc):
                         res[interv] = r
 
                 except queue.Empty:
-                    # Graphe trop grand a examiner, il faudra revenir
+                    # Graph is too large. Discard for now (might become smaller once other intervals are resolved)
                     print("queuetimeout")
                     p.join()
                     return False
             return True
 
-        # Contient les resultats
+        # The results
         res = {}
         timeouts = set()
 
@@ -573,7 +573,7 @@ def do(anc):
 
             print("nb intervals todo", len(goodPairwise))
 
-            # Calcul des meilleurs chemins
+            # Find the best paths
             paths = []
             filtered = set()
             todelete = set()
@@ -582,27 +582,27 @@ def do(anc):
                 if bestPathWrapper(interv):
                     if interv in res:
                         if len(res[interv][0]) > 2:
-                            # Resultat: chemin
+                            # The best solution is a path with at least 1 extra gene
                             paths.append(interv)
                         else:
-                            # Resultat: lien direct
+                            # The best solution is the original interval
                             applyResult(interv, filtered, todelete)
                     else:
-                        # Resultat: pas de chemin
+                        # Searched but found no path
                         applyResult(interv, filtered, todelete)
                 else:
-                    # Pas de resultat
+                    # Could not search for a path
                     timeouts.add(interv)
             print(len(timeouts), "timeouts")
 
-            # Association gene -> intervalles qui l'utilisent
+            # Map each each to the intervals it could be inserted in
             counts = collections.defaultdict(list)
             for interv in paths:
                 for g in res[interv][0][1:-1]:
                     counts[g[0]].append(interv)
             print(len(counts), "referenced genes")
 
-            # Regroupement des intervalles avec des resultats qui s'excluent
+            # Used to group mutually-exclusive solutions
             comb = utils.myTools.myCombinator()
             for l in counts.values():
                 comb.addLink(l)
@@ -613,7 +613,7 @@ def do(anc):
                     applyResult(g[0], filtered, todelete)
                 else:
                     print("mutually exluded interv", len(g), ["%d/%d" % x for x in g])
-                    # On selectionne le resultat le mieux soutenu
+                    # Find the path that has the highest score
                     scores = []
                     for interv in g:
                         s = 0
@@ -624,13 +624,13 @@ def do(anc):
                         scores.append((s, interv))
                     scores.sort(reverse=True)
 
-                    # On applique son resultat
+                    # Apply itt
                     print("best interv", [(x[0], "%d/%d" % x[1]) for x in scores])
                     for (_, interv) in scores:
                         if todelete.isdisjoint(x[0] for x in res[interv][0][1:-1]):
                             applyResult(interv, filtered, todelete)
 
-            # Mise a jour des intervalles en enlevant les liens pairwise qui ne sont plus disponibles
+            # Update all the adjacencies that have been selected and the other intervals that used them
             filtered.intersection_update(goodPairwise)
             print("filtered intervals", ["%d/%d" % x for x in filtered])
             for x in filtered:
@@ -651,7 +651,7 @@ def do(anc):
 
         print("OK", file=sys.stderr)
 
-        # Rassemblement des nouveaux blocs ancestraux
+        # Build the new blocks together
         print("Output blocks of", anc, end=' ', file=sys.stderr)
         newintegr = []
         for (i, (b, s)) in enumerate(integr):
@@ -674,7 +674,7 @@ def do(anc):
             break
         integr = newintegr
 
-    # Impression des resultats finaux
+    # Print the blocks
     f = utils.myFile.openFile(arguments["OUT.ancBlocks"] % phylTree.fileName[anc], "w")
     for (i, (newb, news)) in enumerate(newintegr):
         print(utils.myFile.myTSV.printLine(
@@ -694,7 +694,7 @@ start = time.time()
 phylTree = utils.myPhylTree.PhylogeneticTree(arguments["speciesTree"])
 targets = phylTree.getTargetsAnc(arguments["target"])
 
-# Initialisation des fonctions de recherche
+# Initialisation of search functions
 func = [x.split(",") for x in arguments["func"].split("|")]
 maxsize = int(func[-1][0])
 func = [(int(x[0]), eval("bestPath" + x[1].replace("t", "")), "t" in x[1]) for x in func[:-1]]

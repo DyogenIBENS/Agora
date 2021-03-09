@@ -208,7 +208,7 @@ def reportPairs(anc):
 
 	print(len(pairs), "conserved pairs for", anc, file=sys.stderr)
 
-	# -1 is the outgroup species, 1,2,3... are the descendantsdescendants
+	# -1 is the outgroup species, 1,2,3... are the descendants
 	ind = dict.fromkeys(set(phylTree.outgroupSpecies[anc]).intersection(listSpecies), -1)
 	for (i,(x,_)) in enumerate(phylTree.items[anc]):
 		ind.update(dict.fromkeys(set(phylTree.species[x]).intersection(listSpecies), i+1))
@@ -220,7 +220,7 @@ def reportPairs(anc):
 		#assert ancPair[0][0] < ancPair[1][0]
 		#assert set(pairs[ancPair]).isdisjoint([(x[0],revPair(x[1])) for x in pairs[ancPair]])
 
-		# Calcul des poids
+		# Compute the weight (number of comparisons that support this adjacency)
 		weights = collections.defaultdict(int)
 		for modPair in pairs[ancPair]:
 			weights[ind[modPair[0]]] += 1

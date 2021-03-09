@@ -92,7 +92,7 @@ def getAllAdj(anc):
 			stats.append(len(da))
 
 		newGA = rewriteGenome(dicGenomes[anc], dicA)
-		# Liste des blocs choisis chez l'ancetre
+		# The blocs selected so far
 		notdup = set()
 		for cA in newGA:
 			notdup.update(x[0] for x in newGA[cA])
@@ -104,7 +104,7 @@ def getAllAdj(anc):
 		na = 0
 		for (cM,l) in newGM.items():
 			print(anc, esp, "MOD", cM, len(newGM[cM]), newGM[cM], file=f)
-			# Permet de selectionner lors d'une duplication segmentale, le meme bloc que chez l'ancetre
+			# In case there is a segmental duplication, choose the same block as in the ancestor
 			l = [x for x in l if x[0] in notdup]
 			print(anc, esp, "FMOD", cM, len(l), l, file=f)
 			for (x1,x2) in utils.myTools.myIterator.slidingTuple(l):
@@ -123,7 +123,7 @@ def getAllAdj(anc):
 		print("Gene order comparison between %s and %s ..." % (anc,esp), utils.myMaths.myStats.txtSummary(stats), "%d adjacencies / %d blocks" % (na, len(newGA)), "(anchor size: %d)" % anchorSize, file=sys.stderr)
 	f.close()
 
-	# -1 designe l'outgroup, 1,2,3... designent les descendants
+	# -1 is the outgroup species, 1,2,3... are the descendants
 	ind = dict.fromkeys(set(phylTree.outgroupSpecies[anc]).intersection(listSpecies), -1)
 	for (i,(x,_)) in enumerate(phylTree.items[anc]):
 		ind.update(dict.fromkeys(set(phylTree.species[x]).intersection(listSpecies), i+1))
@@ -132,7 +132,7 @@ def getAllAdj(anc):
 	f = utils.myFile.openFile(res, "w")
 	for ancPair in allAdj:
 
-		# Calcul des poids
+		# Compute the weight (number of comparisons that support this adjacency)
 		weights = collections.defaultdict(int)
 		for esp in allAdj[ancPair]:
 			weights[ind[esp]] += 1
@@ -151,7 +151,6 @@ def getAllAdj(anc):
 
 
 
-# L'arbre phylogenetique
 phylTree = utils.myPhylTree.PhylogeneticTree(arguments["speciesTree"])
 
 (listSpecies, targets, accessoryAncestors) = phylTree.getTargetsForPairwise(arguments["target"], arguments["extantSpeciesFilter"])

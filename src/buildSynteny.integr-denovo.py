@@ -69,7 +69,7 @@ def do(anc):
     f = utils.myFile.openFile(arguments["OUT.ancBlocks"] % phylTree.fileName[anc], "w")
     s = []
 
-    # Graph linearizing
+    # Graph linearisation
     for (d, dw) in graph.getBestDiags():
 
         if len(d) == 1:
