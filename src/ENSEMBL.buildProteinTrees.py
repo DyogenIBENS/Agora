@@ -4,10 +4,11 @@
 # Licences GLP v3 and CeCILL v2
 
 __doc__ = """
-	Corrige les arbres d'Ensembl en fonction du seuil minimal de duplication_score et de l'arbre des especes desire
-		1: score par defaut (0 -> 1)
-		2: coef multiplicateur d'un score reference 6X_species / all_species
-		3: duplication_confidence_score calcule sur uniquement 6X_species
+    Edit Ensembl's gene trees by optimising the placement of duplication nodes according to a score function
+
+    Usage:
+        src/ENSEMBL.buildProteinTrees.py example/data/Species.nwk example/data/EnsemblGeneTreeForest.nhx.bz2 \
+                -cutoff 0.25 -scoreMethod 1
 """
 
 
@@ -31,6 +32,9 @@ phylTree = utils.myPhylTree.PhylogeneticTree(arguments["speciesTree"])
 sys.setrecursionlimit(20000)
 
 # Limites automatiques de score de duplication
+# 1: score par defaut (0 -> 1)
+# 2: coef multiplicateur d'un score reference 6X_species / all_species
+# 3: duplication_confidence_score calcule sur uniquement 6X_species
 if arguments["scoreMethod"] in [1, 3]:
 	def calc(anc, val):
 		return val
