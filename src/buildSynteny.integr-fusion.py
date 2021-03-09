@@ -38,7 +38,7 @@ arguments = utils.myTools.checkArgs(
     [("speciesTree", file), ("target", str), ("pairwise", str)],
     [("minimalWeight", int, 1), ("searchLoops", bool, True), ("onlySingletons", bool, False),
      ("nbThreads", int, 0),
-     ("IN.ancBlocks", str, ""), ("OUT.ancBlocks", str, ""), ("LOG.ancGraph", str, "extend_log/%s.log.bz2")],
+     ("IN.ancBlocks", str, ""), ("OUT.ancBlocks", str, ""), ("LOG.ancGraph", str, "")],
     __doc__
 )
 

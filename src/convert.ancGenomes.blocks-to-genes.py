@@ -32,7 +32,7 @@ from utils.myTools import file
 # Arguments
 arguments = utils.myTools.checkArgs(
     [("speciesTree", file), ("target", str)],
-    [("IN.ancBlocks", str, ""), ("ancGenesFiles", str, ""), ("OUT.ancGenomes", str, "ancGenomes/ancGenome.%s.list.bz2"),
+    [("IN.ancBlocks", str, ""), ("ancGenesFiles", str, ""), ("OUT.ancGenomes", str, ""),
      ("nbThreads", int, 0), ("orderBySize", bool, False),
     ],
     __doc__

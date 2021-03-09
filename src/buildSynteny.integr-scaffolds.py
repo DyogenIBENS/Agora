@@ -42,8 +42,8 @@ arguments = utils.myTools.checkArgs( \
      ("nbThreads", int, 0),
      ("extantSpeciesFilter", str, ""), \
      ("IN.ancBlocks", str, ""), \
-     ("LOG.ancGraph", str, "groups_log/%s.log.bz2"),
-     ("OUT.ancBlocks", str, "anc/diags.%s.list.bz2"), \
+     ("LOG.ancGraph", str, ""),
+     ("OUT.ancBlocks", str, ""), \
      ("genesFiles", str, ""), \
      ("ancGenesFiles", str, "")], \
     __doc__ \

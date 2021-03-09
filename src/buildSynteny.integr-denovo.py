@@ -35,8 +35,8 @@ from utils.myTools import file
 arguments = utils.myTools.checkArgs(
     [("speciesTree", file), ("target", str), ("pairwise", str)],
     [("minimalWeight", int, 1), ("searchLoops", bool, False),
-     ("LOG.ancGraph", str, "denovo_log/%s.log.bz2"),
-     ("OUT.ancBlocks", str, "anc/diags.%s.list.bz2"),
+     ("LOG.ancGraph", str, ""),
+     ("OUT.ancBlocks", str, ""),
      ("ancGenesFiles", str, ""),
      ("nbThreads", int, 0),
      ],

@@ -37,7 +37,7 @@ from utils.myTools import file
 # Arguments
 arguments = utils.myTools.checkArgs(
     [("speciesTree", file), ("target", str), ("pairwise", str)],
-    [("IN.ancBlocks", str, ""), ("OUT.ancBlocks", str, ""), ("REF.ancBlocks", str, ""), ("LOG.ancGraph", str, "halfinsert_log/%s.log.bz2"),
+    [("IN.ancBlocks", str, ""), ("OUT.ancBlocks", str, ""), ("REF.ancBlocks", str, ""), ("LOG.ancGraph", str, ""),
      ("nbThreads", int, 0),
      ("selectionFunction", str, "newscore/float(oldscore) if oldscore else newscore")],
     __doc__
