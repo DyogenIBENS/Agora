@@ -7,12 +7,14 @@
 # This is free software; you may copy, modify and/or distribute this work under the terms of the GNU General Public License, version 3 or later and the CeCiLL v2 license in France
 
 __doc__ = """
-    Builds the ancestral graph of gene adjacencies infered from pairwise comparisons and linearizes it.
+    Build the ancestral graph of conserved gene adjacencies (inferred from pairwise comparisons) and linearize it.
 
-    usage:
-        src/buildSynteny.integr-denovo.py example/data/Species.nwk Boreoeutheria diags/pairwise/pairs-all/%s.list.bz2
-        -ancGenesFiles=ancGenes/all/ancGenes.%s.list.bz2 -OUT.ancBlocks=diags/integr/denovo-all/anc/diags.%s.list.bz2
-        2> diags/integr/denovo-all/log
+    Usage:
+        src/buildSynteny.integr-denovo.py example/data/Species.nwk A0 \
+                example/results/pairwise/pairs-all/%s.list.bz2 \
+                -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
+                -OUT.ancBlocks=example/results/ancBlocks/denovo-all/blocks.%s.list.bz2 \
+                -LOG.ancGraph=example/results/ancBlocks/denovo-all/graph.%s.txt.bz2
 """
 
 import multiprocessing

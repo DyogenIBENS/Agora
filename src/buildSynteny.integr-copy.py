@@ -7,7 +7,13 @@
 # This is free software; you may copy, modify and/or distribute this work under the terms of the GNU General Public License, version 3 or later and the CeCiLL v2 license in France
 
 __doc__ = """
-	Just a script to copy ancestral blocks to another directory to continue the procedure
+    Simple script to copy ancestral blocks to another directory. Useful to combine
+    different reconstructions (on different ancestors) in one directory
+
+    Usage:
+        src/buildSynteny.integr-copy.py example/data/Species.nwk A0 \
+                -IN.ancBlocks=example/results/ancBlocks/best-pass1/blocks.%s.list.bz2 \
+                -OUT.ancBlocks=example/results/filtBlocks/best-pass1-all/blocks.%s.list.bz2
 """
 
 import time

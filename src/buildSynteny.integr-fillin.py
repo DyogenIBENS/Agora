@@ -7,21 +7,37 @@
 # This is free software; you may copy, modify and/or distribute this work under the terms of the GNU General Public License, version 3 or later and the CeCiLL v2 license in France
 
 __doc__ = """
-	Tries to insert a maximum of singletons inside blocks:
-		Function 1: successive addition of the edges starting from the best (limit: ~ 30 pairs)
-		Function 2: -idem- (limit: ~ 40 pairs)
-		Function * 3: recursive analysis of all paths between start and end, with successive selection of the maximum (limit: ~ 100 pairs)
-				31: sum of the scores
-				32: length
-				33: -length
-				34: scores sorted in descending order
-				35: scores sorted in ascending order
-				36: mean of scores
-		Function * 4: selection of the pair of maximum weight ensures the existence of the path and divide the problem into two sub-problems (no size limit)
-				40: size criterion for the choice of resolution functions of sub-problems
-				4XX: XX use for sub-problems
-	-func=0,f1|size2,f2|size3,f3t|sizel (t for using a thread+timeout, sizel for a maximum size of graph)
+    Fill blocks made of constrained genes with non-constrained genes.
 
+    The selection of the best path of non-constrained genes is described with this mini-language:
+        -func=0,f1|size2,f2|size3,f3t|sizel
+    where size2, size3, etc, indicate size thresholds and f1, f2, etc the function to use in
+    each size interval. The "t" suffix indicates that the evaluation is timed and cancelled if
+    exceeding the "timeout" parameter. A size parameter without a function (sizel in the example)
+    indicates the maximum size to process. Graphs / paths longer than that will be discarded.
+
+    The function is to be referenced by a numeric identifier:
+        1: successive addition of the edges starting from the best (efficient up to ~30 pairs)
+        2: -idem-, but efficient up to ~40 pairs
+        3*: recursive analysis of all paths, with successive selection of the best one (efficient
+            up to ~100 pairs) using one of these methods:
+            31: sum of the scores
+            32: length (i.e. choose the longest path)
+            33: -length (i.e. choose the shortest path)
+            34: scores sorted in descending order
+            35: scores sorted in ascending order
+            36: mean of scores
+        4*: select of the pair of maximum weight that ensures the existence of the path and
+            divide the problem into two sub-problems (no size limit)
+            40: fall back to the user-defined function for paths of that size
+            4XX: always use the function XX, regardless of the path size
+
+    Usage:
+        src/buildSynteny.integr-fillin.py example/data/Species.nwk A0 \
+                example/results/pairwise/pairs-all/%s.list.bz2 \
+                -IN.ancBlocks=example/results/ancBlocks/denovo-size-1.0-1.0/blocks.%s.list.bz2 \
+                -OUT.ancBlocks=example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all/blocks.%s.list.bz2 \
+                -LOG.ancGraph=example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all/graph.%s.txt.bz2
 """
 
 import queue

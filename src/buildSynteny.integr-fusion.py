@@ -7,7 +7,16 @@
 # This is free software; you may copy, modify and/or distribute this work under the terms of the GNU General Public License, version 3 or later and the CeCiLL v2 license in France
 
 __doc__ = """
-	Rallonge et fusionne des blocs integres de base, grace a des blocs de syntenie pairwise relaxes
+    Similar to a de-novo integration, but around existing blocks. This is typically run
+    on singletons only, leaving the input blocks untouched.
+
+    Usage:
+        src/buildSynteny.integr-fusion.py example/data/Species.nwk A0 \
+                example/results/pairwise/pairs-all/%s.list.bz2 \
+                +onlySingletons \
+                -IN.ancBlocks=example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all/blocks.%s.list.bz2 \
+                -OUT.ancBlocks=example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all/blocks.%s.list.bz2 \
+                -LOG.ancGraph=example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all/graph.%s.txt.bz2
 """
 
 import multiprocessing

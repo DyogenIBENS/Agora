@@ -7,13 +7,16 @@
 # This is free software; you may copy, modify and/or distribute this work under the terms of the GNU General Public License, version 3 or later and the CeCiLL v2 license in France
 
 __doc__ = """
-    Combine previous blocks when they are side by side in extant species.
-    This could be compare to an "assembly" step of previous blocs.
+    Compute conserved block adjacencies across the given species set, and reconstruct blocks
+    of blocks
 
-        Usage:
-            src/buildSynteny.integr-scaffolds.py example/data/Species.nwk Boreoeutheria \
-            -IN.ancBlocks=diags/integr/denovo-all/anc/diags.%s.list.bz2 -OUT.ancBlocks=diags/integr/denovo-all.groups/anc/diags.%s.list.bz2
-            -ancGenesFiles=ancGenes/all/ancGenes.%s.list.bz2 -genesFiles=genes.%s.list.bz2 2> diags/integr/denovo-all.groups/log
+    Usage:
+        src/buildSynteny.integr-scaffolds.py example/data/Species.nwk A0 \
+                -IN.ancBlocks=example/results/ancBlocks/denovo-all/blocks.%s.list.bz2 \
+                -ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
+                -genesFiles=example/data/genes/genes.%s.list.bz2 \
+                -OUT.ancBlocks=example/results/ancBlocks/denovo-all.scaffolds/blocks.%s.list.bz2 \
+                -LOG.ancGraph=example/results/ancBlocks/denovo-all.scaffolds/graph.%s.txt.bz2
 """
 
 import collections
