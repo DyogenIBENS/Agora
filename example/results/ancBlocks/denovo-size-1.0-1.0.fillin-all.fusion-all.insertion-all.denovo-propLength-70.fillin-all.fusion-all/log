@@ -12,12 +12,12 @@
 | OUT.ancBlocks  | example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all.denovo-propLength-70.fillin-all.fusion-all/blocks.%s.list.bz2 |
 | LOG.ancGraph   | example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all.denovo-propLength-70.fillin-all.fusion-all/graph.%s.txt.bz2   |
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all.denovo-propLength-70.fillin-all/blocks.A0.list.bz2 ... 2 [2/2/3] [2/3/8] 10 [3.10/2.08-63] + 2975 singletons OK
+Elapsed time: 0.13022804260253906
+Loading ancestral blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all.denovo-propLength-70.fillin-all/blocks.A0.list.bz2 ... 2 [2/2/3] [2/3/8] 10 [3.10/2.08-63] + 2975 singletons OK
 Blocs integres de A0 ... 2 [2/2/3] [2/3/3] 8 [2.61/0.97-98] + 2719 singletons OK
-Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all.denovo-propLength-70.fillin-all/blocks.A1.list.bz2 ... 2 [2/3/4] [3/4/6] 7 [3.36/1.54-44] + 1719 singletons OK
+Loading ancestral blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all.denovo-propLength-70.fillin-all/blocks.A1.list.bz2 ... 2 [2/3/4] [3/4/6] 7 [3.36/1.54-44] + 1719 singletons OK
 Blocs integres de A1 ... 2 [2/2/3] [2/3/5] 15 [3.19/1.97-110] + 1368 singletons OK
-Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all.denovo-propLength-70.fillin-all/blocks.A2.list.bz2 ... 2 [2/3/4] [3/4/5] 7 [3.34/1.44-56] + 1719 singletons OK
+Loading ancestral blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all.denovo-propLength-70.fillin-all/blocks.A2.list.bz2 ... 2 [2/3/4] [3/4/5] 7 [3.34/1.44-56] + 1719 singletons OK
 Blocs integres de A2 ... 2 [2/2/4] [2/4/8] 18 [3.49/2.47-112] + 1328 singletons OK
-Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all.denovo-propLength-70.fillin-all/blocks.A3.list.bz2 ... 2 [2/2/3] [2/2/3] 4 [2.35/0.59-17] + 1324 singletons OK
+Loading ancestral blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all.denovo-propLength-70.fillin-all/blocks.A3.list.bz2 ... 2 [2/2/3] [2/2/3] 4 [2.35/0.59-17] + 1324 singletons OK
 Blocs integres de A3 ... 2 [2/3/3] [2/3/4] 7 [2.92/1.13-66] + 1131 singletons OK
-Elapsed time: 0.14478492736816406

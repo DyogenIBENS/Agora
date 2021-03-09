@@ -12,16 +12,16 @@
 | nbThreads     | 1                                                                |
 ------------------------------------------------------------------------------------
 Targets: ['A0', 'A1', 'A2', 'A3']
+Elapsed time: 5.279165029525757
 Loading genome of example/results/ancGenes/all/ancGenes.A0.list.bz2 ... (ancestral genes) OK
-Integrated blocs of A0 ... OK
+Blocks of A0 ... OK
 A0 min=2	N50=26	WA=31.75	max=137 + 8226 singletons OK
 Loading genome of example/results/ancGenes/all/ancGenes.A1.list.bz2 ... (ancestral genes) OK
-Integrated blocs of A1 ... OK
+Blocks of A1 ... OK
 A1 min=2	N50=58	WA=65.42	max=238 + 5043 singletons OK
 Loading genome of example/results/ancGenes/all/ancGenes.A2.list.bz2 ... (ancestral genes) OK
-Integrated blocs of A2 ... OK
+Blocks of A2 ... OK
 A2 min=2	N50=38	WA=42.45	max=139 + 5805 singletons OK
 Loading genome of example/results/ancGenes/all/ancGenes.A3.list.bz2 ... (ancestral genes) OK
-Integrated blocs of A3 ... OK
+Blocks of A3 ... OK
 A3 min=2	N50=133	WA=179.65	max=505 + 3789 singletons OK
-Elapsed time: 5.366949081420898

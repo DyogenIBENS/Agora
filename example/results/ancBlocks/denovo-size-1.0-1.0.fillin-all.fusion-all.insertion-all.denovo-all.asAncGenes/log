@@ -8,16 +8,16 @@
 | IN.blocksGenesFile  | example/results/filtBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all-all/blocks.%s.list.bz2                  |
 | OUT.ancBlocksFile   | example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all.denovo-all.asAncGenes/blocks.%s.list.bz2 |
 ----------------------------------------------------------------------------------------------------------------------------------------------------
-Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all.denovo-all/blocks.A0.list.bz2 ... 2 [2/2/4] [2/3/5] 11 [3.09/1.74-129] + 2772 singletons OK
+Time elapsed: 0.19655895233154297
+Loading ancestral blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all.denovo-all/blocks.A0.list.bz2 ... 2 [2/2/4] [2/3/5] 11 [3.09/1.74-129] + 2772 singletons OK
 Loading reference blocks set from example/results/filtBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all-all/blocks.A0.list.bz2 ... OK
 Writing ancBlocks of A0 ... 2 [3/9/26] [20/39/64] 173 [18.55/22.09-762] + 2139 singletons
-Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all.denovo-all/blocks.A1.list.bz2 ... 2 [2/3/5] [3/5/7] 15 [3.86/2.31-134] + 1350 singletons OK
+Loading ancestral blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all.denovo-all/blocks.A1.list.bz2 ... 2 [2/3/5] [3/5/7] 15 [3.86/2.31-134] + 1350 singletons OK
 Loading reference blocks set from example/results/filtBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all-all/blocks.A1.list.bz2 ... OK
 Writing ancBlocks of A1 ... 2 [3/12/78] [87/180/278] 531 [55.86/88.89-289] + 1195 singletons
-Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all.denovo-all/blocks.A2.list.bz2 ... 2 [2/3/5] [3/5/7] 18 [3.83/2.47-155] + 1313 singletons OK
+Loading ancestral blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all.denovo-all/blocks.A2.list.bz2 ... 2 [2/3/5] [3/5/7] 18 [3.83/2.47-155] + 1313 singletons OK
 Loading reference blocks set from example/results/filtBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all-all/blocks.A2.list.bz2 ... OK
 Writing ancBlocks of A2 ... 2 [3/10/50] [57/109/197] 482 [38.11/61.35-380] + 1088 singletons
-Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all.denovo-all/blocks.A3.list.bz2 ... 2 [2/3/4] [2/3/5] 8 [3.10/1.33-78] + 1122 singletons OK
+Loading ancestral blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all.denovo-all/blocks.A3.list.bz2 ... 2 [2/3/4] [2/3/5] 8 [3.10/1.33-78] + 1122 singletons OK
 Loading reference blocks set from example/results/filtBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all-all/blocks.A3.list.bz2 ... OK
 Writing ancBlocks of A3 ... 2 [2/8/104] [170/276/454] 661 [79.69/133.02-215] + 985 singletons
-Time elapsed: 0.15566205978393555

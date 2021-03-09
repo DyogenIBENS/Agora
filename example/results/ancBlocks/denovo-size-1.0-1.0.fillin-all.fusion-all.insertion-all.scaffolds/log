@@ -23,32 +23,32 @@ Loading genome of example/data/genes/genes.M2.list.bz2 ... (Ensembl) OK
 Loading genome of example/data/genes/genes.M3.list.bz2 ... (Ensembl) OK
 Loading genome of example/data/genes/genes.M4.list.bz2 ... (Ensembl) OK
 Loading genome of example/data/genes/genes.M5.list.bz2 ... (Ensembl) OK
+Elapsed time: 5.466144800186157
 Loading genome of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all/blocks.A0.list.bz2 ... (ancestral genome: diags) OK
-Diagonals extraction between A0 and M1 ... 2 [2/5/12] [8/17/31] 107 [9.38/11.15-1435] 819 adjacencies / 963 blocs
-Diagonals extraction between A0 and M2 ... 2 [2/5/11] [7/15/29] 87 [8.81/10.03-1512] 800 adjacencies / 957 blocs
-Diagonals extraction between A0 and M3 ... 2 [2/4/11] [8/17/30] 82 [8.79/10.53-1433] 803 adjacencies / 926 blocs
-Diagonals extraction between A0 and M4 ... 2 [2/5/13] [11/23/43] 149 [11.09/14.59-1074] 840 adjacencies / 893 blocs
-Diagonals extraction between A0 and M5 ... 2 [2/4/7] [4/8/12] 49 [5.45/4.69-2218] 453 adjacencies / 931 blocs
-Integrated blocs of A0 2 [3/9/26] [20/39/64] 173 [18.55/22.09-762] + 2139 singletons
+Gene order comparison between A0 and M1 ... 2 [2/5/12] [8/17/31] 107 [9.38/11.15-1435] 819 adjacencies / 963 blocks
+Gene order comparison between A0 and M2 ... 2 [2/5/11] [7/15/29] 87 [8.81/10.03-1512] 800 adjacencies / 957 blocks
+Gene order comparison between A0 and M3 ... 2 [2/4/11] [8/17/30] 82 [8.79/10.53-1433] 803 adjacencies / 926 blocks
+Gene order comparison between A0 and M4 ... 2 [2/5/13] [11/23/43] 149 [11.09/14.59-1074] 840 adjacencies / 893 blocks
+Gene order comparison between A0 and M5 ... 2 [2/4/7] [4/8/12] 49 [5.45/4.69-2218] 453 adjacencies / 931 blocks
+Output blocks of A0 2 [3/9/26] [20/39/64] 173 [18.55/22.09-762] + 2139 singletons
 Loading genome of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all/blocks.A1.list.bz2 ... (ancestral genome: diags) OK
-Diagonals extraction between A1 and M1 ... 2 [2/6/17] [13/29/54] 131 [13.69/17.83-1120] 478 adjacencies / 609 blocs
-Diagonals extraction between A1 and M2 ... 2 [2/6/16] [12/26/43] 124 [12.40/15.18-1232] 461 adjacencies / 620 blocs
-Diagonals extraction between A1 and M3 ... 2 [2/4/15] [15/35/65] 153 [13.00/19.50-1140] 484 adjacencies / 616 blocs
-Diagonals extraction between A1 and M4 ... 2 [2/5/13] [10/20/34] 109 [9.82/11.71-1234] 396 adjacencies / 513 blocs
-Diagonals extraction between A1 and M5 ... 2 [2/4/7] [4/7/12] 32 [5.23/4.31-2343] 216 adjacencies / 519 blocs
-Integrated blocs of A1 2 [3/12/78] [87/180/278] 531 [55.86/88.89-289] + 1195 singletons
+Gene order comparison between A1 and M1 ... 2 [2/6/17] [13/29/54] 131 [13.69/17.83-1120] 478 adjacencies / 609 blocks
+Gene order comparison between A1 and M2 ... 2 [2/6/16] [12/26/43] 124 [12.40/15.18-1232] 461 adjacencies / 620 blocks
+Gene order comparison between A1 and M3 ... 2 [2/4/15] [15/35/65] 153 [13.00/19.50-1140] 484 adjacencies / 616 blocks
+Gene order comparison between A1 and M4 ... 2 [2/5/13] [10/20/34] 109 [9.82/11.71-1234] 396 adjacencies / 513 blocks
+Gene order comparison between A1 and M5 ... 2 [2/4/7] [4/7/12] 32 [5.23/4.31-2343] 216 adjacencies / 519 blocks
+Output blocks of A1 2 [3/12/78] [87/180/278] 531 [55.86/88.89-289] + 1195 singletons
 Loading genome of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all/blocks.A2.list.bz2 ... (ancestral genome: diags) OK
-Diagonals extraction between A2 and M1 ... 2 [2/5/10] [7/14/27] 107 [8.38/9.51-1606] 538 adjacencies / 734 blocs
-Diagonals extraction between A2 and M2 ... 2 [2/5/10] [7/13/23] 87 [7.95/8.47-1677] 540 adjacencies / 736 blocs
-Diagonals extraction between A2 and M3 ... 2 [2/5/10] [7/14/24] 82 [8.11/9.35-1552] 520 adjacencies / 711 blocs
-Diagonals extraction between A2 and M4 ... 2 [2/6/16] [14/35/57] 162 [13.38/19.05-920] 669 adjacencies / 716 blocs
-Diagonals extraction between A2 and M5 ... 2 [2/4/8] [5/9/17] 54 [6.48/6.26-1946] 109 adjacencies / 746 blocs
-Integrated blocs of A2 2 [3/10/50] [57/109/197] 482 [38.11/61.35-380] + 1088 singletons
+Gene order comparison between A2 and M1 ... 2 [2/5/10] [7/14/27] 107 [8.38/9.51-1606] 538 adjacencies / 734 blocks
+Gene order comparison between A2 and M2 ... 2 [2/5/10] [7/13/23] 87 [7.95/8.47-1677] 540 adjacencies / 736 blocks
+Gene order comparison between A2 and M3 ... 2 [2/5/10] [7/14/24] 82 [8.11/9.35-1552] 520 adjacencies / 711 blocks
+Gene order comparison between A2 and M4 ... 2 [2/6/16] [14/35/57] 162 [13.38/19.05-920] 669 adjacencies / 716 blocks
+Gene order comparison between A2 and M5 ... 2 [2/4/8] [5/9/17] 54 [6.48/6.26-1946] 109 adjacencies / 746 blocks
+Output blocks of A2 2 [3/10/50] [57/109/197] 482 [38.11/61.35-380] + 1088 singletons
 Loading genome of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all/blocks.A3.list.bz2 ... (ancestral genome: diags) OK
-Diagonals extraction between A3 and M1 ... 2 [2/7/27] [29/63/122] 227 [22.25/34.95-747] 231 adjacencies / 331 blocs
-Diagonals extraction between A3 and M2 ... 2 [2/6/24] [27/52/88] 235 [19.21/28.85-864] 193 adjacencies / 344 blocs
-Diagonals extraction between A3 and M3 ... 2 [2/5/14] [12/26/49] 147 [11.42/15.76-1275] 204 adjacencies / 309 blocs
-Diagonals extraction between A3 and M4 ... 2 [2/5/12] [9/19/31] 75 [9.59/11.04-1249] 143 adjacencies / 238 blocs
-Diagonals extraction between A3 and M5 ... 2 [2/4/6] [4/7/11] 48 [5.07/4.27-2406] 79 adjacencies / 241 blocs
-Integrated blocs of A3 2 [2/8/104] [170/276/454] 661 [79.69/133.02-215] + 985 singletons
-Elapsed time: 5.262253761291504
+Gene order comparison between A3 and M1 ... 2 [2/7/27] [29/63/122] 227 [22.25/34.95-747] 231 adjacencies / 331 blocks
+Gene order comparison between A3 and M2 ... 2 [2/6/24] [27/52/88] 235 [19.21/28.85-864] 193 adjacencies / 344 blocks
+Gene order comparison between A3 and M3 ... 2 [2/5/14] [12/26/49] 147 [11.42/15.76-1275] 204 adjacencies / 309 blocks
+Gene order comparison between A3 and M4 ... 2 [2/5/12] [9/19/31] 75 [9.59/11.04-1249] 143 adjacencies / 238 blocks
+Gene order comparison between A3 and M5 ... 2 [2/4/6] [4/7/11] 48 [5.07/4.27-2406] 79 adjacencies / 241 blocks
+Output blocks of A3 2 [2/8/104] [170/276/454] 661 [79.69/133.02-215] + 985 singletons

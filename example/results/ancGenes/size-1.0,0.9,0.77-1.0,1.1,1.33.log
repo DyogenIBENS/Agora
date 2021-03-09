@@ -8,44 +8,44 @@
 | minSize           | 1.0,0.9,0.77                                          |
 | maxSize           | 1.0,1.1,1.33                                          |
 -----------------------------------------------------------------------------
-Loading genome of example/results/ancGenes/all/ancGenes.M5.list.bz2 ... (ancestral genes) OK
-Loading genome of example/results/ancGenes/all/ancGenes.M4.list.bz2 ... (ancestral genes) OK
-Loading genome of example/results/ancGenes/all/ancGenes.A1.list.bz2 ... (ancestral genes) OK
 Loading genome of example/results/ancGenes/all/ancGenes.A0.list.bz2 ... (ancestral genes) OK
-Loading genome of example/results/ancGenes/all/ancGenes.A3.list.bz2 ... (ancestral genes) OK
+Loading genome of example/results/ancGenes/all/ancGenes.A1.list.bz2 ... (ancestral genes) OK
 Loading genome of example/results/ancGenes/all/ancGenes.A2.list.bz2 ... (ancestral genes) OK
+Loading genome of example/results/ancGenes/all/ancGenes.A3.list.bz2 ... (ancestral genes) OK
 Loading genome of example/results/ancGenes/all/ancGenes.M1.list.bz2 ... (ancestral genes) OK
-Loading genome of example/results/ancGenes/all/ancGenes.M3.list.bz2 ... (ancestral genes) OK
 Loading genome of example/results/ancGenes/all/ancGenes.M2.list.bz2 ... (ancestral genes) OK
-Structures creation ... OK
-Browsing ancGenome A0
-Browsing ancGenome A1
-Browsing ancGenome A3
-Browsing ancGenome A2
-Writing families of A1 (size 1.0-1.0)... 17339 -> 12358 OK
+Loading genome of example/results/ancGenes/all/ancGenes.M3.list.bz2 ... (ancestral genes) OK
+Loading genome of example/results/ancGenes/all/ancGenes.M4.list.bz2 ... (ancestral genes) OK
+Loading genome of example/results/ancGenes/all/ancGenes.M5.list.bz2 ... (ancestral genes) OK
+Structure creation ... OK
+Processing ancGenome A0
+Processing ancGenome A1
+Processing ancGenome A3
+Processing ancGenome A2
 Writing families of A0 (size 1.0-1.0)... 16274 -> 8142 OK
-Writing families of M5 (size 1.0-1.0)... 17448 -> 17448 OK
-Writing families of M4 (size 1.0-1.0)... 15058 -> 15058 OK
-Writing families of A3 (size 1.0-1.0)... 18119 -> 14348 OK
+Writing families of A1 (size 1.0-1.0)... 17339 -> 12358 OK
 Writing families of A2 (size 1.0-1.0)... 15569 -> 9840 OK
+Writing families of A3 (size 1.0-1.0)... 18119 -> 14348 OK
 Writing families of M1 (size 1.0-1.0)... 19850 -> 19850 OK
-Writing families of M3 (size 1.0-1.0)... 19002 -> 19002 OK
 Writing families of M2 (size 1.0-1.0)... 21836 -> 21836 OK
-Writing families of A1 (size 0.9-1.1)... 17339 -> 12358 OK
+Writing families of M3 (size 1.0-1.0)... 19002 -> 19002 OK
+Writing families of M4 (size 1.0-1.0)... 15058 -> 15058 OK
+Writing families of M5 (size 1.0-1.0)... 17448 -> 17448 OK
 Writing families of A0 (size 0.9-1.1)... 16274 -> 8142 OK
-Writing families of M5 (size 0.9-1.1)... 17448 -> 17448 OK
-Writing families of M4 (size 0.9-1.1)... 15058 -> 15058 OK
-Writing families of A3 (size 0.9-1.1)... 18119 -> 14348 OK
+Writing families of A1 (size 0.9-1.1)... 17339 -> 12358 OK
 Writing families of A2 (size 0.9-1.1)... 15569 -> 9840 OK
+Writing families of A3 (size 0.9-1.1)... 18119 -> 14348 OK
 Writing families of M1 (size 0.9-1.1)... 19850 -> 19850 OK
-Writing families of M3 (size 0.9-1.1)... 19002 -> 19002 OK
 Writing families of M2 (size 0.9-1.1)... 21836 -> 21836 OK
-Writing families of A1 (size 0.77-1.33)... 17339 -> 13774 OK
+Writing families of M3 (size 0.9-1.1)... 19002 -> 19002 OK
+Writing families of M4 (size 0.9-1.1)... 15058 -> 15058 OK
+Writing families of M5 (size 0.9-1.1)... 17448 -> 17448 OK
 Writing families of A0 (size 0.77-1.33)... 16274 -> 12863 OK
-Writing families of M5 (size 0.77-1.33)... 17448 -> 17448 OK
-Writing families of M4 (size 0.77-1.33)... 15058 -> 15058 OK
-Writing families of A3 (size 0.77-1.33)... 18119 -> 15271 OK
+Writing families of A1 (size 0.77-1.33)... 17339 -> 13774 OK
 Writing families of A2 (size 0.77-1.33)... 15569 -> 13379 OK
+Writing families of A3 (size 0.77-1.33)... 18119 -> 15271 OK
 Writing families of M1 (size 0.77-1.33)... 19850 -> 19850 OK
-Writing families of M3 (size 0.77-1.33)... 19002 -> 19002 OK
 Writing families of M2 (size 0.77-1.33)... 21836 -> 21836 OK
+Writing families of M3 (size 0.77-1.33)... 19002 -> 19002 OK
+Writing families of M4 (size 0.77-1.33)... 15058 -> 15058 OK
+Writing families of M5 (size 0.77-1.33)... 17448 -> 17448 OK

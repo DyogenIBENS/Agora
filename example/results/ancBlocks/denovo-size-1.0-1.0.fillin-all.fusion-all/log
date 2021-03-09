@@ -12,12 +12,12 @@
 | OUT.ancBlocks  | example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all/blocks.%s.list.bz2 |
 | LOG.ancGraph   | example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all/graph.%s.txt.bz2   |
 -----------------------------------------------------------------------------------------------------------
-Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all/blocks.A0.list.bz2 ... 2 [5/12/25] [18/33/55] 164 [18.75/19.83-525] + 6430 singletons OK
+Elapsed time: 0.8409299850463867
+Loading ancestral blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all/blocks.A0.list.bz2 ... 2 [5/12/25] [18/33/55] 164 [18.75/19.83-525] + 6430 singletons OK
 Blocs integres de A0 ... 2 [2/3/5] [3/7/12] 35 [4.57/4.43-722] + 3130 singletons OK
-Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all/blocks.A1.list.bz2 ... 2 [6/17/42] [33/63/100] 269 [30.43/35.92-446] + 3766 singletons OK
+Loading ancestral blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all/blocks.A1.list.bz2 ... 2 [6/17/42] [33/63/100] 269 [30.43/35.92-446] + 3766 singletons OK
 Blocs integres de A1 ... 2 [2/3/6] [4/9/18] 55 [5.54/6.72-358] + 1782 singletons OK
-Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all/blocks.A2.list.bz2 ... 2 [6/13/32] [22/45/73] 169 [23.22/25.15-489] + 4212 singletons OK
+Loading ancestral blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all/blocks.A2.list.bz2 ... 2 [6/13/32] [22/45/73] 169 [23.22/25.15-489] + 4212 singletons OK
 Blocs integres de A2 ... 2 [2/2/5] [2/6/11] 28 [4.11/3.73-485] + 2221 singletons OK
-Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all/blocks.A3.list.bz2 ... 2 [10/40/100] [83/147/264] 575 [73.71/96.60-214] + 2346 singletons OK
+Loading ancestral blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all/blocks.A3.list.bz2 ... 2 [10/40/100] [83/147/264] 575 [73.71/96.60-214] + 2346 singletons OK
 Blocs integres de A3 ... 2 [2/2/4] [2/6/11] 47 [4.13/4.50-262] + 1264 singletons OK
-Elapsed time: 0.8643248081207275

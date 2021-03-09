@@ -12,18 +12,18 @@ Loading genome of example/results/ancGenes/size-0.77-1.33/ancGenes.A0.list.bz2 .
 Loading genome of example/results/ancGenes/size-0.77-1.33/ancGenes.A1.list.bz2 ... (ancestral genes) OK
 Loading genome of example/results/ancGenes/size-0.77-1.33/ancGenes.A2.list.bz2 ... (ancestral genes) OK
 Loading genome of example/results/ancGenes/size-0.77-1.33/ancGenes.A3.list.bz2 ... (ancestral genes) OK
-time for loading 0.6738643646240234
+time for loading 0.670159101486206
 Loading genome of example/data/genes/genes.M1.list.bz2 ... (Ensembl) OK
-Extraction of pairs of genes from M1  ... OK
+Extraction of gene pairs from M1  ... OK
 Loading genome of example/data/genes/genes.M2.list.bz2 ... (Ensembl) OK
-Extraction of pairs of genes from M2  ... OK
+Extraction of gene pairs from M2  ... OK
 Loading genome of example/data/genes/genes.M3.list.bz2 ... (Ensembl) OK
-Extraction of pairs of genes from M3  ... OK
+Extraction of gene pairs from M3  ... OK
 Loading genome of example/data/genes/genes.M4.list.bz2 ... (Ensembl) OK
-Extraction of pairs of genes from M4  ... OK
+Extraction of gene pairs from M4  ... OK
 Loading genome of example/data/genes/genes.M5.list.bz2 ... (Ensembl) OK
-Extraction of pairs of genes from M5  ... OK
-time for task1 1.5794708728790283
+Extraction of gene pairs from M5  ... OK
+time for task1 1.579935073852539
 Number of pairs for A0 [('A1', 15492), ('A2', 14901)]
 Intersection between A1 and A2 ... OK
 11237 conserved pairs between descendants A0
@@ -36,9 +36,9 @@ Intersection between M4 and M5 ... OK
 Number of pairs for A3 [('M1', 15176), ('M2', 15142)]
 Intersection between M1 and M2 ... OK
 13873 conserved pairs between descendants A3
-time for task 2 1.0486140251159668
+time for task 2 1.0472309589385986
 11237 conserved pairs for A0
 13374 conserved pairs for A1
 11935 conserved pairs for A2
 15025 conserved pairs for A3
-Elapsed time task3: 0.5336802005767822 3.835681200027466
+Elapsed time task3: 0.5146539211273193 3.8120410442352295

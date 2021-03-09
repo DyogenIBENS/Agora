@@ -15,20 +15,20 @@
 | func          | 0,32|100,40t|10000                                                                       |
 ------------------------------------------------------------------------------------------------------------
 Targets: ['A0', 'A1', 'A2', 'A3']
-Loading integrated blocks of example/results/ancBlocks/best-pass1.denovo-fixedLength-20/blocks.A0.list.bz2 ... 2 [2/2/2] [2/2/3] 3 [2.25/0.43-24] + 3116 singletons OK
+total computation time 0.12117505073547363
+Loading ancestral blocks of example/results/ancBlocks/best-pass1.denovo-fixedLength-20/blocks.A0.list.bz2 ... 2 [2/2/2] [2/2/3] 3 [2.25/0.43-24] + 3116 singletons OK
 Building graphs ... OK
 adding singletons ... OK
-Final blocks of A0 2 [2/2/2] [2/2/3] 4 [2.33/0.62-24] + 3114 singletons
-Loading integrated blocks of example/results/ancBlocks/best-pass1.denovo-fixedLength-20/blocks.A1.list.bz2 ... 2 [2/2/3] [2/3/4] 6 [2.84/1.07-45] + 1571 singletons OK
+Output blocks of A0 2 [2/2/2] [2/2/3] 4 [2.33/0.62-24] + 3114 singletons
+Loading ancestral blocks of example/results/ancBlocks/best-pass1.denovo-fixedLength-20/blocks.A1.list.bz2 ... 2 [2/2/3] [2/3/4] 6 [2.84/1.07-45] + 1571 singletons OK
 Building graphs ... OK
 adding singletons ... OK
-Final blocks of A1 2 [2/3/4] [2/3/5] 7 [3.16/1.38-45] + 1557 singletons
-Loading integrated blocks of example/results/ancBlocks/best-pass1.denovo-fixedLength-20/blocks.A2.list.bz2 ... 2 [2/2/3] [2/3/4] 7 [2.69/1.01-49] + 1774 singletons OK
+Output blocks of A1 2 [2/3/4] [2/3/5] 7 [3.16/1.38-45] + 1557 singletons
+Loading ancestral blocks of example/results/ancBlocks/best-pass1.denovo-fixedLength-20/blocks.A2.list.bz2 ... 2 [2/2/3] [2/3/4] 7 [2.69/1.01-49] + 1774 singletons OK
 Building graphs ... OK
 adding singletons ... OK
-Final blocks of A2 2 [2/3/4] [2/4/5] 7 [3.18/1.37-49] + 1750 singletons
-Loading integrated blocks of example/results/ancBlocks/best-pass1.denovo-fixedLength-20/blocks.A3.list.bz2 ... 2 [2/2/3] [2/3/3] 6 [2.59/0.93-39] + 1263 singletons OK
+Output blocks of A2 2 [2/3/4] [2/4/5] 7 [3.18/1.37-49] + 1750 singletons
+Loading ancestral blocks of example/results/ancBlocks/best-pass1.denovo-fixedLength-20/blocks.A3.list.bz2 ... 2 [2/2/3] [2/3/3] 6 [2.59/0.93-39] + 1263 singletons OK
 Building graphs ... OK
 adding singletons ... OK
-Final blocks of A3 2 [2/2/3] [2/3/4] 6 [2.79/1.04-39] + 1255 singletons
-total computation time 0.0948038101196289
+Output blocks of A3 2 [2/2/3] [2/3/4] 6 [2.79/1.04-39] + 1255 singletons

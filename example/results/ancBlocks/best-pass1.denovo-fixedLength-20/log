@@ -12,16 +12,16 @@
 | nbThreads     | 1                                                                             |
 -------------------------------------------------------------------------------------------------
 Targets: ['A0', 'A1', 'A2', 'A3']
+Elapsed time: 0.23189187049865723
 Loading genome of example/results/ancBlocks/best-pass1/blocks.A0.list.bz2 ... (ancestral genome: diags) OK
-Integrated blocs of A0 ... OK
+Blocks of A0 ... OK
 A0 min=2	N50=2	WA=2.33	max=3 + 3116 singletons OK
 Loading genome of example/results/ancBlocks/best-pass1/blocks.A1.list.bz2 ... (ancestral genome: diags) OK
-Integrated blocs of A1 ... OK
+Blocks of A1 ... OK
 A1 min=2	N50=3	WA=3.25	max=6 + 1571 singletons OK
 Loading genome of example/results/ancBlocks/best-pass1/blocks.A2.list.bz2 ... (ancestral genome: diags) OK
-Integrated blocs of A2 ... OK
+Blocks of A2 ... OK
 A2 min=2	N50=3	WA=3.08	max=7 + 1774 singletons OK
 Loading genome of example/results/ancBlocks/best-pass1/blocks.A3.list.bz2 ... (ancestral genome: diags) OK
-Integrated blocs of A3 ... OK
+Blocks of A3 ... OK
 A3 min=2	N50=3	WA=2.92	max=6 + 1263 singletons OK
-Elapsed time: 0.20888400077819824

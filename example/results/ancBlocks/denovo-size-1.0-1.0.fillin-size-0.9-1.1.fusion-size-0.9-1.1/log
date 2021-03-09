@@ -12,12 +12,12 @@
 | OUT.ancBlocks  | example/results/ancBlocks/denovo-size-1.0-1.0.fillin-size-0.9-1.1.fusion-size-0.9-1.1/blocks.%s.list.bz2 |
 | LOG.ancGraph   | example/results/ancBlocks/denovo-size-1.0-1.0.fillin-size-0.9-1.1.fusion-size-0.9-1.1/graph.%s.txt.bz2   |
 -----------------------------------------------------------------------------------------------------------------------------
-Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-size-0.9-1.1/blocks.A0.list.bz2 ... 2 [4/10/20] [14/26/44] 137 [15.33/15.86-525] + 8226 singletons OK
+Elapsed time: 0.45293116569519043
+Loading ancestral blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-size-0.9-1.1/blocks.A0.list.bz2 ... 2 [4/10/20] [14/26/44] 137 [15.33/15.86-525] + 8226 singletons OK
 Blocs integres de A0 ... None [None/None/None] [None/None/None] None [None/None-0] + 8226 singletons OK
-Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-size-0.9-1.1/blocks.A1.list.bz2 ... 2 [6/15/39] [29/58/90] 238 [27.57/32.30-446] + 5043 singletons OK
+Loading ancestral blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-size-0.9-1.1/blocks.A1.list.bz2 ... 2 [6/15/39] [29/58/90] 238 [27.57/32.30-446] + 5043 singletons OK
 Blocs integres de A1 ... None [None/None/None] [None/None/None] None [None/None-0] + 5043 singletons OK
-Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-size-0.9-1.1/blocks.A2.list.bz2 ... 2 [5/11/28] [19/38/61] 139 [19.97/21.19-489] + 5805 singletons OK
+Loading ancestral blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-size-0.9-1.1/blocks.A2.list.bz2 ... 2 [5/11/28] [19/38/61] 139 [19.97/21.19-489] + 5805 singletons OK
 Blocs integres de A2 ... None [None/None/None] [None/None/None] None [None/None-0] + 5805 singletons OK
-Loading integrated blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-size-0.9-1.1/blocks.A3.list.bz2 ... 2 [10/38/88] [72/133/235] 505 [66.96/86.87-214] + 3789 singletons OK
+Loading ancestral blocks of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-size-0.9-1.1/blocks.A3.list.bz2 ... 2 [10/38/88] [72/133/235] 505 [66.96/86.87-214] + 3789 singletons OK
 Blocs integres de A3 ... None [None/None/None] [None/None/None] None [None/None-0] + 3789 singletons OK
-Elapsed time: 0.4682590961456299

@@ -11,16 +11,16 @@
 | nbThreads         | 1                                                                                                                 |
 | selectionFunction | newscore/float(oldscore) if oldscore else newscore                                                                |
 -----------------------------------------------------------------------------------------------------------------------------------------
-Loading integrated blocks of example/results/ancBlocks/best-pass1.denovo-fixedLength-20.fillin-all.fusion-all/blocks.A0.list.bz2 ... 2 [2/2/3] [2/3/5] 11 [2.98/1.65-146] + 2735 singletons OK
-Loading integrated blocks of example/results/ancBlocks/best-pass1.denovo-fixedLength-20.fillin-all/blocks.A0.list.bz2 ... 2 [2/2/2] [2/2/3] 4 [2.33/0.62-24] + 3114 singletons OK
-2 [2/2/4] [2/3/5] 11 [3.04/1.70-144] + 2732 singletons
-Loading integrated blocks of example/results/ancBlocks/best-pass1.denovo-fixedLength-20.fillin-all.fusion-all/blocks.A1.list.bz2 ... 2 [2/2/3] [2/3/5] 12 [2.92/1.53-115] + 1363 singletons OK
-Loading integrated blocks of example/results/ancBlocks/best-pass1.denovo-fixedLength-20.fillin-all/blocks.A1.list.bz2 ... 2 [2/3/4] [2/3/5] 7 [3.16/1.38-45] + 1557 singletons OK
-2 [2/3/5] [2/4/6] 12 [3.48/1.99-103] + 1341 singletons
-Loading integrated blocks of example/results/ancBlocks/best-pass1.denovo-fixedLength-20.fillin-all.fusion-all/blocks.A2.list.bz2 ... 2 [2/3/4] [2/4/6] 18 [3.52/2.28-165] + 1325 singletons OK
-Loading integrated blocks of example/results/ancBlocks/best-pass1.denovo-fixedLength-20.fillin-all/blocks.A2.list.bz2 ... 2 [2/3/4] [2/4/5] 7 [3.18/1.37-49] + 1750 singletons OK
-2 [2/3/5] [3/5/8] 18 [3.91/2.54-152] + 1312 singletons
-Loading integrated blocks of example/results/ancBlocks/best-pass1.denovo-fixedLength-20.fillin-all.fusion-all/blocks.A3.list.bz2 ... 2 [2/2/3] [2/3/4] 7 [2.76/1.04-86] + 1127 singletons OK
-Loading integrated blocks of example/results/ancBlocks/best-pass1.denovo-fixedLength-20.fillin-all/blocks.A3.list.bz2 ... 2 [2/2/3] [2/3/4] 6 [2.79/1.04-39] + 1255 singletons OK
-2 [2/3/4] [2/3/5] 8 [3.23/1.49-77] + 1115 singletons
-Elapsed time: 0.11935687065124512
+Elapsed time: 0.1502220630645752
+Loading ancestral blocks of example/results/ancBlocks/best-pass1.denovo-fixedLength-20.fillin-all.fusion-all/blocks.A0.list.bz2 ... 2 [2/2/3] [2/3/5] 11 [2.98/1.65-146] + 2735 singletons OK
+Loading ancestral blocks of example/results/ancBlocks/best-pass1.denovo-fixedLength-20.fillin-all/blocks.A0.list.bz2 ... 2 [2/2/2] [2/2/3] 4 [2.33/0.62-24] + 3114 singletons OK
+Output blocks of  A0 2 [2/2/4] [2/3/5] 11 [3.04/1.70-144] + 2732 singletons
+Loading ancestral blocks of example/results/ancBlocks/best-pass1.denovo-fixedLength-20.fillin-all.fusion-all/blocks.A1.list.bz2 ... 2 [2/2/3] [2/3/5] 12 [2.92/1.53-115] + 1363 singletons OK
+Loading ancestral blocks of example/results/ancBlocks/best-pass1.denovo-fixedLength-20.fillin-all/blocks.A1.list.bz2 ... 2 [2/3/4] [2/3/5] 7 [3.16/1.38-45] + 1557 singletons OK
+Output blocks of  A1 2 [2/3/5] [2/4/6] 12 [3.48/1.99-103] + 1341 singletons
+Loading ancestral blocks of example/results/ancBlocks/best-pass1.denovo-fixedLength-20.fillin-all.fusion-all/blocks.A2.list.bz2 ... 2 [2/3/4] [2/4/6] 18 [3.52/2.28-165] + 1325 singletons OK
+Loading ancestral blocks of example/results/ancBlocks/best-pass1.denovo-fixedLength-20.fillin-all/blocks.A2.list.bz2 ... 2 [2/3/4] [2/4/5] 7 [3.18/1.37-49] + 1750 singletons OK
+Output blocks of  A2 2 [2/3/5] [3/5/8] 18 [3.91/2.54-152] + 1312 singletons
+Loading ancestral blocks of example/results/ancBlocks/best-pass1.denovo-fixedLength-20.fillin-all.fusion-all/blocks.A3.list.bz2 ... 2 [2/2/3] [2/3/4] 7 [2.76/1.04-86] + 1127 singletons OK
+Loading ancestral blocks of example/results/ancBlocks/best-pass1.denovo-fixedLength-20.fillin-all/blocks.A3.list.bz2 ... 2 [2/2/3] [2/3/4] 6 [2.79/1.04-39] + 1255 singletons OK
+Output blocks of  A3 2 [2/3/4] [2/3/5] 8 [3.23/1.49-77] + 1115 singletons

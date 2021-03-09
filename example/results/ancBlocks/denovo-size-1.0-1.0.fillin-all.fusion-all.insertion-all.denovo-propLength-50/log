@@ -12,16 +12,16 @@
 | nbThreads     | 1                                                                                                                         |
 ---------------------------------------------------------------------------------------------------------------------------------------------
 Targets: ['A0', 'A1', 'A2', 'A3']
+Elapsed time: 0.2399430274963379
 Loading genome of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all/blocks.A0.list.bz2 ... (ancestral genome: diags) OK
-Integrated blocs of A0 ... OK
+Blocks of A0 ... OK
 A0 min=2	N50=2	WA=2.27	max=3 + 3126 singletons OK
 Loading genome of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all/blocks.A1.list.bz2 ... (ancestral genome: diags) OK
-Integrated blocs of A1 ... OK
+Blocks of A1 ... OK
 A1 min=2	N50=2	WA=2.56	max=4 + 1826 singletons OK
 Loading genome of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all/blocks.A2.list.bz2 ... (ancestral genome: diags) OK
-Integrated blocs of A2 ... OK
+Blocks of A2 ... OK
 A2 min=2	N50=2	WA=2.49	max=4 + 1843 singletons OK
 Loading genome of example/results/ancBlocks/denovo-size-1.0-1.0.fillin-all.fusion-all.insertion-all/blocks.A3.list.bz2 ... (ancestral genome: diags) OK
-Integrated blocs of A3 ... OK
+Blocks of A3 ... OK
 A3 min=2	N50=2	WA=2.00	max=2 + 1354 singletons OK
-Elapsed time: 0.19438600540161133
