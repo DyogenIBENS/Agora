@@ -34,18 +34,6 @@ error () {
 print_title 'creates tmp directory for testing'
 print_and_run_commands "rm -rf tmp" "mkdir tmp"
 
-#############################################
-#	Check integrity of pre-processing scripts #
-#############################################
-print_title 'check the preprocessing scripts'
-
-preProcessCommandLines=(
-# convet a .nhx tree into a protTree (forest of gene trees)
-"src/convert.geneTrees.NHX-phylTree.py example/data/GeneTreeForest.nhx.bz2 > tmp/geneTrees.protTree"
-# convet a .nwk tree into a phylTree
-"src/convert.speciesTree.Newick-phylTree.py example/data/Species.nwk > tmp/speciesTree.phylTree"
-)
-print_and_run_commands "${preProcessCommandLines[@]}"
 
 ###################################################
 #	Check integrity of ALL.extractGeneFamilies.py #
@@ -53,21 +41,18 @@ print_and_run_commands "${preProcessCommandLines[@]}"
 print_title 'check the ancGenes families extraction scripts'
 
 extractGeneFamiliesCommandLines=(
-"src/ALL.extractGeneFamilies.py tmp/speciesTree.phylTree tmp/geneTrees.protTree -OUT.ancGenesFiles=tmp/ancGenes/all/ancGenes.%s.list.bz2 > tmp/geneTrees.afterExtractingAncGenes.protTree"
+"src/ALL.extractGeneFamilies.py example/data/Species.nwk example/data/GeneTreeForest.nhx.bz2 -OUT.ancGenesFiles=tmp/ancGenes/all/ancGenes.%s.list.bz2 > tmp/geneTrees.afterExtractingAncGenes.protTree"
 )
 print_and_run_commands "${extractGeneFamiliesCommandLines[@]}"
 
 #########################################
 #	Check integrity of agora.py		    #
 #########################################
-print_title 'creation of the configuration file'
-
-sed  s,../example/data/Species.conf,speciesTree.phylTree, ./conf/agora-vertebrates.ini > tmp/agora.ini
 
 print_title 'check the agora.py encapsulated script'
 agoraCommandLines=(
 # agora.py
-"src/agora.py tmp/agora.ini -workingDir=tmp -nbThreads=1"
+"src/agora.py conf/agora-vertebrates.ini -workingDir=tmp -nbThreads=1"
 )
 
 print_and_run_commands "${agoraCommandLines[@]}"
