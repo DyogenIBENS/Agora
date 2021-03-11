@@ -267,6 +267,8 @@ class TaskList():
                                 print("present - different parameters")
                         else:
                             print("missing")
+                    else:
+                        print("No control file could be identified")
                     if launch:
                         print("Launching task", taskId, command.args, ">", command.out, "2>", command.log)
                         if self.list[taskId].multithreaded:
