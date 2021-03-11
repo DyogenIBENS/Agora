@@ -91,7 +91,7 @@ src/agora-basic.py species-tree.nwk gene-trees.nhx genes.%s.list
 If the ancestral genomes are too fragmented, run this otherwise:
 
 ```bash
-src/agora-vertebrates.py species-tree.nwk gene-trees.nhx genes.%s.list
+src/agora-generic.py species-tree.nwk gene-trees.nhx genes.%s.list
 ```
 
 Check out our [user manual](doc/HowTo.md) for more information about the
