@@ -27,7 +27,7 @@ __doc__ = """
 arguments = utils.myTools.checkArgs(
     [("speciesTree", file), ("geneTrees", file), ("genes", str)],
     [("minSize", float, 0.9), ("maxSize", float, 1.1), ("target", str, ""), ("extantSpeciesFilter", str, ""),
-     ("workingDir", str, "."), ("nbThreads", int, multiprocessing.cpu_count()), ("sequential", bool, True)],
+     ("workingDir", str, "."), ("nbThreads", int, multiprocessing.cpu_count()), ("forceRerun", bool, False), ("sequential", bool, True)],
     __doc__)
 
 # Path configuration
@@ -54,5 +54,5 @@ workflow.publishGenome(outputName="vertebrates-workflow")
 
 # Launching tasks in multiple threads
 #####################################
-failed = workflow.tasklist.runAll(arguments["nbThreads"], arguments["sequential"])
+failed = workflow.tasklist.runAll(arguments["nbThreads"], arguments["sequential"], arguments["forceRerun"])
 sys.exit(failed)

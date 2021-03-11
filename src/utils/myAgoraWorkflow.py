@@ -225,7 +225,7 @@ class TaskList():
         self.queue.put((i, r))
 
     # Launching tasks in multiple threads
-    def runAll(self, nbThreads, sequential):
+    def runAll(self, nbThreads, sequential, forceRerun):
         start = time.time()
 
         self.memusage[os.getpid()] = 0
@@ -255,7 +255,9 @@ class TaskList():
                         print("Dummy task")
                         launch = False
                     status_file = self.getJsonPath(taskId)
-                    if status_file:
+                    if forceRerun:
+                        print("'forceRerun' option given, not checking the control file")
+                    elif status_file:
                         print("Control file", status_file, end=' ')
                         if os.path.exists(status_file):
                             with open(status_file, 'r') as fh:
