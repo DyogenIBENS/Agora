@@ -50,7 +50,7 @@ You can install a Python 3 environment with all the dependencies with
 [_conda_](https://docs.conda.io/)
 
 ```
-conda create --file conda_env.yml
+conda env create --file conda_env.yml
 ```
 
 Alternatively you can add the required dependencies to an existing
