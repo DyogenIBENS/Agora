@@ -314,7 +314,7 @@ class Genome:
 
         # sort chromosome names
         for t in self.chrList:
-            self.chrList[t].sort()
+            self.chrList[t].sort(key=lambda c: (isinstance(c, str), c))
 
 
     # add a gene to the genome
