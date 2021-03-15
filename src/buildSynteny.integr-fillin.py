@@ -522,20 +522,20 @@ def do(anc):
                             break
                     if thread:
 
-                        queue = queue.Queue()
+                        q = queue.Queue()
                         def bestPathInQueue(f, args):
-                            queue.put(f(*args))
+                            q.put(f(*args))
 
                         print("with thread")
                         p = threading.Thread(target=bestPathInQueue, args=(f, (start, end, lstPairwise)))
                         p.start()
                         # st = time.time()
                         try:
-                            r = queue.get(True, arguments["timeout"])
+                            r = q.get(True, arguments["timeout"])
                         except queue.Empty:
                             p._Thread__stop()
                             # Just in case the result was sent after the exception was raised 
-                            r = queue.get_nowait()
+                            r = q.get_nowait()
                         # et = time.time()
                         p.join()
                     else:
