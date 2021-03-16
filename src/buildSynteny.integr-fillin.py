@@ -533,7 +533,10 @@ def do(anc):
                         try:
                             r = q.get(True, arguments["timeout"])
                         except queue.Empty:
-                            p._Thread__stop()
+                            # threading.Thread doesn't have public methods to kill it, so we
+                            # use some protected methods that seem to do the job
+                            p._tstate_lock.release()
+                            p._stop()
                             # Just in case the result was sent after the exception was raised 
                             r = q.get_nowait()
                         # et = time.time()
