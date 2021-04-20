@@ -199,12 +199,7 @@ start = time.time()
 
 # Results files.
 def reportPairs(anc):
-	pairs = details.pop(anc)
-
-	# Accessory ancestor (required to compare against outgroups)
-	if anc not in listAncestors:
-		print("Skipping", anc, "(not a target)", file=sys.stderr)
-		return
+	pairs = details.pop(anc, [])
 
 	print(len(pairs), "conserved pairs for", anc, file=sys.stderr)
 
@@ -232,7 +227,7 @@ def reportPairs(anc):
 		), file=f)
 	f.close()
 		
-for anc in sorted(details):
+for anc in sorted(listAncestors):
 	reportPairs(anc)
 
 print("Elapsed time task3:", (time.time() - start), (time.time() - st), file=sys.stderr)
