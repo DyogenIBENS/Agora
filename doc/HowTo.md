@@ -189,7 +189,7 @@ AGORA supports several compression formats for input and output files:
 
 * gzip -- `.gz` extension
 * bzip2 -- `.bz2` extension
-* LZMA -- `.lzma` and `.xz` extensions (needs the `pyliblzma` Python package)
+* LZMA -- `.lzma` and `.xz` extensions
 
 Compression / decompression costs extra CPU time, but decreases file transfer times
 and storage footprint (typically 6x with bzip2).
