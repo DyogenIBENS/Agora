@@ -1,4 +1,4 @@
-# AGORA How To
+# AGORA How-To
 
 Written by Alexandra LOUIS (alouis {at} biologie {dot} ens {dot} fr),
 Matthieu MUFFATO (muffato {at} ebi {dot} ac {dot} uk), and
@@ -70,7 +70,7 @@ genome with these genes (ignoring all other families) as a constrained
 backbone. Then, it use remaining gene families to fill in the space
 between constrained genes, but without breaking a chain of constrained genes.
 
-In this HowTo, all the paths are relative to the root of the repository.
+In this How-To, all the paths are relative to the root of the repository.
 The individual script commands usually complete within seconds on the
 example dataset, using less than 300 MB of memory, while the complete
 reconstructions themselves take between 30 seconds and 1 minute.
