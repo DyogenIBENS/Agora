@@ -225,7 +225,7 @@ trees and gene lists.
 src/agora-basic.py /path/to/species-tree.nwk /path/to/gene-trees.nhx /path/to/genes.%s.list
 ```
 
-There are three optional Command-line parameters:
+There are three optional command-line parameters:
 
 * By default the files will be created in the current directory.
   Add the `-workingDir=output_dir` option to change the output
@@ -622,7 +622,7 @@ configuration file.
 
 The [`agora-multi-constrained.ini`](../conf/agora-multi-constrained.ini) configuration
 file tells AGORA to use multiple filters on different
-ancestors, and how to conbine the results.
+ancestors, and how to combine the results.
 
 Run the entire workflow with `agora.py`:
 
