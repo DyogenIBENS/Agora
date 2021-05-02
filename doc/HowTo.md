@@ -212,7 +212,7 @@ genome assembly:
 
 * The pairwise comparisons provide "reads" of the ancestral genomes
 * The reads are assembled into contigs ("Graph linearisation" step)
-* The contigs are assembled into scaffolds ("Scaffolding" step)
+* The contigs are assembled into scaffolds ("Blocks assembly" step)
 
 #### All in one: `agora-basic.py`
 
@@ -330,7 +330,7 @@ src/buildSynteny.integr-denovo.py \
   2> example/results/ancBlocks/denovo-all/log
 ```
 
-##### Scaffolding
+##### Block assembly
 
 In this step, we basically reiterate the same process (pairwise comparisons
 and integration into an adjacency graph) but on the previous CARs, which allows
@@ -390,7 +390,7 @@ linearise them to obtain constrained contigs. It then _fills these in_
 with non-constrained genes, builds contigs of non-constrained
 genes (_non-constrained families fusion_) and inserts these in the filled-in constrained
 contigs (_single side junction_). Finally it assembles the resulting
-contigs (scaffolding) into ancestral genomes.
+blocks into ancestral genomes.
 
 #### All in one: `agora-vertebrates.py`
 
@@ -548,7 +548,7 @@ src/buildSynteny.integr-insertion.py \
   2> example/results/ancBlocks/denovo-size-1.0-1.0.refine-all.extend-all.halfinsert-all/log
 ```
 
-##### Scaffolding
+##### Block assembly
 
 Like in non-constrained mode, this step does pairwise comparisons and a graph linearisation
 of the CARs themselves, which allows finding higher-level adjacencies.
