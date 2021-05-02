@@ -210,7 +210,7 @@ adjacency graphs and linearises them to produce CARs.
 In this mode, the reconstruction is composed of three steps akin to a
 genome assembly:
 
-* The pairwise comparisons provide "reads" of the ancestral genomes
+* The pairwise comparisons provide "short reads" of the ancestral genomes
 * The reads are assembled into contigs ("Graph linearisation" step)
 * The contigs are assembled into scaffolds ("Blocks assembly" step)
 
