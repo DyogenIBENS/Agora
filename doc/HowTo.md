@@ -633,6 +633,22 @@ src/agora-plants.py \
   -nbThreads=1
 ```
 
+This makes the actual workflow followed by AGORA fairly complex, see [agora-plants-workflow.png](agora-plants-workflow.png), compared to [agora-basic-workflow.png](agora-basic-workflow.png) and [agora-vertebrates-workflow.png](agora-vertebrates-workflow.png).
+
+#### `agora-generic.py` script
+
+This concept can be expanded to the filtering of the ancestral genes. While `agora-plants` applies the same (user-defined) filter parameters to all ancestors, `agora-generic` will try several parameters, and select the ones that yield the highest G50 individually for each ancestor.
+
+```bash
+src/agora-geeneric.py \
+  example/data/Species.nwk \
+  example/data/GeneTreeForest.nhx.bz2 \
+  example/data/genes/genes.%s.list.bz2 \
+  -workingDir=example/results \
+  -nbThreads=1
+```
+
+The resulting workflow is even more complex, [agora-generic-workflow.png](agora-generic-workflow.png), but can accommodate any case.
 
 #### `agora.py` script
 
