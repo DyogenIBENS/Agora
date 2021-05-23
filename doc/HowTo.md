@@ -587,6 +587,53 @@ below.
 
 ### Advanced AGORA usage
 
+#### AGORA with selection of blocks for the second pass
+
+By default, AGORA executes the second reconstruction pass on the entire set of blocks coming from the first pass.
+However, the same way that the first pass benefits from building a backbone on a selection of genes, te second pass
+can yield better reconstructions by using a selection of blocks (typically the longest ones) to build a backbone,
+and then fill the remaining blocks in.
+
+This approach is used to reconstruct Plant genomes and the same series of extension steps is used in both passes.
+
+> AGORA workflow with selection of blocks for the second pass
+
+![](agora-plants.jpg)
+
+##### Indicative steps
+
+There are three differences between both passes.
+
+1. In the second pass, the _ancGenes_ are actually blocks from the first pass.
+2. `buildSynteny.pairwise-conservedAdjacencies.py` is used to compute the pairwise comparisons instead of `buildSynteny.pairwise-conservedPairs.py`.`
+3. `ALL.filterBlocks-fixedLength.py` or `ALL.filterBlocks-propLength.py` are used to select the longest blocks, which is equivalent to filtering the _ancGenes_ with `ALL.filterGeneFamilies-size.py`.
+
+
+#### Automatic selection of the best reconstruction
+
+When unsure about some parameters, it is possible to run multiple reconstructions with different parameters
+and let AGORA decide which one is the best (has the highest G50) for each ancestor.
+
+This is used by `agora-plants.py` to test multiple selections of blocks for the second pass.
+The whole workflow can be run automatically with `agora-plants.py` using
+the same syntax as `agora-vertebrates.py`
+
+```bash
+src/agora-plants.py /path/to/species-tree.nwk /path/to/gene-trees.nhx /path/to/genes.%s.list
+```
+
+To regenerate the reference output of the example dataset, run:
+
+```bash
+src/agora-plants.py \
+  example/data/Species.nwk \
+  example/data/GeneTreeForest.nhx.bz2 \
+  example/data/genes/genes.%s.list.bz2 \
+  -workingDir=example/results \
+  -nbThreads=1
+```
+
+
 #### `agora.py` script
 
 The AGORA method is also available through a script named `agora.py`, which
