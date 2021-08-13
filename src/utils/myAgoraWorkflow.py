@@ -342,7 +342,7 @@ class AgoraWorkflow:
         return self.tasklist.addTask(taskFullName, dependencies, Command(None, None, None), False)
 
     def addAncGenesGenerationAnalysis(self):
-            taskFullName = ("ancgenes", self.allAncGenesName)
+            taskFullName = (self.ancGenesTaskName, self.allAncGenesName)
             return self.tasklist.addTask(
                 taskFullName,
                 [],
