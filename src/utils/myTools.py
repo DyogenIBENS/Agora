@@ -6,6 +6,7 @@
 # mail : agora@bio.ens.psl.eu
 # Licences GLP v3 and CeCILL v2
 
+import glob
 import os
 import re
 import sys
@@ -19,13 +20,58 @@ from functools import wraps
 
 from . import myFile
 
-class file: pass
-
 null = open(os.devnull, 'w')
 
 debug = null
 
 class Namespace: pass
+
+
+# Helper functions to check command-line arguments
+###################################################
+
+class ArgChecker:
+    @classmethod
+    def check(cls, value):
+        raise NotImplementedError
+
+class FileArgChecker(ArgChecker):
+    @classmethod
+    def check(cls, value):
+        value = os.path.expanduser(value)
+        if not myFile.hasAccess(value):
+            raise ValueError("File '%s' inaccessible" % value)
+        else:
+            return value
+
+class PatternArgChecker(ArgChecker):
+    @classmethod
+    def check(cls, value):
+        value = os.path.expanduser(value)
+        if "%s" in value:
+            it = glob.iglob(value.replace('%s', '*'))
+            if any(it):
+                return value
+            else:
+                raise ValueError("No file matches the pattern '%s'" % value)
+        else:
+            raise ValueError("'%s' is not a pattern" % value)
+
+class FileOrPatternArgChecker(ArgChecker):
+    @classmethod
+    def check(cls, value):
+        value = os.path.expanduser(value)
+        if "%s" in value:
+            it = glob.iglob(value.replace('%s', '*'))
+            if any(it):
+                return value
+            else:
+                raise ValueError("No file matches the pattern '%s'" % value)
+        else:
+            return FileArgChecker.check(value)
+
+file = FileArgChecker
+
 
 # http://stackoverflow.com/questions/1969005/enumerations-in-python
 # Usage
@@ -410,13 +456,11 @@ def checkArgs(args, options, info, showArgs=True, loadOnlyDefaultOptions=False):
         if typ == bool:
             # Type booleen
             res = {"false": False, "true":True}[v.lower()]
-        elif typ == file:
-            # Type 'fichier': test of presence
-            v = os.path.expanduser(v)
-            if not myFile.hasAccess(v):
-                error_usage("File '%s' innaccessible" % v)
-            else:
-                res = v
+        elif issubclass(typ, ArgChecker):
+            try:
+                res = typ.check(v)
+            except ValueError as e:
+                error_usage(e.args[0])
         elif isinstance(typ, Enum):
             try:
                 res = getattr(typ, v)
