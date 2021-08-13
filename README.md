@@ -60,6 +60,8 @@ environment (e.g. a Python _virtualenv_):
 pip install -r requirements.txt
 ```
 
+:warning: AGORA is currently not compatible with Python 3.8+ on macOS.
+
 AGORA is compatible with [PyPy](https://www.pypy.org/) (an alternative,
 faster implementation of Python) which significantly speeds up the
 reconstructions, whilst using more memory.
