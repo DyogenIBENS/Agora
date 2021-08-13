@@ -302,20 +302,20 @@ class AgoraWorkflow:
 
     # Default paths (in case not set in the configuration file)
     defaultPaths = {
-        'ancGenesData': 'ancGenes/%(filt)s/ancGenes.%(name)s.list.bz2',
+        'ancGenesData': 'ancGenes/%(filt)s/ancGenes.%(name)s.list',
         'ancGenesLog': 'ancGenes/%(filt)s.log',
-        'filteredBlocksData': 'filtBlocks/%(filt)s/blocks.%(name)s.list.bz2',
+        'filteredBlocksData': 'filtBlocks/%(filt)s/blocks.%(name)s.list',
         'filteredBlocksLog': 'filtBlocks/%(filt)s/log',
         'geneTreesWithAncNames': 'GeneTreeForest.withAncGenes.nhx.bz2',
-        'pairwiseOutput': 'pairwise/pairs-%(filt)s/%(name)s.list.bz2',
+        'pairwiseOutput': 'pairwise/pairs-%(filt)s/%(name)s.list',
         'pairwiseLog': 'pairwise/pairs-%(filt)s/log',
-        'adjacenciesOutput': 'pairwise/adjacencies-%(filt)s/%(name)s.list.bz2',
+        'adjacenciesOutput': 'pairwise/adjacencies-%(filt)s/%(name)s.list',
         'adjacenciesDebug': 'pairwise/adjacencies-%(filt)s/%(name)s.log.bz2',
         'adjacenciesLog': 'pairwise/adjacencies-%(filt)s/log',
-        'ancBlocks': 'ancBlocks/%(method)s/blocks.%(name)s.list.bz2',
+        'ancBlocks': 'ancBlocks/%(method)s/blocks.%(name)s.list',
         'ancGraphs': 'ancBlocks/%(method)s/graph.%(name)s.txt.bz2',
         'ancLog': 'ancBlocks/%(method)s/log',
-        'ancGenomesOutput': 'ancGenomes/%(method)s/ancGenome.%(name)s.list.bz2',
+        'ancGenomesOutput': 'ancGenomes/%(method)s/ancGenome.%(name)s.list',
         'ancGenomesLog': 'ancGenomes/%(method)s/log',
     }
     allAncGenesName = "all"
@@ -340,7 +340,7 @@ class AgoraWorkflow:
         fixedArgs = [("speciesTree", myTools.FileArgChecker), ("geneTrees|ancGenes", myTools.FileOrPatternArgChecker), ("genes", str)]
         optionalArgs = options \
             + [("target", str, ""), ("extantSpeciesFilter", str, "")] \
-            + [("workingDir", str, "."), ("nbThreads", int, multiprocessing.cpu_count())] \
+            + [("compress", str, ["bz2", "xz", "gz", ""]), ("workingDir", str, "."), ("nbThreads", int, multiprocessing.cpu_count())] \
             + [("forceRerun", bool, False), ("sequential", bool, True)]
         arguments = myTools.checkArgs(fixedArgs, optionalArgs, doc)
 
@@ -352,6 +352,8 @@ class AgoraWorkflow:
         outputDir = arguments["workingDir"]
         for (f, s) in cls.defaultPaths.items():
             files[f] = os.path.normpath(os.path.join(outputDir, s))
+            if files[f].endswith('.list') and arguments["compress"]:
+                files[f] = files[f] + '.' + arguments["compress"]
         scriptDir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
         phylTree = myPhylTree.PhylogeneticTree(arguments["speciesTree"])
