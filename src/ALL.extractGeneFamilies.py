@@ -7,7 +7,8 @@
 # This is free software; you may copy, modify and/or distribute this work under the terms of the GNU General Public License, version 3 or later and the CeCiLL v2 license in France
 
 __doc__ = """
-    Read the forest of gene trees and extract the gene content of every ancestral genome in a separate file.
+    When the second argument is a forest of gene trees, read it and extract the gene content of every ancestral genome in a separate file.
+    When it is a file pattern, assume they are already ancestral genes, and copy the files over to the location defined by OUT.ancGenesFiles
 
     Usage:
         src/ALL.extractGeneFamilies.py example/data/Species.nwk example/data/GeneTreeForest.nhx.bz2 \
@@ -15,13 +16,13 @@ __doc__ = """
 """
 
 import collections
+import os
 import sys
 
 import utils.myFile
 import utils.myPhylTree
 import utils.myProteinTree
 import utils.myTools
-from utils.myTools import file
 
 sys.setrecursionlimit(10000)
 
@@ -29,12 +30,36 @@ sys.setrecursionlimit(10000)
 ###########
 
 arguments = utils.myTools.checkArgs(
-    [("speciesTree", file), ("geneTrees", file)],
+    [("speciesTree", utils.myTools.FileArgChecker), ("geneTrees", utils.myTools.FileOrPatternArgChecker)],
     [("OUT.ancGenesFiles", str, ""), ("reuseNames", bool, False)],
     __doc__
 )
 
 phylTree = utils.myPhylTree.PhylogeneticTree(arguments["speciesTree"])
+
+if "%s" in arguments["geneTrees"]:
+    # ancGenes are already present, just copy them over
+    for anc in phylTree.listAncestr.union(phylTree.listSpecies):
+        inputPath = arguments["geneTrees"] % phylTree.fileName[anc]
+        if os.path.exists(inputPath):
+            if anc in phylTree.listSpecies:
+                print("Copying families of genome %s ..." % anc, end=' ', file=sys.stderr)
+            else:
+                print("Copying families of ancestral genome %s ..." % anc, end=' ', file=sys.stderr)
+            outputPath = arguments["OUT.ancGenesFiles"] % phylTree.fileName[anc]
+            fi = utils.myFile.openFile(inputPath, "r")
+            fo = utils.myFile.openFile(outputPath, "w")
+            n = 0
+            for l in fi:
+                fo.write(l)
+                n += 1
+            fo.close()
+            fi.close()
+            print(n, "OK", file=sys.stderr)
+        else:
+            print("No file for '%s' in '%s'" % (anc, arguments["geneTrees"]))
+    sys.exit(0)
+
 
 dupCount = collections.defaultdict(int)
 

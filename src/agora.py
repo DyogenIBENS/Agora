@@ -63,8 +63,12 @@ for x in bysections["files"]:
 # All input paths are relative to the directory of the configuration file
 files = {}
 inputDir = os.path.dirname(arguments["agora.ini"])
-for f in utils.myAgoraWorkflow.AgoraWorkflow.inputParams:
+for f in ["speciesTree", "genes"]:
     files[f] = os.path.normpath(os.path.join(inputDir, conffiles[f.lower()]))
+if 'geneTrees'.lower() in conffiles:
+    files["geneTrees|ancGenes"] = os.path.normpath(os.path.join(inputDir, conffiles['geneTrees'.lower()]))
+else:
+    files["geneTrees|ancGenes"] = os.path.normpath(os.path.join(inputDir, conffiles['inputAncGenes'.lower()]))
 outputDir = arguments["workingDir"]
 for (f, s) in utils.myAgoraWorkflow.AgoraWorkflow.defaultPaths.items():
     files[f] = os.path.normpath(os.path.join(outputDir, conffiles.get(f.lower(), s)))
