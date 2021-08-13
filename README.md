@@ -82,7 +82,7 @@ In a nutshell, you need to gather:
 
 * a species tree
 * the list of genes of each species
-* gene trees
+* gene trees or ancestral genes for each ancestor
 
 and then try:
 
