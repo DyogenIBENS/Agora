@@ -1,3 +1,10 @@
+## 2021-08-14 - v3.1
+
+1. [new] -- The `agora-*.py` scripts now accept existing ancGenes as an
+   alternative to gene trees.
+2. [new] -- New `-compress` option to change the compression algorithm
+   (or skip compression).
+
 ## 2021-03-12 - v3.0
 
 1. [bugfix] -- Translated some French comments.
