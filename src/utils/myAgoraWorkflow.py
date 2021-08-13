@@ -328,11 +328,7 @@ class AgoraWorkflow:
         self.files = files
         self.interm = {}
         self.refMethod = {}
-        self.ancBlocksAsAncGenes = False
-        self.ancGenesTaskName = "ancgenes"
-        self.ancGenesFileEntryName = "ancGenesData"
-        self.pairwiseFileEntryName = "pairwiseOutput"
-        self.allAncGenesPath = self.files["ancGenesData"] % {"filt": self.allAncGenesName, "name": "%s"}
+        self.workOnGenes()
         self.selectionPool = []
         # With agora-*.py, people may use %s instead of %(name)s
         if '%(name)s' not in files['genes']:
@@ -639,8 +635,11 @@ class AgoraWorkflow:
 
 
     def revertToRealAncGenes(self):
-        self.ancBlocksAsAncGenes = False
         self.prevMethod = self.blocksName
+        self.workOnGenes()
+
+    def workOnGenes(self):
+        self.ancBlocksAsAncGenes = False
         self.ancGenesTaskName = "ancgenes"
         self.ancGenesFileEntryName = "ancGenesData"
         self.pairwiseFileEntryName = "pairwiseOutput"
