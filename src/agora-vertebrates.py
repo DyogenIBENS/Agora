@@ -6,14 +6,9 @@
 # mail : agora@bio.ens.psl.eu
 # This is free software; you may copy, modify and/or distribute this work under the terms of the GNU General Public License, version 3 or later and the CeCiLL v2 license in France
 
-import multiprocessing
-import os
 import sys
 
 import utils.myAgoraWorkflow
-import utils.myPhylTree
-import utils.myTools
-from utils.myTools import file
 
 __doc__ = """
     Run the Vertebrates workflow of AGORA (a multi-integration pass followed by a single-integration pass)
@@ -24,29 +19,9 @@ __doc__ = """
           src/agora-vertebrates.py example/data/Species.nwk example/data/GeneTreeForest.nhx.bz2 example/data/genes/genes.%s.list.bz2 -workingDir=example/results -nbThreads=1
 """
 
-arguments = utils.myTools.checkArgs(
-    [("speciesTree", file), ("geneTrees", file), ("genes", str)],
-    [("minSize", float, 0.9), ("maxSize", float, 1.1), ("target", str, ""), ("extantSpeciesFilter", str, ""),
-     ("workingDir", str, "."), ("nbThreads", int, multiprocessing.cpu_count()), ("forceRerun", bool, False), ("sequential", bool, True)],
-    __doc__)
+options = [("minSize", float, 0.9), ("maxSize", float, 1.1)]
+(workflow, arguments) = utils.myAgoraWorkflow.AgoraWorkflow.initFromCommandLine(__doc__, options)
 
-# Path configuration
-files = {}
-for f in utils.myAgoraWorkflow.AgoraWorkflow.inputParams:
-    files[f] = arguments[f]
-outputDir = arguments["workingDir"]
-for (f, s) in utils.myAgoraWorkflow.AgoraWorkflow.defaultPaths.items():
-    files[f] = os.path.normpath(os.path.join(outputDir, s))
-scriptDir = os.path.dirname(os.path.abspath(__file__))
-
-phylTree = utils.myPhylTree.PhylogeneticTree(arguments["speciesTree"])
-# Check that the syntax is correct
-if arguments["target"]:
-    phylTree.getTargetsAnc(arguments["target"])
-if arguments["extantSpeciesFilter"]:
-    phylTree.getTargetsSpec(arguments["extantSpeciesFilter"])
-
-workflow = utils.myAgoraWorkflow.AgoraWorkflow(arguments["target"] or phylTree.root, arguments["extantSpeciesFilter"], scriptDir, files)
 workflow.addAncGenesGenerationAnalysis()
 workflow.reconstructionPassWithAncGenesFiltering("size", [arguments['minSize'], arguments['maxSize']])
 workflow.addIntegrationAnalysis("scaffolds", [], None)

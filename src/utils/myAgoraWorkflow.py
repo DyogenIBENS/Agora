@@ -20,6 +20,8 @@ import threading
 import psutil
 
 from . import myFile
+from . import myPhylTree
+from . import myTools
 
 # A command that will be run. args represents the entire command-line, incl. the executable
 Command = collections.namedtuple("Command", ['args', 'out', 'log'])
@@ -333,6 +335,36 @@ class AgoraWorkflow:
         # With agora-*.py, people may use %s instead of %(name)s
         if '%(name)s' not in files['genes']:
             files['genes'] = files['genes'].replace('%s', '%(name)s')
+
+    @classmethod
+    def initFromCommandLine(cls, doc, options):
+        fixedArgs = [("speciesTree", myTools.file), ("geneTrees", myTools.file), ("genes", str)]
+        optionalArgs = options \
+            + [("target", str, ""), ("extantSpeciesFilter", str, "")] \
+            + [("workingDir", str, "."), ("nbThreads", int, multiprocessing.cpu_count())] \
+            + [("forceRerun", bool, False), ("sequential", bool, True)]
+        arguments = myTools.checkArgs(fixedArgs, optionalArgs, doc)
+
+        # Path configuration
+        files = {}
+        for (f, _) in fixedArgs:
+            files[f] = arguments[f]
+
+        outputDir = arguments["workingDir"]
+        for (f, s) in cls.defaultPaths.items():
+            files[f] = os.path.normpath(os.path.join(outputDir, s))
+        scriptDir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+        phylTree = myPhylTree.PhylogeneticTree(arguments["speciesTree"])
+        # Check that the syntax is correct
+        if arguments["target"]:
+            phylTree.getTargetsAnc(arguments["target"])
+        if arguments["extantSpeciesFilter"]:
+            phylTree.getTargetsSpec(arguments["extantSpeciesFilter"])
+
+        workflow = cls(arguments["target"] or phylTree.root, arguments["extantSpeciesFilter"], scriptDir, files)
+
+        return (workflow, arguments)
 
     def addDummy(self, taskFullName, dependencies=[]):
         return self.tasklist.addTask(taskFullName, dependencies, Command(None, None, None), False)
