@@ -44,10 +44,7 @@ if "%s" in arguments["geneTrees|orthologyGroups"]:
     for anc in sorted(phylTree.listAncestr):
         inputPath = arguments["geneTrees|orthologyGroups"] % phylTree.fileName[anc]
         if os.path.exists(inputPath):
-            if anc in phylTree.listSpecies:
-                print("Copying families of genome %s ..." % anc, end=' ', file=sys.stderr)
-            else:
-                print("Copying families of ancestral genome %s ..." % anc, end=' ', file=sys.stderr)
+            print("Copying families of ancestral genome %s ..." % anc, end=' ', file=sys.stderr)
             code = 'FAM' + anc[:4].upper()
             outputPath = arguments["OUT.ancGenesFiles"] % phylTree.fileName[anc]
             fi = utils.myFile.openFile(inputPath, "r")
