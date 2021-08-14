@@ -66,9 +66,9 @@ inputDir = os.path.dirname(arguments["agora.ini"])
 for f in ["speciesTree", "genes"]:
     files[f] = os.path.normpath(os.path.join(inputDir, conffiles[f.lower()]))
 if 'geneTrees'.lower() in conffiles:
-    files["geneTrees|ancGenes"] = os.path.normpath(os.path.join(inputDir, conffiles['geneTrees'.lower()]))
+    files["geneTrees|orthologyGroups"] = os.path.normpath(os.path.join(inputDir, conffiles['geneTrees'.lower()]))
 else:
-    files["geneTrees|ancGenes"] = os.path.normpath(os.path.join(inputDir, conffiles['inputAncGenes'.lower()]))
+    files["geneTrees|orthologyGroups"] = os.path.normpath(os.path.join(inputDir, conffiles['orthologyGroups'.lower()]))
 outputDir = arguments["workingDir"]
 for (f, s) in utils.myAgoraWorkflow.AgoraWorkflow.defaultPaths.items():
     files[f] = os.path.normpath(os.path.join(outputDir, conffiles.get(f.lower(), s)))
