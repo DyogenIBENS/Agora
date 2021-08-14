@@ -1,11 +1,11 @@
--------------------------------------------------------------------------
-| Key               | Values                                            |
--------------------------------------------------------------------------
-| speciesTree       | example/data/Species.nwk                          |
-| geneTrees         | example/data/GeneTreeForest.nhx.bz2               |
-| OUT.ancGenesFiles | example/results/ancGenes/all/ancGenes.%s.list.bz2 |
-| reuseNames        | False                                             |
--------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+| Key                       | Values                                            |
+---------------------------------------------------------------------------------
+| speciesTree               | example/data/Species.nwk                          |
+| geneTrees|orthologyGroups | example/data/GeneTreeForest.nhx.bz2               |
+| OUT.ancGenesFiles         | example/results/ancGenes/all/ancGenes.%s.list.bz2 |
+| reuseNames                | False                                             |
+---------------------------------------------------------------------------------
 Loading the forest of gene trees example/data/GeneTreeForest.nhx.bz2 ... (NHX format) 11011 roots, 82031 branches, 93194 nodes OK
 Writing families of ancestral genome A0 ... 16274 OK
 Writing families of ancestral genome A1 ... 17339 OK

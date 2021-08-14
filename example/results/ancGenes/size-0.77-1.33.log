@@ -3,10 +3,11 @@
 -----------------------------------------------------------------------------
 | speciesTree       | example/data/Species.nwk                              |
 | target            | A0                                                    |
-| IN.ancGenesFiles  | example/results/ancGenes/all/ancGenes.%s.list.bz2     |
-| OUT.ancGenesFiles | example/results/ancGenes/size-%s/ancGenes.%s.list.bz2 |
 | minSize           | 0.77                                                  |
 | maxSize           | 1.33                                                  |
+| IN.genesFiles     | example/data/genes/genes.%s.list.bz2                  |
+| IN.ancGenesFiles  | example/results/ancGenes/all/ancGenes.%s.list.bz2     |
+| OUT.ancGenesFiles | example/results/ancGenes/size-%s/ancGenes.%s.list.bz2 |
 -----------------------------------------------------------------------------
 Loading genome of example/results/ancGenes/all/ancGenes.A0.list.bz2 ... (ancestral genes) OK
 Loading genome of example/results/ancGenes/all/ancGenes.A1.list.bz2 ... (ancestral genes) OK
@@ -26,8 +27,3 @@ Writing families of A0 (size 0.77-1.33)... 16274 -> 12863 OK
 Writing families of A1 (size 0.77-1.33)... 17339 -> 13774 OK
 Writing families of A2 (size 0.77-1.33)... 15569 -> 13379 OK
 Writing families of A3 (size 0.77-1.33)... 18119 -> 15271 OK
-Writing families of M1 (size 0.77-1.33)... 19850 -> 19850 OK
-Writing families of M2 (size 0.77-1.33)... 21836 -> 21836 OK
-Writing families of M3 (size 0.77-1.33)... 19002 -> 19002 OK
-Writing families of M4 (size 0.77-1.33)... 15058 -> 15058 OK
-Writing families of M5 (size 0.77-1.33)... 17448 -> 17448 OK
