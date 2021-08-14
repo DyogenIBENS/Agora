@@ -55,7 +55,7 @@ if "%s" in arguments["geneTrees|orthologyGroups"]:
             n = 0
             for l in fi:
                 n += 1
-                fo.write(code + ('%06d' % n) + l)
+                fo.write(code + ('%06d ' % n) + l)
             fo.close()
             fi.close()
             print(n, "OK", file=sys.stderr)
