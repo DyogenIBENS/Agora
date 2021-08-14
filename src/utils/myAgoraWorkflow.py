@@ -337,7 +337,7 @@ class AgoraWorkflow:
 
     @classmethod
     def initFromCommandLine(cls, doc, options):
-        fixedArgs = [("speciesTree", myTools.FileArgChecker), ("geneTrees|ancGenes", myTools.FileOrPatternArgChecker), ("genes", str)]
+        fixedArgs = [("speciesTree", myTools.FileArgChecker), ("geneTrees|orthologyGroups", myTools.FileOrPatternArgChecker), ("genes", str)]
         optionalArgs = options \
             + [("target", str, ""), ("extantSpeciesFilter", str, "")] \
             + [("compress", str, ["bz2", "xz", "gz", ""]), ("workingDir", str, "."), ("nbThreads", int, multiprocessing.cpu_count())] \
@@ -379,7 +379,7 @@ class AgoraWorkflow:
                     [
                         os.path.join(self.scriptDir, "ALL.extractGeneFamilies.py"),
                         self.files["speciesTree"],
-                        self.files["geneTrees|ancGenes"],
+                        self.files["geneTrees|orthologyGroups"],
                         "-OUT.ancGenesFiles=" + self.files["ancGenesData"] % {"filt": self.allAncGenesName, "name": "%s"},
                     ],
                     self.files["geneTreesWithAncNames"],

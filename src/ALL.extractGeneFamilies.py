@@ -30,17 +30,17 @@ sys.setrecursionlimit(10000)
 ###########
 
 arguments = utils.myTools.checkArgs(
-    [("speciesTree", utils.myTools.FileArgChecker), ("geneTrees", utils.myTools.FileOrPatternArgChecker)],
+    [("speciesTree", utils.myTools.FileArgChecker), ("geneTrees|orthologyGroups", utils.myTools.FileOrPatternArgChecker)],
     [("OUT.ancGenesFiles", str, ""), ("reuseNames", bool, False)],
     __doc__
 )
 
 phylTree = utils.myPhylTree.PhylogeneticTree(arguments["speciesTree"])
 
-if "%s" in arguments["geneTrees"]:
+if "%s" in arguments["geneTrees|orthologyGroups"]:
     # ancGenes are already present, just copy them over
     for anc in phylTree.listAncestr.union(phylTree.listSpecies):
-        inputPath = arguments["geneTrees"] % phylTree.fileName[anc]
+        inputPath = arguments["geneTrees|orthologyGroups"] % phylTree.fileName[anc]
         if os.path.exists(inputPath):
             if anc in phylTree.listSpecies:
                 print("Copying families of genome %s ..." % anc, end=' ', file=sys.stderr)
@@ -57,7 +57,7 @@ if "%s" in arguments["geneTrees"]:
             fi.close()
             print(n, "OK", file=sys.stderr)
         else:
-            print("No file for '%s' in '%s'" % (anc, arguments["geneTrees"]))
+            print("No file for '%s' in '%s'" % (anc, arguments["geneTrees|orthologyGroups"]))
     sys.exit(0)
 
 
@@ -127,7 +127,7 @@ def extractGeneFamilies(node, baseName, previousAnc, lastWrittenAnc):
 
 
 geneFamilies = collections.defaultdict(list)
-for tree in utils.myProteinTree.loadTree(arguments["geneTrees"]):
+for tree in utils.myProteinTree.loadTree(arguments["geneTrees|orthologyGroups"]):
     extractGeneFamilies(tree.root, tree.info[tree.root]["tree_name"], None, None)
     if tree.info[tree.root]["format"] == "NHX":
         tree.printNewick(sys.stdout, withDist=True, withTags=True, withAncSpeciesNames=True, withAncGenesNames=True)
