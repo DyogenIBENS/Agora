@@ -39,8 +39,10 @@ described in a separate study [(Berthelot et al 2015)](https://www.cell.com/cell
 ### What AGORA does and does not do
 
 AGORA takes as input a set of extant gene lists,
-a species tree linking the genomes, and phylogenetic
-gene trees reconciled with the species tree. It can produce linear
+a species tree linking the genomes, and orthology
+relationships between the genes (either already available as flat lists,
+or as phylogenetic gene trees reconciled with the species tree).
+It can produce linear
 ancestral gene orders (with transcriptional orientation) at any
 node of the species tree. This may result in very long successive
 ancestral adjacencies or CARs (Contiguous Ancestral Regions) if the data
@@ -61,10 +63,10 @@ adjacencies, eventually leading to ancestral genomes. In
 principle this should work fine if the genomes are perfectly sequenced
 and annotated, but they rarely are. Also, gene duplications are
 difficult to resolve accurately in gene phylogenies, and AGORA is
-sensitive to errors in gene trees. A second, more complex version first
+sensitive to errors in orthology assignments. A second, more complex version first
 identifies "constrained" gene familes, on the basis of a user-defined
 criterion. Typically this can be a requirement that there are as many
-genes on a tree as there are species, thus limiting the chances that
+genes in a family as there are species, thus limiting the chances that
 duplications have occurred. AGORA first builds a temporary ancestral
 genome with these genes (ignoring all other families) as a constrained
 backbone. Then, it use remaining gene families to fill in the space
@@ -81,11 +83,13 @@ To reconstruct ancestral gene orders, AGORA needs 3 kinds of files (see
 [`example/data/`](../example/data)):
 
 * A species tree, e.g. [`example/data/Species.nwk`](../example/data/Species.nwk)
-* A set of extant gene trees reconciled with the species tree, e.g.
-  [`example/data/GeneTreeForest.nhx.bz2`](../example/data/GeneTreeForest.nhx.bz2).
 * The list and positions of the genes of each extant genomes, e.g.
   [`example/data/genes/genes.M1.list.bz2`](../example/data/genes/genes.M1.list.bz2).
   Extant genes that are not in a tree are **not** used for gene order reconstruction.
+* *Either* a set of extant gene trees reconciled with the species tree, e.g.
+  [`example/data/GeneTreeForest.nhx.bz2`](../example/data/GeneTreeForest.nhx.bz2).
+* *or* the list of orthology groups of each ancestor, e.g.
+  [`example/data/orthologyGroups/orthologyGroups.A0.list.bz2`](../example/data/orthologyGroups/orthologyGroups.A0.list.bz2).
 
 ### Species tree
 
@@ -141,7 +145,8 @@ coordinates can be 0-based or 1-based, inclusive or not, etc, as long as
 the same convention is used throughout each file.
 
 &#9888; **Warning**: The gene identifiers have to be consistent with the
-ones used in the gene trees.
+ones used in the gene trees. The transcript identifiers are ignored by
+AGORA.
 
 &#9888; **Warning**: The genes files must be named consistently
 with the names of the species in the species tree, using the format `prefix.species_name.suffix`.
@@ -162,6 +167,16 @@ genes files have to be named:
 
 In [`example/data`](../example/data), the five species named in the [species tree](../example/data/Species.nwk)
 are `M1`, `M2`, `M3`, `M4`, and `M5`, and the genes files are named [`genes.M1.list.bz2`](../example/data/genes/genes.M1.list.bz2), etc.
+
+### Orthology Groups
+
+The _orthologyGroups_ files used by AGORA contain the list of orthology groups
+present on each (internal) node of the species tree.
+
+Each line represents one group, as the list of names of genes that it contains,
+separated by white space. The gene names must match the gene lists.
+
+Each group will be considered as one ancestral gene in the reconstructions.
 
 ## Running AGORA
 
@@ -219,10 +234,11 @@ genome assembly:
 The `agora-basic.py` script sets AGORA
 to run these three steps sequentially. The only parameters that have
 to be given are the paths to the input files: species tree, gene
-trees and gene lists.
+trees or orthology groups, and gene lists.
 
 ```bash
 src/agora-basic.py /path/to/species-tree.nwk /path/to/gene-trees.nhx /path/to/genes.%s.list
+src/agora-basic.py /path/to/species-tree.nwk /path/to/orthologyGroups.%s.list /path/to/genes.%s.list
 ```
 
 There are three optional command-line parameters:
@@ -402,6 +418,7 @@ the same syntax as `agora-basic.py`
 
 ```bash
 src/agora-vertebrates.py /path/to/species-tree.nwk /path/to/gene-trees.nhx /path/to/genes.%s.list
+src/agora-vertebrates.py /path/to/species-tree.nwk /path/to/orthologyGroups.%s.list /path/to/genes.%s.list
 ```
 
 This configuration file is set to select
@@ -624,6 +641,7 @@ the same syntax as `agora-vertebrates.py`
 
 ```bash
 src/agora-plants.py /path/to/species-tree.nwk /path/to/gene-trees.nhx /path/to/genes.%s.list
+src/agora-plants.py /path/to/species-tree.nwk /path/to/orthologyGroups.%s.list /path/to/genes.%s.list
 ```
 
 To regenerate the reference output of the example dataset, run:

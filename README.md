@@ -80,21 +80,18 @@ It should run for a few minutes and end with this message in green:
 
 In a nutshell, you need to gather:
 
-* a species tree
-* the list of genes of each species
-* gene trees or ancestral genes for each ancestor
+* a species tree (e.g. `species-tree.nwk`)
+* the list of genes of each species (e.g. matching the pattern `genes/genes.%s.list`)
+* gene trees (e.g. `gene-trees.nhx`), or orthology groups for each ancestor (e.g. matching the pattern `orthologyGroups/orthologyGroups.%s.list`)
 
-and then try:
-
-```bash
-src/agora-basic.py species-tree.nwk gene-trees.nhx genes.%s.list
-```
-
-If the ancestral genomes are too fragmented, run this otherwise:
+and then try one of these:
 
 ```bash
-src/agora-generic.py species-tree.nwk gene-trees.nhx genes.%s.list
+src/agora-basic.py species-tree.nwk gene-trees.nhx genes/genes.%s.list
+src/agora-basic.py species-tree.nwk orthologyGroups/orthologyGroups.%s.list genes/genes.%s.list
 ```
+
+If the ancestral genomes are too fragmented, run `src/agora-generic.py` instead of `src/agora-basic.py`.
 
 Check out our [user manual](doc/HowTo.md) for more information about the
 input file formats, what these two scripts do, and how to tune AGORA even
