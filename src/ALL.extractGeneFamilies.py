@@ -40,7 +40,7 @@ arguments = utils.myTools.checkArgs(
 phylTree = utils.myPhylTree.PhylogeneticTree(arguments["speciesTree"])
 
 if "%s" in arguments["geneTrees|orthologyGroups"]:
-    # ancGenes are already present, just copy them over
+    # ancGenes are already present, just copy them over, but add a family name for unique reference
     for anc in phylTree.listAncestr.union(phylTree.listSpecies):
         inputPath = arguments["geneTrees|orthologyGroups"] % phylTree.fileName[anc]
         if os.path.exists(inputPath):
@@ -48,13 +48,14 @@ if "%s" in arguments["geneTrees|orthologyGroups"]:
                 print("Copying families of genome %s ..." % anc, end=' ', file=sys.stderr)
             else:
                 print("Copying families of ancestral genome %s ..." % anc, end=' ', file=sys.stderr)
+            code = 'FAM' + anc[:4].upper()
             outputPath = arguments["OUT.ancGenesFiles"] % phylTree.fileName[anc]
             fi = utils.myFile.openFile(inputPath, "r")
             fo = utils.myFile.openFile(outputPath, "w")
             n = 0
             for l in fi:
-                fo.write(l)
                 n += 1
+                fo.write(code + ('%06d' % n) + l)
             fo.close()
             fi.close()
             print(n, "OK", file=sys.stderr)
