@@ -443,10 +443,11 @@ genes from the gene trees (see running AGORA with no selection of constrained fa
 src/ALL.filterGeneFamilies-size.py \
   example/data/Species.nwk \
   A0 \
-  example/results/ancGenes/all/ancGenes.%s.list.bz2 \
-  example/results/ancGenes/size-%s-%s/ancGenes.%s.list.bz2 \
   1.0 \
   1.0 \
+  -IN.genesFiles=example/data/genes/genes.%s.list.bz2 \
+  -IN.ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
+  -OUT.ancGenesFiles=example/results/ancGenes/size-%s-%s/ancGenes.%s.list.bz2 \
   2> example/results/ancGenes/size.log
 ```
 

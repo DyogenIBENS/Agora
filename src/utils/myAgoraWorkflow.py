@@ -396,14 +396,19 @@ class AgoraWorkflow:
             taskName = self.blocksName + "-" + taskName
             inputName = self.blocksName + "-" + self.allAncGenesName
             scriptTemplate = "ALL.filterBlocks-%s.py"
-            inputPath = self.files["filteredBlocksData"] % {"filt": self.blocksName + "-" + self.allAncGenesName, "name": "%s"}
-            outputPath = self.files["filteredBlocksData"] % {"filt": taskName, "name": "%s"}
+            pathParameters = [
+                self.files["filteredBlocksData"] % {"filt": self.blocksName + "-" + self.allAncGenesName, "name": "%s"},
+                self.files["filteredBlocksData"] % {"filt": taskName, "name": "%s"},
+            ]
             logPath = self.files["filteredBlocksLog"] % {"filt": taskName}
         else:
             scriptTemplate = "ALL.filterGeneFamilies-%s.py"
             inputName = self.allAncGenesName
-            inputPath = self.files["ancGenesData"] % {"filt": self.allAncGenesName, "name": "%s"}
-            outputPath = self.files["ancGenesData"] % {"filt": methodName + "-%s", "name": "%s"}
+            pathParameters = [
+                "-IN.genesFiles=" + self.files["genes"] % {"name": "%s"},
+                "-IN.ancGenesFiles=" + self.files["ancGenesData"] % {"filt": self.allAncGenesName, "name": "%s"},
+                "-OUT.ancGenesFiles=" + self.files["ancGenesData"] % {"filt": methodName + "-%s", "name": "%s"},
+            ]
             logPath = self.files["ancGenesLog"] % {"filt": taskName}
 
         return self.tasklist.addTask(
@@ -414,9 +419,7 @@ class AgoraWorkflow:
                     os.path.join(self.scriptDir, scriptTemplate  % methodName),
                     self.files["speciesTree"],
                     ancestor or self.defaultRoot,
-                    inputPath,
-                    outputPath,
-                ] + params,
+                ] + pathParameters + params,
                 None,
                 logPath,
             )

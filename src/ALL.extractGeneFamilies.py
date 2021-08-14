@@ -41,7 +41,7 @@ phylTree = utils.myPhylTree.PhylogeneticTree(arguments["speciesTree"])
 
 if "%s" in arguments["geneTrees|orthologyGroups"]:
     # ancGenes are already present, just copy them over, but add a family name for unique reference
-    for anc in phylTree.listAncestr.union(phylTree.listSpecies):
+    for anc in phylTree.listAncestr:
         inputPath = arguments["geneTrees|orthologyGroups"] % phylTree.fileName[anc]
         if os.path.exists(inputPath):
             if anc in phylTree.listSpecies:

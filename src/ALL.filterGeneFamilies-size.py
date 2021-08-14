@@ -11,10 +11,13 @@ __doc__ = """
 
     Usage:
         src/ALL.filterGeneFamilies-size.py example/data/Species.nwk A0 \
-                example/results/ancGenes/all/ancGenes.%s.list.bz2 example/results/ancGenes/size-%s/ancGenes.%s.list.bz2 \
+                -IN.ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
+                -IN.genesFiles=example/data/genes/genes.%s.list.bz2 \
+                -OUT.ancGenesFiles=example/results/ancGenes/size-%s/ancGenes.%s.list.bz2 \
                 1.0,0.9,0.77 1.0,1.1,1.33
 """
 
+import os.path
 import sys
 
 import utils.myGenomes
@@ -23,8 +26,8 @@ import utils.myTools
 from utils.myTools import file
 
 arguments = utils.myTools.checkArgs(
-    [("speciesTree", file), ("target", str), ("IN.ancGenesFiles", str), ("OUT.ancGenesFiles", str), ("minSize", str),("maxSize", str)],
-    [],
+    [("speciesTree", file), ("target", str), ("minSize", str),("maxSize", str)],
+    [("IN.genesFiles", str, ""), ("IN.ancGenesFiles", str, ""), ("OUT.ancGenesFiles", str, "")],
     __doc__)
 
 phylTree = utils.myPhylTree.PhylogeneticTree(arguments["speciesTree"])
@@ -34,14 +37,24 @@ lstAncGenes = {}
 dicAncGenes = {}
 for anc in sorted(phylTree.listAncestr.union(phylTree.listSpecies)):
     if phylTree.dicParents[anc][target] == target:
-        ancGenes = utils.myGenomes.Genome(arguments["IN.ancGenesFiles"] % phylTree.fileName[anc])
-        lstAncGenes[anc] = [gene.names for gene in ancGenes.lstGenes[None]]
+        ancPath = arguments["IN.ancGenesFiles"] % phylTree.fileName[anc]
+        if os.path.exists(ancPath):
+            ancGenes = utils.myGenomes.Genome(arguments["IN.ancGenesFiles"] % phylTree.fileName[anc])
+            lstAncGenes[anc] = [gene.names for gene in ancGenes.lstGenes[None]]
+            del ancGenes
+        elif anc in phylTree.listSpecies:
+            # Use the genesFiles if ancGenesFiles don't cover extant species
+            genome = utils.myGenomes.Genome(arguments["IN.genesFiles"] % phylTree.fileName[anc])
+            # Only the first "name" of each gene matters, it's the one that is expected to be used
+            # in the gene trees or orthology groups. Need to add None to match the way ancestral
+            # genes are usually recorded
+            lstAncGenes[anc] = [[None, gene.names[0]] for gene in genome]
+            del genome
         dicGenes = {}
         for (i, names) in enumerate(lstAncGenes[anc]):
             for s in names:
                 dicGenes[s] = i
         dicAncGenes[anc] = dicGenes
-        del ancGenes
 
 minsizes = [float(x) for x in arguments["minSize"].split(",")]
 maxsizes = [float(x) for x in arguments["maxSize"].split(",")]
@@ -135,6 +148,8 @@ for size in range(len(minsizes)):
 
     # Writing files
     for anc in sorted(lstAncGenes):
+        if anc not in phylTree.listAncestr:
+            continue
         print("Writing families of %s (size %s-%s)..." % (anc, minsizes[size], maxsizes[size]), end=' ', file=sys.stderr)
         n = 0
         outFile = arguments["OUT.ancGenesFiles"] % ("%s-%s" % (minsizes[size], maxsizes[size]), phylTree.fileName[anc])
