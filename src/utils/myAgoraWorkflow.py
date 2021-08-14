@@ -223,7 +223,6 @@ class TaskList():
             with open(status_file, 'w') as fh:
                 json.dump(report, fh)
         self.printCPUUsageStats("task %d report:" % i, start)
-        time.sleep(5)
         self.queue.put((i, r))
 
     # Launching tasks in multiple threads
