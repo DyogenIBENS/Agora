@@ -7,8 +7,10 @@
 # This is free software; you may copy, modify and/or distribute this work under the terms of the GNU General Public License, version 3 or later and the CeCiLL v2 license in France
 
 __doc__ = """
-    When the second argument is a forest of gene trees, read it and extract the gene content of every ancestral genome in a separate file.
-    When it is a file pattern, assume they are already ancestral genes, and copy the files over to the location defined by OUT.ancGenesFiles
+    When the second argument is a forest of gene trees, read it and extract the gene content of every
+    ancestral genome in a separate file.
+    When it is a file pattern, assume they are orthology groups (and thus already represent ancestral
+    genes), and copy the files over to the location defined by OUT.ancGenesFiles.
 
     Usage:
         src/ALL.extractGeneFamilies.py example/data/Species.nwk example/data/GeneTreeForest.nhx.bz2 \
