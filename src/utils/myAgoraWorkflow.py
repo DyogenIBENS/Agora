@@ -212,11 +212,13 @@ class TaskList():
         # This is where the .bz2 compression would happen
         for l in p.stdout:
             stdout.write(l)
+        stderr.flush()
         r = p.wait()
         for l in p.stdout:
             stdout.write(l)
         stdout.close()
         if command.log:
+            stderr.flush()
             stderr.close()
         if r == 0 and status_file:
             report = self.getJsonPayload(i)
