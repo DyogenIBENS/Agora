@@ -373,9 +373,8 @@ class Genome:
 
     # return all genes
     def __iter__(self):
-        for t in self.lstGenes.values():
-            for g in t:
-                yield g
+        for chrom in sorted(self.lstGenes):
+            yield from self.lstGenes[chrom]
 
     # search gene locations given by its names
     def getPositions(self, names):
