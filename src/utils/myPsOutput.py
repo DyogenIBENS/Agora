@@ -1,5 +1,6 @@
 
 # Module d'ecriture dans un fichier PostScript
+import os
 
 # Les petits noms que je donne a mes couleurs (nom -> nom UNIX)
 colorTransl = {}
@@ -46,8 +47,13 @@ def printPsFooter():
 #
 def initColor(silent = False):
 
+	knownLocations = [
+		"/etc/X11/rgb.txt",
+		"/opt/X11/share/X11/rgb.txt",
+	]
+	location = [f for f in knownLocations if os.path.exists(f)][0]
 	# La liste des couleurs et leurs valeurs RGB
-	f = open("/etc/X11/rgb.txt", 'r')
+	f = open(location, 'r')
 	for l in f:
 		if l.startswith("!"):
 			continue
