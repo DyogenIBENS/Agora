@@ -1,7 +1,6 @@
 #! /usr/bin/env python
 
 import sys
-import enum
 import operator
 import collections
 
@@ -23,13 +22,13 @@ __doc__ = """
 		misc.compareGenomes.py genesST.Homo.sapiens.list.bz2 genesST.Mus.musculus.list.bz2 ancGenes.Euarchontoglires.list.bz2 -mode=drawKaryotype -minChrSize=200 > Karyo_human_min200genes.ps
 """
 
-modes = enum.Enum("modes", "drawMatrix drawKaryotype printOrthologuesList printOrthologuesCount printGeneDiff printOrthologousChrom")
+modes = ["drawMatrix", "drawKaryotype", "printOrthologuesList", "printOrthologuesCount", "printGeneDiff", "printOrthologousChrom"]
 
 arguments = utils.myTools.checkArgs(
 	[("studiedGenome", file), ("referenceGenome", file), ("orthologuesList", file)],
 	[("includeGaps", bool, False), ("includeScaffolds", bool, True), ("includeRandoms",bool,False), ("includeNones",bool,False),
 	("reverse",bool,False),
-	("mode",modes,"drawMatrix"),
+	("mode",str,modes),
 	("orthoslist:fullgenenames",bool,False),
 	("orthoschr:minHomology",int,90),
 	("minChrSize",int,0),
