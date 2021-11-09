@@ -13,8 +13,14 @@ import utils.myPsOutput
 import utils.myKaryoDrawer
 
 __doc__ = """
-	Compare deux genomes grace a des familles ancestrales
-		- Dessin de matrice
+	Compare two genomes thanks to an orthologues list (ancGenes or 2 columns orthologues gene list)
+		
+		-can draw dotplot or karyotype
+		-can print orthologous gene list, ortologous chromosome list, gene difference, orthologs count
+		
+	
+	Usage:	misc.compareGenomes.py genesST.Homo.sapiens.list.bz2 genesST.Mus.musculus.list.bz2 ancGenes.Euarchontoglires.list.bz2  > dotplot_Human_Mouse.ps
+		misc.compareGenomes.py genesST.Homo.sapiens.list.bz2 genesST.Mus.musculus.list.bz2 ancGenes.Euarchontoglires.list.bz2 -mode=drawKaryotype -minChrSize=200 > Karyo_human_min200genes.ps
 """
 
 modes = enum.Enum("modes", "drawMatrix drawKaryotype printOrthologuesList printOrthologuesCount printGeneDiff printOrthologousChrom")
