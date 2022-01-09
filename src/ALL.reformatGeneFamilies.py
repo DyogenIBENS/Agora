@@ -19,7 +19,6 @@ __doc__ = """
 """
 
 import collections
-import os
 import sys
 
 import utils.myFile
@@ -38,45 +37,60 @@ arguments = utils.myTools.checkArgs(
 
 phylTree = utils.myPhylTree.PhylogeneticTree(arguments["speciesTree"])
 
+# Make sure the gene names are unique by adding the species name (both
+# extant species and ancestors)
+ancGeneNames = {}
 nameMapping = collections.defaultdict(dict)
 for species in sorted(phylTree.listSpecies) + sorted(phylTree.listAncestr):
+    print("Renaming the genes of %s ..." % species, end=' ', file=sys.stderr)
+    seen = set()
+    n = 0
     inputPath = arguments["IN.genesFiles"] % phylTree.fileName[species]
     outputPath = arguments["OUT.genesFiles"] % phylTree.fileName[species]
     fi = utils.myFile.openFile(inputPath, "r")
     fo = utils.myFile.openFile(outputPath, "w")
     for line in fi:
+        n += 1
         t = line[:-1].split("\t")
+        assert len(t) == 5
         oldName = t[4]
-        assert (oldName not in nameMapping) or (species not in nameMapping[oldName])
+        assert oldName not in seen
+        seen.add(oldName)
         newName = phylTree.fileName[species] + "." + oldName
         nameMapping[oldName][species] = newName
         print(*t[:4], newName, sep="\t", file=fo)
+    fi.close()
+    fo.close()
+    if species in phylTree.listAncestr:
+        ancGeneNames[species] = seen
+    print(n, "OK", file=sys.stderr)
 
-# ancGenes are already present, just copy them over, but add a family name for unique reference
+# Same for the ancGene: the ancGene's name itself, and its descendants
+# Also restrict the list of descendants to the extant speciess
 for anc in sorted(phylTree.listAncestr):
+    print("Updating the ancestral families of %s ..." % anc, end=' ', file=sys.stderr)
+    orthologyGroups = []
     inputPath = arguments["orthologyGroups"] % phylTree.fileName[anc]
-    descendants = set(phylTree.species[anc])
-    if os.path.exists(inputPath):
-        print("Copying families of ancestral genome %s ..." % anc, end=' ', file=sys.stderr)
-        code = 'FAM' + anc[:4].upper()
-        outputPath = arguments["OUT.ancGenesFiles"] % phylTree.fileName[anc]
-        fi = utils.myFile.openFile(inputPath, "r")
-        fo = utils.myFile.openFile(outputPath, "w")
-        n = 0
-        for l in fi:
-            t = l.split()
-            allNewNames = []
-            for g in set(t[1:]):
-                newNames = [nameMapping[g][species] for species in descendants if species in nameMapping[g]]
-                #assert newNames, (anc, descendants, t)
-                #assert t.count(g) == len(newNames), (anc, t, g, [species for species in descendants if species in nameMapping[g]], newNames, t.count(g), len(newNames))
-                allNewNames.extend(newNames)
-            n += 1
-            uniqueName = phylTree.fileName[anc] + "." + t[0]
-            print(uniqueName, *allNewNames, file=fo)
-        fo.close()
-        fi.close()
-        print(n, "OK", file=sys.stderr)
-    else:
-        print("No file for '%s' in '%s'" % (anc, arguments["orthologyGroups"]))
+    fi = utils.myFile.openFile(inputPath, "r")
+    for l in fi:
+        orthologyGroups.append(l.split())
+    fi.close()
+    hasAncGeneName = all(og[0] in ancGeneNames[anc] for og in orthologyGroups)
+    print("with names" if hasAncGeneName else "adding names", "...", end=' ', file=sys.stderr)
+    n = 0
+    descendants = phylTree.species[anc]
+    outputPath = arguments["OUT.ancGenesFiles"] % phylTree.fileName[anc]
+    fo = utils.myFile.openFile(outputPath, "w")
+    for og in orthologyGroups:
+        n += 1
+        ancGeneName = og.pop(0) if hasAncGeneName else str(n)
+        ancGeneName = phylTree.fileName[anc] + "." + ancGeneName
+        allNewNames = []
+        assert len(og) == len(set(og))
+        for g in og:
+            newNames = [nameMapping[g][species] for species in descendants if species in nameMapping[g]]
+            allNewNames.extend(newNames)
+        print(ancGeneName, *allNewNames, file=fo)
+    fo.close()
+    print(n, "OK", file=sys.stderr)
 
