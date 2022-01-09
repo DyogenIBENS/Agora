@@ -7,10 +7,7 @@
 # This is free software; you may copy, modify and/or distribute this work under the terms of the GNU General Public License, version 3 or later and the CeCiLL v2 license in France
 
 __doc__ = """
-    When the second argument is a forest of gene trees, read it and extract the gene content of every
-    ancestral genome in a separate file.
-    When it is a file pattern, assume they are orthology groups (and thus already represent ancestral
-    genes), and copy the files over to the location defined by OUT.ancGenesFiles.
+    Read the forest of gene trees and extract the gene content of every ancestral genome in a separate file.
 
     Usage:
         src/ALL.extractGeneFamilies.py example/data/Species.nwk example/data/GeneTreeForest.nhx.bz2 \
@@ -18,7 +15,6 @@ __doc__ = """
 """
 
 import collections
-import os
 import sys
 
 import utils.myFile
@@ -32,34 +28,12 @@ sys.setrecursionlimit(10000)
 ###########
 
 arguments = utils.myTools.checkArgs(
-    [("speciesTree", utils.myTools.FileArgChecker), ("geneTrees|orthologyGroups", utils.myTools.FileOrPatternArgChecker)],
+    [("speciesTree", utils.myTools.FileArgChecker), ("geneTrees", utils.myTools.FileArgChecker)],
     [("OUT.ancGenesFiles", str, ""), ("reuseNames", bool, False)],
     __doc__
 )
 
 phylTree = utils.myPhylTree.PhylogeneticTree(arguments["speciesTree"])
-
-if "%s" in arguments["geneTrees|orthologyGroups"]:
-    # ancGenes are already present, just copy them over, but add a family name for unique reference
-    for anc in sorted(phylTree.listAncestr):
-        inputPath = arguments["geneTrees|orthologyGroups"] % phylTree.fileName[anc]
-        if os.path.exists(inputPath):
-            print("Copying families of ancestral genome %s ..." % anc, end=' ', file=sys.stderr)
-            code = 'FAM' + anc[:4].upper()
-            outputPath = arguments["OUT.ancGenesFiles"] % phylTree.fileName[anc]
-            fi = utils.myFile.openFile(inputPath, "r")
-            fo = utils.myFile.openFile(outputPath, "w")
-            n = 0
-            for l in fi:
-                n += 1
-                fo.write(code + ('%06d ' % n) + l)
-            fo.close()
-            fi.close()
-            print(n, "OK", file=sys.stderr)
-        else:
-            print("No file for '%s' in '%s'" % (anc, arguments["geneTrees|orthologyGroups"]))
-    sys.exit(0)
-
 
 dupCount = collections.defaultdict(int)
 
@@ -127,7 +101,7 @@ def extractGeneFamilies(node, baseName, previousAnc, lastWrittenAnc):
 
 
 geneFamilies = collections.defaultdict(list)
-for tree in utils.myProteinTree.loadTree(arguments["geneTrees|orthologyGroups"]):
+for tree in utils.myProteinTree.loadTree(arguments["geneTrees"]):
     extractGeneFamilies(tree.root, tree.info[tree.root]["tree_name"], None, None)
     if tree.info[tree.root]["format"] == "NHX":
         tree.printNewick(sys.stdout, withDist=True, withTags=True, withAncSpeciesNames=True, withAncGenesNames=True)

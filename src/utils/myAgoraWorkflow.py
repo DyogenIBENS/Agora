@@ -303,6 +303,7 @@ class AgoraWorkflow:
 
     # Default paths (in case not set in the configuration file)
     defaultPaths = {
+        'formattedGenesData': 'genes/genes.%(name)s.list',
         'ancGenesData': 'ancGenes/%(filt)s/ancGenes.%(name)s.list',
         'ancGenesLog': 'ancGenes/%(filt)s.log',
         'filteredBlocksData': 'filtBlocks/%(filt)s/blocks.%(name)s.list',
@@ -372,6 +373,28 @@ class AgoraWorkflow:
         return self.tasklist.addTask(taskFullName, dependencies, Command(None, None, None), False)
 
     def addAncGenesGenerationAnalysis(self):
+        if "%s" in self.files["geneTrees|orthologyGroups"]:
+            taskFullName = (self.ancGenesTaskName, self.allAncGenesName)
+            genesIN = self.files["genes"]
+            genesOUT = self.files["formattedGenesData"]
+            self.files["genes"] = genesOUT
+            return self.tasklist.addTask(
+                taskFullName,
+                [],
+                Command(
+                    [
+                        os.path.join(self.scriptDir, "ALL.reformatGeneFamilies.py"),
+                        self.files["speciesTree"],
+                        self.files["geneTrees|orthologyGroups"],
+                        "-IN.genesFiles=" + genesIN % {"name": "%s"},
+                        "-OUT.ancGenesFiles=" + self.files["ancGenesData"] % {"filt": self.allAncGenesName, "name": "%s"},
+                        "-OUT.genesFiles=" + genesOUT % {"name": "%s"},
+                    ],
+                    self.files["geneTreesWithAncNames"],
+                    self.files["ancGenesLog"] % {"filt": "ancGenes"},
+                )
+            )
+        else:
             taskFullName = (self.ancGenesTaskName, self.allAncGenesName)
             return self.tasklist.addTask(
                 taskFullName,
