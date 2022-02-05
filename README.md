@@ -30,9 +30,9 @@ of the Institut de Biologie de l'Ecole Normale Supérieure (IBENS) 46 rue d'Ulm 
 Genome Research Ltd,
 and the individual authors.
 
-- Copyright © 2006-2021 IBENS/Dyogen : Alexandra LOUIS, Thi Thuy Nga NGUYEN, Matthieu MUFFATO and Hugues ROEST CROLLIUS
+- Copyright © 2006-2022 IBENS/Dyogen : Alexandra LOUIS, Thi Thuy Nga NGUYEN, Matthieu MUFFATO and Hugues ROEST CROLLIUS
 - Copyright © 2020-2021 EMBL-European Bioinformatics Institute
-- Copyright © 2021 Genome Research Ltd
+- Copyright © 2021-2022 Genome Research Ltd
 
 ## Contact
 

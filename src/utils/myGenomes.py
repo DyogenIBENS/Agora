@@ -2,7 +2,7 @@
 
 # LibsDyogen version 1.0 (6/11/2015) -- modified for AGORA v3.1
 # python 3.5 at least is needed
-# Copyright © 2006-2021 IBENS/Dyogen, 2020-2021 EMBL-European Bioinformatics Institute, 2021 Genome Research Ltd : Matthieu MUFFATO, Joseph LUCAS and Hugues ROEST CROLLIUS
+# Copyright © 2006-2022 IBENS/Dyogen, 2020-2021 EMBL-European Bioinformatics Institute, 2021-2022 Genome Research Ltd : Matthieu MUFFATO, Joseph LUCAS and Hugues ROEST CROLLIUS
 # mail : agora@bio.ens.psl.eu
 # Licences GLP v3 and CeCILL v2
 
