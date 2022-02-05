@@ -1,7 +1,7 @@
 ## 2022-02-05 - v3.1
 
-1. [new] -- The `agora-*.py` scripts now accept existing ancGenes as an
-   alternative to gene trees.
+1. [new] -- The `agora-*.py` scripts now accept existing orthology groups
+   as an alternative to gene trees.
 2. [new] -- New `-compress` option to change the compression algorithm
    (or skip compression).
 
