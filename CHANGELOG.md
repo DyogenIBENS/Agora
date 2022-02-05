@@ -1,4 +1,4 @@
-## 2021-08-14 - v3.1
+## 2022-02-05 - v3.1
 
 1. [new] -- The `agora-*.py` scripts now accept existing ancGenes as an
    alternative to gene trees.
