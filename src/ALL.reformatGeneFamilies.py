@@ -44,8 +44,13 @@ nameMapping = collections.defaultdict(dict)
 for species in sorted(phylTree.listSpecies) + sorted(phylTree.listAncestr):
     print("Renaming the genes of %s ..." % species, end=' ', file=sys.stderr)
     seen = set()
+    if species in phylTree.listAncestr:
+        ancGeneNames[species] = seen
     n = 0
     inputPath = arguments["IN.genesFiles"] % phylTree.fileName[species]
+    if (not utils.myFile.hasAccess(inputPath)) and (species in phylTree.listAncestr):
+        print("SKIPPING", file=sys.stderr)
+        continue
     outputPath = arguments["OUT.genesFiles"] % phylTree.fileName[species]
     fi = utils.myFile.openFile(inputPath, "r")
     fo = utils.myFile.openFile(outputPath, "w")
@@ -61,8 +66,6 @@ for species in sorted(phylTree.listSpecies) + sorted(phylTree.listAncestr):
         print(*t[:4], newName, sep="\t", file=fo)
     fi.close()
     fo.close()
-    if species in phylTree.listAncestr:
-        ancGeneNames[species] = seen
     print(n, "OK", file=sys.stderr)
 
 # Same for the ancGene: the ancGene's name itself, and its descendants
