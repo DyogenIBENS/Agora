@@ -12,8 +12,8 @@ __doc__ = """
     them with the species name.
 
     Usage:
-        src/ALL.reformatGeneFamilies.py example/data/Species.nwk TODO \
-                -IN.genesFiles= \
+        src/ALL.reformatGeneFamilies.py example/data/Species.nwk example/data/orthologyGroups/orthologyGroups.%s.list.bz2 \
+                -IN.genesFiles=example/data/genes/genes.%s.list.bz2 \
                 -OUT.ancGenesFiles=example/results/ancGenes/all/ancGenes.%s.list.bz2 \
                 -OUT.genesFiles=example/results/genes/genes.%s.list.bz2
 """
