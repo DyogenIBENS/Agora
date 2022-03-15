@@ -1,3 +1,8 @@
+## 2022-03-14 - v3.2 (pending)
+
+1. [bugfix] -- `ALL.reformatGeneFamilies.py` doesn't need the ancestral
+   species to have genes
+
 ## 2022-02-05 - v3.1
 
 1. [new] -- The `agora-*.py` scripts now accept existing orthology groups
