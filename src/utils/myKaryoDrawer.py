@@ -10,7 +10,7 @@ from . import myPsOutput
 myTools.addModuleOptions("karyo", [("roundedChr",bool,False), ("resolution",int,1), ("showText",bool,True), ("drawBorder",bool,False), ("defaultColor",str,""), ("penColor",str,"black")] )
 
 
-def drawKaryo(data, arguments, x0=1, y0=1, lx=None, ly=None, dx=None, dy=None, bysize=False):
+def drawKaryo(data, arguments, x0=1, y0=1, lx=None, ly=None, dx=None, dy=None, bysize=False, color_chrom=None):
 
 	defaultColor = arguments["karyo:defaultColor"] if len(arguments["karyo:defaultColor"]) > 0 else None
 
@@ -76,6 +76,8 @@ def drawKaryo(data, arguments, x0=1, y0=1, lx=None, ly=None, dx=None, dy=None, b
 					continue
 				if col is None:
 					col = defaultColor
+				elif (col not in myPsOutput.colorTransl) and color_chrom:
+					col = color_chrom[col]
 				ly *= dy
 				myPsOutput.drawBox(x0+i*dx/nbl, y, dx/nbl, ly, col, col)
 				y += ly

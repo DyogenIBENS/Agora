@@ -172,8 +172,12 @@ def drawKaryotype():
 				newl.append( val[0][0] )
 		data.append( (c, newl) )
 
+	color_chrom = {}
+	for (i,c) in enumerate(sorted(chr2, key=lambda c: (len(genome2.lstGenes[c]), c), reverse=True)):
+		color_chrom[c] = str(i+1)
+
 	print("Affichage ...", end=' ', file=sys.stderr)
-	utils.myKaryoDrawer.drawKaryo(data, arguments, x0=1, y0=1, lx=lx-2, ly=ly-2, bysize=arguments["sortBySize"])
+	utils.myKaryoDrawer.drawKaryo(data, arguments, x0=1, y0=1, lx=lx-2, ly=ly-2, bysize=arguments["sortBySize"], color_chrom=color_chrom)
 	utils.myPsOutput.printPsFooter()
 	print("OK", file=sys.stderr)
 
