@@ -288,14 +288,15 @@ class PhylogeneticTree:
                 keepWhile(' ')
 
             nodeName = keepUntil("),:;[ ")
-            if nodeName[0] == SYMBOL6X:
-                nodeName = nodeName[1:]
-                self.lstEsp6X.add(nodeName)
-            elif nodeName[0] == SYMBOL2X:
-                nodeName = nodeName[1:]
-                self.lstEsp2X.add(nodeName)
-            else:
-                self.lstEspFull.add(nodeName)
+            if nodeName:
+                if nodeName[0] == SYMBOL6X:
+                    nodeName = nodeName[1:]
+                    self.lstEsp6X.add(nodeName)
+                elif nodeName[0] == SYMBOL2X:
+                    nodeName = nodeName[1:]
+                    self.lstEsp2X.add(nodeName)
+                else:
+                    self.lstEspFull.add(nodeName)
             elt = (children, nodeName)
 
             keepWhile(' ')
