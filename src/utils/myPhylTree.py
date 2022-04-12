@@ -15,6 +15,8 @@ from . import myFile
 
 SYMBOL6X = '.'
 SYMBOL2X = '*'
+# global counter
+nodeIndex = 0
 
 GeneSpeciesPosition = collections.namedtuple("GeneSpeciesPosition", ['species', 'chromosome', 'index'])
 
@@ -344,12 +346,10 @@ class PhylogeneticTree:
         # fill the variables of a GenericTree
         def storeTree(data):
             ((children, name), length, info) = data
-            #FIXME for rare cases
             if (name == '') or (name in self.officialName):
-                #FIXME ??
-                name = "NAME_%d" % self.pos
-                #FIXME ??
-                self.pos += 1
+                global nodeIndex
+                name = "NAME_%d" % nodeIndex
+                nodeIndex += 1
             self.officialName[name] = name
             self.info[name] = info
 
@@ -368,7 +368,6 @@ class PhylogeneticTree:
         self.lstEsp6X = set()
         self.lstEspFull = set()
         data = readTree()
-        self.pos = 0
         self.info = {}
         storeTree(data)
         self.ages = self.newCommonNamesMapperInstance()
