@@ -433,7 +433,7 @@ def loadNHXTree(f):
             info["taxon_lost"] = tree.info[node]["E"].split("=-$")[1].split("-")
 
         if "S" in tree.info[node]:
-            info["taxon_name"] = tree.info[node]["S"].replace("_", " ").replace(".", " ").capitalize()
+            info["taxon_name"] = tree.info[node]["S"]
 
         if node not in tree.items:
             info["gene_name"] = node
