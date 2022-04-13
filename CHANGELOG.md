@@ -4,6 +4,8 @@
    species to have genes
 2. [bugfix] -- NHX trees can now miss internal labels, as AGORA can generate
    names by itself.
+3. [new] -- `misc.compareGenomes.py` now defaults to colouring the
+   chromosomes according to their size
 
 ## 2022-02-05 - v3.1
 
