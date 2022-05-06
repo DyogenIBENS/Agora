@@ -1,17 +1,19 @@
 ## 2022-03-14 - v3.2 (pending)
 
-1. [bugfix] -- `ALL.reformatGeneFamilies.py` doesn't need the ancestral
+1. [change] -- `ALL.filterGeneFamilies-size.py` doesn't accept a target
+   ancestor any more, and will filter *every* ancestor and species.
+2. [bugfix] -- `ALL.reformatGeneFamilies.py` doesn't need the ancestral
    species to have genes
-2. [bugfix] -- NHX trees can now miss internal labels, as AGORA can generate
+3. [bugfix] -- NHX trees can now miss internal labels, as AGORA can generate
    names by itself.
-3. [bugfix] -- Species names in the gene trees are not transformed by AGORA
+4. [bugfix] -- Species names in the gene trees are not transformed by AGORA
    anymore, and simply have to match the names in the species tree.
-4. [bugfix] -- Ancestors that cannot be reached due to filtering some
+5. [bugfix] -- Ancestors that cannot be reached due to filtering some
    extant species out are now implicitly omitted rather than raising an
    error.
-5. [new] -- `misc.compareGenomes.py` now defaults to colouring the
+6. [new] -- `misc.compareGenomes.py` now defaults to colouring the
    chromosomes according to their size
-6. [new] -- Added a script to convert BUSCO's output to AGORA's input
+7. [new] -- Added a script to convert BUSCO's output to AGORA's input
 
 ## 2022-02-05 - v3.1
 

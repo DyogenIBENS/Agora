@@ -8,6 +8,7 @@
 
 __doc__ = """
     Filter ancestral genes according to the number of extant genes
+    Note: the target ancestor name is ignores. The script always processes *all* ancestors.
 
     Usage:
         src/ALL.filterGeneFamilies-size.py example/data/Species.nwk A0 \
@@ -31,12 +32,14 @@ arguments = utils.myTools.checkArgs(
     __doc__)
 
 phylTree = utils.myPhylTree.PhylogeneticTree(arguments["speciesTree"])
-target = phylTree.officialName[arguments["target"]]
+#target = phylTree.officialName[arguments["target"]]
 
 lstAncGenes = {}
 dicAncGenes = {}
 for anc in sorted(phylTree.listAncestr.union(phylTree.listSpecies)):
-    if phylTree.dicParents[anc][target] == target:
+    # TODO: add concept of target filtering
+    #if phylTree.dicParents[anc][target] == target:
+    if True:
         ancPath = arguments["IN.ancGenesFiles"] % phylTree.fileName[anc]
         if os.path.exists(ancPath):
             ancGenes = utils.myGenomes.Genome(arguments["IN.ancGenesFiles"] % phylTree.fileName[anc])
@@ -92,7 +95,7 @@ def mkStruct(anc):
                 if (len(s) > 1) and (newanc in phylTree.listAncestr):
                     todo.extend((newanc, x) for x in s)
             mkStruct(newanc)
-mkStruct(target)
+mkStruct(phylTree.root)
 #print >> sys.stderr, len(todo), "todo", todo[0], todo[-1]
 
 # Combine calc results on each extant species gene.
