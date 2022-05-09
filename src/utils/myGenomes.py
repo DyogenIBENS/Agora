@@ -373,7 +373,10 @@ class Genome:
 
     # return all genes
     def __iter__(self):
-        for chrom in sorted(self.lstGenes):
+        # int cannot be compared to str
+        ordered_chr = sorted([c for c in self.lstGenes if isinstance(c, int)])
+        ordered_chr = ordered_chr + sorted([c for c in self.lstGenes if not isinstance(c, int)])
+        for chrom in ordered_chr:
             yield from self.lstGenes[chrom]
 
     # search gene locations given by its names
