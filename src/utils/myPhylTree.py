@@ -517,9 +517,7 @@ class PhylogeneticTree:
 
         # All the allowed extant species
         if extantSpeciesFilter:
-            listSpecies = set()
-            for anc in self.getTargetsSpec(extantSpeciesFilter):
-                listSpecies.update(self.species[anc])
+            listSpecies = self.getTargetsSpec(extantSpeciesFilter)
         else:
             listSpecies = set(self.listSpecies)
         # print "listSpecies", listSpecies
