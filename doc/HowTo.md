@@ -2,9 +2,9 @@
 
 Written by Alexandra LOUIS (alouis {at} biologie {dot} ens {dot} fr),
 Matthieu MUFFATO (muffato {at} ebi {dot} ac {dot} uk), and
-Hugues ROEST CROLLIUS (hrc {at} ens {dot} fr).  
+Hugues ROEST CROLLIUS (hrc {at} ens {dot} fr).
 DYOGEN Laboratory, Institut de Biologie de l'École Normale Supérieure
-(IBENS)  
+(IBENS)
 46 rue d'Ulm, 75005 Paris
 
 **Table of contents:**
@@ -86,9 +86,9 @@ To reconstruct ancestral gene orders, AGORA needs three kinds of files (see
 * The list and positions of the genes of each extant genomes, e.g.
   [`example/data/genes/genes.M1.list.bz2`](../example/data/genes/genes.M1.list.bz2).
   Extant genes that are not in a tree are **not** used for gene order reconstruction.
-* *Either* a set of extant gene trees reconciled with the species tree, e.g.
+* _Either_ a set of extant gene trees reconciled with the species tree, e.g.
   [`example/data/GeneTreeForest.nhx.bz2`](../example/data/GeneTreeForest.nhx.bz2).
-* *or* the list of orthology groups of each ancestor, e.g.
+* _or_ the list of orthology groups of each ancestor, e.g.
   [`example/data/orthologyGroups/orthologyGroups.A0.list.bz2`](../example/data/orthologyGroups/orthologyGroups.A0.list.bz2).
 
 ### Species tree
@@ -119,7 +119,6 @@ See an example family:
 
 * [`example/data/Family1.nhx`](../example/data/Family1.nhx) -- NHX format
 * [`example/data/Family1.pdf`](../example/data/Family1.pdf) -- Graphical representation
-
 
 The forest file is merely the concatenation of all the families. See the example forest:
 
@@ -189,10 +188,9 @@ explained below, and the output is a set of CARs.
 AGORA comes with two presets (predefined workflows) and a mechanism
 to _roll your own_ workflow:
 
-  * [AGORA with no selection of constrained families](#agora-with-no-selection-of-constrained-families)
-  * [AGORA with selection of constrained families](#agora-with-selection-of-constrained-families)
-  * [Advanced AGORA usage](#advanced-agora-usage)
-
+* [AGORA with no selection of constrained families](#agora-with-no-selection-of-constrained-families)
+* [AGORA with selection of constrained families](#agora-with-selection-of-constrained-families)
+* [Advanced AGORA usage](#advanced-agora-usage)
 
 #### Notes
 
@@ -210,7 +208,6 @@ Compression / decompression costs extra CPU time, but decreases file transfer ti
 and storage footprint (typically 6x with bzip2).
 Compression is also supported on the standard output by adding `+gz`, `+bz2`,
 `+lzma`, or `+xz` on the command-line.
-
 
 ### AGORA with no selection of constrained families
 
@@ -248,7 +245,7 @@ There are three optional command-line parameters:
   directory (which will be automatically created).
 * By default AGORA uses all the cores available on the machine. Use
   the `-nbThreads=XX` option to control this.
-* By default AGORA will reconstruct *every* ancestor. To limit the
+* By default AGORA will reconstruct _every_ ancestor. To limit the
   reconstruction to one ancestor and all its descendants (say
   `Boreoeutheria`), add the `-target=Boreoeutheria` option. To reconstruct
   `Boreoeutheria` _only_, use `-target==Boreoeutheria` (with two `=`)
@@ -605,7 +602,6 @@ src/convert.ancGenomes.blocks-to-genes.py \
 More information about these files in [Output file formats](#output-file-formats)
 below.
 
-
 ### Advanced AGORA usage
 
 #### AGORA with selection of blocks for the second pass
@@ -628,7 +624,6 @@ There are three differences between both passes.
 1. In the second pass, the _ancGenes_ are actually blocks from the first pass.
 2. `buildSynteny.pairwise-conservedAdjacencies.py` is used to compute the pairwise comparisons instead of `buildSynteny.pairwise-conservedPairs.py`.`
 3. `ALL.filterBlocks-fixedLength.py` or `ALL.filterBlocks-propLength.py` are used to select the longest blocks, which is equivalent to filtering the _ancGenes_ with `ALL.filterGeneFamilies-size.py`.
-
 
 #### Automatic selection of the best reconstruction
 
@@ -801,8 +796,8 @@ The fields are:
    (starting from 0).
 4. Gene transcriptional orientation (strand) within the block.
 5. A relative confidence index for each inter-block linkage.
-   - The values in parenthesis are the size of the initial blocks.
-   - The values without parenthesis represent the number of time the two
+   * The values in parenthesis are the size of the initial blocks.
+   * The values without parenthesis represent the number of time the two
      adjacent blocks are adjacent in extant species.
 
    The sum of the lengths of the initial blocks (numbers in parenthesis) is
@@ -812,7 +807,7 @@ For instance, the following line represents a block of 8 genes in A0 made
 of two sub-blocks (of respectively five and three genes) linked by an adjacency
 of score 6.
 
-```
+```text
 A0	8	4559 4179 10099 15638 1304 10998 5675 13765	-1 -1 -1 1 1 -1 -1 1	(5) 6 (3)
 ```
 

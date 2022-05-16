@@ -6,7 +6,7 @@ AGORA stands for “Algorithm for Gene Order Reconstruction in Ancestors”. It 
 Matthieu Muffato in the DYOGEN Laboratory (at the École normale supérieure, Paris) in 2008
 and has been in constant development since.
 
-```
+```text
     // | |     //   ) )  //   ) ) //   ) )  // | |
    //__| |    //        //   / / //___/ /  //__| |
   / ___  |   //  ____  //   / / / ___ (   / ___  |
@@ -53,14 +53,14 @@ AGORA is written in Python 3, which is widely available.
 You can install a Python 3 environment with all the dependencies with
 [_conda_](https://docs.conda.io/)
 
-```
+```bash
 conda env create --file conda_env.yml
 ```
 
 Alternatively you can add the required dependencies to an existing
 environment (e.g. a Python _virtualenv_):
 
-```
+```bash
 pip install -r requirements.txt
 ```
 
@@ -72,7 +72,7 @@ reconstructions, whilst using more memory.
 
 Once everything is installed, run this to check the installation:
 
-```
+```bash
 ./checkAgoraIntegrity.sh
 ```
 
@@ -84,9 +84,9 @@ It should run for a few minutes and end with this message in green:
 
 In a nutshell, you need to provide:
 
-* a species tree (e.g. `species-tree.nwk`)
-* the list of genes of each species (e.g. matching the pattern `genes/genes.%s.list`)
-* gene trees (e.g. `gene-trees.nhx`), or orthology groups for each ancestor (e.g. matching the pattern `orthologyGroups/orthologyGroups.%s.list`)
+- a species tree (e.g. `species-tree.nwk`)
+- the list of genes of each species (e.g. matching the pattern `genes/genes.%s.list`)
+- gene trees (e.g. `gene-trees.nhx`), or orthology groups for each ancestor (e.g. matching the pattern `orthologyGroups/orthologyGroups.%s.list`)
 
 and then try one of these:
 
