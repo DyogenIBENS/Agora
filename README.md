@@ -2,8 +2,9 @@
 
 ## Introduction
 
-AGORA stands for “Algorithm for Gene Order Reconstruction in Ancestors” and was developed by
-Matthieu Muffato in the DYOGEN Laboratory at the École normale supérieure in Paris in 2008.
+AGORA stands for “Algorithm for Gene Order Reconstruction in Ancestors”. It was initiated by
+Matthieu Muffato in the DYOGEN Laboratory (at the École normale supérieure, Paris) in 2008
+and has been in constant development since.
 
 ```
     // | |     //   ) )  //   ) ) //   ) )  // | |
@@ -38,18 +39,15 @@ and the individual authors.
 
 Email agora {at} bio {dot} ens {dot} psl {dot} eu
 
-## If you use AGORA, please cite:
+## Citation
 
-Reconstruction of hundreds of reference ancestral genomes across the eukaryotic kingdom. 
-Matthieu Muffato, Alexandra Louis, Nga Thi Thuy Nguyen, Joseph Lucas, Camille Berthelot, Hugues Roest Crollius. 
-bioRxiv 2022.02.17.480882; doi: https://doi.org/10.1101/2022.02.17.480882
+If you use AGORA, please cite:
+
+> Reconstruction of hundreds of reference ancestral genomes across the eukaryotic kingdom.
+> Matthieu Muffato, Alexandra Louis, Nga Thi Thuy Nguyen, Joseph Lucas, Camille Berthelot, Hugues Roest Crollius.
+> bioRxiv 2022.02.17.480882; doi: <https://doi.org/10.1101/2022.02.17.480882>
 
 ## Installation
-
-To simplify deployment, AGORA already embeds a modified version of
-[LibsDyogen](https://github.com/DyogenIBENS/LibsDyogen) version 1.0
-(6/11/2015), a Python library
-for bioinformatics and comparative genomics developed by the same group.
 
 AGORA is written in Python 3, which is widely available.
 You can install a Python 3 environment with all the dependencies with
@@ -84,7 +82,7 @@ It should run for a few minutes and end with this message in green:
 
 ## Usage
 
-In a nutshell, you need to gather:
+In a nutshell, you need to provide:
 
 * a species tree (e.g. `species-tree.nwk`)
 * the list of genes of each species (e.g. matching the pattern `genes/genes.%s.list`)
@@ -98,6 +96,12 @@ src/agora-basic.py species-tree.nwk orthologyGroups/orthologyGroups.%s.list gene
 ```
 
 If the ancestral genomes are too fragmented, run `src/agora-generic.py` instead of `src/agora-basic.py`.
+
+AGORA has been successfuly run on data from [Ensembl](https://www.ensembl.org/),
+[OMA](https://omabrowser.org/), and [BUSCO](https://busco.ezlab.org/) data.
+To simplify using AGORA, we provide an import script that converts BUSCO's
+annotations (the `*.full_table.tsv` files) into the required `genes/genes.%s.list`
+and `orthologyGroups/orthologyGroups.%s.list`.
 
 Check out our [user manual](doc/HowTo.md) for more information about the
 input file formats, what these two scripts do, and how to tune AGORA even
