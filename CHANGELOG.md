@@ -8,6 +8,7 @@
    anymore, and simply have to match the names in the species tree.
 4. [new] -- `misc.compareGenomes.py` now defaults to colouring the
    chromosomes according to their size
+5. [new] -- Added a script to convert BUSCO's output to AGORA's input
 
 ## 2022-02-05 - v3.1
 
