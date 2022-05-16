@@ -303,7 +303,7 @@ class AgoraWorkflow:
 
     # Default paths (in case not set in the configuration file)
     defaultPaths = {
-        'formattedGenesData': 'genes/genes.%(name)s.list',
+        'formattedGenesData': 'formattedGenes/genes.%(name)s.list',
         'ancGenesData': 'ancGenes/%(filt)s/ancGenes.%(name)s.list',
         'ancGenesLog': 'ancGenes/%(filt)s.log',
         'filteredBlocksData': 'filtBlocks/%(filt)s/blocks.%(name)s.list',
