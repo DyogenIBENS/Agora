@@ -359,13 +359,16 @@ class AgoraWorkflow:
         scriptDir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
         phylTree = myPhylTree.PhylogeneticTree(arguments["speciesTree"])
-        # Check that the syntax is correct
+        # Check that the species filters are valid by loading them
         if arguments["target"]:
-            phylTree.getTargetsAnc(arguments["target"])
+            target = arguments["target"]
+            listAncestors = phylTree.getTargetsAnc(target)
+        else:
+            target = phylTree.root
         if arguments["extantSpeciesFilter"]:
             phylTree.getTargetsSpec(arguments["extantSpeciesFilter"])
 
-        workflow = cls(arguments["target"] or phylTree.root, arguments["extantSpeciesFilter"], scriptDir, files)
+        workflow = cls(target, arguments["extantSpeciesFilter"], scriptDir, files)
 
         return (workflow, arguments)
 
