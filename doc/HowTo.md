@@ -26,9 +26,9 @@ DYOGEN Laboratory, Institut de Biologie de l'École Normale Supérieure
 ### History
 
 AGORA stands for "Algorithm for Gene Order Reconstruction in Ancestors"
-and was developed by Matthieu Muffato during his PhD (2007-2010) in the
+and was initiated by Matthieu Muffato during his PhD (2007-2010) in the
 DYOGEN Laboratory at the École normale supérieure in Paris. Since then
-it has been constantly used in the group, especially to generate
+it has been constantly used and improved in the group, especially to generate
 ancestral genomes for the [Genomicus](https://www.genomicus.biologie.ens.fr/genomicus)
 online server for comparative genomics. Many algorithms used
 in AGORA are described in details in Matthieu's thesis, available only
@@ -79,7 +79,7 @@ reconstructions themselves take between 30 seconds and 1 minute.
 
 ## Input file formats
 
-To reconstruct ancestral gene orders, AGORA needs 3 kinds of files (see
+To reconstruct ancestral gene orders, AGORA needs three kinds of files (see
 [`example/data/`](../example/data)):
 
 * A species tree, e.g. [`example/data/Species.nwk`](../example/data/Species.nwk)
@@ -809,7 +809,7 @@ The fields are:
    thus equal to the size of the whole block (field number 2)
 
 For instance, the following line represents a block of 8 genes in A0 made
-of 2 sub-blocks (of respectively 5 and 3 genes) linked by an adjacency
+of two sub-blocks (of respectively five and three genes) linked by an adjacency
 of score 6.
 
 ```
