@@ -6,9 +6,12 @@
    names by itself.
 3. [bugfix] -- Species names in the gene trees are not transformed by AGORA
    anymore, and simply have to match the names in the species tree.
-4. [new] -- `misc.compareGenomes.py` now defaults to colouring the
+4. [bugfix] -- Ancestors that cannot be reached due to filtering some
+   extant species out are now implicitly omitted rather than raising an
+   error.
+5. [new] -- `misc.compareGenomes.py` now defaults to colouring the
    chromosomes according to their size
-5. [new] -- Added a script to convert BUSCO's output to AGORA's input
+6. [new] -- Added a script to convert BUSCO's output to AGORA's input
 
 ## 2022-02-05 - v3.1
 

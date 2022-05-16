@@ -365,8 +365,16 @@ class AgoraWorkflow:
             listAncestors = phylTree.getTargetsAnc(target)
         else:
             target = phylTree.root
+            listAncestors = phylTree.listAncestr
         if arguments["extantSpeciesFilter"]:
-            phylTree.getTargetsSpec(arguments["extantSpeciesFilter"])
+            listSpecies = phylTree.getTargetsSpec(arguments["extantSpeciesFilter"])
+            # All the possible ancestors given the extant species
+            linkedAncestors = set()
+            for (e1,e2) in itertools.combinations(listSpecies, 2):
+                linkedAncestors.update(phylTree.dicLinks[e1][e2][1:-1])
+            # Exclude the ancestors that cannot be reached given the species filter
+            for anc in listAncestors.difference(linkedAncestors):
+                target = "%s,_=%s" % (target, anc)
 
         workflow = cls(target, arguments["extantSpeciesFilter"], scriptDir, files)
 
