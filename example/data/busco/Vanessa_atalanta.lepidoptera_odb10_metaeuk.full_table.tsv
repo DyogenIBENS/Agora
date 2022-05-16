@@ -1,0 +1,10 @@
+# BUSCO version is: 5.0.0 
+# The lineage dataset is: lepidoptera_odb10 (Creation date: 2020-08-05, number of species: 16, number of BUSCOs: 5286)
+# Busco id	Status	Sequence	Gene Start	Gene End	Strand	Score	Length	OrthoDB url	Description
+0at7088	Complete	LR990574.1	5263203	5360579	+	17093.9	8753	https://www.orthodb.org/v10?query=0at7088	twitchin
+1at7088	Complete	LR990549.1	58565	158767	-	9414.4	5824	https://www.orthodb.org/v10?query=1at7088	titin
+2at7088	Complete	LR990555.1	6852421	6934380	+	25748.8	16231	https://www.orthodb.org/v10?query=2at7088	Notch-like protein
+3at7088	Complete	LR990558.1	12211872	12319835	+	10670.0	6756	https://www.orthodb.org/v10?query=3at7088	nesprin-1 isoform X1
+4at7088	Complete	LR990573.1	2224460	2340189	-	13031.1	7555	https://www.orthodb.org/v10?query=4at7088	uncharacterized protein LOC110381036
+6at7088	Complete	LR990558.1	3711830	3817201	+	8468.1	4383	https://www.orthodb.org/v10?query=6at7088	cadherin-related tumor suppressor
+11at7088	Complete	LR990566.1	3634532	3693925	+	8167.0	4163	https://www.orthodb.org/v10?query=11at7088	LOW QUALITY PROTEIN: dynein heavy chain 10, axonemal

@@ -177,6 +177,53 @@ separated by white space. The gene names must match the gene lists.
 
 Each group will be considered as one ancestral gene in the reconstructions.
 
+### Import from BUSCO
+
+To palliate the difficulty of annotating genes and computing orthologies, we offer
+a helper script to use existing annotations from [BUSCO](https://busco.ezlab.org/).
+The BUSCO annotations may include thousands of genes for certain lineages, and be
+sufficient to reconstruct the entire chromosome structure.
+
+The script `src/import/busco/convert_buscos.py` takes two parameters as inputs:
+
+* the path to the directory that contains all BUSCO annotations, named `*.tsv`
+  (see [`example/data/busco`](../example/data/busco) for an example of such a file).
+  The script assumes the file names start with the species name (up to the first dot).
+* the path to the species tree. The species listed in the tree must exactly match
+  the BUSCO annotations.
+* optionally, a directory in which to create the output files. Defaults to the
+  current working directory.
+
+The script very simply only considers the _Complete_ BUSCO genes, i.e. discarding
+the _Duplicated_ and _Fragmented_ ones, and assumes the history of those genes
+**only** involves speciation events (and losses), but no duplications.
+
+The outputs are:
+
+* _genes_ files, as required by AGORA;
+* _orthologyGroups_ files, as required by AGORA;
+* `species_tree.nh`: a reformatted species tree that includes the ancestor names
+  AGORA automatically creates;
+* `families.txt`: a summary of all the families the script has found (one per line),
+  with their BUSCO name, the name of their last common ancestor, and the names of all
+  the species that have it.
+
+&#9888; **Warning**: the following command is for information only. It doesn't work on
+the example data we provide with AGORA.
+
+```bash
+src/import/busco/convert_buscos.py \
+    example/data/busco/ \
+    example/data/Species.nwk \
+    agora_input
+# Actual reconstruction. See below for an explanation
+src/agora-basic.py \
+    example/data/Species.nwk \
+    agora_input/orthologyGroups/orthologyGroups.%s.list \
+    agora_input/genes/genes.%s.list \
+    -workingDir=output
+```
+
 ## Running AGORA
 
 > General AGORA workflow
