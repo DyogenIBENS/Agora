@@ -41,6 +41,8 @@ class AncestorSearch:
     def as_str(self):
         def _rec_as_str(d):
             if 'children' in d:
+                if len(d['children']) == 1:
+                    return _rec_as_str(d['children'][0])
                 return '(' + ','.join([_rec_as_str(x) for x in d['children']]) + ')' + d['label']
             else:
                 return d['label']
