@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # AGORA v3.1
 # python 3.5
@@ -96,4 +96,3 @@ for anc in sorted(phylTree.listAncestr):
         print(ancGeneName, *allNewNames, file=fo)
     fo.close()
     print(n, "OK", file=sys.stderr)
-

@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 # Copyright (c) 2010 IBENS/Dyogen : Amelie PERES, Matthieu MUFFATO, Alexandra LOUIS, Hugues ROEST CROLLIUS
 # Mail : hrc@ens.fr or alouis@biologie.ens.fr
 # Licences GLP v3 and CeCILL v2
