@@ -383,7 +383,7 @@ class AgoraWorkflow:
                 [],
                 Command(
                     [
-                        os.path.join(self.scriptDir, "ALL.reformatGeneFamilies.py"),
+                        "ALL.reformatGeneFamilies.py",
                         self.files["speciesTree"],
                         self.files["geneTrees|orthologyGroups"],
                         "-IN.genesFiles=" + genesIN % {"name": "%s"},
@@ -401,7 +401,7 @@ class AgoraWorkflow:
                 [],
                 Command(
                     [
-                        os.path.join(self.scriptDir, "ALL.extractGeneFamilies.py"),
+                        "ALL.extractGeneFamilies.py",
                         self.files["speciesTree"],
                         self.files["geneTrees|orthologyGroups"],
                         "-OUT.ancGenesFiles=" + self.files["ancGenesData"] % {"filt": self.allAncGenesName, "name": "%s"},
@@ -440,7 +440,7 @@ class AgoraWorkflow:
             [(self.ancGenesTaskName, inputName)],
             Command(
                 [
-                    os.path.join(self.scriptDir, scriptTemplate  % methodName),
+                    scriptTemplate % methodName,
                     self.files["speciesTree"],
                     ancestor or self.defaultRoot,
                 ] + pathParameters + params,
@@ -466,7 +466,7 @@ class AgoraWorkflow:
             [(self.ancGenesTaskName, ancGenesName)],
             Command(
                 [
-                    os.path.join(self.scriptDir, "buildSynteny.pairwise-%s.py" % methodName),
+                    "buildSynteny.pairwise-%s.py" % methodName,
                     self.files["speciesTree"],
                     ancestor or self.defaultRoot,
                     "-ancGenesFiles=" + self.files[self.ancGenesFileEntryName] % {"filt": ancGenesName, "name": "%s"},
@@ -519,7 +519,7 @@ class AgoraWorkflow:
 
         # task parameters
         args = [
-                os.path.join(self.scriptDir, "buildSynteny.integr-%s.py" % methodName),
+                "buildSynteny.integr-%s.py" % methodName,
                 self.files["speciesTree"],
                 ancestor,
         ] + params
@@ -603,7 +603,7 @@ class AgoraWorkflow:
 
         # task parameters
         args = [
-                os.path.join(self.scriptDir, "convert.ancGenomes.blocks-to-genes.py"),
+                "convert.ancGenomes.blocks-to-genes.py",
                 self.files["speciesTree"],
                 ancestor,
                 "+orderBySize",
@@ -637,7 +637,7 @@ class AgoraWorkflow:
             [("integr", self.blocksName)],
             Command(
                 [
-                    os.path.join(self.scriptDir, "buildSynteny.integr-copy.py"),
+                    "buildSynteny.integr-copy.py",
                     self.files["speciesTree"],
                     ancestor or self.defaultRoot,
                     "-IN.ancBlocks=" + self.files["ancBlocks"] % {"method": self.blocksName, "name": "%s"},
@@ -672,7 +672,7 @@ class AgoraWorkflow:
         # task parameters
         deps = [("integr", self.prevMethod)]
         args = [
-                os.path.join(self.scriptDir, "convert.ancGenomes.blocks-of-blocks-to-blocks-of-ancGenes.py"),
+                "convert.ancGenomes.blocks-of-blocks-to-blocks-of-ancGenes.py",
                 self.files["speciesTree"],
                 ancestor,
                 "-IN.blocksBlocksFile=" + self.files["ancBlocks"] % {"method": self.prevMethod, "name": "%s"},
@@ -730,7 +730,7 @@ class AgoraWorkflow:
 
         # task parameters
         args = [
-                os.path.join(self.scriptDir, "ALL.selectBestReconstruction.py"),
+                "ALL.selectBestReconstruction.py",
                 self.files["speciesTree"],
                 ancestor,
                 "-OUT.ancBlocks=" + self.files["ancBlocks"] % {"method": newMethod, "name": "%s"},
