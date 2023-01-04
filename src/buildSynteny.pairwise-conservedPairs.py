@@ -68,8 +68,8 @@ for anc in sorted(listAncestors.union(accessoryAncestors)):
                 genesAnc[anc] = {k: v.index for (k,v) in ancGenes.dicGenes.items()}
                 del ancGenes
         else:
+                genesAnc[anc] = {}
                 print(f"Empty genome: {anc}")
-                geneAnc[anc] = {}
 
 print("time for loading", time.time() - start, file=sys.stderr)
 start = time.time()

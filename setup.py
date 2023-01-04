@@ -2,7 +2,7 @@
 from distutils.core import setup
 
 setup(name='Agora',
-      version='1.2.1',
+      version='1.2.2',
       description='Ancestral Genome Reconstruction',
       author='DYOGEN lab',
       author_email='agora@bio.ens.psl.eu',
