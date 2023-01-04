@@ -64,7 +64,7 @@ genesAnc = {}
 for anc in sorted(listAncestors.union(accessoryAncestors)):
         filename = arguments["ancGenesFiles"] % phylTree.fileName[anc]
         if os.path.exists(filename):
-                ancGenes = utils.myGenomes.Genome()
+                ancGenes = utils.myGenomes.Genome(filename)
                 genesAnc[anc] = {k: v.index for (k,v) in ancGenes.dicGenes.items()}
                 del ancGenes
         else:
