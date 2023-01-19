@@ -1,5 +1,7 @@
 # AGORA v3.1 (2022-02-05)
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7479507.svg)](https://doi.org/10.5281/zenodo.7479507)
+
 ## Introduction
 
 AGORA stands for “Algorithm for Gene Order Reconstruction in Ancestors” and was developed by
