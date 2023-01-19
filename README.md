@@ -40,9 +40,7 @@ Email agora {at} bio {dot} ens {dot} psl {dot} eu
 
 ## If you use AGORA, please cite:
 
-Reconstruction of hundreds of reference ancestral genomes across the eukaryotic kingdom. 
-Matthieu Muffato, Alexandra Louis, Nga Thi Thuy Nguyen, Joseph Lucas, Camille Berthelot, Hugues Roest Crollius. 
-bioRxiv 2022.02.17.480882; doi: https://doi.org/10.1101/2022.02.17.480882
+Matthieu Muffato, Alexandra Louis, Nga Thi Thuy Nguyen, Joseph M. Lucas, Camille Berthelot, Hugues Roest Crollius. [Reconstruction of hundreds of reference ancestral genomes across the eukaryotic kingdom.](https://doi.org/10.1038/s41559-022-01956-z) ***Nat Ecol Evol*** (Jan 2023).
 
 ## Installation
 
