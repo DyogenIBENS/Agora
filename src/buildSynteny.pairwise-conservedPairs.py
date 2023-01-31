@@ -19,7 +19,6 @@ __doc__ = """
 import collections
 import itertools
 import sys
-import os
 import time
 
 import utils.myMaths
@@ -62,14 +61,9 @@ utils.myGenomes.intern = myintern
 
 genesAnc = {}
 for anc in sorted(listAncestors.union(accessoryAncestors)):
-        filename = arguments["ancGenesFiles"] % phylTree.fileName[anc]
-        if os.path.exists(filename):
-                ancGenes = utils.myGenomes.Genome(filename)
-                genesAnc[anc] = {k: v.index for (k,v) in ancGenes.dicGenes.items()}
-                del ancGenes
-        else:
-                genesAnc[anc] = {}
-                print(f"Empty genome: {anc}")
+        ancGenes = utils.myGenomes.Genome(arguments["ancGenesFiles"] % phylTree.fileName[anc])
+        genesAnc[anc] = {k: v.index for (k,v) in ancGenes.dicGenes.items()}
+        del ancGenes
 
 print("time for loading", time.time() - start, file=sys.stderr)
 start = time.time()

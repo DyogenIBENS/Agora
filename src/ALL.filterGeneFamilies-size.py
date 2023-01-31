@@ -51,7 +51,7 @@ for anc in sorted(phylTree.listAncestr.union(phylTree.listSpecies)):
             lstAncGenes[anc] = [[None, gene.names[0]] for gene in genome]
             del genome
         dicGenes = {}
-        for (i, names) in enumerate(lstAncGenes.get(anc, [])):
+        for (i, names) in enumerate(lstAncGenes[anc]):
             for s in names:
                 dicGenes[s] = i
         dicAncGenes[anc] = dicGenes
@@ -76,11 +76,11 @@ def mkStruct(anc):
     if anc in sorted(phylTree.items):
         print("Processing ancGenome", anc, file=sys.stderr)
         # New ancestral genes have to be analyzed
-        for i in notseen.get(anc, []):
+        for i in notseen[anc]:
             todo.append((anc, i))
         for (newanc, _) in phylTree.items[anc]:
             dicGenes = dicAncGenes[newanc]
-            for (i, names) in enumerate(lstAncGenes.get(anc, [])):
+            for (i, names) in enumerate(lstAncGenes[anc]):
                 s = set((dicGenes[s] for s in names[1:] if s in dicGenes))
                 #print >>sys.stderr, i, names, s
                 # links father/children
@@ -168,3 +168,4 @@ for size in range(len(minsizes)):
         f.close()
         deleted[anc] = set()
         print(len(desc[anc]), "->", n, "OK", file=sys.stderr)
+
