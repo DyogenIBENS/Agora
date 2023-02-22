@@ -12,6 +12,7 @@ import itertools
 import collections
 
 from . import myFile
+from . import newick
 
 SYMBOL6X = '.'
 SYMBOL2X = '*'
@@ -277,56 +278,27 @@ class PhylogeneticTree:
                 x += 1
             return readStr(x-self.pos)
 
-        # read the tree in the form of text informations
         def readTree():
-            keepWhile(' ')
+            def recParseTree(n):
+                nodeName = n.name
+                if nodeName:
+                    if nodeName[0] == SYMBOL6X:
+                        nodeName = nodeName[1:]
+                        self.lstEsp6X.add(nodeName)
+                    elif nodeName[0] == SYMBOL2X:
+                        nodeName = nodeName[1:]
+                        self.lstEsp2X.add(nodeName)
+                    else:
+                        self.lstEspFull.add(nodeName)
 
-            children = []
-            if s[self.pos] == '(':
-                # '(' the first time, then some ',' untill the final ')'
-                while readStr(1) != ')':
-                    children.append(readTree())
-                    keepWhile(' ')
-                keepWhile(' ')
+                children = [recParseTree(c) for c in n.descendants]
+                elt = (children, n.name)
+                return (elt, n.length, n.properties)
 
-            nodeName = keepUntil("),:;[ ")
-            if nodeName:
-                if nodeName[0] == SYMBOL6X:
-                    nodeName = nodeName[1:]
-                    self.lstEsp6X.add(nodeName)
-                elif nodeName[0] == SYMBOL2X:
-                    nodeName = nodeName[1:]
-                    self.lstEsp2X.add(nodeName)
-                else:
-                    self.lstEspFull.add(nodeName)
-            elt = (children, nodeName)
-
-            keepWhile(' ')
-
-            # possibly a non-null branch length
-            if s[self.pos] == ':':
-                # ":"
-                readStr(1)
-                length = float(keepWhile("0123456789.eE-"))
-            else:
-                length = 0
-
-            keepWhile(' ')
-
-            # possibly informations between brackets
-            if s[self.pos] == '[':
-                # "["
-                readStr(1)
-                info = keepUntil("]")
-                info = dict(x.split("=") for x in info.split(":") if "=" in x)
-                # "]"
-                readStr(1)
-            else:
-                info = {}
-
-            keepWhile(' ')
-
-            return (elt, length, info)
+            trees = newick.loads(s)
+            if len(trees) > 1:
+                raise Exception(f"Expected 1 tree in file, found {len(trees)}")
+            return recParseTree(trees[0])
 
         def calcAges(data):
             ((children, name), _, _) = data
