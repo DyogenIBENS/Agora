@@ -50,6 +50,7 @@ def initColor(silent = False):
 	knownLocations = [
 		"/etc/X11/rgb.txt",
 		"/opt/X11/share/X11/rgb.txt",
+		"/usr/share/X11/rgb.txt",
 	]
 	location = [f for f in knownLocations if os.path.exists(f)][0]
 	# La liste des couleurs et leurs valeurs RGB
