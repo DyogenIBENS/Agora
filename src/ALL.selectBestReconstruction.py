@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # AGORA v3.1
 # python 3.5
@@ -61,4 +61,3 @@ for anc in sorted(targets):
     for l in lines[bestBlocks]:
         fo.write(l)
     fo.close()
-
