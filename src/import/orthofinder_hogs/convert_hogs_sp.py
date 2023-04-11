@@ -7,7 +7,7 @@ import re
 __doc__ = """
 script name: convert_hogs_sp.py
 
-Example : python ./convert_hogs_sp.py -of_hogs OrthoFinder/Results_Apr07/Phylogenetic_Hierarchical_Orthogroups  -outdir Agora_data
+Example : python ./convert_hogs_sp.py -of_hogs OrthoFinder/Results_Apr07/Phylogenetic_Hierarchical_Orthogroups  -outdir Agora_data/orthoGroups
 
 
 
