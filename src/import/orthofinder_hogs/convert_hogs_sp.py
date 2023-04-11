@@ -45,3 +45,4 @@ for filename in os.listdir(dirHogs):
                     og=re.split("[\t,]+",l)[3:]
                     print(*og, sep = " ", file=outfile)
             outfile.close()
+            print("orthoGroup file for AGORA: ", of, file=sys.stderr) 
