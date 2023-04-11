@@ -33,7 +33,7 @@ print("Parsing:", dirHogs, file=sys.stderr)
 for filename in os.listdir(dirHogs):
     f = os.path.join(dirHogs, filename)
     base = os.path.splitext(filename)[0]
-    filename2="orthologyGroups."+base+'.list.bz2'
+    filename2="orthologyGroups."+base+'.list'
     of = os.path.join(outOG,filename2)
     # checking if it is a file
     if os.path.isfile(f) :
