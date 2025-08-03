@@ -1,0 +1,41 @@
+#!/usr/bin/env python3
+from distutils.core import setup
+
+setup(name='Agora',
+      version='1.3.0',
+      description='Ancestral Genome Reconstruction',
+      author='DYOGEN lab',
+      author_email='agora@bio.ens.psl.eu',
+      url='https://github.com/DyogenIBENS/Agora/',
+      packages=['agora', 'utils'],
+      requires=['psutil'],
+      package_dir= {
+          'agora': 'src/',
+          'utils': 'src/utils',
+      },
+      scripts=[
+          'src/ALL.extractGeneFamilies.py',
+          'src/ALL.filterBlocks-fixedLength.py',
+          'src/ALL.filterBlocks-propLength.py',
+          'src/ALL.filterGeneFamilies-size.py',
+          'src/ALL.reformatGeneFamilies.py',
+          'src/ALL.selectBestReconstruction.py',
+          'src/ENSEMBL.buildProteinTrees.py',
+          'src/agora-basic.py',
+          'src/agora-generic.py',
+          'src/agora-plants.py',
+          'src/agora-vertebrates.py',
+          'src/agora.py',
+          'src/buildSynteny.integr-copy.py',
+          'src/buildSynteny.integr-denovo.py',
+          'src/buildSynteny.integr-fillin.py',
+          'src/buildSynteny.integr-fusion.py',
+          'src/buildSynteny.integr-insertion.py',
+          'src/buildSynteny.integr-scaffolds.py',
+          'src/buildSynteny.pairwise-conservedAdjacencies.py',
+          'src/buildSynteny.pairwise-conservedPairs.py',
+          'src/convert.ancGenomes.blocks-of-blocks-to-blocks-of-ancGenes.py',
+          'src/convert.ancGenomes.blocks-to-genes.py',
+          'src/misc.compareGenomes.py',
+      ]
+     )
